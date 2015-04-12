@@ -1,2 +1,2 @@
 # league-wins-pool
-League Wins Pool
+League Wins Pool Application
