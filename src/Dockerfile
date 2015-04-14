@@ -20,11 +20,11 @@ RUN npm install -g nodemon@1.3.7
 ADD . /app
 WORKDIR /app/client
 RUN bower install --allow-root # --allow-root allows bower to run as sudo, which is how Docker runs it
-RUN npm install --production
+RUN npm install
 RUN grunt --force
 
 WORKDIR /app/server
-RUN npm install --production
+RUN npm install
 
 EXPOSE 3000
 
