@@ -31,6 +31,10 @@ And your production ready version will fire up on `localhost:3000`! After doing 
     $ boot2docker run (if on OSX)
     $ cd src
     $ docker build -t league-wins-pool .
-    $ docker run -d -p league-wins-pool
-    $ docker ps (get generated port number)
-    $ curl http://$(boot2docker ip):port
+    $ docker run -d -P league-wins-pool
+    $ docker ps (get generated port number from container)
+    $ curl http://$(boot2docker ip):<container_port>
+
+## SSH into Docker container
+
+    $ docker exec -it <container id> bash
