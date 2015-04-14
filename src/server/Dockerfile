@@ -1,0 +1,7 @@
+FROM node:0.12.2
+
+WORKDIR /app
+RUN npm install -g nodemon
+ADD package.json /app/
+RUN npm install
+ADD . /app

@@ -2,13 +2,13 @@
 
 ## Getting Started
 
-    cd src/client
-    npm install
-    bower install
-    gem install compass
+    $ cd src/client
+    $ npm install
+    $ bower install
+    $ gem install compass
     
-    cd ../server
-    npm install
+    $ cd ../server
+    $ npm install
 
 In the client folder command line tab do a `$ grunt serve` and let the thing fire up on `localhost:9000` in your web browser. Close that web browser tab, you don't need it.
 
@@ -25,3 +25,12 @@ And Yeoman will optimize/jshint/minify your client side code, CSS, images, etc, 
     $ npm start
     
 And your production ready version will fire up on `localhost:3000`! After doing these steps, your server folder is what you'd deploy to your hosting service of choice.
+
+## Deploying to Docker
+
+    $ boot2docker run (if on OSX)
+    $ cd src/server
+    $ docker build -t league-wins-pool .
+    $ docker run -d -p league-wins-pool
+    $ docker ps (get generated port number)
+    $ curl http://$(boot2docker ip):port
