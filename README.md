@@ -29,7 +29,7 @@ And your production ready version will fire up on `localhost:3000`! After doing 
 ## Deploying to Docker
 
     $ boot2docker run (if on OSX)
-    $ cd src/server
+    $ cd src
     $ docker build -t league-wins-pool .
     $ docker run -d -p league-wins-pool
     $ docker ps (get generated port number)
