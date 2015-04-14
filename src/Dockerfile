@@ -1,14 +1,15 @@
 FROM node:0.12.2
 
-RUN apt-get update
+# Install dependencies
+RUN apt-get update -y
 RUN apt-get install ruby-full -y
 RUN gem install compass
+RUN apt-get install libfontconfig -y # required for PhantomJS (https://github.com/karma-runner/karma-phantomjs-launcher/issues/31)
 
 # Build client-side app within the container so we don't have to include it in our repo
 WORKDIR /app
-RUN npm install -g nodemon
-RUN npm install -g grunt-cli
-RUN npm install -g karma-phantomjs-launcher
+RUN npm install nodemon -g
+RUN npm install grunt-cli -g
 
 ADD . /app
 WORKDIR /app/client
