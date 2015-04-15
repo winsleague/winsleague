@@ -1,0 +1,4 @@
+app:
+  image: noahsw/league-wins-pool
+  ports:
+    - "80:3000"
