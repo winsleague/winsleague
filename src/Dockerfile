@@ -47,4 +47,5 @@ RUN grunt --force
 EXPOSE 3000
 
 WORKDIR /app/server
-CMD ["npm", "start"]
+ENTRYPOINT ["npm"]
+CMD ["start"]
