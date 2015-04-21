@@ -2,8 +2,10 @@
 
 ## Getting Started
 
-    $ [Install Docker](https://docs.docker.com/installation/)
-    $ boot2docker up (if on OSX)
+1. [Install Docker](https://docs.docker.com/installation/)
+2. If on Mac, start Boot2docker
+    
+    $ boot2docker up
 
 
 ## Local Development
