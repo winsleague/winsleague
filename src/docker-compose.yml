@@ -6,7 +6,7 @@ nginx:
     - "80:80"
 
 app:
-  build: src
+  build: app
   links:
     - db
   expose:

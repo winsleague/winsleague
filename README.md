@@ -6,7 +6,7 @@
     $ boot2docker run (if on OSX)
     $ cd src && docker build -t league-wins-pool . (run anytime there's a change to Dockerfile)
     $ docker run \
-      -v ~/path/to/repo/src:/app \
+      -v ~/path/to/repo/src/app:/app \
       -p 3000:3000 league-wins-pool test
 
 Open a separate tab

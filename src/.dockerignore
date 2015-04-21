@@ -1,8 +1,8 @@
 .git
-client/.tmp
-client/.sass-cache
-client/bower_components
-client/dist
-client/node_modules
-server/dist
-server/node_modules
+.tmp
+.sass-cache
+bower_components
+dist
+node_modules
+Dockerfile
+.dockerignore
