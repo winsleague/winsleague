@@ -1,12 +1,12 @@
 nginx:
   build: nginx
   links:
-    - app
+    - webapp
   ports:
     - "80:80"
 
-app:
-  build: app
+webapp:
+  build: webapp
   links:
     - db
   expose:

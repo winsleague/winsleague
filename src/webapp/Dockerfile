@@ -23,29 +23,29 @@ RUN npm install -g phantomjs@1.9.7-14
 RUN npm install -g nodemon@1.3.7
 
 # Install client-side packages
-COPY client/package.json /app/client/
-COPY client/npm-shrinkwrap.json /app/client/
-COPY client/bower.json /app/client/
-WORKDIR /app/client
+COPY client/package.json /webapp/client/
+COPY client/npm-shrinkwrap.json /webapp/client/
+COPY client/bower.json /webapp/client/
+WORKDIR /webapp/client
 RUN bower install --allow-root # --allow-root allows bower to run as sudo, which is how Docker runs it
 RUN npm install
 
 # Install server-side packages
-COPY server/package.json /app/server/
-COPY server/npm-shrinkwrap.json /app/server/
-WORKDIR /app/server
+COPY server/package.json /webapp/server/
+COPY server/npm-shrinkwrap.json /webapp/server/
+WORKDIR /webapp/server
 RUN npm install
 
 # Add app files to container
 # Everything above this lined should be cached in most cases
-COPY . /app
+COPY . /webapp
 
 # Build client-side code
-WORKDIR /app/client
+WORKDIR /webapp/client
 RUN grunt --force
 
 EXPOSE 3000
 
-WORKDIR /app/server
+WORKDIR /webapp/server
 ENTRYPOINT ["npm"]
 CMD ["start"]
