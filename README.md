@@ -1,19 +1,27 @@
 # League Wins Pool
 
-## Local Development
+## Getting Started
 
     $ [Install Docker](https://docs.docker.com/installation/)
-    $ boot2docker run (if on OSX)
-    $ cd src && docker build -t league-wins-pool . (run anytime there's a change to Dockerfile)
+    $ boot2docker up (if on OSX)
+
+
+## Local Development
+
+    $ cd src
+    $ docker-compose build webapp
     $ docker run \
-      -v ~/path/to/repo/src/webapp:/webapp \
-      -p 3000:3000 league-wins-pool test
+        -v ~/path/to/repo/src/webapp:/webapp \
+        -p 3000:3000 \
+        src_webapp \
+        test
 
 Open a separate tab
 
     $ docker ps (look for container id)
     $ docker exec -it <container id> bash
-    $ cd ../client && grunt serve
+    $ cd /webapp/client
+    $ grunt serve
 
 Open a browser to view changes
 
@@ -23,5 +31,4 @@ Open a browser to view changes
 ## Build for Production
 
     $ docker-compose up
-    $ docker ps (look for port number of new container)
-    $ curl http://$(boot2docker ip):<container port>
+    $ curl http://$(boot2docker ip)
