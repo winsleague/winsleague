@@ -1,0 +1,16 @@
+nginx:
+  image: leaguewinspool/nginx
+  links:
+    - webapp
+  ports:
+    - "80:80"
+
+webapp:
+  image: leaguewinspool/webapp
+  links:
+    - db
+  expose:
+    - "3000"
+
+db:
+  image: leaguewinspool/db
