@@ -10,8 +10,8 @@ webapp:
 
 db:
   build: db
-  environment:
-    - MYSQL_ROOT_PASSWORD=test
+  env_file:
+    - db/secrets.env
 
 dbdata:
   build: dbdata

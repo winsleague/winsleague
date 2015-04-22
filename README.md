@@ -5,9 +5,11 @@
 1. [Install Docker](https://docs.docker.com/installation/)
 2. If on Mac, start Boot2docker
 
- ```bash
-$ boot2docker up
-```
+    ```bash
+    $ boot2docker up
+    ```
+
+3. Create `src/db/secrets.env` from `src/db/secrets.example.env`
 
 
 ## Local Development
