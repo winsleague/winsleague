@@ -34,5 +34,6 @@ Open a browser to view changes
 
 ## Build for Production
 
+    $ cd src
     $ docker-compose up
     $ curl http://$(boot2docker ip)
