@@ -7,6 +7,10 @@ nginx:
 
 webapp:
   build: webapp
+  volumes:
+    - webapp:/webapp
+  command:
+    - test
   links:
     - db
   expose:
@@ -14,7 +18,10 @@ webapp:
 
 db:
   build: db
-  volumes:
-    - /data/mysql:/var/lib/mysql
+  volumes_from:
+  - dbdata
   environment:
     - MYSQL_ROOT_PASSWORD=test
+
+dbdata:
+  build: dbdata
