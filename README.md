@@ -20,12 +20,17 @@
 Open a separate tab
 
     $ docker exec -it src_webapp_1 bash
-    $ cd /webapp/client
-    $ grunt serve
+    $ cd /webapp/client && grunt serve
 
 Open a browser to view changes
 
     $ curl http://$(boot2docker ip)
+    
+    
+## Running Database Migrations
+
+    $ docker exec -it src_webapp_1 bash
+    $ cd /webapp/server && node_modules/.bin/sequelize db:migrate
     
 
 ## Build for Production
