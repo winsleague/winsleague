@@ -1,0 +1,18 @@
+nginx:
+  image: leaguewinspool/nginx:latest-develop
+  links:
+    - webapp
+  ports:
+    - "8080:80" # staging gets 8080, prod gets 80
+
+webapp:
+  image: leaguewinspool/webapp:latest-develop
+  links:
+    - db
+  expose:
+    - "3000"
+
+db:
+  image: leaguewinspool/db:latest-develop
+  environment: # we probably want to use env_file instead so secret passwords are outside the repo
+    - MYSQL_ROOT_PASSWORD=test
