@@ -1,0 +1,20 @@
+nginx:
+  build: nginx
+  links:
+    - webapp
+  ports:
+    - "80:80"
+
+webapp:
+  build: webapp
+  links:
+    - db
+  expose:
+    - "3000"
+
+db:
+  build: db
+  volumes:
+    - /data/mysql:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=test
