@@ -11,10 +11,6 @@ webapp:
     service: webapp
   links:
     - db
-  volumes:
-    - webapp:/webapp
-  command:
-    - test
 
 db:
   extends:

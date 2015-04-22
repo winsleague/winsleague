@@ -13,27 +13,21 @@ $ boot2docker up
 ## Local Development
 
     $ cd src
-    $ docker-compose build webapp
-    $ docker run \
-        -v ~/path/to/repo/src/webapp:/webapp \
-        -p 3000:3000 \
-        src_webapp \
-        test
+    $ docker-compose up
 
 Open a separate tab
 
-    $ docker ps (look for container id)
-    $ docker exec -it <container id> bash
+    $ docker exec -it src_webapp_1 bash
     $ cd /webapp/client
     $ grunt serve
 
 Open a browser to view changes
 
-    $ curl http://$(boot2docker ip):3000
+    $ curl http://$(boot2docker ip)
     
 
 ## Build for Production
 
     $ cd src
-    $ docker-compose up
+    $ docker-compose -f docker-production.yml up 
     $ curl http://$(boot2docker ip)
