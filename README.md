@@ -33,6 +33,15 @@ Open a browser to view changes
     $ cd /webapp/server && node_modules/.bin/sequelize db:migrate
     
 
+## Rebuilding Docker Images
+
+Whenever you change the Dockerfile, you must run:
+
+    $ docker-compose build
+
+Now you are ready for development again.
+
+
 ## Build for Production
 
     $ cd src

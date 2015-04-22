@@ -17,10 +17,18 @@ RUN apt-get update && apt-get install -y \
 RUN gem install compass -v 1.0.3
 
 # Install global packages
-RUN npm install -g grunt-cli@0.1.13
-RUN npm install -g bower@1.3.8
-RUN npm install -g phantomjs@1.9.7-14
-RUN npm install -g nodemon@1.3.7
+RUN npm install -g \
+    grunt-cli@0.1.13 \
+    bower@1.3.8 \
+    phantomjs@1.9.7-14 \
+    nodemon@1.3.7 \
+    yo@1.4.6 \
+    generator-angular@0.11.1
+
+# Adjust permissions so we can run yo within Docker container (https://github.com/yeoman/yeoman.io/issues/282)
+RUN mkdir /root/.config
+RUN mkdir /root/.config/configstore
+RUN chmod g+rwx /root /root/.config /root/.config/configstore
 
 # Install client-side packages
 COPY client/package.json /webapp/client/
