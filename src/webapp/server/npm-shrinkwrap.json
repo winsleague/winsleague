@@ -473,6 +473,102 @@
         }
       }
     },
+    "mysql": {
+      "version": "2.6.2",
+      "from": "mysql@*",
+      "resolved": "https://registry.npmjs.org/mysql/-/mysql-2.6.2.tgz",
+      "dependencies": {
+        "bignumber.js": {
+          "version": "2.0.7",
+          "from": "bignumber.js@2.0.7",
+          "resolved": "https://registry.npmjs.org/bignumber.js/-/bignumber.js-2.0.7.tgz"
+        },
+        "readable-stream": {
+          "version": "1.1.13",
+          "from": "readable-stream@>=1.1.13 <1.2.0",
+          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz",
+          "dependencies": {
+            "core-util-is": {
+              "version": "1.0.1",
+              "from": "core-util-is@>=1.0.0 <1.1.0",
+              "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.1.tgz"
+            },
+            "isarray": {
+              "version": "0.0.1",
+              "from": "isarray@0.0.1",
+              "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+            },
+            "string_decoder": {
+              "version": "0.10.31",
+              "from": "string_decoder@>=0.10.0 <0.11.0",
+              "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-0.10.31.tgz"
+            },
+            "inherits": {
+              "version": "2.0.1",
+              "from": "inherits@>=2.0.1 <2.1.0",
+              "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
+            }
+          }
+        },
+        "require-all": {
+          "version": "1.0.0",
+          "from": "require-all@>=1.0.0 <1.1.0",
+          "resolved": "https://registry.npmjs.org/require-all/-/require-all-1.0.0.tgz"
+        }
+      }
+    },
+    "sequelize": {
+      "version": "2.0.6",
+      "from": "sequelize@*",
+      "resolved": "https://registry.npmjs.org/sequelize/-/sequelize-2.0.6.tgz",
+      "dependencies": {
+        "bluebird": {
+          "version": "2.4.2",
+          "from": "bluebird@2.4.2",
+          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.4.2.tgz"
+        },
+        "dottie": {
+          "version": "0.3.1",
+          "from": "dottie@>=0.3.1 <0.4.0",
+          "resolved": "https://registry.npmjs.org/dottie/-/dottie-0.3.1.tgz"
+        },
+        "generic-pool": {
+          "version": "2.1.1",
+          "from": "generic-pool@2.1.1",
+          "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.1.1.tgz"
+        },
+        "inflection": {
+          "version": "1.7.0",
+          "from": "inflection@>=1.6.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/inflection/-/inflection-1.7.0.tgz"
+        },
+        "lodash": {
+          "version": "3.7.0",
+          "from": "lodash@>=3.5.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.7.0.tgz"
+        },
+        "moment": {
+          "version": "2.10.2",
+          "from": "moment@>=2.9.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/moment/-/moment-2.10.2.tgz"
+        },
+        "node-uuid": {
+          "version": "1.4.3",
+          "from": "node-uuid@>=1.4.1 <1.5.0",
+          "resolved": "https://registry.npmjs.org/node-uuid/-/node-uuid-1.4.3.tgz"
+        },
+        "toposort-class": {
+          "version": "0.3.1",
+          "from": "toposort-class@>=0.3.0 <0.4.0",
+          "resolved": "https://registry.npmjs.org/toposort-class/-/toposort-class-0.3.1.tgz"
+        },
+        "validator": {
+          "version": "3.39.0",
+          "from": "validator@>=3.34.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/validator/-/validator-3.39.0.tgz"
+        }
+      }
+    },
     "serve-favicon": {
       "version": "2.2.0",
       "from": "serve-favicon@>=2.2.0 <2.3.0",
