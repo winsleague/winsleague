@@ -1,20 +1,18 @@
-FROM node:0.12.2
+FROM node:0.12.2-slim
 
 # Install dependencies
 # TODO: specify versions of these packages so they don't change under us
 # This includes PhantomJS dependencies (https://github.com/karma-runner/karma-phantomjs-launcher/issues/31)
 RUN apt-get update && apt-get install -y \
-    ruby-full \
-    build-essential \
-    chrpath \
-    libssl-dev \
-    libxft-dev \
-    libfreetype6 \
-    libfreetype6-dev \
-    libfontconfig \
-    libfontconfig1 \
-    libfontconfig1-dev
-RUN gem install compass -v 1.0.3
+    build-essential=11.7 \
+    git=1:2.1.4-2.1 \
+    ruby-full=1:2.1.5 \
+    chrpath=0.16-1 \
+    libssl-dev=1.0.1k-3 \
+    libxft-dev=2.3.2-1 \
+    libfreetype6-dev=2.5.2-3 \
+    libfontconfig1-dev=2.11.0-6.3
+RUN gem install compass -v 1.0.3 --no-document
 
 # Install global packages
 RUN npm install -g \
