@@ -29,13 +29,20 @@ Open a browser to view changes
     
 ## Running Database Migrations
 
-    $ docker exec -it src_webapp_1 bash
-    $ cd /webapp/server && node_modules/.bin/sequelize db:migrate
+Make sure the containers are running first.
+
+    $ docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate
     
 
 ## Rebuilding Docker Images
 
-Whenever you change the Dockerfile, you must run:
+When changing the webapp-app Dockerfile, rebuild and publish the image by running:
+
+    $ cd src/webapp-base
+    $ docker build -t leaguewinspool/webapp-base .
+    $ docker push leaguewinspool/webapp-base
+
+When changing any of the other Dockerfiles, rebuild the images by running:
 
     $ docker-compose build
 
