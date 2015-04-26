@@ -14,7 +14,7 @@ webapp:
   volumes:
     - webapp:/webapp
   command:
-    - test
+    - npm test
 
 db:
   extends:
