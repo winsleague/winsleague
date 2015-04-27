@@ -33,6 +33,13 @@ Make sure the containers are running first.
 
     $ docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate
     
+Sequelize automatically syncs the database when the webapp starts. However, this only creates and drops tables -- it doesn't run pending migrations. That is currently done manually but we should figure out how to automate them as part of the deploy process. 
+    
+
+## Adding or Removing Node Packages
+
+When changing either the client or server's package.json, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions.
+
 
 ## Rebuilding Docker Images
 
