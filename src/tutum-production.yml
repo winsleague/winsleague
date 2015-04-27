@@ -14,5 +14,13 @@ webapp:
 
 db:
   image: leaguewinspool/db
-  environment: # we probably want to use env_file instead so secret passwords are outside the repo
-    - MYSQL_ROOT_PASSWORD=test
+  volumes_from:
+    - dbdata
+  environment: # enter the real values before updating Tutum!
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=database
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=password
+
+dbdata:
+  image: leaguewinspool/dbdata
