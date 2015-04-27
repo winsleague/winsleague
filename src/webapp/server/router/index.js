@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * The Index of Routes
  */
