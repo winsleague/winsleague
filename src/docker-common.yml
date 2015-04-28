@@ -1,0 +1,17 @@
+nginx:
+  build: nginx
+  ports:
+    - "80:80"
+
+webapp:
+  build: webapp
+  expose:
+    - "3000"
+
+db:
+  build: db
+  env_file:
+    - db/secrets.env
+
+dbdata:
+  build: dbdata

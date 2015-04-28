@@ -5,34 +5,69 @@
 1. [Install Docker](https://docs.docker.com/installation/)
 2. If on Mac, start Boot2docker
 
- ```bash
-$ boot2docker up
-```
+    ```bash
+    $ boot2docker up
+    ```
+
+3. Create `src/db/secrets.env` from `src/db/secrets.example.env`
 
 
 ## Local Development
 
+Launch the entire development environment:
+
     $ cd src
-    $ docker-compose build webapp
-    $ docker run \
-        -v ~/path/to/repo/src/webapp:/webapp \
-        -p 3000:3000 \
-        src_webapp \
-        test
+    $ docker-compose up
 
-Open a separate tab
+This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
 
-    $ docker ps (look for container id)
-    $ docker exec -it <container id> bash
-    $ cd /webapp/client
-    $ grunt serve
+To also monitor client-side changes, open a separate terminal tab and run:
 
-Open a browser to view changes
+    $ docker exec -it src_webapp_1 bash
+    $ cd /webapp/client && grunt serve
 
-    $ curl http://$(boot2docker ip):3000
+Open a browser to view changes:
+
+    $ curl http://$(boot2docker ip)
     
+    
+## Running Database Migrations
+
+Make sure the containers are running first.
+
+    $ docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate
+    
+Sequelize automatically syncs the database when the webapp starts. However, this only creates and drops tables -- it doesn't run pending migrations. That is currently done manually but we should figure out how to automate them as part of the deploy process. 
+    
+
+## Adding or Removing Node Packages
+
+When changing either the client or server's package.json, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions.
+
+
+## Rebuilding Docker Images
+
+The `webapp-base` image (`src/webapp-base/Dockerfile`) is used to manage core dependencies such as node and its global packages. Although changes should be rare, when doing so, rebuild and publish the image by running:
+
+    $ cd src/webapp-base
+    $ docker build -t leaguewinspool/webapp-base .
+    $ docker push leaguewinspool/webapp-base
+
+When changing any of the other Dockerfiles, rebuild the images by running:
+
+    $ docker-compose build
+
+Now you are ready for development again.
+
 
 ## Build for Production
 
-    $ docker-compose up
+To effectively run a staging environment on your machine, run:
+
+    $ cd src
+    $ docker-compose -f docker-production.yml up 
     $ curl http://$(boot2docker ip)
+    
+This difference is `docker-production.yml` won't link your local code to the container.
+
+Actually deploying to production is done automatically when code is merged to `master`.
