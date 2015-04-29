@@ -32,7 +32,7 @@ fi
 if changed 'src/webapp/server/package.json'; then
   echo "Install webapp server npm packages"
   echo "$(pwd)"
-  (cd src/webapp/server; npm install; npm prune)
+  (cd src/webapp/server; echo pwd; npm install; npm prune)
 fi
 
 echo "Done with post-checkout hook"
