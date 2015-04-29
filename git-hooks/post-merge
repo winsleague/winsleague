@@ -2,6 +2,8 @@
 
 # post-merge hook - looks for package changes or migrations every time you `git merge` or `git pull`
 
+echo "Starting post-merge hook"
+
 function changed {
   git diff --name-only | grep "^$1" > /dev/null 2>&1
 }
