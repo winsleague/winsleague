@@ -4,6 +4,8 @@
 
 echo "Starting post-merge hook"
 
+PATH=$PATH:/usr/local/bin:/usr/local/sbin # http://stackoverflow.com/questions/12881975/git-pre-commit-hook-failing-in-github-for-mac-works-on-command-line
+
 function changed {
   git diff --name-only | grep "^$1" > /dev/null 2>&1
 }
@@ -14,17 +16,17 @@ if changed 'src/webapp/server/migrations'; then
 fi
 
 if changed 'src/webapp/client/bower.json'; then
-  echo "Install webapp client bower packages"
+  echo "Installing webapp client bower packages"
   (cd src/webapp/client; bower install; bower prune)
 fi
 
 if changed 'src/webapp/client/package.json'; then
-  echo "Install webapp client npm packages"
+  echo "Installing webapp client npm packages"
   (cd src/webapp/client; npm install; npm prune)
 fi
 
 if changed 'src/webapp/server/package.json'; then
-  echo "Install webapp server npm packages"
+  echo "Installing webapp server npm packages"
   (cd src/webapp/server; npm install; npm prune)
 fi
 
