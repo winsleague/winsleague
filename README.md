@@ -10,21 +10,31 @@
     ```
 
 3. Create `src/db/secrets.env` from `src/db/secrets.example.env`
+4. Install package dependencies
+
+    ```bash
+    $ (cd scripts; ./install-packages)
+    ```
+
+5. Install Git hooks so that dependencies are automatically installed when switching or merging branches
+
+    ```bash
+    $ (cd scripts; ./install-git-hooks)
+    ```
 
 
-## Local Development
+## Developing Locally
 
 Launch the entire development environment:
 
-    $ cd src
-    $ docker-compose up
+    $ (cd src; docker-compose up)
 
 This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
 
 To also monitor client-side changes, open a separate terminal tab and run:
 
     $ docker exec -it src_webapp_1 bash
-    $ cd /webapp/client && grunt serve
+    $ (cd /webapp/client; grunt serve)
 
 Open a browser to view changes:
 
@@ -60,12 +70,11 @@ When changing any of the other Dockerfiles, rebuild the images by running:
 Now you are ready for development again.
 
 
-## Build for Production
+## Building for Production
 
 To effectively run a staging environment on your machine, run:
 
-    $ cd src
-    $ docker-compose -f docker-production.yml up 
+    $ (cd src; docker-compose -f docker-production.yml up) 
     $ curl http://$(boot2docker ip)
     
 This difference is `docker-production.yml` won't link your local code to the container.

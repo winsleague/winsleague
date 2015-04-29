@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "Installing webapp client bower packages"
+(cd ../src/webapp/client; bower install; bower prune)
+
+echo "Installing webapp client npm packages"
+(cd ../src/webapp/client; npm install; npm prune)
+
+echo "Installing webapp server npm packages"
+(cd ../src/webapp/server; npm install; npm prune)
+
+echo "Done installing packages"
