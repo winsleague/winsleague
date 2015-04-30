@@ -72,7 +72,7 @@ The `webapp-base` image (`src/webapp-base/Dockerfile`) is used to manage core de
 
 When changing any of the other Dockerfiles, rebuild the images by running:
 
-    $ docker-compose build
+    $ (cd src; docker-compose build)
 
 Now you are ready for development again.
 
