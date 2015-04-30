@@ -1,9 +1,9 @@
 {
   "name": "server",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production nodemon ./bin/www",
+    "start": "NODE_ENV=production pm2 start ./bin/www --no-daemon",
     "test": "NODE_ENV=development nodemon ./bin/www"
   },
   "engines": {
