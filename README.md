@@ -2,21 +2,28 @@
 
 ## Getting Started
 
-1. [Install Docker](https://docs.docker.com/installation/)
-2. If on Mac, start Boot2docker
+1. [Install Node](https://nodejs.org/download/)
+2. [Install Docker](https://docs.docker.com/installation/)
+3. If on Mac, start Boot2docker
 
     ```bash
     $ boot2docker up
     ```
 
-3. Create `src/db/secrets.env` from `src/db/secrets.example.env`
-4. Install package dependencies
+4. Create secrets file and add passwords
+ 
+    ```bash
+    $ cp src/db/secrets.example.env src/db/secrets.env
+    $ vim src/db/secrets.env
+    ```
+    
+5. Install package dependencies
 
     ```bash
     $ (cd scripts; ./install-packages)
     ```
 
-5. Install Git hooks so that dependencies are automatically installed when switching or merging branches
+6. Install Git hooks so that dependencies are automatically installed when switching or merging branches
 
     ```bash
     $ (cd scripts; ./install-git-hooks)
