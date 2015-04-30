@@ -7,7 +7,7 @@ echo "Starting post-merge hook"
 PATH=$PATH:/usr/local/bin:/usr/local/sbin # http://stackoverflow.com/questions/12881975/git-pre-commit-hook-failing-in-github-for-mac-works-on-command-line
 
 function changed {
-  git diff --name-only | grep "^$1" > /dev/null 2>&1
+  git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep "^$1" > /dev/null 2>&1
 }
 
 if changed 'src/webapp/server/migrations'; then
