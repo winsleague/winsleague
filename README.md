@@ -2,33 +2,40 @@
 
 ## Getting Started
 
-1. [Install Docker 1.6+ and optionally Boot2Docker](https://docs.docker.com/installation/)
-2. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
-3. If on Mac, start Boot2Docker
-
-    ```bash
-    $ boot2docker up
-    ```
-
-3. Create `src/db/secrets.env` from `src/db/secrets.example.env`
-4. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
-
-    ```bash
-    $ (cd src; docker-compose build)
-    ```
-    
-5. Install package dependencies
+1. [Install Node](https://nodejs.org/download/)
+2. [Install Docker 1.6+ and optionally Boot2Docker](https://docs.docker.com/installation/)
+3. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
+4. Install package dependencies
 
     ```bash
     $ (cd scripts; ./install-packages)
     ```
 
-6. Install Git hooks so that dependencies are automatically installed when switching or merging branches
+5. Install Git hooks so that dependencies are automatically installed when switching or merging branches
 
     ```bash
     $ (cd scripts; ./install-git-hooks)
     ```
 
+6. Create secrets file and add passwords
+    
+    ```bash
+    $ cp src/db/secrets.example.env src/db/secrets.env
+    $ vim src/db/secrets.env
+    ```
+
+7. If on Mac, start Boot2Docker
+
+    ```bash
+    $ boot2docker up
+    ```
+
+8. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
+
+    ```bash
+    $ (cd src; docker-compose build)
+    ```   
+    
 
 ## Developing Locally
 
