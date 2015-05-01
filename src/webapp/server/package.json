@@ -1,10 +1,13 @@
 {
   "name": "server",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production nodemon ./bin/www",
+    "start": "NODE_ENV=production pm2 start ./bin/www --no-daemon",
     "test": "NODE_ENV=development nodemon ./bin/www"
+  },
+  "engines": {
+    "node": "0.12.*"
   },
   "dependencies": {
     "body-parser": "~1.12.0",
