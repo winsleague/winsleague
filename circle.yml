@@ -9,9 +9,7 @@ dependencies:
   override:
     - sudo pip install -U docker-compose
     - cp src/db/secrets.example.env src/db/secrets.env
-    - if [[ -e ~/docker/leaguewinspool-webapp.tar ]]; then docker load -i ~/docker/leaguewinspool-webapp.tar; fi
     - (cd src; docker-compose -f docker-production.yml build)
-    - mkdir -p ~/docker; docker save leaguewinspool/webapp > ~/docker/leaguewinspool-webapp.tar
     - (cd src; docker-compose -f docker-production.yml up)
 
 test:
