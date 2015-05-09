@@ -7,8 +7,7 @@ dependencies:
     - "~/docker"
 
   override:
-    - sudo curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-    - sudo chmod +x /usr/local/bin/docker-compose
+    - sudo pip install -U docker-compose
     - cp src/db/secrets.example.env src/db/secrets.env
     - if [[ -e ~/docker/leaguewinspool-webapp.tar ]]; then docker load -i ~/docker/leaguewinspool-webapp.tar; fi
     - docker build -t leaguewinspool/webapp .
