@@ -14,4 +14,4 @@ dependencies:
 
 test:
   override:
-    - docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js
+    - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
