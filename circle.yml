@@ -7,9 +7,19 @@ dependencies:
     - "~/docker"
 
   override:
-    - sudo pip install -U docker-compose
+    - docker info
+    - sudo pip install -U docker-compose==1.2.0
     - cp src/db/secrets.example.env src/db/secrets.env
+    # If there's a base image cached, load it. A click on CircleCI's "Clear
+    # Cache" will make sure we start with a clean slate.
+    - mkdir -p ~/docker
+    - if [[ -e ~/docker/images.tar ]]; then docker load -i ~/docker/images.tar; fi
     - (cd src; docker-compose -f docker-production.yml build)
+    # Otherwise, we built one above, and save it.
+    - if [[ ! -e ~/docker/images.tar ]]; then docker save -o ~/docker/images.tar src_nginx src_db ; fi
+    # Print the history so that we can investigate potential steps which fatten
+    # the image needlessly.
+    - docker history src_webapp
     - (cd src; docker-compose -f docker-production.yml up -d)
 
 test:
