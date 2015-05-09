@@ -20,7 +20,7 @@ COPY . /webapp
 
 # Build client-side code
 WORKDIR /webapp/client
-RUN grunt --force
+RUN grunt build --force
 
 EXPOSE 3000
 
