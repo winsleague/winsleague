@@ -1,0 +1,21 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+
+  override:
+    - curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
+    - cp src/db/secrets.example.env src/db/secrets.env
+    - if [[ -e ~/docker/leaguewinspool-webapp.tar ]]; then docker load -i ~/docker/leaguewinspool-webapp.tar; fi
+    - docker build -t leaguewinspool/webapp .
+    - mkdir -p ~/docker; docker save leaguewinspool/webapp > ~/docker/leaguewinspool-webapp.tar
+    - (cd src; docker-compose -f docker-production.yml build)
+    - (cd src; docker-compose -f docker-production.yml up)
+
+test:
+  override:
+    - docker-compose -f docker-production.yml run webapp grunt --gruntfile /webapp/client/Gruntfile.js

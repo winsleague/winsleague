@@ -1,4 +1,4 @@
-FROM leaguewinspool/webapp-base
+FROM leaguewinspool/webapp-base:latest
 
 # Install client-side packages
 COPY client/package.json /webapp/client/
