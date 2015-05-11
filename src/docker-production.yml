@@ -17,7 +17,7 @@ db:
     file: docker-common.yml
     service: db
   volumes_from:
-  - dbdata
+    - dbdata
 
 dbdata:
   extends:
