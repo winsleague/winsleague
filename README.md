@@ -88,7 +88,8 @@ Now you are ready for development again.
 
 To effectively run a staging environment on your machine, run:
 
-    $ (cd src; docker-compose -f docker-production.yml up) 
+    $ (cd src; docker-compose -f docker-production.yml up -d)
+    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
     $ curl http://$(boot2docker ip)
     
 This difference is `docker-production.yml` won't link your local code to the container.
