@@ -99,4 +99,8 @@ The difference is `docker-production.yml` won't link your local code to the cont
 
 When code is merged into `master`, CircleCI runs the integration tests. If they pass, CircleCI notifies DockerHub to rebuild the `webapp` container. Once the build finishes, DockerHub notifies Tutum to swap the old container with the new `webapp` image.
 
-The other containers are not deployed automatically because they rarely change. If they need updating, manually start a build on DockerHub and redeploy the container on Tutum.
+The other containers are not deployed automatically because they rarely change. If they need updating:
+
+1. On CircleCI, [clear the cache](https://circleci.com/docs/how-cache-works) and rerun the tests
+2. On DockerHub, manually start a build on the updated container
+3. On Tutum, redeploy the container
