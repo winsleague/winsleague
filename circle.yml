@@ -24,8 +24,18 @@ dependencies:
     # Print the history so that we can investigate potential steps which fatten
     # the image needlessly.
     - docker history src_webapp
+    # Bring up the environment as a daemon (-d) to not block tests
     - (cd src; docker-compose -f docker-production.yml up -d)
 
 test:
   override:
     - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+
+deployment:
+  hub:
+    # Notify DockerHub to build the new container once the tests pass
+    # Set on https://circleci.com/gh/league-wins-pool/league-wins-pool/edit#env-vars
+    # From https://blog.rainforestqa.com/2014-12-08-docker-in-action-from-deployment-to-delivery-part-2-continuous-integration/
+    branch: master
+    commands:
+      - $DEPLOY_WEBAPP
