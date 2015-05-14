@@ -423,9 +423,8 @@ module.exports = function (grunt) {
 
     exec: {
       // Publish metrics to CodeClimate
-      // The
       publishCodeCoverageMetrics: {
-        command: './node_modules/.bin/codeclimate < log/coverage/report-lcov/lcov.info' // CODECLIMATE_REPO_TOKEN=' + process.env.CODECLIMATE_REPO_TOKEN + '
+        command: 'CODECLIMATE_REPO_TOKEN=' + process.env.CODECLIMATE_REPO_TOKEN + ' ./node_modules/.bin/codeclimate < log/coverage/report-lcov/lcov.info'
       }
     }
   });
