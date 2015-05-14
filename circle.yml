@@ -2,6 +2,10 @@ machine:
   services:
     - docker
 
+general:
+  artifacts:
+    - "src/webapp/client/log"
+
 dependencies:
   cache_directories:
     - "~/docker"
@@ -29,7 +33,11 @@ dependencies:
 
 test:
   override:
+    # Run tests
+    # We need to manually specify the gruntfile because the container's working directory is /webapp/server
     - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+    # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
+    - (cd src; docker-compose -f docker-production.yml run --no-deps -e CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN webapp grunt exec:publishCodeCoverageMetrics --gruntfile /webapp/client/Gruntfile.js)
 
 deployment:
   hub:
