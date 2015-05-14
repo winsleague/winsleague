@@ -29,7 +29,10 @@ dependencies:
 
 test:
   override:
+    # Run tests
     - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+    # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
+    - (cd src/webapp/client; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN ./node_modules/.bin/codeclimate < reports/coverage/report-lcov/lcov.info)
 
 deployment:
   hub:
