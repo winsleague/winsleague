@@ -84,14 +84,23 @@ When changing any of the other Dockerfiles, rebuild the images by running:
 Now you are ready for development again.
 
 
-## Building for Production
+## Running a Staging Environment
 
-To effectively run a staging environment on your machine, run:
+These are the same commands the integration tests on CircleCI run:
 
     $ (cd src; docker-compose -f docker-production.yml up -d)
     $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
     $ curl http://$(boot2docker ip)
-    
-This difference is `docker-production.yml` won't link your local code to the container.
 
-Actually deploying to production is done automatically when code is merged to `master`.
+The difference is `docker-production.yml` won't link your local code to the container.
+
+
+## Deploying to Production
+
+When code is merged into `master`, CircleCI runs the integration tests. If they pass, CircleCI notifies DockerHub to rebuild the `webapp` container. Once the build finishes, DockerHub notifies Tutum to swap the old container with the new `webapp` image.
+
+The other containers are not deployed automatically because they rarely change. If they need updating:
+
+1. On CircleCI, [clear the cache](https://circleci.com/docs/how-cache-works) and rerun the tests
+2. On DockerHub, manually start a build on the updated container
+3. On Tutum, redeploy the container
