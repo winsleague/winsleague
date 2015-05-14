@@ -2,6 +2,10 @@ machine:
   services:
     - docker
 
+general:
+  artifacts:
+    - "src/webapp/client/reports"
+
 dependencies:
   cache_directories:
     - "~/docker"
