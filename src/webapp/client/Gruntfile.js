@@ -419,6 +419,14 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    exec: {
+      // Publish metrics to CodeClimate
+      // The
+      publishCodeCoverageMetrics: {
+        command: './node_modules/.bin/codeclimate < log/coverage/report-lcov/lcov.info' // CODECLIMATE_REPO_TOKEN=' + process.env.CODECLIMATE_REPO_TOKEN + '
+      }
     }
   });
 
