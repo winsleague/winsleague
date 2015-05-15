@@ -47,12 +47,16 @@ This links your local `src/webapp` folder to the container so that server-side c
 
 To also monitor client-side changes, open a separate terminal tab and run:
 
-    $ docker exec -it src_webapp_1 bash
+    $ docker exec -it src_webapp_1 bash    # connect to existing container because we need both `npm start` and `grunt serve` running for local development
     $ (cd /webapp/client; grunt serve)
 
 Open a browser to view changes:
 
     $ curl http://$(boot2docker ip)
+    
+Run tests:
+
+    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
     
     
 ## Running Database Migrations
