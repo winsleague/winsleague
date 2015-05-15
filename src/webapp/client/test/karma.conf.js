@@ -73,7 +73,8 @@ module.exports = function(config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'app/**/*.js': ['coverage']
+      'app/**/*.js': ['babel', 'coverage'],
+      'test/**/*.js': ['babel']
     },
 
     // optionally, configure the reporter
@@ -83,6 +84,18 @@ module.exports = function(config) {
         { type: 'html', subdir: 'report-html' },
         { type: 'lcov', subdir: 'report-lcov' }
       ]
+    },
+
+    babelPreprocessor: {
+      options: {
+        sourceMap: 'inline'
+      },
+      filename: function(file) {
+        return file.originalPath.replace(/\.js$/, '.es5.js');
+      },
+      sourceFileName: function(file) {
+        return file.originalPath;
+      }
     }
 
     // Uncomment the following lines if you are using grunt's server to run the tests
