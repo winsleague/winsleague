@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['newer:jshint:all', 'babel'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -365,36 +365,45 @@ module.exports = function (grunt) {
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
-          ]
-        }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: ['generated/*']
-        }, {
-          expand: true,
-          cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
-        }]
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.app %>',
+            src: [
+              '*.{ico,png,txt}',
+              '.htaccess',
+              '*.html',
+              'views/{,*/}*.html',
+              'images/{,*/}*.{webp}',
+              'styles/fonts/{,*/}*.*'
+            ],
+            dest: '<%= yeoman.dist %>'
+          },
+          {
+            expand: true,
+            cwd: '.tmp/images',
+            src: ['generated/*'],
+            dest: '<%= yeoman.dist %>/images'
+          },
+          {
+            expand: true,
+            src: ['.tmp/scripts'],
+            dest: '<%= yeoman.dist %>/scripts'
+          },
+          {
+            expand: true,
+            cwd: '.',
+            src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+            dest: '<%= yeoman.dist %>'
+          }
+        ]
       },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
-        dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+        src: '{,*/}*.css',
+        dest: '.tmp/styles/'
       }
     },
 
@@ -426,6 +435,22 @@ module.exports = function (grunt) {
       publishCodeCoverageMetrics: {
         command: 'CODECLIMATE_REPO_TOKEN=' + process.env.CODECLIMATE_REPO_TOKEN + ' ./node_modules/.bin/codeclimate < log/coverage/report-lcov/lcov.info'
       }
+    },
+
+    // ES6 transpiler settings
+    babel: {
+      options: {
+        sourceMap: true
+      },
+      dist: {
+        files: [{
+          'expand': true,
+          'cwd': 'app/',
+          'src': ['scripts/**/*.js'],
+          'dest': '.tmp/',
+          'ext': '.js'
+        }]
+      }
     }
   });
 
@@ -437,17 +462,13 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'babel',
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
       'watch'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
@@ -461,6 +482,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'babel',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
