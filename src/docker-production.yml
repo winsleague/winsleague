@@ -13,6 +13,7 @@ webapp:
     - db
   volumes:
     - webapp/client/log:/webapp/client/log # so we can access logs from outside the container
+  command: NODE_ENV=production pm2 start ./bin/www --no-daemon
 
 db:
   extends:
