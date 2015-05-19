@@ -47,12 +47,17 @@ This links your local `src/webapp` folder to the container so that server-side c
 
 To also monitor client-side changes, open a separate terminal tab and run:
 
-    $ docker exec -it src_webapp_1 bash
-    $ (cd /webapp/client; grunt serve)
+    $ (cd src/webapp/client; grunt serve)
+
+Ideally we'd run `grunt serve` in the container itself but due to slow boot2docker issues, it's faster to run it outside.
 
 Open a browser to view changes:
 
     $ curl http://$(boot2docker ip)
+    
+Run tests:
+
+    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
     
     
 ## Running Database Migrations
@@ -66,7 +71,7 @@ Sequelize automatically syncs the database when the webapp starts. However, this
 
 ## Adding or Removing Node Packages
 
-When changing either the client or server's package.json, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions.
+When changing either the client or server's `package.json`, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions. Also update the `package.json` version number.
 
 
 ## Rebuilding Docker Images
