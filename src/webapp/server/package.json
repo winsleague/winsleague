@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=development nodemon ./bin/www",
-    "test": "./node_modules/.bin/jasmine"
+    "test": "JASMINE_CONFIG_PATH=test/support/jasmine.json ./node_modules/.bin/jasmine"
   },
   "engines": {
     "node": "0.12.*"
@@ -22,7 +22,13 @@
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jasmine": "^0.8.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-template-jasmine-requirejs": "^0.2.3",
     "jasmine": "^2.3.1",
-    "supertest": "^1.0.1"
+    "load-grunt-tasks": "^3.1.0",
+    "supertest": "^1.0.1",
+    "time-grunt": "^1.0.0"
   }
 }
