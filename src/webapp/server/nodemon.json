@@ -1,4 +1,4 @@
 {
   "verbose": true,
-  "ignore": ["fixtures/*", "spec/*"]
+  "ignore": ["test/*", "Gruntfile.js"]
 }
