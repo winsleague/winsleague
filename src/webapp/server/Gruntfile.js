@@ -15,14 +15,36 @@ module.exports = function(grunt) {
       unit: {
         configFile: 'test/karma.conf.js'
       }
+    },
+
+    jasmine: {
+      all: {
+        src: [
+          'models/**/*.js',
+          'router/**/*.js',
+          'app.js'
+        ],
+        options: {
+          specs: 'test/spec/**/*.js',
+          helpers: 'test/helpers/*',
+          vendor: 'node_modules/**/*.js',
+          template: require('grunt-template-jasmine-requirejs')
+        }
+      }
+    },
+
+    watch: {
+      js: {
+        files: [
+          'test/**/*.js'
+        ],
+        tasks: ['jasmine:all']
+      }
     }
   });
 
   grunt.registerTask('test', [
-    'karma'
-  ]);
-
-  grunt.registerTask('default', [
-    'karma'
+    'jasmine:all',
+    'watch'
   ]);
 };
