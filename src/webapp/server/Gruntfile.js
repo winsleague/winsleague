@@ -17,18 +17,42 @@ module.exports = function(grunt) {
       }
     },
 
+    "babel": {
+      options: {
+        sourceMap: true
+      },
+      dist: {
+        files: [{
+          'expand': true,
+          'src': [
+            '*.js',
+            'models/**/*.js',
+            'router/**/*.js',
+            'test/**/*.js',
+          ],
+          'dest': '.babel',
+          'ext': '.js'
+        }]
+      }
+    },
+
     jasmine: {
       all: {
         src: [
-          'models/**/*.js',
-          'router/**/*.js',
-          'app.js'
+          '.babel/models/**/*.js',
+          '.babel/router/**/*.js',
+          '.babel/*.js'
         ],
         options: {
-          specs: 'test/spec/**/*.js',
-          helpers: 'test/helpers/*',
+          specs: '.babel/test/spec/**/*.js',
+          helpers: '.babel/test/helpers/*',
           vendor: 'node_modules/**/*.js',
-          template: require('grunt-template-jasmine-requirejs')
+          template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfig: {
+              baseUrl: ''
+            }
+          }
         }
       }
     },
@@ -44,7 +68,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('test', [
-    'jasmine:all',
-    'watch'
+    'babel',
+    'jasmine:all'
   ]);
 };
