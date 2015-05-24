@@ -54,10 +54,10 @@ module.exports = function(grunt) {
         },
         // spec files
         specs: [
-          'test/spec/**'
+          '.babel/test/spec/**'
         ],
         helpers: [
-          'test/helpers/**'
+          '.babel/test/helpers/**'
         ]
       }
     },
@@ -67,13 +67,13 @@ module.exports = function(grunt) {
         files: [
           'test/**/*.js'
         ],
-        tasks: ['jasmine:all']
+        tasks: ['jasmine_nodejs']
       }
     }
   });
 
   grunt.registerTask('test', [
     'babel',
-    'jasmine:all'
+    'jasmine_nodejs'
   ]);
 };
