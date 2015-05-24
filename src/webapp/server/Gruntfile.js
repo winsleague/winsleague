@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       }
     },
 
-    "babel": {
+    'babel': {
       options: {
         sourceMap: true
       },
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
             '*.js',
             'models/**/*.js',
             'router/**/*.js',
-            'test/**/*.js',
+            'test/**/*.js'
           ],
           'dest': '.babel',
           'ext': '.js'
