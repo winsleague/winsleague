@@ -30,24 +30,56 @@ module.exports = function(grunt) {
       }
     },
 
-    jasmine: {
-      all: {
-        src: [
-          '.babel/models/**/*.js',
-          '.babel/router/**/*.js',
-          '.babel/*.js'
-        ],
+    jasmine_nodejs: {
+      // task specific (default) options
+      options: {
+        specNameSuffix: "spec.js", // also accepts an array
+        helperNameSuffix: "helper.js",
+        useHelpers: false,
+        stopOnFailure: false,
+        // configure one or more built-in reporters
+        reporters: {
+          console: {
+            colors: true,
+            cleanStack: 1,       // (0|false)|(1|true)|2|3
+            verbosity: 3,        // (0|false)|1|2|(3|true)
+            listStyle: "indent", // "flat"|"indent"
+            activity: false
+          },
+          // junit: {
+          //     savePath: "./reports",
+          //     filePrefix: "junit-report",
+          //     consolidate: true,
+          //     useDotNotation: true
+          // },
+          // nunit: {
+          //     savePath: "./reports",
+          //     filename: "nunit-report.xml",
+          //     reportName: "Test Results"
+          // },
+          // terminal: {
+          //     color: false,
+          //     showStack: false,
+          //     verbosity: 2
+          // },
+          // teamcity: true,
+          // tap: true
+        },
+        // add custom Jasmine reporter(s)
+        customReporters: []
+      },
+      your_target: {
+        // target specific options
         options: {
-          specs: '.babel/test/spec/**/*.js',
-          helpers: '.babel/test/helpers/*',
-          vendor: 'node_modules/**/*.js',
-          template: require('grunt-template-jasmine-requirejs'),
-          templateOptions: {
-            requireConfig: {
-              baseUrl: ''
-            }
-          }
-        }
+          useHelpers: true
+        },
+        // spec files
+        specs: [
+          "test/spec/**",
+        ],
+        helpers: [
+          "test/helpers/**"
+        ]
       }
     },
 
