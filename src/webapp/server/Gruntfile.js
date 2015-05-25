@@ -24,7 +24,7 @@ module.exports = function(grunt) {
             'router/**/*.js',
             'test/**/*.js'
           ],
-          'dest': '.babel',
+          'dest': '.tmp',
           'ext': '.js'
         }]
       }
@@ -54,10 +54,10 @@ module.exports = function(grunt) {
         },
         // spec files
         specs: [
-          '.babel/test/spec/**'
+          '.tmp/test/spec/**'
         ],
         helpers: [
-          '.babel/test/helpers/**'
+          '.tmp/test/helpers/**'
         ]
       }
     },

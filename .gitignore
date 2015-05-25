@@ -1,5 +1,5 @@
 # Logs
-logs
+log
 *.log
 
 # Runtime data
@@ -32,5 +32,5 @@ node_modules
 # Secrets
 secrets.env
 
-# Babel
-.babel
+# Temporary data, for things like preprocessors
+.tmp
