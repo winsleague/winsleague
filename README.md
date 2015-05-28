@@ -58,7 +58,7 @@ Open a browser to view changes:
 Run tests:
 
     $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side tests
-    $ (cd src; docker-compose run webapp npm test)    # server-side tests
+    $ (cd src; docker-compose run webapp grunt test)    # server-side tests
     
     
 ## Running Database Migrations
