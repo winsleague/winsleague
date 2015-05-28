@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 
     'babel': {
       options: {
-        sourceMap: true
+        sourceMap: false
       },
       dist: {
         files: [{
@@ -35,7 +35,6 @@ module.exports = function(grunt) {
       options: {
         specNameSuffix: 'spec.js', // also accepts an array
         helperNameSuffix: 'helper.js',
-        useHelpers: false,
         stopOnFailure: false,
         reporters: {
           console: {
@@ -54,7 +53,8 @@ module.exports = function(grunt) {
         },
         // spec files
         specs: [
-          '.tmp/test/spec/**'
+          '.tmp/test/spec/**/*.js',
+          '.tmp/test/integration/**/*.js'
         ],
         helpers: [
           '.tmp/test/helpers/**'
