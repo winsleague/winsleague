@@ -11,7 +11,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    'babel': {
+    clean: {
+      tmp: '.tmp'
+    },
+
+    babel: {
       options: {
         sourceMap: false
       },
@@ -33,8 +37,8 @@ module.exports = function(grunt) {
     jasmine_nodejs: {
       // task specific (default) options
       options: {
-        specNameSuffix: 'spec.js', // also accepts an array
-        helperNameSuffix: 'helper.js',
+        specNameSuffix: '.test.js', // also accepts an array
+        helperNameSuffix: '.helper.js',
         stopOnFailure: false,
         reporters: {
           console: {
@@ -53,7 +57,7 @@ module.exports = function(grunt) {
         },
         // spec files
         specs: [
-          '.tmp/test/spec/**/*.js',
+          '.tmp/test/unit/**/*.js',
           '.tmp/test/integration/**/*.js'
         ],
         helpers: [
@@ -73,7 +77,9 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('test', [
+    'clean:tmp',
     'babel',
-    'jasmine_nodejs'
+    'jasmine_nodejs',
+    'watch'
   ]);
 };
