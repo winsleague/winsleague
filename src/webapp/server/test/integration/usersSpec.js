@@ -3,8 +3,7 @@
 // import models from '../../models/index';
 // import user from '../../models/user';
 
-var request = require('supertest'),
-  express = require('express');
+var request = require('supertest');
 
 import app from '../../app';
 
@@ -16,7 +15,9 @@ describe('user creation page', function () {
 
   it('lists a user if there is one', function (done) {
     this.models.User.create({ username: 'johndoe' }).then(function () {
-      request(app).get('/users').expect(/johndoe/, done);
+      var ret = request(app).get('/users');
+      expect(ret).toMatch(/johndoe/);
+      done();
     });
   });
 });
