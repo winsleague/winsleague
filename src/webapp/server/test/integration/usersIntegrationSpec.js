@@ -1,8 +1,5 @@
 'use strict';
 
-// import models from '../../models/index';
-// import user from '../../models/user';
-
 var request = require('supertest');
 
 import app from '../../app';
