@@ -15,9 +15,16 @@ describe('user creation page', function () {
 
   it('lists a user if there is one', function (done) {
     this.models.User.create({ username: 'johndoe' }).then(function () {
-      var ret = request(app).get('/users');
-      expect(ret).toMatch(/johndoe/);
-      done();
+      request(app)
+        .get('/users')
+        .expect(/johndoe/)
+        .end(function(err, res) {
+          if (err) {
+            done.fail(err);
+          } else {
+            done();
+          }
+        });
     });
   });
 });
