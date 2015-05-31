@@ -17,7 +17,7 @@ describe('user creation page', function () {
     this.models.User.create({ username: 'johndoe' }).then(function () {
       request(app)
         .get('/users')
-        .expect(/johndoe/)
+        .expect(/"username":"johndoe"/)
         .end(function(err, res) {
           if (err) {
             done.fail(err);
