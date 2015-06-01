@@ -37,8 +37,8 @@ module.exports = function(grunt) {
     jasmine_nodejs: {
       // task specific (default) options
       options: {
-        specNameSuffix: '.test.js', // also accepts an array
-        helperNameSuffix: '.helper.js',
+        specNameSuffix: 'Test.js', // also accepts an array
+        helperNameSuffix: 'Helper.js',
         stopOnFailure: false,
         reporters: {
           console: {
@@ -57,8 +57,8 @@ module.exports = function(grunt) {
         },
         // spec files
         specs: [
-          '.tmp/test/unit/**/*.js',
-          '.tmp/test/integration/**/*.js'
+          '.tmp/test/unit/**/*Test.js',
+          '.tmp/test/integration/**/*Test.js'
         ],
         helpers: [
           '.tmp/test/helpers/**'
@@ -79,7 +79,11 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'clean:tmp',
     'babel',
-    'jasmine_nodejs',
+    'jasmine_nodejs'
+  ]);
+
+  grunt.registerTask('testWatch', [
+    'test',
     'watch'
   ]);
 };
