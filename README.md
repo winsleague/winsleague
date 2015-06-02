@@ -3,7 +3,7 @@
 ## Getting Started
 
 1. [Install Node](https://nodejs.org/download/)
-2. [Install Docker 1.6+ and optionally Boot2Docker](https://docs.docker.com/installation/)
+2. [Install Docker 1.6+](https://docs.docker.com/installation/) and optionally [Boot2Docker](https://docs.docker.com/installation/) or [Dinghy](https://github.com/codekitchen/dinghy)
 3. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
 4. Install package dependencies
 
@@ -24,10 +24,11 @@
     $ vim src/db/secrets.env
     ```
 
-7. If on Mac, start Boot2Docker
+7. If on Mac, start the Docker VM
 
     ```bash
-    $ boot2docker up
+    $ boot2docker up    # if using Boot2Docker
+    $ dinghy up         # if using Dinghy
     ```
 
 8. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
@@ -49,11 +50,12 @@ To also monitor client-side changes, open a separate terminal tab and run:
 
     $ (cd src/webapp/client; grunt serve)
 
-Ideally we'd run `grunt serve` in the container itself but due to slow boot2docker issues, it's faster to run it outside.
+Ideally we'd run `grunt serve` in the container itself but due to [slow Docker syncing issues](https://github.com/boot2docker/boot2docker/issues/593), it's faster to run it outside.
 
 Open a browser to view changes:
 
-    $ curl http://$(boot2docker ip)
+    $ curl http://$(boot2docker ip)        # if using Boot2Docker
+    $ curl http://leaguewinspool.docker    # if using Dinghy
     
 Run tests:
 
