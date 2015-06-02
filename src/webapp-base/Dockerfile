@@ -21,7 +21,6 @@ RUN npm install -g \
     generator-angular@0.11.1 \
     grunt-cli@0.1.13 \
     nodemon@1.3.7 \
-    phantomjs@1.9.7-14 \
     pm2@0.12.13 \
     yo@1.4.6
 
