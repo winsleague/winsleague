@@ -49,7 +49,9 @@ To also monitor client-side changes, open a separate terminal tab and run:
 
     $ (cd src/webapp/client; grunt serve)
 
-Ideally we'd run `grunt serve` in the container itself but due to slow boot2docker issues, it's faster to run it outside.
+Or, if you prefer to run this within the container, run:
+
+    $ (cd src; docker-compose run webapp grunt serve --gruntfile /webapp/client/Gruntfile.js)
 
 Open a browser to view changes:
 
