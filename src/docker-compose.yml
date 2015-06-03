@@ -13,7 +13,8 @@ webapp:
     - db
   volumes:
     - webapp:/webapp
-  command: npm test
+  environment:
+    - NODE_ENV=development
 
 db:
   extends:

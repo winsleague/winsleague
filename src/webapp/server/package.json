@@ -3,8 +3,9 @@
   "version": "0.4.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production pm2 start ./bin/www --no-daemon",
-    "test": "NODE_ENV=development nodemon ./bin/www"
+    "prestart": "npm install && (cd ../client; bower install --allow-root; npm install; grunt build --force)", // needed for https://github.com/brikis98/docker-osx-dev/issues/30
+    "start": "if [ \"$NODE_ENV\" = \"development\" ]; then nodemon ./bin/www; else pm2 start ./bin/www --no-daemon; fi",
+    "test": "grunt test"
   },
   "engines": {
     "node": "0.12.*"

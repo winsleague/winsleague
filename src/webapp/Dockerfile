@@ -25,4 +25,5 @@ RUN grunt build --force
 EXPOSE 3000
 
 WORKDIR /webapp/server
+ENV NODE_ENV production
 CMD ["npm", "start"]
