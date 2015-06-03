@@ -95,7 +95,7 @@ Now you are ready for development again.
 
 These are the same commands the integration tests on CircleCI run:
 
-    $ (cd src; docker-compose -f docker-production.yml up -d)
+    $ (cd src; docker-compose -f docker-production.yml up)
     $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
     $ curl http://$(boot2docker ip)
 
