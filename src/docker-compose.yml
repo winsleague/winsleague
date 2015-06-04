@@ -13,6 +13,8 @@ webapp:
     - db
   volumes:
     - webapp:/webapp
+  environment:
+    - NODE_ENV=development
 
 db:
   extends:
