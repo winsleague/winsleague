@@ -3,34 +3,36 @@
 ## Getting Started
 
 1. [Install Node](https://nodejs.org/download/)
-2. [Install Docker 1.6+ and optionally Boot2Docker](https://docs.docker.com/installation/)
-3. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
-4. Install package dependencies
+2. [Install Docker 1.6+](https://docs.docker.com/installation/)
+3. If on Mac, install [Boot2Docker](https://docs.docker.com/installation/) and optionally [docker-osx-dev](https://github.com/brikis98/docker-osx-dev) (faster syncing of local files to Docker VM)
+4. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
+5. Install package dependencies
 
     ```bash
     $ (cd scripts; ./install-packages)
     ```
 
-5. Install Git hooks so that dependencies are automatically installed when switching or merging branches
+6. Install Git hooks so that dependencies are automatically installed when switching or merging branches
 
     ```bash
     $ (cd scripts; ./install-git-hooks)
     ```
 
-6. Create secrets file and add passwords
+7. Create secrets file and add passwords
     
     ```bash
     $ cp src/db/secrets.example.env src/db/secrets.env
     $ vim src/db/secrets.env
     ```
 
-7. If on Mac, start Boot2Docker
+8. If on Mac, start Boot2Docker and docker-osx-dev
 
     ```bash
     $ boot2docker up
+    $ (cd src/webapp; docker-osx-dev -l DEBUG)
     ```
 
-8. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
+9. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
 
     ```bash
     $ (cd src; docker-compose build)
@@ -39,21 +41,21 @@
 
 ## Developing Locally
 
-Launch the entire development environment:
+1. Launch the entire development environment:
 
     $ (cd src; docker-compose up)
 
-This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
+    This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
 
-To also monitor client-side changes, open a separate terminal tab and run:
+2. To also monitor client-side changes, open a separate terminal tab and run:
 
     $ (cd src/webapp/client; grunt serve)
 
-Ideally we'd run `grunt serve` in the container itself but due to slow boot2docker issues, it's faster to run it outside. If you prefer to run this within the container, run:
+    Ideally we'd run `grunt serve` in the container itself but due to slow Boot2Docker issues, it's faster to run it outside. If you prefer to run this within the container, run:
 
     $ (cd src; docker-compose run webapp grunt serve --gruntfile /webapp/client/Gruntfile.js)
 
-Open a browser to view changes:
+3. Open a browser to view changes:
 
     $ curl http://$(boot2docker ip)
     
