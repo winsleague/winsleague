@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "//": "prestart is needed for https://github.com/brikis98/docker-osx-dev/issues/30",
-    "prestart": "npm install && (cd ../client; bower install --allow-root; npm install; grunt build --force)",
+    "prestart": "echo \"Installing package dependencies...\" && npm install && (cd ../client; bower install --allow-root; npm install; grunt build --force)",
     "start": "if [ \"$NODE_ENV\" = \"development\" ]; then nodemon ./bin/www; elif [ \"$NODE_ENV\" = \"production\" ]; then pm2 start ./bin/www --no-daemon; fi",
     "test": "grunt test"
   },
