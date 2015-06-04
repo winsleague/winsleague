@@ -50,7 +50,7 @@ module.exports = function(grunt) {
           }
         }
       },
-      your_target: {
+      test: {
         // target specific options
         options: {
           useHelpers: true
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'clean:tmp',
     'babel',
-    'jasmine_nodejs'
+    'jasmine_nodejs:test'
   ]);
 
   grunt.registerTask('testWatch', [
