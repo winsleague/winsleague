@@ -49,6 +49,7 @@ To also monitor client-side changes, open a separate terminal tab and run:
 
     $ (cd src/webapp/client; grunt serve)
 
+Ideally we'd run `grunt serve` in the container itself but due to slow boot2docker issues, it's faster to run it outside.
 Or, if you prefer to run this within the container, run:
 
     $ (cd src; docker-compose run webapp grunt serve --gruntfile /webapp/client/Gruntfile.js)
@@ -57,9 +58,19 @@ Open a browser to view changes:
 
     $ curl http://$(boot2docker ip)
     
-Run tests:
 
-    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+## Running Tests
+    
+If running isolated tests contained to the webapp only, run:
+
+    $ (cd src/webapp/client; grunt test)
+    $ (cd src/webapp/server; grunt test)
+    
+If running tests that depend on other services such as the database, run them within Docker:
+
+    $ (cd src; docker exec -it src_webapp_1 bash) 
+    $ (cd /webapp/client; grunt test --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd /webapp/server; grunt test --gruntfile /webapp/server/Gruntfile.js)
     
     
 ## Running Database Migrations
@@ -96,7 +107,8 @@ Now you are ready for development again.
 These are the same commands the integration tests on CircleCI run:
 
     $ (cd src; docker-compose -f docker-production.yml up)
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side
+    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test)    # server-side
     $ curl http://$(boot2docker ip)
 
 The difference is `docker-production.yml` won't link your local code to the container.
