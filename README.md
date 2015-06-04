@@ -77,16 +77,15 @@ If running isolated tests contained to the webapp only, run:
     
 If running tests that depend on other services such as the database, run them within Docker:
 
-    $ (cd src; docker exec -it src_webapp_1 bash) 
-    $ (cd /webapp/client; grunt test --gruntfile /webapp/client/Gruntfile.js)
-    $ (cd /webapp/server; grunt test --gruntfile /webapp/server/Gruntfile.js)
+    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/server/Gruntfile.js)
     
     
 ## Running Database Migrations
 
 Make sure the containers are running first.
 
-    $ docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate
+    $ (cd src; docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate)
     
 Sequelize automatically syncs the database when the webapp starts. However, this only creates and drops tables -- it doesn't run pending migrations. That is currently done manually but we should figure out how to automate them as part of the deploy process. 
     
