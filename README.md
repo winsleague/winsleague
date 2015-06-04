@@ -55,9 +55,19 @@ Open a browser to view changes:
 
     $ curl http://$(boot2docker ip)
     
-Run tests:
 
-    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+## Running Tests
+    
+If running isolated tests contained to the webapp only, run:
+
+    $ (cd src/webapp/client; grunt test)
+    $ (cd src/webapp/server; grunt test)
+    
+If running tests that depend on other services such as the database, run them within Docker:
+
+    $ (cd src; docker exec -it src_webapp_1 bash) 
+    $ (cd /webapp/client; grunt test --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd /webapp/server; grunt test --gruntfile /webapp/server/Gruntfile.js)
     
     
 ## Running Database Migrations
@@ -94,7 +104,8 @@ Now you are ready for development again.
 These are the same commands the integration tests on CircleCI run:
 
     $ (cd src; docker-compose -f docker-production.yml up -d)
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side
+    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test)    # server-side
     $ curl http://$(boot2docker ip)
 
 The difference is `docker-production.yml` won't link your local code to the container.
