@@ -430,13 +430,6 @@ module.exports = function (grunt) {
       }
     },
 
-    exec: {
-      // Publish metrics to CodeClimate
-      publishCodeCoverageMetrics: {
-        command: 'CODECLIMATE_REPO_TOKEN=' + process.env.CODECLIMATE_REPO_TOKEN + ' ./node_modules/.bin/codeclimate < log/coverage/report-lcov/lcov.info'
-      }
-    },
-
     // ES6 transpiler settings
     babel: {
       options: {
