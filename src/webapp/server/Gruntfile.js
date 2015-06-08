@@ -69,9 +69,12 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: [
+          '*.js',
+          'models/**/*.js',
+          'router/**/*.js',
           'test/**/*.js'
         ],
-        tasks: ['jasmine_nodejs']
+        tasks: ['test']
       }
     }
   });

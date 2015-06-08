@@ -2,6 +2,10 @@
 .tmp
 .sass-cache
 bower_components
-dist
+log
 node_modules
 .dockerignore
+
+# Don't list dist folder here because we want docker-osx-dev to sync the local dist folder with the VM.
+# This is needed when running `grunt serve` locally instead of in the container.
+# Unfortunately it causes rsync to complain sometimes but these errors can safely be ignored.

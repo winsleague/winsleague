@@ -3,34 +3,36 @@
 ## Getting Started
 
 1. [Install Node](https://nodejs.org/download/)
-2. [Install Docker 1.6+ and optionally Boot2Docker](https://docs.docker.com/installation/)
-3. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
-4. Install package dependencies
+2. [Install Docker 1.6+](https://docs.docker.com/installation/)
+3. If on Mac, install [Boot2Docker](https://docs.docker.com/installation/) and optionally [docker-osx-dev](https://github.com/brikis98/docker-osx-dev) (faster syncing of local files to Docker VM)
+4. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
+5. Install package dependencies
 
     ```bash
     $ (cd scripts; ./install-packages)
     ```
 
-5. Install Git hooks so that dependencies are automatically installed when switching or merging branches
+6. Install Git hooks so that dependencies are automatically installed when switching or merging branches
 
     ```bash
     $ (cd scripts; ./install-git-hooks)
     ```
 
-6. Create secrets file and add passwords
+7. Create secrets file and add passwords
     
     ```bash
     $ cp src/db/secrets.example.env src/db/secrets.env
     $ vim src/db/secrets.env
     ```
 
-7. If on Mac, start Boot2Docker
+8. If on Mac, start Boot2Docker and docker-osx-dev
 
     ```bash
     $ boot2docker up
+    $ (cd src/webapp; docker-osx-dev -l DEBUG)
     ```
 
-8. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
+9. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
 
     ```bash
     $ (cd src; docker-compose build)
@@ -39,21 +41,31 @@
 
 ## Developing Locally
 
-Launch the entire development environment:
+1. Launch the entire development environment:
 
+    ```bash
     $ (cd src; docker-compose up)
+    ```
 
-This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
+    This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
 
-To also monitor client-side changes, open a separate terminal tab and run:
+2. To also monitor client-side changes, open a separate terminal tab and run:
 
+    ```bash
     $ (cd src/webapp/client; grunt serve)
+    ```
 
-Ideally we'd run `grunt serve` in the container itself but due to slow boot2docker issues, it's faster to run it outside.
+    Ideally we'd run `grunt serve` in the container itself but due to slow Boot2Docker issues, it's faster to run it outside. If you prefer to run this within the container, run:
 
-Open a browser to view changes:
+    ```bash
+    $ (cd src; docker-compose run webapp grunt serve --gruntfile /webapp/client/Gruntfile.js)
+    ```
 
+3. Open a browser to view changes:
+
+    ```bash
     $ curl http://$(boot2docker ip)
+    ```
     
 
 ## Running Tests
@@ -65,16 +77,15 @@ If running isolated tests contained to the webapp only, run:
     
 If running tests that depend on other services such as the database, run them within Docker:
 
-    $ (cd src; docker exec -it src_webapp_1 bash) 
-    $ (cd /webapp/client; grunt test --gruntfile /webapp/client/Gruntfile.js)
-    $ (cd /webapp/server; grunt test --gruntfile /webapp/server/Gruntfile.js)
+    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/server/Gruntfile.js)
     
     
 ## Running Database Migrations
 
 Make sure the containers are running first.
 
-    $ docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate
+    $ (cd src; docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate)
     
 Sequelize automatically syncs the database when the webapp starts. However, this only creates and drops tables -- it doesn't run pending migrations. That is currently done manually but we should figure out how to automate them as part of the deploy process. 
     
@@ -103,7 +114,7 @@ Now you are ready for development again.
 
 These are the same commands the integration tests on CircleCI run:
 
-    $ (cd src; docker-compose -f docker-production.yml up -d)
+    $ (cd src; docker-compose -f docker-production.yml up)
     $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side
     $ (cd src; docker-compose -f docker-production.yml run webapp grunt test)    # server-side
     $ curl http://$(boot2docker ip)
