@@ -19,12 +19,13 @@ RUN gem install compass -v 1.0.3 --no-document
 
 # Install global packages
 RUN npm install -g \
-    bower@1.3.8 \
-    generator-angular@0.11.1 \
     grunt-cli@0.1.13 \
+    bower@1.3.8 \
+    yo@1.5.0 \
+    generator-karma@1.0.0 \
+    generator-angular@0.14.0 \
     nodemon@1.3.7 \
-    pm2@0.12.13 \
-    yo@1.4.6
+    pm2@0.12.13
 
 # Adjust permissions so we can run yo within Docker container (https://github.com/yeoman/yeoman.io/issues/282)
 RUN mkdir /root/.config
