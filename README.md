@@ -85,7 +85,7 @@ Sequelize automatically syncs the database when the webapp starts. However, this
 
 ## Adding or Removing Node Packages
 
-When changing either the client or server's `package.json`, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions. Also update the `package.json` version number.
+When changing either the client or server's `package.json`, update the version number and then run `npm shrinkwrap --dev` in `src/webapp/client` and `src/webapp/server`. This ensures everyone is using the exact same package versions.
 
 
 ## Rebuilding Docker Images
