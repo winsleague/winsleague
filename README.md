@@ -4,8 +4,8 @@
 
 1. [Install Node](https://nodejs.org/download/)
 2. [Install Docker 1.6+](https://docs.docker.com/installation/)
-3. If on Mac, install [Boot2Docker](https://docs.docker.com/installation/) and optionally [docker-osx-dev](https://github.com/brikis98/docker-osx-dev) (faster syncing of local files to Docker VM)
-4. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
+3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
+4. [Install Docker Compose 1.3+](https://docs.docker.com/compose/install/)
 5. Install package dependencies
 
     ```bash
@@ -25,19 +25,12 @@
     $ vim src/db/secrets.env
     ```
 
-8. If on Mac, start Boot2Docker and docker-osx-dev
+8. If on Mac, create a VM with Dinghy
 
     ```bash
-    $ boot2docker up
-    $ (cd src/webapp; docker-osx-dev -l DEBUG)
+    $ dinghy create --provider virtualbox
     ```
 
-9. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
-
-    ```bash
-    $ (cd src; docker-compose build)
-    ```   
-    
 
 ## Developing Locally
 
@@ -64,7 +57,7 @@
 3. Open a browser to view changes:
 
     ```bash
-    $ curl http://$(boot2docker ip)
+    $ curl http://$(dinghy ip)
     ```
     
 
@@ -117,9 +110,9 @@ These are the same commands the integration tests on CircleCI run:
     $ (cd src; docker-compose -f docker-production.yml up)
     $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side
     $ (cd src; docker-compose -f docker-production.yml run webapp grunt test)    # server-side
-    $ curl http://$(boot2docker ip)
+    $ curl http://$(dinghy ip)
 
-The difference is `docker-production.yml` won't link your local code to the container.
+The difference is `docker-production.yml` won't sync your local code with the container.
 
 
 ## Deploying to Production
