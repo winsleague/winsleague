@@ -7,11 +7,11 @@ FROM node:5.0.0-slim
 RUN apt-get update && apt-get install -y \
     build-essential=11.7 \
     git=1:2.1.4-2.1 \
-    ruby-full=1:2.1.5 \
+    ruby-full=1:2.1.5+deb8u1 \
     chrpath=0.16-1 \
-    libssl-dev=1.0.1k-3 \
+    libssl-dev=1.0.1k-3+deb8u1 \
     libxft-dev=2.3.2-1 \
-    libfreetype6-dev=2.5.2-3 \
+    libfreetype6-dev=2.5.2-3+deb8u1 \
     libfontconfig1-dev=2.11.0-6.3
 RUN gem install compass -v 1.0.3 --no-document
 
