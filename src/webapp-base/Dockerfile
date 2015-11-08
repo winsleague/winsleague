@@ -4,6 +4,7 @@ FROM node:5.0.0-slim
 
 # Install dependencies
 # This includes PhantomJS dependencies (https://github.com/karma-runner/karma-phantomjs-launcher/issues/31)
+# Python required for npm and npm-gyp
 RUN apt-get update && apt-get install -y \
     build-essential=11.7 \
     git=1:2.1.4-2.1 \
@@ -12,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libssl-dev=1.0.1k-3+deb8u1 \
     libxft-dev=2.3.2-1 \
     libfreetype6-dev=2.5.2-3+deb8u1 \
-    libfontconfig1-dev=2.11.0-6.3
+    libfontconfig1-dev=2.11.0-6.3 \
+    python=2.7.9-1
 RUN gem install compass -v 1.0.3 --no-document
 
 # Install global packages
