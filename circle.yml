@@ -38,8 +38,8 @@ test:
     # Run server-side tests.
     - (cd src; docker-compose -f docker-production.yml run webapp grunt test)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
-    - npm install -g codeclimate-test-reporter
-    - (cd src/webapp/client; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate < log/coverage/report-lcov/lcov.info)
+    - npm install -g codeclimate-test-reporter@0.1.1
+    - (cd src/webapp/client; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < log/coverage/report-lcov/lcov.info)
 
 deployment:
   hub:
