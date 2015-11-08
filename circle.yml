@@ -12,6 +12,7 @@ dependencies:
 
   override:
     - docker info
+    - docker --version
     - sudo pip install -U docker-compose==1.4.2
     - cp src/db/secrets.example.env src/db/secrets.env
     # If there's a base image cached, load it.
