@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "0.6.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "//": "prestart is needed when developing locally (https://github.com/brikis98/docker-osx-dev/issues/30)",
@@ -19,8 +19,7 @@
     "express": "~4.12.2",
     "morgan": "~1.5.1",
     "mysql": "^2.6.2",
-    "sequelize": "^2.0.6",
-    "sequelize-cli": "^1.7.0",
+    "sequelize": "^3.13.0",
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
@@ -31,6 +30,7 @@
     "grunt-jasmine-nodejs": "^1.4.0",
     "jasmine": "^2.3.1",
     "load-grunt-tasks": "^3.1.0",
+    "sequelize-cli": "^1.7.0",
     "supertest": "^1.0.1",
     "time-grunt": "^1.0.0"
   }
