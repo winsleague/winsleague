@@ -1,6 +1,5 @@
 {
   "node": true,
-  "browser": true,
   "esnext": true,
   "bitwise": true,
   "camelcase": true,
@@ -8,6 +7,7 @@
   "eqeqeq": true,
   "immed": true,
   "indent": 2,
+  "jasmine": true,
   "latedef": true,
   "newcap": true,
   "noarg": true,

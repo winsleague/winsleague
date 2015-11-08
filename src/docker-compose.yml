@@ -16,6 +16,7 @@ webapp:
   environment:
     - VIRTUAL_HOST=leaguewinspool.docker # for https://github.com/codekitchen/dinghy#optional-http-proxy
   command: npm test
+    - NODE_ENV=development
 
 db:
   extends:
