@@ -1,6 +1,6 @@
 # This is the base image for our webapp. It should rarely change.
 
-FROM node:5.0.0-slim
+FROM node:4.2.2-slim
 
 # Install dependencies
 # This includes PhantomJS dependencies (https://github.com/karma-runner/karma-phantomjs-launcher/issues/31)
