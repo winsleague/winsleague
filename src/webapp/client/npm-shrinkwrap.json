@@ -4,7 +4,7 @@
   "dependencies": {
     "jasmine-core": {
       "version": "2.3.4",
-      "from": "jasmine-core@*",
+      "from": "https://registry.npmjs.org/jasmine-core/-/jasmine-core-2.3.4.tgz",
       "resolved": "https://registry.npmjs.org/jasmine-core/-/jasmine-core-2.3.4.tgz"
     }
   }

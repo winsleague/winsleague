@@ -3,7 +3,7 @@
   "version": "0.4.1",
   "private": true,
   "scripts": {
-    "test": "grunt test"
+    "test": "echo \"Node version: $(node -v)\"; grunt test"
   },
   "engines": {
     "node": "4.2.*"
