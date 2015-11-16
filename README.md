@@ -2,11 +2,11 @@
 
 ## Getting Started
 
-1. [Install Node](https://nodejs.org/download/)
+1. [Install Node 4.2.2](https://nodejs.org/download/)
 2. [Install Docker 1.6+](https://docs.docker.com/installation/)
 3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
 4. [Install Docker Compose 1.3+](https://docs.docker.com/compose/install/)
-5. Install package dependencies
+5. Install package dependencies for development
 
     ```bash
     $ (cd scripts; ./install-packages)
@@ -29,6 +29,7 @@
 
     ```bash
     $ dinghy create --provider virtualbox
+    $ dinghy status
     ```
 
 

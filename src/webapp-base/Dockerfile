@@ -15,9 +15,17 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev=2.5.2-3+deb8u1 \
     libfontconfig1-dev=2.11.0-6.3 \
     python=2.7.9-1 \
- && apt-get clean \
+ && apt-get autoremove -y \
+ && apt-get clean all \
  && rm -rf /var/lib/apt/lists/*
 RUN gem install compass -v 1.0.3 --no-document
+
+# Install PhantomJS
+# Do this here to make sure we install the Linux flavor
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 \
+ && tar xvjf phantomjs-1.9.8-linux-x86_64.tar.bz2 \
+ && mv phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/local/bin/ \
+ && rm -f phantomjs-1.9.8-linux-x86_64.tar.bz2 && rm -rf phantomjs-1.9.8-linux-x86_64/bin/phantomjs
 
 # Install global packages
 RUN npm install -g \
