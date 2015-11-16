@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
     libxft-dev=2.3.2-1 \
     libfreetype6-dev=2.5.2-3+deb8u1 \
     libfontconfig1-dev=2.11.0-6.3 \
-    python=2.7.9-1
+    python=2.7.9-1 \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 RUN gem install compass -v 1.0.3 --no-document
 
 # Install global packages
