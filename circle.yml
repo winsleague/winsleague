@@ -12,6 +12,7 @@ dependencies:
 
   override:
     - docker info
+    - docker --version
     - sudo pip install -U docker-compose==1.4.2
     - cp src/db/secrets.example.env src/db/secrets.env
     # If there's a base image cached, load it.
@@ -35,8 +36,8 @@ test:
   override:
     # Run client-side tests. We need to manually specify the gruntfile because the container's working directory is /webapp/server
     - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
-    # Run server-side tests.
-    - (cd src; docker-compose -f docker-production.yml run webapp grunt test)
+    # Run server-side tests. We manually specify the gruntfile just to be explicit.
+    - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/server/Gruntfile.js)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     - npm install -g codeclimate-test-reporter@0.1.1
     - (cd src/webapp/client; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < log/coverage/report-lcov/lcov.info)

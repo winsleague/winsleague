@@ -2,11 +2,11 @@
 
 ## Getting Started
 
-1. [Install Node](https://nodejs.org/download/)
+1. [Install Node 4.2.2](https://nodejs.org/download/)
 2. [Install Docker 1.6+](https://docs.docker.com/installation/)
 3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
 4. [Install Docker Compose 1.3+](https://docs.docker.com/compose/install/)
-5. Install package dependencies
+5. Install package dependencies for development
 
     ```bash
     $ (cd scripts; ./install-packages)
@@ -29,6 +29,7 @@
 
     ```bash
     $ dinghy create --provider virtualbox
+    $ dinghy status
     ```
 
 
@@ -85,7 +86,7 @@ Sequelize automatically syncs the database when the webapp starts. However, this
 
 ## Adding or Removing Node Packages
 
-When changing either the client or server's `package.json`, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions. Also update the `package.json` version number.
+When changing either the client or server's `package.json`, update the version number and then run `npm shrinkwrap --dev` in `src/webapp/client` and `src/webapp/server`. This ensures everyone is using the exact same package versions.
 
 
 ## Rebuilding Docker Images
