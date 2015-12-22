@@ -52,15 +52,14 @@
 
 ## Running Tests
     
-If running isolated tests contained to the webapp only, run:
-
-    $ (cd src/webapp; npm test)
-
-If running tests that depend on other services such as the database, run them within Docker:
-
     $ (cd src; docker-compose run webapp npm test)
 
     
+## Interactive Development Console
+
+    $ (cd src; docker-compose run webapp node_modules/.bin/sails console)
+
+
 ## Running Database Migrations
 
 Make sure the containers are running first.
