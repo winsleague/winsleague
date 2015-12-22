@@ -25,9 +25,18 @@
     "sails-hook-autoreload": "^0.12.0"
   },
   "scripts": {
+    "//": "prestart is needed when developing locally (https://github.com/brikis98/docker-osx-dev/issues/30)",
+    "prestart": "echo \"Node version: $(node -v)\"; if [ \"$NODE_ENV\" = \"development\" ]; then echo \"Installing package dependencies...\" && (cd /webapp; npm prune; npm install) && (cd /webapp/assets; bower install --allow-root); fi",
+    "start": "if [ \"$NODE_ENV\" = \"development\" ]; then node app.js; elif [ \"$NODE_ENV\" = \"production\" ]; then pm2 start app.js -x -- --prod --no-daemon; fi",
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "test": "echo \"Node version: $(node -v)\"; grunt test"
   },
   "main": "app.js",
-  "license": "GPL"
+  "license": "GPL",
+  "devDependencies": {
+    "assert": "^1.3.0",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2"
+  }
 }
