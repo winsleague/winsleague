@@ -1,19 +1,23 @@
 #!/bin/sh
 
-echo "Installing PhantomJS"
+if [ "${PWD##*/}" != "scripts" ]
+then
+  echo "Please make sure your current working directory is the scripts folder!"
+  exit
+fi
+
+
+echo "Installing PhantomJS..."
 brew update
 brew install phantomjs198
 
-echo "Installing bower"
-npm install -g bower@1.3.8
+echo "Installing bower..."
+npm install -g bower@1.7.0
 
-echo "Installing webapp client bower packages"
-(cd ../src/webapp/client; bower install; bower prune)
+echo "Installing webapp bower packages..."
+(cd ../src/webapp; bower install; bower prune)
 
-echo "Installing webapp client npm packages"
-(cd ../src/webapp/client; npm install; npm prune)
-
-echo "Installing webapp server npm packages"
-(cd ../src/webapp/server; npm install; npm prune)
+echo "Installing webapp npm packages..."
+(cd ../src/webapp; npm install; npm prune)
 
 echo "Done installing development packages"
