@@ -27,14 +27,16 @@ RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x
  && mv phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/local/bin/ \
  && rm -f phantomjs-1.9.8-linux-x86_64.tar.bz2 && rm -rf phantomjs-1.9.8-linux-x86_64/bin/phantomjs
 
+# Upgrade npm
+RUN npm install -g npm@3.5.2
+
 # Install global packages
 RUN npm install -g \
     grunt-cli@0.1.13 \
-    bower@1.3.8 \
+    bower@1.7.1 \
     yo@1.5.0 \
     generator-karma@1.0.0 \
-    generator-angular@0.14.0 \
-    nodemon@1.3.7 \
+    generator-angular@0.15.1 \
     pm2@0.12.13
 
 # Adjust permissions so we can run yo within Docker container (https://github.com/yeoman/yeoman.io/issues/282)

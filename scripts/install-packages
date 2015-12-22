@@ -11,11 +11,14 @@ echo "Installing PhantomJS..."
 brew update
 brew install phantomjs198
 
+echo "Install npm..."
+sudo npm install -g npm@3.5.2
+
 echo "Installing bower..."
-npm install -g bower@1.7.0
+npm install -g bower@1.7.1
 
 echo "Installing webapp bower packages..."
-(cd ../src/webapp; bower install; bower prune)
+(cd ../src/webapp/assets; bower install; bower prune)
 
 echo "Installing webapp npm packages..."
 (cd ../src/webapp; npm install; npm prune)
