@@ -54,14 +54,12 @@
     
 If running isolated tests contained to the webapp only, run:
 
-    $ (cd src/webapp/client; grunt test)
-    $ (cd src/webapp/server; grunt test)
-    
+    $ (cd src/webapp; npm test)
+
 If running tests that depend on other services such as the database, run them within Docker:
 
-    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
-    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/server/Gruntfile.js)
-    
+    $ (cd src; docker-compose run webapp npm test)
+
     
 ## Running Database Migrations
 
@@ -97,8 +95,7 @@ Now you are ready for development again.
 These are the same commands the integration tests on CircleCI run:
 
     $ (cd src; docker-compose -f docker-production.yml up)
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test)    # server-side
+    $ (cd src; docker-compose -f docker-production.yml run webapp npm test)
     $ curl http://$(dinghy ip)
 
 The difference is `docker-production.yml` won't sync your local code with the container.
