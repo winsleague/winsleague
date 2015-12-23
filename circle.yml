@@ -34,6 +34,8 @@ dependencies:
 
 test:
   override:
+    # Run database migrations
+    - (cd src; docker-compose -f docker-production.yml run -e LOG_LEVEL=debug webapp grunt db:migrate:up)
     # Run tests
     - (cd src; docker-compose -f docker-production.yml run webapp npm test)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.

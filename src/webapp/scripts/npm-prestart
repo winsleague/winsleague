@@ -7,9 +7,3 @@ then
   (cd /webapp; npm prune; npm install)
   (cd /webapp/assets; bower install --allow-root)
 fi
-
-# In prod, run migrations
-if [ "$NODE_ENV" = "production" ]
-then
-  (cd /webapp; LOG_LEVEL=debug grunt db:migrate:up)
-fi
