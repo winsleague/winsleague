@@ -21,7 +21,9 @@ exports.up = function(db) {
     email: 'string',
     password: 'string',
     firstName: 'string',
-    lastName: 'string'
+    lastName: 'string',
+    createdAt: 'datetime',
+    updatedAt: 'datetime'
   });
   return null;
 };
