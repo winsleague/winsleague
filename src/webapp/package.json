@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.1.0",
   "description": "League Wins Pool Sails application",
-  "keywords": [],
   "dependencies": {
     "db-migrate": "^0.10.0-beta.6",
     "db-migrate-mysql": "^1.1.3",
@@ -34,7 +33,6 @@
     "test": "echo \"Node version: $(node -v)\"; grunt test"
   },
   "main": "app.js",
-  "license": "GPL",
   "devDependencies": {
     "assert": "^1.3.0",
     "grunt-mocha-test": "^0.12.7",
