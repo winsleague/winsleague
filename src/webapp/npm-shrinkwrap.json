@@ -1730,9 +1730,16 @@
       "resolved": "https://registry.npmjs.org/growl/-/growl-1.8.1.tgz"
     },
     "grunt": {
-      "version": "0.4.2",
-      "from": "grunt@0.4.2",
-      "resolved": "https://registry.npmjs.org/grunt/-/grunt-0.4.2.tgz"
+      "version": "0.4.5",
+      "from": "grunt@0.4.5",
+      "resolved": "https://registry.npmjs.org/grunt/-/grunt-0.4.5.tgz",
+      "dependencies": {
+        "rimraf": {
+          "version": "2.2.8",
+          "from": "rimraf@>=2.2.8 <2.3.0",
+          "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz"
+        }
+      }
     },
     "grunt-cli": {
       "version": "0.1.13",
@@ -1821,6 +1828,45 @@
       "version": "0.5.3",
       "from": "grunt-contrib-watch@>=0.5.3 <0.6.0",
       "resolved": "https://registry.npmjs.org/grunt-contrib-watch/-/grunt-contrib-watch-0.5.3.tgz"
+    },
+    "grunt-legacy-log": {
+      "version": "0.1.2",
+      "from": "grunt-legacy-log@>=0.1.0 <0.2.0",
+      "resolved": "https://registry.npmjs.org/grunt-legacy-log/-/grunt-legacy-log-0.1.2.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "2.4.2",
+          "from": "lodash@>=2.4.1 <2.5.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
+        },
+        "underscore.string": {
+          "version": "2.3.3",
+          "from": "underscore.string@>=2.3.3 <2.4.0",
+          "resolved": "https://registry.npmjs.org/underscore.string/-/underscore.string-2.3.3.tgz"
+        }
+      }
+    },
+    "grunt-legacy-log-utils": {
+      "version": "0.1.1",
+      "from": "grunt-legacy-log-utils@>=0.1.1 <0.2.0",
+      "resolved": "https://registry.npmjs.org/grunt-legacy-log-utils/-/grunt-legacy-log-utils-0.1.1.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "2.4.2",
+          "from": "lodash@>=2.4.1 <2.5.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
+        },
+        "underscore.string": {
+          "version": "2.3.3",
+          "from": "underscore.string@>=2.3.3 <2.4.0",
+          "resolved": "https://registry.npmjs.org/underscore.string/-/underscore.string-2.3.3.tgz"
+        }
+      }
+    },
+    "grunt-legacy-util": {
+      "version": "0.2.0",
+      "from": "grunt-legacy-util@>=0.2.0 <0.3.0",
+      "resolved": "https://registry.npmjs.org/grunt-legacy-util/-/grunt-legacy-util-0.2.0.tgz"
     },
     "grunt-lib-contrib": {
       "version": "0.7.1",
@@ -2728,6 +2774,36 @@
           "version": "3.2.11",
           "from": "glob@>=3.2.9 <3.3.0",
           "resolved": "https://registry.npmjs.org/glob/-/glob-3.2.11.tgz"
+        },
+        "grunt": {
+          "version": "0.4.2",
+          "from": "grunt@0.4.2",
+          "resolved": "https://registry.npmjs.org/grunt/-/grunt-0.4.2.tgz",
+          "dependencies": {
+            "async": {
+              "version": "0.1.22",
+              "from": "async@>=0.1.22 <0.2.0"
+            },
+            "glob": {
+              "version": "3.1.21",
+              "from": "glob@>=3.1.21 <3.2.0",
+              "resolved": "https://registry.npmjs.org/glob/-/glob-3.1.21.tgz"
+            },
+            "inherits": {
+              "version": "1.0.2",
+              "from": "inherits@>=1.0.0 <2.0.0",
+              "resolved": "https://registry.npmjs.org/inherits/-/inherits-1.0.2.tgz"
+            },
+            "lodash": {
+              "version": "0.9.2",
+              "from": "lodash@>=0.9.2 <0.10.0"
+            },
+            "minimatch": {
+              "version": "0.2.14",
+              "from": "minimatch@>=0.2.12 <0.3.0",
+              "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-0.2.14.tgz"
+            }
+          }
         },
         "grunt-sync": {
           "version": "0.0.8",
