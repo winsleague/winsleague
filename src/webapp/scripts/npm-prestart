@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# prestart is needed when developing locally in Docker because of https://github.com/brikis98/docker-osx-dev/issues/30
+
+if [ "$NODE_ENV" = "development" ] && [ ! -d node_modules ]
+then
+  echo "Installing package dependencies..."
+  (cd /webapp; npm prune; npm install)
+  (cd /webapp/assets; bower install --allow-root)
+fi

@@ -28,9 +28,8 @@
     "sails-mysql": "^0.11.2"
   },
   "scripts": {
-    "//": "prestart is needed when developing locally (https://github.com/brikis98/docker-osx-dev/issues/30)",
-    "prestart": "echo \"Node version: $(node -v)\"; if [ \"$NODE_ENV\" = \"development\" ]; then echo \"Installing package dependencies...\" && (cd /webapp; npm prune; npm install) && (cd /webapp/assets; bower install --allow-root); fi",
-    "start": "if [ \"$NODE_ENV\" = \"development\" ]; then node app.js; elif [ \"$NODE_ENV\" = \"production\" ]; then pm2 start app.js -x -- --prod --no-daemon; fi",
+    "prestart": "sh scripts/npm-prestart",
+    "start": "sh scripts/npm-start",
     "debug": "node debug app.js",
     "test": "echo \"Node version: $(node -v)\"; grunt test"
   },
