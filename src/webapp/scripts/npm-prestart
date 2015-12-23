@@ -1,10 +1,15 @@
 #!/bin/sh
 
-# prestart is needed when developing locally in Docker because of https://github.com/brikis98/docker-osx-dev/issues/30
-
+# In dev, make sure node_modules are installed (https://github.com/brikis98/docker-osx-dev/issues/30)
 if [ "$NODE_ENV" = "development" ] && [ ! -d node_modules ]
 then
   echo "Installing package dependencies..."
   (cd /webapp; npm prune; npm install)
   (cd /webapp/assets; bower install --allow-root)
+fi
+
+# In prod, run migrations
+if [ "$NODE_ENV" = "production" ]
+then
+  (cd /webapp; LOG_LEVEL=debug grunt db:migrate:up)
 fi
