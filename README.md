@@ -107,9 +107,9 @@ Now you are ready for development again.
 
 ## Debugging commands
 
-Add `-e LOG_LEVEL=debug` to run command:
+Add `-e LOG_LEVEL=verbose` to run command:
 
-    $ (cd src; docker-compose run -e LOG_LEVEL=debug webapp <command>)
+    $ (cd src; docker-compose run -e LOG_LEVEL=verbose webapp <command>)
 
 
 ## Running a Staging Environment
