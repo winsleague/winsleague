@@ -1,5 +1,4 @@
 # This is the base image for our webapp. It should rarely change.
-
 FROM node:4.2.2-slim
 
 # Install dependencies
@@ -41,19 +40,18 @@ RUN npm install -g \
 
 # Use non-root user (needed because of https://github.com/codekitchen/dinghy/issues/17)
 # From my reading, this seems like a good practice to do regardless
-RUN useradd -ms /bin/sh node
-# copy the nice dotfiles that dockerfile/ubuntu gives us:
+RUN useradd -mr node
+
+# Copy the nice dotfiles that root has. Not sure whether this is needed but https://gist.github.com/thom-nic/5e561e800cbc0f71555c had it
 RUN cd && cp -R .bashrc .profile /home/node
 
-# Take ownership of key folders
+# Take ownership of key folders so npm install and bower install have write access
 # Not sure why we also have to chown assets and .tmp when we've already done it for webapp
-RUN chown -R node:node /home/node \
- && mkdir /webapp \
- && chown -R node:node /webapp \
+RUN mkdir /webapp \
  && mkdir /webapp/assets \
- && chown -R node:node /webapp/assets \
  && mkdir /webapp/.tmp \
- && chown -R node:node /webapp/.tmp
+ && chown -R node:node /webapp
 
+# Run all commands after this point as node user
 USER node
 ENV HOME /home/node

@@ -3,9 +3,9 @@
 ## Getting Started
 
 1. [Install Node 4.2.2](https://nodejs.org/download/)
-2. [Install Docker 1.6+](https://docs.docker.com/installation/)
+2. [Install Docker 1.8.2](https://docs.docker.com/installation/). Make sure this is the same version as CircleCI.
 3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
-4. [Install Docker Compose 1.3+](https://docs.docker.com/compose/install/)
+4. [Install Docker Compose 1.5.2](https://docs.docker.com/compose/install/).
 5. Install package dependencies for development
 
     ```bash

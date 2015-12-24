@@ -10,5 +10,5 @@ fi
 if [ "$NODE_ENV" = "development" ] && [ ! -d assets/bower_components ]
 then
   echo "Installing bower packages..."
-  (cd /webapp/assets; bower install --allow-root)
+  (cd /webapp/assets; bower prune; bower install)
 fi

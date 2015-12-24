@@ -1,4 +1,4 @@
-FROM leaguewinspool/webapp-base:1
+FROM leaguewinspool/webapp-base:3
 
 # Install node packages
 COPY package.json /webapp/
@@ -9,11 +9,18 @@ RUN npm install
 # Install bower packages
 COPY assets/bower.json /webapp/assets/
 WORKDIR /webapp/assets
-RUN bower install --allow-root # Not sure why allow-root is needed when we set USER to node in webapp-base, but if we remove it, the install fails
+RUN bower install
 
 # Add app files to container
 # Everything above this line should be cached in most cases
 COPY . /webapp
+
+# Sails.js requires active user to write to layout.ejs (https://www.npmjs.com/package/grunt-sails-linker)
+# It'd be ideal if the COPY command above automatically gave write access to the node user but I'm not sure why that isn't happening.
+# So we'll just force it here:
+USER root
+RUN chown -R node:node /webapp/views/layout.ejs
+USER node
 
 EXPOSE 3000
 
