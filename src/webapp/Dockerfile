@@ -1,14 +1,15 @@
 FROM leaguewinspool/webapp-base:latest
 
-# Install packages
+# Install node packages
 COPY package.json /webapp/
 COPY npm-shrinkwrap.json /webapp/
 WORKDIR /webapp
 RUN npm install
 
+# Install bower packages
 COPY assets/bower.json /webapp/assets/
 WORKDIR /webapp/assets
-RUN bower install --allow-root # --allow-root allows bower to run as sudo, which is how Docker runs it
+RUN bower install
 
 # Add app files to container
 # Everything above this line should be cached in most cases

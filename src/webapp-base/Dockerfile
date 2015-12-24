@@ -39,8 +39,18 @@ RUN npm install -g \
     generator-angular@0.15.1 \
     pm2@0.12.13
 
-# Adjust permissions so we can run yo within Docker container (https://github.com/yeoman/yeoman.io/issues/282)
-RUN mkdir /root/.config
-RUN mkdir /root/.config/configstore
-RUN chmod g+rwx /root /root/.config /root/.config/configstore
+# Use non-root user (needed because of https://github.com/codekitchen/dinghy/issues/17)
+# From my reading, this seems like a good practice to do regardless
+RUN useradd -ms /bin/sh node
+# copy the nice dotfiles that dockerfile/ubuntu gives us:
+RUN cd && cp -R .bashrc .profile /home/node
 
+# Take ownership of key folders
+RUN chown -R node:node /home/node \
+ && mkdir /webapp \
+ && chown -R node:node /webapp \
+ && mkdir /webapp/assets \
+ && chown -R node:node /webapp/assets
+
+USER node
+ENV HOME /home/node

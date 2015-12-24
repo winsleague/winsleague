@@ -43,7 +43,13 @@
 
     This links your local `src/webapp` folder to the container so that changes automatically reload the server.
 
-2. Open a browser to view changes:
+2. Run any outstanding database migrations:
+
+    ```bash
+    $ (cd src; docker-compose run webapp grunt db:migrate:up)
+    ```
+
+3. Open a browser to view changes:
 
     ```bash
     $ curl http://$(dinghy ip)
@@ -51,25 +57,34 @@
     
 
 ## Running Tests
-    
+
+    ```bash
     $ (cd src; docker-compose run webapp npm test)
+    ```
 
     
 ## Interactive Development Console
 
+    ```bash
     $ (cd src; docker-compose run webapp node_modules/.bin/sails console)
+    ```
 
 
 ## Running Database Migrations
 
-    $ (cd src; docker-compose run -e LOG_LEVEL=debug webapp grunt db:migrate)
+    ```bash
+    $ (cd src; docker-compose run webapp grunt db:migrate)
+    ```
 
-    Documentation on writing migrations can be found [here](http://umigrate.readthedocs.org/projects/db-migrate/en/latest/)
+Documentation on writing migrations can be found [here](http://umigrate.readthedocs.org/projects/db-migrate/en/latest/)
     
 
 ## Adding or Removing Node Packages
 
-When changing the `package.json`, update the version number and then run `npm shrinkwrap --dev` in `src/webapp`. This ensures everyone is using the exact same package versions.
+After updating `package.json`:
+
+    $ (cd src; docker-compose run webapp npm install)
+    $ (cd src; docker-compose run webapp npm shrinkwrap --dev) # install packages in container
 
 
 ## Rebuilding Docker Images
@@ -85,6 +100,13 @@ When changing any of the other Dockerfiles, rebuild the images by running:
     $ (cd src; docker-compose build)
 
 Now you are ready for development again.
+
+
+## Debugging commands
+
+Add `-e LOG_LEVEL=debug` to run command:
+
+    $ (cd src; docker-compose run -e LOG_LEVEL=debug webapp <command>)
 
 
 ## Running a Staging Environment
