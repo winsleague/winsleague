@@ -83,8 +83,9 @@ Documentation on writing migrations can be found [here](http://umigrate.readthed
 
 After updating `package.json`:
 
-    $ (cd src; docker-compose run webapp npm install)
+    $ (cd src; docker-compose run webapp npm install <package-name> --save)
     $ (cd src; docker-compose run webapp npm shrinkwrap --dev) # install packages in container
+    $ (cd src; docker-compose up) # restart webapp
 
 
 ## Rebuilding Docker Images

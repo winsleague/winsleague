@@ -27,13 +27,14 @@
     "sails": "~0.11.3",
     "sails-db-migrate": "^1.2.0",
     "sails-hook-autoreload": "^0.12.0",
-    "sails-mysql": "^0.11.2"
+    "sails-mysql": "^0.11.2",
+    "supertest": "^1.1.0"
   },
   "scripts": {
     "prestart": "sh scripts/npm-prestart",
     "start": "sh scripts/npm-start",
     "debug": "node debug app.js",
-    "test": "echo \"Node version: $(node -v)\"; grunt test"
+    "test": "grunt test"
   },
   "main": "app.js",
   "devDependencies": {

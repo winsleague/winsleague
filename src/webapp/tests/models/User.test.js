@@ -7,7 +7,6 @@ describe('The User Model', function () {
       User.destroy({})
       .then(function() {
         User.create({
-          username: 'username',
           email: 'user@domain.com',
           password: 'password'
         })
