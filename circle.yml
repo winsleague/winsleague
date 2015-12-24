@@ -13,7 +13,7 @@ dependencies:
   override:
     - docker info
     - docker --version
-    - sudo pip install -U docker-compose==1.4.2
+    - sudo pip install -U docker-compose==1.5.4
     - cp src/db/secrets.example.env src/db/secrets.env
     # If there's a base image cached, load it.
     # A click on CircleCI's "Clear Cache" will make sure we start with a clean slate.
