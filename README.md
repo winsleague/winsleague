@@ -93,8 +93,10 @@ After updating `package.json`:
 The `webapp-base` image (`src/webapp-base/Dockerfile`) is used to manage core dependencies such as node and its global packages. Although changes should be rare, when doing so, rebuild and publish the image by running:
 
     $ cd src/webapp-base
-    $ docker build -t leaguewinspool/webapp-base .
-    $ docker push leaguewinspool/webapp-base
+    $ docker build -t leaguewinspool/webapp-base:<new version number> .
+    $ docker push leaguewinspool/webapp-base:<new version number>
+
+Update `src/webapp/Dockerfile` and `circleci.yml` to use the new webapp-base version number
 
 When changing any of the other Dockerfiles, rebuild the images by running:
 

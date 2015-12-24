@@ -20,12 +20,12 @@ dependencies:
     - mkdir -p ~/docker
     - if [[ -e ~/docker/images.tar ]]; then docker load -i ~/docker/images.tar; fi
     # If cache doesn't exist, pull the base images so we can easily save them later
-    - if [[ ! -e ~/docker/images.tar ]]; then docker pull leaguewinspool/webapp-base:latest; fi
+    - if [[ ! -e ~/docker/images.tar ]]; then docker pull leaguewinspool/webapp-base:1; fi
     - if [[ ! -e ~/docker/images.tar ]]; then docker pull mysql:5.6; fi
     - if [[ ! -e ~/docker/images.tar ]]; then docker pull nginx:1.9.0; fi
     - (cd src; docker-compose -f docker-production.yml build)
     # Otherwise, we built one above, and save it.
-    - if [[ ! -e ~/docker/images.tar ]]; then docker save -o ~/docker/images.tar leaguewinspool/webapp-base:latest mysql:5.6 nginx:1.9.0; fi
+    - if [[ ! -e ~/docker/images.tar ]]; then docker save -o ~/docker/images.tar leaguewinspool/webapp-base:1 mysql:5.6 nginx:1.9.0; fi
     # Print the history so that we can investigate potential steps which fatten
     # the image needlessly.
     - docker history src_webapp

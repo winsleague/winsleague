@@ -46,11 +46,14 @@ RUN useradd -ms /bin/sh node
 RUN cd && cp -R .bashrc .profile /home/node
 
 # Take ownership of key folders
+# Not sure why we also have to chown assets and .tmp when we've already done it for webapp
 RUN chown -R node:node /home/node \
  && mkdir /webapp \
  && chown -R node:node /webapp \
  && mkdir /webapp/assets \
- && chown -R node:node /webapp/assets
+ && chown -R node:node /webapp/assets \
+ && mkdir /webapp/.tmp \
+ && chown -R node:node /webapp/.tmp
 
 USER node
 ENV HOME /home/node

@@ -1,4 +1,4 @@
-FROM leaguewinspool/webapp-base:latest
+FROM leaguewinspool/webapp-base:1
 
 # Install node packages
 COPY package.json /webapp/
