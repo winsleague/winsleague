@@ -2,71 +2,90 @@
 
 ## Getting Started
 
-1. [Install Node](https://nodejs.org/download/)
-2. [Install Docker 1.6+ and optionally Boot2Docker](https://docs.docker.com/installation/)
-3. [Install Docker Compose 1.2+](https://docs.docker.com/compose/install/)
-4. Install package dependencies
+1. [Install Node 4.2.2](https://nodejs.org/download/)
+2. [Install Docker 1.8.2](https://docs.docker.com/installation/). Make sure this is the same version as CircleCI.
+3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
+4. [Install Docker Compose 1.5.2](https://docs.docker.com/compose/install/).
+5. Install package dependencies for development
 
     ```bash
     $ (cd scripts; ./install-packages)
     ```
 
-5. Install Git hooks so that dependencies are automatically installed when switching or merging branches
+6. Install Git hooks so that dependencies are automatically installed when switching or merging branches
 
     ```bash
     $ (cd scripts; ./install-git-hooks)
     ```
 
-6. Create secrets file and add passwords
+7. Create secrets file and add passwords
     
     ```bash
     $ cp src/db/secrets.example.env src/db/secrets.env
     $ vim src/db/secrets.env
     ```
 
-7. If on Mac, start Boot2Docker
+8. If on Mac, create a VM with Dinghy
 
     ```bash
-    $ boot2docker up
+    $ dinghy create --provider virtualbox
+    $ dinghy status
     ```
 
-8. Build the images on your local machine (needed due to [Docker Compose issue #1275](https://github.com/docker/compose/issues/1275))
-
-    ```bash
-    $ (cd src; docker-compose build)
-    ```   
-    
 
 ## Developing Locally
 
-Launch the entire development environment:
+1. Launch the entire development environment:
 
+    ```bash
     $ (cd src; docker-compose up)
+    ```
 
-This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
+    This links your local `src/webapp` folder to the container so that changes automatically reload the server.
 
-To also monitor client-side changes, open a separate terminal tab and run:
+2. Run any outstanding database migrations:
 
-    $ docker exec -it src_webapp_1 bash
-    $ (cd /webapp/client; grunt serve)
+    ```bash
+    $ (cd src; docker-compose run webapp grunt db:migrate:up)
+    ```
 
-Open a browser to view changes:
+3. Open a browser to view changes:
 
-    $ curl http://$(boot2docker ip)
+    ```bash
+    $ curl http://$(dinghy ip)
+    ```
     
+
+## Running Tests
+
+    ```bash
+    $ (cd src; docker-compose run webapp npm test)
+    ```
+
     
+## Interactive Development Console
+
+    ```bash
+    $ (cd src; docker-compose run webapp node_modules/.bin/sails console)
+    ```
+
+
 ## Running Database Migrations
 
-Make sure the containers are running first.
+    ```bash
+    $ (cd src; docker-compose run webapp grunt db:migrate)
+    ```
 
-    $ docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate
-    
-Sequelize automatically syncs the database when the webapp starts. However, this only creates and drops tables -- it doesn't run pending migrations. That is currently done manually but we should figure out how to automate them as part of the deploy process. 
+Documentation on writing migrations can be found [here](http://umigrate.readthedocs.org/projects/db-migrate/en/latest/)
     
 
 ## Adding or Removing Node Packages
 
-When changing either the client or server's package.json, run `npm shrinkwrap` in `src/webapp/client` and `src/webapp/server` to update the `npm-shrinkwrap.json` file. This ensures everyone is using the exact same package versions.
+After updating `package.json`:
+
+    $ (cd src; docker-compose run webapp npm install <package-name> --save)
+    $ (cd src; docker-compose run webapp npm shrinkwrap --dev) # install packages in container
+    $ (cd src; docker-compose up) # restart webapp
 
 
 ## Rebuilding Docker Images
@@ -74,8 +93,10 @@ When changing either the client or server's package.json, run `npm shrinkwrap` i
 The `webapp-base` image (`src/webapp-base/Dockerfile`) is used to manage core dependencies such as node and its global packages. Although changes should be rare, when doing so, rebuild and publish the image by running:
 
     $ cd src/webapp-base
-    $ docker build -t leaguewinspool/webapp-base .
-    $ docker push leaguewinspool/webapp-base
+    $ docker build -t leaguewinspool/webapp-base:<new version number> .
+    $ docker push leaguewinspool/webapp-base:<new version number>
+
+Update `src/webapp/Dockerfile` and `circleci.yml` to use the new webapp-base version number
 
 When changing any of the other Dockerfiles, rebuild the images by running:
 
@@ -84,15 +105,22 @@ When changing any of the other Dockerfiles, rebuild the images by running:
 Now you are ready for development again.
 
 
+## Debugging commands
+
+Add `-e LOG_LEVEL=verbose` to run command:
+
+    $ (cd src; docker-compose run -e LOG_LEVEL=verbose webapp <command>)
+
+
 ## Running a Staging Environment
 
 These are the same commands the integration tests on CircleCI run:
 
-    $ (cd src; docker-compose -f docker-production.yml up -d)
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
-    $ curl http://$(boot2docker ip)
+    $ (cd src; docker-compose -f docker-production.yml up)
+    $ (cd src; docker-compose -f docker-production.yml run webapp npm test)
+    $ curl http://$(dinghy ip)
 
-The difference is `docker-production.yml` won't link your local code to the container.
+The difference is `docker-production.yml` won't sync your local code with the container.
 
 
 ## Deploying to Production

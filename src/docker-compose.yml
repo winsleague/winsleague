@@ -12,8 +12,10 @@ webapp:
   links:
     - db
   volumes:
-    - webapp:/webapp
-  command: npm test
+    - ./webapp:/webapp
+  environment:
+    - VIRTUAL_HOST=leaguewinspool.docker # for https://github.com/codekitchen/dinghy#optional-http-proxy
+    - NODE_ENV=development
 
 db:
   extends:

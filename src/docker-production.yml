@@ -11,6 +11,10 @@ webapp:
     service: webapp
   links:
     - db
+  volumes:
+    - ./webapp/logs:/webapp/logs # so we can access logs from outside the container
+  environment:
+    - NODE_ENV=production
 
 db:
   extends:

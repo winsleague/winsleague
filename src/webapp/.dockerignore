@@ -2,6 +2,7 @@
 .tmp
 .sass-cache
 bower_components
-dist
+log
 node_modules
 .dockerignore
+npm-debug.log
