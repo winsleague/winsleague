@@ -3,9 +3,9 @@
 ## Getting Started
 
 1. [Install Node 4.2.2](https://nodejs.org/download/)
-2. [Install Docker 1.6+](https://docs.docker.com/installation/)
+2. [Install Docker 1.8.2](https://docs.docker.com/installation/). Make sure this is the same version as CircleCI.
 3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
-4. [Install Docker Compose 1.3+](https://docs.docker.com/compose/install/)
+4. [Install Docker Compose 1.5.2](https://docs.docker.com/compose/install/).
 5. Install package dependencies for development
 
     ```bash
@@ -41,18 +41,12 @@
     $ (cd src; docker-compose up)
     ```
 
-    This links your local `src/webapp` folder to the container so that server-side changes automatically reload the server. 
+    This links your local `src/webapp` folder to the container so that changes automatically reload the server.
 
-2. To also monitor client-side changes, open a separate terminal tab and run:
-
-    ```bash
-    $ (cd src/webapp/client; grunt serve)
-    ```
-
-    Ideally we'd run `grunt serve` in the container itself but due to slow Boot2Docker issues, it's faster to run it outside. If you prefer to run this within the container, run:
+2. Run any outstanding database migrations:
 
     ```bash
-    $ (cd src; docker-compose run webapp grunt serve --gruntfile /webapp/client/Gruntfile.js)
+    $ (cd src; docker-compose run webapp grunt db:migrate:up)
     ```
 
 3. Open a browser to view changes:
@@ -63,30 +57,35 @@
     
 
 ## Running Tests
-    
-If running isolated tests contained to the webapp only, run:
 
-    $ (cd src/webapp/client; grunt test)
-    $ (cd src/webapp/server; grunt test)
-    
-If running tests that depend on other services such as the database, run them within Docker:
+    ```bash
+    $ (cd src; docker-compose run webapp npm test)
+    ```
 
-    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
-    $ (cd src; docker-compose run webapp grunt test --gruntfile /webapp/server/Gruntfile.js)
     
-    
+## Interactive Development Console
+
+    ```bash
+    $ (cd src; docker-compose run webapp node_modules/.bin/sails console)
+    ```
+
+
 ## Running Database Migrations
 
-Make sure the containers are running first.
+    ```bash
+    $ (cd src; docker-compose run webapp grunt db:migrate)
+    ```
 
-    $ (cd src; docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate)
-    
-Sequelize automatically syncs the database when the webapp starts. However, this only creates and drops tables -- it doesn't run pending migrations. That is currently done manually but we should figure out how to automate them as part of the deploy process. 
+Documentation on writing migrations can be found [here](http://umigrate.readthedocs.org/projects/db-migrate/en/latest/)
     
 
 ## Adding or Removing Node Packages
 
-When changing either the client or server's `package.json`, update the version number and then run `npm shrinkwrap --dev` in `src/webapp/client` and `src/webapp/server`. This ensures everyone is using the exact same package versions.
+After updating `package.json`:
+
+    $ (cd src; docker-compose run webapp npm install <package-name> --save)
+    $ (cd src; docker-compose run webapp npm shrinkwrap --dev) # install packages in container
+    $ (cd src; docker-compose up) # restart webapp
 
 
 ## Rebuilding Docker Images
@@ -94,8 +93,10 @@ When changing either the client or server's `package.json`, update the version n
 The `webapp-base` image (`src/webapp-base/Dockerfile`) is used to manage core dependencies such as node and its global packages. Although changes should be rare, when doing so, rebuild and publish the image by running:
 
     $ cd src/webapp-base
-    $ docker build -t leaguewinspool/webapp-base .
-    $ docker push leaguewinspool/webapp-base
+    $ docker build -t leaguewinspool/webapp-base:<new version number> .
+    $ docker push leaguewinspool/webapp-base:<new version number>
+
+Update `src/webapp/Dockerfile` and `circleci.yml` to use the new webapp-base version number
 
 When changing any of the other Dockerfiles, rebuild the images by running:
 
@@ -104,13 +105,19 @@ When changing any of the other Dockerfiles, rebuild the images by running:
 Now you are ready for development again.
 
 
+## Debugging commands
+
+Add `-e LOG_LEVEL=verbose` to run command:
+
+    $ (cd src; docker-compose run -e LOG_LEVEL=verbose webapp <command>)
+
+
 ## Running a Staging Environment
 
 These are the same commands the integration tests on CircleCI run:
 
     $ (cd src; docker-compose -f docker-production.yml up)
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)    # client-side
-    $ (cd src; docker-compose -f docker-production.yml run webapp grunt test)    # server-side
+    $ (cd src; docker-compose -f docker-production.yml run webapp npm test)
     $ curl http://$(dinghy ip)
 
 The difference is `docker-production.yml` won't sync your local code with the container.

@@ -1,5 +1,4 @@
 # This is the base image for our webapp. It should rarely change.
-
 FROM node:4.2.2-slim
 
 # Install dependencies
@@ -27,18 +26,32 @@ RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x
  && mv phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/local/bin/ \
  && rm -f phantomjs-1.9.8-linux-x86_64.tar.bz2 && rm -rf phantomjs-1.9.8-linux-x86_64/bin/phantomjs
 
+# Upgrade npm
+RUN npm install -g npm@3.5.2
+
 # Install global packages
 RUN npm install -g \
     grunt-cli@0.1.13 \
-    bower@1.3.8 \
+    bower@1.7.1 \
     yo@1.5.0 \
     generator-karma@1.0.0 \
-    generator-angular@0.14.0 \
-    nodemon@1.3.7 \
+    generator-angular@0.15.1 \
     pm2@0.12.13
 
-# Adjust permissions so we can run yo within Docker container (https://github.com/yeoman/yeoman.io/issues/282)
-RUN mkdir /root/.config
-RUN mkdir /root/.config/configstore
-RUN chmod g+rwx /root /root/.config /root/.config/configstore
+# Use non-root user (needed because of https://github.com/codekitchen/dinghy/issues/17)
+# From my reading, this seems like a good practice to do regardless
+RUN useradd -mr node
 
+# Copy the nice dotfiles that root has. Not sure whether this is needed but https://gist.github.com/thom-nic/5e561e800cbc0f71555c had it
+RUN cd && cp -R .bashrc .profile /home/node
+
+# Take ownership of key folders so npm install and bower install have write access
+# Not sure why we also have to chown assets and .tmp when we've already done it for webapp
+RUN mkdir /webapp \
+ && mkdir /webapp/assets \
+ && mkdir /webapp/.tmp \
+ && chown -R node:node /webapp
+
+# Run all commands after this point as node user
+USER node
+ENV HOME /home/node

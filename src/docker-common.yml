@@ -6,7 +6,7 @@ nginx:
 webapp:
   build: webapp
   expose:
-    - "3000"
+    - "1337"
 
 db:
   build: db

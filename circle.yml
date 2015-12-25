@@ -13,34 +13,32 @@ dependencies:
   override:
     - docker info
     - docker --version
-    - sudo pip install -U docker-compose==1.4.2
+    - sudo pip install -U docker-compose==1.5.2
     - cp src/db/secrets.example.env src/db/secrets.env
     # If there's a base image cached, load it.
     # A click on CircleCI's "Clear Cache" will make sure we start with a clean slate.
     - mkdir -p ~/docker
     - if [[ -e ~/docker/images.tar ]]; then docker load -i ~/docker/images.tar; fi
     # If cache doesn't exist, pull the base images so we can easily save them later
-    - if [[ ! -e ~/docker/images.tar ]]; then docker pull leaguewinspool/webapp-base:latest; fi
+    - if [[ ! -e ~/docker/images.tar ]]; then docker pull leaguewinspool/webapp-base:3; fi # Point to correct version of webapp-base
     - if [[ ! -e ~/docker/images.tar ]]; then docker pull mysql:5.6; fi
     - if [[ ! -e ~/docker/images.tar ]]; then docker pull nginx:1.9.0; fi
     - (cd src; docker-compose -f docker-production.yml build)
     # Otherwise, we built one above, and save it.
-    - if [[ ! -e ~/docker/images.tar ]]; then docker save -o ~/docker/images.tar leaguewinspool/webapp-base:latest mysql:5.6 nginx:1.9.0; fi
-    # Print the history so that we can investigate potential steps which fatten
-    # the image needlessly.
+    - if [[ ! -e ~/docker/images.tar ]]; then docker save -o ~/docker/images.tar leaguewinspool/webapp-base:3 mysql:5.6 nginx:1.9.0; fi # Point to correct version of webapp-base
+    # Print the history so that we can investigate potential steps which fatten the image needlessly.
     - docker history src_webapp
-    # Bring up the environment as a daemon (-d) to not block tests
-    - (cd src; docker-compose -f docker-production.yml up -d)
+    # Bring up Sails and run database migrations
+    - (cd src; docker-compose -f docker-production.yml run -e LOG_LEVEL=verbose webapp grunt db:migrate:up)
 
 test:
   override:
-    # Run client-side tests. We need to manually specify the gruntfile because the container's working directory is /webapp/server
-    - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/client/Gruntfile.js)
-    # Run server-side tests. We manually specify the gruntfile just to be explicit.
-    - (cd src; docker-compose -f docker-production.yml run webapp grunt test --gruntfile /webapp/server/Gruntfile.js)
+    # Run tests
+    - (cd src; docker-compose -f docker-production.yml run webapp npm test)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     - npm install -g codeclimate-test-reporter@0.1.1
-    - (cd src/webapp/client; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < log/coverage/report-lcov/lcov.info)
+    # Disabled until we get tests reporting to lcov again
+    # - (cd src/webapp; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < log/coverage/report-lcov/lcov.info)
 
 deployment:
   hub:

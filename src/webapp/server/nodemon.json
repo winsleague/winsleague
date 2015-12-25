@@ -1,9 +1,0 @@
-{
-  "verbose": true,
-  "ignore": [
-    "Gruntfile.js",
-    ".tmp/*",
-    "node_modules",
-    "test/*"
-  ]
-}

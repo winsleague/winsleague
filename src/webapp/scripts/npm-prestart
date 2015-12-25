@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# In dev, make sure the platform-appropriate node_modules are installed (https://github.com/brikis98/docker-osx-dev/issues/30)
+if [ "$NODE_ENV" = "development" ]
+then
+  echo "Installing node packages..."
+  (cd /webapp; npm prune; npm install)
+fi
+
+if [ "$NODE_ENV" = "development" ] && [ ! -d assets/bower_components ]
+then
+  echo "Installing bower packages..."
+  (cd /webapp/assets; bower prune; bower install)
+fi
