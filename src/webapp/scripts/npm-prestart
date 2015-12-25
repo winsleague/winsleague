@@ -12,3 +12,9 @@ then
   echo "Installing bower packages..."
   (cd /webapp/assets; bower prune; bower install)
 fi
+
+if [ "$NODE_ENV" = "production" ]
+then
+  echo "Running migrations..."
+  (cd /webapp; grunt db:migrate:up)
+fi
