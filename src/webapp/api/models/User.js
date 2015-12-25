@@ -1,3 +1,5 @@
+"use strict";
+
 var bcrypt = require('bcrypt');
 
 module.exports = {
@@ -23,7 +25,7 @@ module.exports = {
     },
 
     toJSON: function() {
-      var obj = this.toObject();
+      let obj = this.toObject();
       delete obj.password;
       return obj;
     }

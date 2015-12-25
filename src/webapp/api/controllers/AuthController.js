@@ -5,6 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+"use strict";
+
 var passport = require('passport');
 
 module.exports = {
