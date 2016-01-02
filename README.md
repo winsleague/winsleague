@@ -29,6 +29,7 @@
 
     ```bash
     $ dinghy create --provider virtualbox
+    $ dinghy up --proxy
     $ dinghy status
     ```
 
@@ -132,3 +133,10 @@ The other containers are not deployed automatically because they rarely change. 
 1. On CircleCI, [clear the cache](https://circleci.com/docs/how-cache-works) and rerun the tests
 2. On DockerHub, manually start a build on the updated container
 3. On Tutum, redeploy the container
+
+
+## Garbage collecting old Docker containers
+
+From [Spotify's garbage collector](https://github.com/spotify/docker-gc):
+
+    $ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotify/docker-gc
