@@ -10,24 +10,19 @@ function changed {
   git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep "^$1" > /dev/null 2>&1
 }
 
-if changed 'src/webapp/server/migrations'; then
+if changed 'src/webapp/migrations'; then
   echo "Migrations pending, migrating"
-  (cd src; docker-compose run webapp /webapp/server/node_modules/.bin/sequelize db:migrate)
+  (cd src; docker-compose run webapp grunt db:migrate)
 fi
 
-if changed 'src/webapp/client/bower.json'; then
-  echo "Installing webapp client bower packages"
-  (cd src/webapp/client; bower install; bower prune)
+if changed 'src/webapp/assets/bower.json'; then
+  echo "Installing webapp bower packages"
+  (cd src/webapp/assets; bower install; bower prune)
 fi
 
-if changed 'src/webapp/client/package.json'; then
-  echo "Installing webapp client npm packages"
-  (cd src/webapp/client; npm install; npm prune)
-fi
-
-if changed 'src/webapp/server/package.json'; then
-  echo "Installing webapp server npm packages"
-  (cd src/webapp/server; npm install; npm prune)
+if changed 'src/webapp/package.json'; then
+  echo "Installing webapp npm packages"
+  (cd src/webapp; npm install; npm prune)
 fi
 
 echo "Done with post-merge hook"
