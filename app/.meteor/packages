@@ -26,3 +26,5 @@ meteorhacks:npm
 
 
 npm-container
+http
+peerlibrary:xml2js

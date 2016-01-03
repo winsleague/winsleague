@@ -66,6 +66,8 @@ npm-mongo@1.4.39_1
 observe-sequence@1.0.7
 ordered-dict@1.0.4
 package-version-parser@3.0.4
+peerlibrary:blocking@0.5.2
+peerlibrary:xml2js@0.4.8_1
 practicalmeteor:chai@2.1.0_1
 practicalmeteor:loglevel@1.2.0_2
 promise@0.5.1
