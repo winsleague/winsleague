@@ -4,7 +4,15 @@ Modules.server.nflGameData = {
   ingestSeasonData(season) {
     if (season == null) { throw new Error(`Season is null!`) }
 
-    let week = 1;
+    let league = Modules.server.nflGameData.getLeague();
+    Games.remove({ league: league._id, season: season._id });
+
+    for (let week = 1; week <= 17; week++) {
+      Modules.server.nflGameData.ingestWeekData(season, week);
+    }
+  },
+
+  ingestWeekData(season, week) {
     let url = `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
 
     log.debug(`fetching ${url}`);
@@ -22,7 +30,7 @@ Modules.server.nflGameData = {
   },
 
   saveGame(game, season, week) {
-    log.info(`game: ${game.eid}`);
+    log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
     let league = Modules.server.nflGameData.getLeague();
     Games.insert({
       league: league,
