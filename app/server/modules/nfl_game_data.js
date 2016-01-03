@@ -5,7 +5,7 @@ Modules.server.nflGameData = {
     if (season == null) { throw new Error(`Season is null!`) }
 
     let league = Modules.server.nflGameData.getLeague();
-    Games.remove({ league: league._id, season: season._id });
+    Games.remove({ league: league, season: season });
 
     for (let week = 1; week <= 17; week++) {
       Modules.server.nflGameData.ingestWeekData(season, week);
@@ -41,9 +41,9 @@ Modules.server.nflGameData = {
       day: game.d,
       time: game.t,
       quarter: game.q,
-      homeTeam: LeagueTeams.findOne({ league: league._id, abbreviation: game.h }),
+      homeTeam: LeagueTeams.findOne({ league: league, abbreviation: game.h }),
       homeScore: game.hs,
-      visitorTeam: LeagueTeams.findOne({ league: league._id, abbreviation: game.v }),
+      visitorTeam: LeagueTeams.findOne({ league: league, abbreviation: game.v }),
       visitorScore: game.vs
     });
   },
@@ -54,6 +54,6 @@ Modules.server.nflGameData = {
 
   getSeason(year = (new Date()).getFullYear()) {
     let league = Modules.server.nflGameData.getLeague();
-    return Seasons.findOne({ league: league._id, year: year })
+    return Seasons.findOne({ league: league, year: year })
   }
 };
