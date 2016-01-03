@@ -18,7 +18,7 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 iron:router
 mquandalle:jade
-grigio:babel
 sanjo:jasmine
 velocity:console-reporter
 twbs:bootstrap
+promise
