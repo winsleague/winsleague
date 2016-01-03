@@ -21,3 +21,4 @@ mquandalle:jade
 grigio:babel
 sanjo:jasmine
 velocity:console-reporter
+twbs:bootstrap
