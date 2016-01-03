@@ -5,15 +5,15 @@ Modules.server.nflGameData = {
     let week = 1;
     let url = `http://www.nfl.com/ajax/scorestrip?season=${year}&seasonType=REG&week=${week}`;
 
-    console.log(`fetching ${url}`);
+    log.debug(`fetching ${url}`);
     let response = HTTP.get(url);
     let xmlString = response.content;
-    console.log(`xml: ${xmlString}`);
+    log.debug(`xml: ${xmlString}`);
 
     let json = xml2js.parseStringSync(xmlString, {mergeAttrs: true, explicitArray: false});
-    console.log(`parsed json: ${prettyjson.render(json)}`);
+    log.debug(`parsed json: ${prettyjson.render(json)}`);
 
-    console.log(`parsed json.ss.gms.g: ${prettyjson.render(json.ss.gms.g)}`);
+    log.debug(`parsed json.ss.gms.g: ${prettyjson.render(json.ss.gms.g)}`);
     json.ss.gms.g.forEach(Modules.server.nflGameData.saveGame);
 
     return "all done";
@@ -38,6 +38,6 @@ Modules.server.nflGameData = {
      */
   },
   saveGame: function (game) {
-    console.log(`game: ${game.eid}`);
+    log.info(`game: ${game.eid}`);
   }
 };
