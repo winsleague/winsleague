@@ -29,3 +29,4 @@ npm-container
 http
 peerlibrary:xml2js
 practicalmeteor:loglevel
+blaze-html-templates
