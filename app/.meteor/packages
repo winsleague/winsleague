@@ -22,3 +22,5 @@ sanjo:jasmine
 velocity:console-reporter
 twbs:bootstrap
 promise
+houston:admin
+deanius:promise
