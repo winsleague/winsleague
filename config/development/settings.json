@@ -2,5 +2,5 @@
   "public": {
   },
 
-  "sample": "value"
+  "loglevel.global": "info"
 }
