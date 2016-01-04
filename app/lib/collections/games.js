@@ -10,19 +10,44 @@ Games.attachSchema(new SimpleSchema({
   time: { type: String },
   quarter: {
     type: String,
-    allowedValues: ["Pregame", "1", "2", "3", "4", "OT?", "Final", "Final Overtime"],
+    allowedValues: ["Pregame", "1", "2", "Halftime", "3", "4", "OT?", "Final", "Final Overtime"],
     autoValue: function() {
-      if (this.isInsert) {
-        if (this.value == "P") { return "Pregame"; }
-        if (this.value == "F") { return "Final"; }
-        if (this.value == "FO") { return "Final Overtime"; }
-      }
+      if (this.value == "P") { return "Pregame"; }
+      if (this.value == "F") { return "Final"; }
+      if (this.value == "FO" || this.value == "final overtime") { return "Final Overtime"; }
     }
   },
+  timeRemaining: { type: String, optional: true },
   homeTeamId: { type: String },
   homeScore: { type: Number, optional: true },
   visitorTeamId: { type: String },
-  visitorScore: { type: Number, optional: true }
+  visitorScore: { type: Number, optional: true },
+  createdAt: {
+    // Force value to be current date (on server) upon insert
+    // and prevent updates thereafter.
+    type: Date,
+    autoValue: function() {
+      if (this.isInsert) {
+        return new Date();
+      } else if (this.isUpsert) {
+        return {$setOnInsert: new Date()};
+      } else {
+        this.unset();  // Prevent user from supplying their own value
+      }
+    }
+  },
+  updatedAt: {
+    // Force value to be current date (on server) upon update
+    // and don't allow it to be set upon insert.
+    type: Date,
+    autoValue: function() {
+      if (this.isUpdate) {
+        return new Date();
+      }
+    },
+    denyInsert: true,
+    optional: true
+  },
 }));
 
 if (Meteor.isServer) {
