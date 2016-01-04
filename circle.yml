@@ -12,6 +12,8 @@ dependencies:
   override:
     - npm install velocity-cli -g
     - cd app
+    - pwd
+    - ls
     - meteor list
 
 test:
