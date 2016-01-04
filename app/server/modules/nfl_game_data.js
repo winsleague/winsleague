@@ -1,10 +1,38 @@
 let prettyjson = Meteor.npmRequire( 'prettyjson' );
 
 Modules.server.nflGameData = {
+  updateScores() {
+    const url = `http://www.nfl.com/liveupdate/scorestrip/scorestrip.json`;
+    const response = HTTP.get(url);
+    log.debug(`raw content: ${response.content}`);
+    let content = response.content.replace(/,,/g, ",\"\",");
+    content = content.replace(/,,/g, ",\"\","); // do it again to address multiple commas in a row
+    log.debug(`fixed content: ${content}`);
+    const json = JSON.parse(content);
+    log.debug(`parsed json: ${prettyjson.render(json)}`);
+
+    const league = Modules.server.nflGameData.getLeague();
+
+    for (let gameData of json.ss) {
+      // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
+      const gsis = parseInt(gameData[10]);
+      const quarter = gameData[2];
+      const timeRemaining = gameData[3];
+      const homeScore = gameData[5];
+      const visitorScore = gameData[7];
+
+      const affected = Games.update({ leagueId: league._id, gsis: gsis },
+        { $set: { quarter: quarter, timeRemaining: timeRemaining, homeScore: homeScore, visitorScore: visitorScore } }
+      );
+
+      log.info(`Updated game with leagueId: ${league._id} and gsis: ${gsis} (affected: ${affected})`);
+    }
+  },
+
   ingestSeasonData(season) {
     if (season == null) { throw new Error(`Season is null!`) }
 
-    let league = Modules.server.nflGameData.getLeague();
+    const league = Modules.server.nflGameData.getLeague();
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
     for (let week = 1; week <= 17; week++) {
@@ -13,14 +41,14 @@ Modules.server.nflGameData = {
   },
 
   ingestWeekData(season, week) {
-    let url = `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
+    const url = `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
 
     log.debug(`fetching ${url}`);
-    let response = HTTP.get(url);
-    let xmlString = response.content;
+    const response = HTTP.get(url);
+    const xmlString = response.content;
     log.debug(`xml: ${xmlString}`);
 
-    let json = xml2js.parseStringSync(xmlString, { mergeAttrs: true, explicitArray: false });
+    const json = xml2js.parseStringSync(xmlString, { mergeAttrs: true, explicitArray: false });
     log.debug(`parsed json: ${prettyjson.render(json)}`);
 
     log.debug(`parsed json.ss.gms.g: ${prettyjson.render(json.ss.gms.g)}`);
@@ -31,7 +59,7 @@ Modules.server.nflGameData = {
 
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
-    let league = Modules.server.nflGameData.getLeague();
+    const league = Modules.server.nflGameData.getLeague();
     Games.insert({
       leagueId: league._id,
       seasonId: season._id,
@@ -53,7 +81,7 @@ Modules.server.nflGameData = {
   },
 
   getSeason(year = (new Date()).getFullYear()) {
-    let league = Modules.server.nflGameData.getLeague();
+    const league = Modules.server.nflGameData.getLeague();
     return Seasons.findOne({ leagueId: league._id, year: year })
   }
 };
