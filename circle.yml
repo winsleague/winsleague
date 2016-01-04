@@ -1,22 +1,23 @@
 machine:
   node:
     version: 0.10.40
-  pre:
-    - curl https://install.meteor.com | /bin/sh
 
 general:
   artifacts:
+    - "app/.meteor/local/log"
     - "log"
 
 dependencies:
+  cache_directories:
+    - ~/.meteor
   override:
-    - npm install velocity-cli -g
+    - meteor || curl https://install.meteor.com | /bin/sh
     - (cd app; meteor list)
 
 test:
   override:
     # Run tests
-    - (cd app; velocity test-app --ci)
+    - (cd app; meteor run --test)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     # Disabled until we get tests reporting to lcov again
     # - npm install -g codeclimate-test-reporter@0.1.1
