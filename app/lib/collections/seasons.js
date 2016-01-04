@@ -1,5 +1,9 @@
 Seasons = new Mongo.Collection('seasons');
 
+Seasons.attachSchema(new SimpleSchema({
+  leagueId: { type: String },
+  year: { type: Number }
+}));
 
 if (Meteor.isServer) {
   Seasons.allow({

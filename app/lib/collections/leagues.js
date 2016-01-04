@@ -1,5 +1,8 @@
 Leagues = new Mongo.Collection('leagues');
 
+Leagues.attachSchema(new SimpleSchema({
+  name: { type: String }
+}));
 
 if (Meteor.isServer) {
   Leagues.allow({
