@@ -5,6 +5,7 @@ aldeed:collection2-core@1.0.0
 aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
+amplify@1.0.0
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
@@ -51,6 +52,7 @@ iron:url@1.0.11
 jquery@1.11.4
 lai:collection-extensions@0.1.4
 launch-screen@1.0.4
+less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
@@ -109,6 +111,7 @@ url@1.0.5
 velocity:chokidar@1.2.0_1
 velocity:console-reporter@0.1.4
 velocity:core@0.10.9
+velocity:html-reporter@0.9.1
 velocity:meteor-internals@1.1.0_7
 velocity:meteor-stubs@1.1.1
 velocity:shim@0.1.0
