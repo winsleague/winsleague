@@ -30,7 +30,7 @@
 ## Running Tests
 
     ```bash
-    $ (cd app; velocity test-app --ci)
+    $ (cd app; meteor run --test)
     ```
 
 

@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 0.10.40
+    version: 0.10.40 # match this to app/.meteor/local/build/.node_version.txt
 
 general:
   artifacts:
@@ -12,7 +12,7 @@ dependencies:
     - ~/.meteor
   override:
     - meteor || curl https://install.meteor.com | /bin/sh
-    - (cd app; meteor list)
+    - (cd app; meteor list) # triggers the packages to download and install
 
 test:
   override:
