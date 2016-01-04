@@ -34,6 +34,13 @@
     ```
 
 
+## Running Meteor without tests running automatically
+
+    ```bash
+    $ (cd app; VELOCITY=0 meteor run)
+    ```
+    
+
 ## Interactive Development Console
 
     ```bash
