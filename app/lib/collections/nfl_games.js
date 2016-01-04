@@ -1,11 +1,11 @@
-Games = new Mongo.Collection('games');
+NflGames = new Mongo.Collection('nfl_games');
 
-Games.attachSchema(new SimpleSchema({
+NflGames.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
   week: { type: Number },
-  eid: { type: Number },
-  gsis: { type: Number },
+  eid: { type: Number }, // a date representation (e.g. 2016010302)
+  gsis: { type: Number }, // a game ID used by the NFL
   day: { type: String, allowedValues: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] },
   time: { type: String },
   quarter: {
@@ -51,7 +51,7 @@ Games.attachSchema(new SimpleSchema({
 }));
 
 if (Meteor.isServer) {
-  Games.allow({
+  NflGames.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -65,7 +65,7 @@ if (Meteor.isServer) {
     }
   });
 
-  Games.deny({
+  NflGames.deny({
     insert: function (userId, doc) {
       return true;
     },

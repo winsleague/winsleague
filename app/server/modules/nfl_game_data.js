@@ -21,7 +21,7 @@ Modules.server.nflGameData = {
       const homeScore = gameData[5];
       const visitorScore = gameData[7];
 
-      const affected = Games.update({ leagueId: league._id, gsis: gsis },
+      const affected = NflGames.update({ leagueId: league._id, gsis: gsis },
         { $set: { quarter: quarter, timeRemaining: timeRemaining, homeScore: homeScore, visitorScore: visitorScore } }
       );
 
@@ -33,7 +33,7 @@ Modules.server.nflGameData = {
     if (season == null) { throw new Error(`Season is null!`) }
 
     const league = Modules.server.nflGameData.getLeague();
-    Games.remove({ leagueId: league._id, seasonId: season._id });
+    NflGames.remove({ leagueId: league._id, seasonId: season._id });
 
     for (let week = 1; week <= 17; week++) {
       Modules.server.nflGameData.ingestWeekData(season, week);
@@ -60,7 +60,7 @@ Modules.server.nflGameData = {
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
     const league = Modules.server.nflGameData.getLeague();
-    Games.insert({
+    NflGames.insert({
       leagueId: league._id,
       seasonId: season._id,
       week, week,
