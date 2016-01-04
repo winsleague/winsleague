@@ -1,13 +1,14 @@
-Pools = new Mongo.Collection('pools');
+PoolLeagueTeams = new Mongo.Collection('pool_league_teams');
 
-Pools.attachSchema(new SimpleSchema({
-  leagueId: { type: String },
-  seasonId: { type: String },
-  name: { type: String }
+PoolLeagueTeams.attachSchema(new SimpleSchema({
+  poolId: { type: String },
+  userId: { type: String },
+  leagueTeamId: { type: String },
+  pickNumber: { type: Number }
 }));
 
 if (Meteor.isServer) {
-  Pools.allow({
+  PoolLeagueTeams.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -21,7 +22,7 @@ if (Meteor.isServer) {
     }
   });
 
-  Pools.deny({
+  PoolLeagueTeams.deny({
     insert: function (userId, doc) {
       return true;
     },
