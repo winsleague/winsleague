@@ -11,15 +11,12 @@ general:
 dependencies:
   override:
     - npm install velocity-cli -g
-    - cd app
-    - pwd
-    - ls
-    - meteor list
+    - (cd app; meteor list)
 
 test:
   override:
     # Run tests
-    - velocity test-app --ci
+    - (cd app; velocity test-app --ci)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     # Disabled until we get tests reporting to lcov again
     # - npm install -g codeclimate-test-reporter@0.1.1
