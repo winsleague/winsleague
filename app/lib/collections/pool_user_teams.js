@@ -3,7 +3,11 @@ PoolUserTeams = new Mongo.Collection('pool_user_teams');
 PoolUserTeams.attachSchema(new SimpleSchema({
   poolId: { type: String },
   userId: { type: String },
-  userTeamName: { type: String }
+  userTeamName: { type: String },
+  leagueTeamMascotNames: { type: [String], defaultValue: [] },
+  totalWins: { type: Number, defaultValue: 0 },
+  totalGames: { type: Number, defaultValue: 0 },
+  totalPlusMinus: { type: Number, defaultValue: 0 }
 }));
 
 if (Meteor.isServer) {

@@ -34,3 +34,4 @@ aldeed:collection2
 velocity:core
 velocity:html-reporter
 accounts-password
+dburles:collection-helpers

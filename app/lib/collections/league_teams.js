@@ -2,11 +2,18 @@ LeagueTeams = new Mongo.Collection('league_teams');
 
 LeagueTeams.attachSchema(new SimpleSchema({
   leagueId: { type: String },
-  name: { type: String },
+  cityName: { type: String },
+  mascotName: { type: String },
   abbreviation: { type: String },
   conference: { type: String, allowedValues: ["AFC", "NFC"] },
   division: { type: String, allowedValues: ["North", "South", "East", "West"] }
 }));
+
+LeagueTeams.helpers({
+  fullName: function () {
+    return this.cityName + ' ' + this.mascotName;
+  }
+});
 
 if (Meteor.isServer) {
   LeagueTeams.allow({
