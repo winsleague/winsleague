@@ -10,6 +10,17 @@ PoolUserTeams.attachSchema(new SimpleSchema({
   totalPlusMinus: { type: Number, defaultValue: 0 }
 }));
 
+PoolUserTeams.helpers({
+  prettyLeagueTeamMascotNames: function () {
+    let string = '';
+    for (name of this.leagueTeamMascotNames)
+      string += `${name}, `
+    if (string.length > 0)
+      string = string.substr(0, string.length - 2);
+    return string;
+  }
+});
+
 if (Meteor.isServer) {
   PoolUserTeams.allow({
     insert: function (userId, doc) {
