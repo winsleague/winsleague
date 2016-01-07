@@ -82,6 +82,6 @@ Modules.server.nflGameData = {
 
   getSeason(year = (new Date()).getFullYear()) {
     const league = Modules.server.nflGameData.getLeague();
-    return Seasons.findOne({ leagueId: league._id, year: year })
+    return Seasons.findOne({ leagueId: league._id, year })
   }
 };
