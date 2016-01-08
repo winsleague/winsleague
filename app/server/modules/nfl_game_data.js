@@ -71,7 +71,8 @@ Modules.server.nflGameData = {
       homeScore: game.hs,
       visitorTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.v })._id,
       visitorScore: game.vs,
-      period: game.q
+      period: Modules.server.nflGameData.cleanPeriod(game.q),
+      status: Modules.server.nflGameData.cleanStatus(game.q)
     });
   },
 
@@ -82,5 +83,19 @@ Modules.server.nflGameData = {
   getSeason(year = (new Date()).getFullYear()) {
     const league = Modules.server.nflGameData.getLeague();
     return Seasons.findOne({ leagueId: league._id, year })
+  },
+
+  cleanPeriod(old) {
+    if (old == "P") { return "pregame"; }
+    if (old == "O") { return "overtime"; }
+    if (old == "F") { return "final"; }
+    if (old == "FO") { return "final overtime"; }
+    return old;
+  },
+
+  cleanStatus(old) {
+    if (old == "P") { return "scheduled"; }
+    if (old == "F" || old == "FO") { return "completed"; }
+    return "in progress";
   }
 };

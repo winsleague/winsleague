@@ -10,14 +10,13 @@ Games.attachSchema(new SimpleSchema({
   homeScore: { type: Number, optional: true },
   visitorTeamId: { type: String },
   visitorScore: { type: Number, optional: true },
+  status: {
+    type: String,
+    allowedValues: ["scheduled", "in progress", "completed", "postponed", "suspended", "cancelled"],
+  },
   period: { // quarter if NFL or NBA, inning if MLB, period if NHL
     type: String,
-    allowedValues: ["Pregame", "1", "2", "Halftime", "3", "4", "Overtime", "Final", "Final Overtime"],
-    autoValue: function() {
-      if (this.value == "P") { return "Pregame"; }
-      if (this.value == "F") { return "Final"; }
-      if (this.value == "FO" || this.value == "final overtime") { return "Final Overtime"; }
-    }
+    allowedValues: ["pregame", "1", "2", "halftime", "3", "4", "overtime", "final", "final overtime"]
   },
   timeRemaining: { type: String, optional: true },
   createdAt: {
@@ -48,6 +47,20 @@ Games.attachSchema(new SimpleSchema({
   }
 }));
 
+
+/* Hooks */
+Games.after.insert(function (userId, doc) {
+  Modules.server.leagueTeamStats.refreshTeam(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  Modules.server.leagueTeamStats.refreshTeam(doc.leagueId, doc.seasonId, doc.awayTeamId);
+});
+
+Games.after.update(function (userId, doc, fieldNames, modifier, options) {
+  Modules.server.leagueTeamStats.refreshTeam(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  Modules.server.leagueTeamStats.refreshTeam(doc.leagueId, doc.seasonId, doc.awayTeamId);
+}, { fetchPrevious: false });
+
+
+/* Access control */
 if (Meteor.isServer) {
   Games.allow({
     insert: function (userId, doc) {
