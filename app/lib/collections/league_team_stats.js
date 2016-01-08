@@ -4,10 +4,23 @@ LeagueTeamStats.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
   leagueTeamId: { type: String },
-  totalWins: { type: Number },
-  totalGames: { type: Number },
-  totalPlusMinus: { type: Number }
+  wins: { type: Number },
+  losses: { type: Number },
+  home_wins: { type: Number },
+  home_losses: { type: Number },
+  away_wins: { type: Number },
+  away_losses: { type: Number },
+  division_wins: { type: Number },
+  division_losses: { type: Number },
+  pointsFor: { type: Number },
+  pointsAgainst: { type: Number }
 }));
+
+LeagueTeamStats.helpers({
+  gamesPlayed: function () {
+    return this.wins + this.losses;
+  }
+});
 
 if (Meteor.isServer) {
   LeagueTeamStats.allow({

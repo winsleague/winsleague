@@ -3,7 +3,7 @@ describe("NFL Game Data", function () {
     it ("should ingest all games for the year", function () {
       const season = Modules.server.nflGameData.getSeason(2015);
       Modules.server.nflGameData.ingestSeasonData(season);
-      expect(NflGames.find().count()).toBeGreaterThan(0);
+      expect(Games.find().count()).toBeGreaterThan(0);
     });
   });
 
@@ -12,7 +12,7 @@ describe("NFL Game Data", function () {
       const season = Modules.server.nflGameData.getSeason(2015);
       Modules.server.nflGameData.ingestSeasonData(season);
       Modules.server.nflGameData.updateScores();
-      expect(NflGames.find().count()).toBeGreaterThan(0);
+      expect(Games.find().count()).toBeGreaterThan(0);
     });
   });
 });

@@ -1,16 +1,18 @@
-NflGames = new Mongo.Collection('nfl_games');
+Games = new Mongo.Collection('games');
 
-NflGames.attachSchema(new SimpleSchema({
+Games.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
-  week: { type: Number },
-  eid: { type: Number }, // a date representation (e.g. 2016010302)
-  gsis: { type: Number }, // a game ID used by the NFL
-  day: { type: String, allowedValues: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] },
-  time: { type: String },
-  quarter: {
+  gameId: { type: Number },
+  gameDate: { type: Date },
+  week: { type: Number, optional: true }, // only for NFL
+  homeTeamId: { type: String },
+  homeScore: { type: Number, optional: true },
+  visitorTeamId: { type: String },
+  visitorScore: { type: Number, optional: true },
+  period: { // quarter if NFL or NBA, inning if MLB, period if NHL
     type: String,
-    allowedValues: ["Pregame", "1", "2", "Halftime", "3", "4", "OT?", "Final", "Final Overtime"],
+    allowedValues: ["Pregame", "1", "2", "Halftime", "3", "4", "Overtime", "Final", "Final Overtime"],
     autoValue: function() {
       if (this.value == "P") { return "Pregame"; }
       if (this.value == "F") { return "Final"; }
@@ -18,10 +20,6 @@ NflGames.attachSchema(new SimpleSchema({
     }
   },
   timeRemaining: { type: String, optional: true },
-  homeTeamId: { type: String },
-  homeScore: { type: Number, optional: true },
-  visitorTeamId: { type: String },
-  visitorScore: { type: Number, optional: true },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -47,11 +45,11 @@ NflGames.attachSchema(new SimpleSchema({
     },
     denyInsert: true,
     optional: true
-  },
+  }
 }));
 
 if (Meteor.isServer) {
-  NflGames.allow({
+  Games.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -65,7 +63,7 @@ if (Meteor.isServer) {
     }
   });
 
-  NflGames.deny({
+  Games.deny({
     insert: function (userId, doc) {
       return true;
     },
