@@ -3,11 +3,6 @@
 ## Getting Started
 
 1. [Install Meteor](https://www.meteor.com/install)
-2. Install Git hooks so that dependencies are automatically installed when switching or merging branches
-
-    ```bash
-    $ (cd scripts; ./install-git-hooks)
-    ```
 
 
 ## Developing Locally
@@ -39,7 +34,7 @@
     ```bash
     $ (cd app; VELOCITY=0 meteor run)
     ```
-    
+
 
 ## Interactive Development Console
 

@@ -1,6 +1,0 @@
-#!/bin/sh
-
-cp post-checkout ../.git/hooks
-cp post-merge ../.git/hooks
-
-echo "Git hooks installed!"
