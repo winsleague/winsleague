@@ -41,10 +41,11 @@ PoolUserTeams.attachSchema(new SimpleSchema({
 }));
 
 PoolUserTeams.helpers({
-  prettyLeagueTeamMascotNames: function () {
+  teamSummary: function () {
     let string = '';
-    for (name of this.leagueTeamMascotNames)
-      string += `${name}, `
+    for (var i = 0; i < this.leagueTeamMascotNames.length; i++) {
+      string += `${this.leagueTeamMascotNames[i]} #${this.pickNumbers[i]}, `;
+    }
     if (string.length > 0)
       string = string.substr(0, string.length - 2);
     return string;

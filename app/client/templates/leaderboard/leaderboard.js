@@ -8,7 +8,7 @@ Template.Leaderboard.events({
 /* Leaderboard: Helpers */
 /*****************************************************************************/
 Template.Leaderboard.helpers({
-  teams: () => { return PoolUserTeams.find() }
+  poolUserTeams: () => { return PoolUserTeams.find() }
 });
 
 /*****************************************************************************/
