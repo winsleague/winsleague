@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ "$NODE_ENV" = "development" ]
-then
-  node app.js
-elif [ "$NODE_ENV" = "production" ]
-then
-  pm2 start app.js -x -- --prod --no-daemon
-fi

@@ -2,133 +2,49 @@
 
 ## Getting Started
 
-1. [Install Node 4.2.2](https://nodejs.org/download/)
-2. [Install Docker 1.8.2](https://docs.docker.com/installation/). Make sure this is the same version as CircleCI.
-3. If on Mac, install [VirtualBox](https://www.virtualbox.org) and [Dingy](https://github.com/codekitchen/dinghy)
-4. [Install Docker Compose 1.5.2](https://docs.docker.com/compose/install/).
-5. Install package dependencies for development
-
-    ```bash
-    $ (cd scripts; ./install-packages)
-    ```
-
-6. Install Git hooks so that dependencies are automatically installed when switching or merging branches
-
-    ```bash
-    $ (cd scripts; ./install-git-hooks)
-    ```
-
-7. Create secrets file and add passwords
-    
-    ```bash
-    $ cp src/db/secrets.example.env src/db/secrets.env
-    $ vim src/db/secrets.env
-    ```
-
-8. If on Mac, create a VM with Dinghy
-
-    ```bash
-    $ dinghy create --provider virtualbox
-    $ dinghy status
-    ```
+1. [Install Meteor](https://www.meteor.com/install)
 
 
 ## Developing Locally
 
-1. Launch the entire development environment:
+1. Launch the development environment:
 
     ```bash
-    $ (cd src; docker-compose up)
+    $ (cd app; meteor)
     ```
 
-    This links your local `src/webapp` folder to the container so that changes automatically reload the server.
-
-2. Run any outstanding database migrations:
+2. Open a browser to view changes:
 
     ```bash
-    $ (cd src; docker-compose run webapp grunt db:migrate:up)
+    $ curl http://localhost:3000)
     ```
 
-3. Open a browser to view changes:
+3. Meteor automatically watches for changes and hot reloads the app.
 
-    ```bash
-    $ curl http://$(dinghy ip)
-    ```
-    
 
 ## Running Tests
 
     ```bash
-    $ (cd src; docker-compose run webapp npm test)
+    $ (cd app; meteor run --test)
     ```
 
-    
+
+## Running Meteor without tests running automatically
+
+    ```bash
+    $ (cd app; VELOCITY=0 meteor run)
+    ```
+
+
 ## Interactive Development Console
 
     ```bash
-    $ (cd src; docker-compose run webapp node_modules/.bin/sails console)
+    $ (cd app; meteor shell)
     ```
-
-
-## Running Database Migrations
-
-    ```bash
-    $ (cd src; docker-compose run webapp grunt db:migrate)
-    ```
-
-Documentation on writing migrations can be found [here](http://umigrate.readthedocs.org/projects/db-migrate/en/latest/)
-    
-
-## Adding or Removing Node Packages
-
-After updating `package.json`:
-
-    $ (cd src; docker-compose run webapp npm install <package-name> --save)
-    $ (cd src; docker-compose run webapp npm shrinkwrap --dev) # install packages in container
-    $ (cd src; docker-compose up) # restart webapp
-
-
-## Rebuilding Docker Images
-
-The `webapp-base` image (`src/webapp-base/Dockerfile`) is used to manage core dependencies such as node and its global packages. Although changes should be rare, when doing so, rebuild and publish the image by running:
-
-    $ cd src/webapp-base
-    $ docker build -t leaguewinspool/webapp-base:<new version number> .
-    $ docker push leaguewinspool/webapp-base:<new version number>
-
-Update `src/webapp/Dockerfile` and `circleci.yml` to use the new webapp-base version number
-
-When changing any of the other Dockerfiles, rebuild the images by running:
-
-    $ (cd src; docker-compose build)
-
-Now you are ready for development again.
-
-
-## Debugging commands
-
-Add `-e LOG_LEVEL=verbose` to run command:
-
-    $ (cd src; docker-compose run -e LOG_LEVEL=verbose webapp <command>)
-
-
-## Running a Staging Environment
-
-These are the same commands the integration tests on CircleCI run:
-
-    $ (cd src; docker-compose -f docker-production.yml up)
-    $ (cd src; docker-compose -f docker-production.yml run webapp npm test)
-    $ curl http://$(dinghy ip)
-
-The difference is `docker-production.yml` won't sync your local code with the container.
 
 
 ## Deploying to Production
 
-When code is merged into `master`, CircleCI runs the integration tests. If they pass, CircleCI notifies DockerHub to rebuild the `webapp` container. Once the build finishes, DockerHub notifies Tutum to swap the old container with the new `webapp` image.
-
-The other containers are not deployed automatically because they rarely change. If they need updating:
-
-1. On CircleCI, [clear the cache](https://circleci.com/docs/how-cache-works) and rerun the tests
-2. On DockerHub, manually start a build on the updated container
-3. On Tutum, redeploy the container
+    ```bash
+    $ (cd app; meteor deploy)
+    ```
