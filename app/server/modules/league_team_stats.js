@@ -2,7 +2,7 @@ let prettyjson = Meteor.npmRequire( 'prettyjson' );
 
 Modules.server.leagueTeamStats = {
   refreshTeam(leagueId, seasonId, leagueTeamId) {
-    log.info(`refreshingTeam: ${leagueId}, ${seasonId}, ${leagueTeamId}`);
+    log.info(`Refreshing leagueTeamStats for: ${leagueTeamId}`);
 
     const games = Games.find({ leagueId, seasonId, status: "completed",
       $or: [{ homeTeamId: leagueTeamId },{ awayTeamId: leagueTeamId }] });
@@ -47,6 +47,6 @@ Modules.server.leagueTeamStats = {
         awayWins, awayLosses, awayTies,
         pointsFor, pointsAgainst
       } } );
-    log.debug(`LeagueTeamStats.upsert result: ${prettyjson.render(result)}`);
+    log.debug(`LeagueTeamStats.upsert numberAffected: ${result.numberAffected}`);
   }
 };
