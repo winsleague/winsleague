@@ -1,6 +1,6 @@
-LeagueTeamStats = new Mongo.Collection('league_team_stats');
+SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
-LeagueTeamStats.attachSchema(new SimpleSchema({
+SeasonLeagueTeams.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
   leagueTeamId: { type: String },
@@ -45,7 +45,7 @@ LeagueTeamStats.attachSchema(new SimpleSchema({
 
 
 /*Helpers */
-LeagueTeamStats.helpers({
+SeasonLeagueTeams.helpers({
   totalGames: function () {
     return this.wins + this.losses + this.ties;
   }
@@ -53,18 +53,18 @@ LeagueTeamStats.helpers({
 
 
 /* Hooks */
-LeagueTeamStats.after.insert(function (userId, doc) {
+SeasonLeagueTeams.after.insert(function (userId, doc) {
   Modules.server.poolUserTeams.refreshTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
 });
 
-LeagueTeamStats.after.update(function (userId, doc, fieldNames, modifier, options) {
+SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
   Modules.server.poolUserTeams.refreshTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
 }, { fetchPrevious: false });
 
 
 /* Access control */
 if (Meteor.isServer) {
-  LeagueTeamStats.allow({
+  SeasonLeagueTeams.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -78,7 +78,7 @@ if (Meteor.isServer) {
     }
   });
 
-  LeagueTeamStats.deny({
+  SeasonLeagueTeams.deny({
     insert: function (userId, doc) {
       return true;
     },

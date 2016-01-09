@@ -15,10 +15,12 @@ Modules.server.poolUserTeams = {
 
     var totalWins = 0, totalGames = 0, totalPlusMinus = 0;
     leagueTeamIds.forEach(function(leagueTeamId) {
-      const leagueTeamStats = LeagueTeamStats.findOne({ leagueId, seasonId, leagueTeamId });
-      totalWins += leagueTeamStats.wins;
-      totalGames += leagueTeamStats.totalGames();
-      totalPlusMinus += leagueTeamStats.pointsFor - leagueTeamStats.pointsAgainst;
+      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ leagueId, seasonId, leagueTeamId });
+      if (seasonLeagueTeams) {
+        totalWins += seasonLeagueTeams.wins;
+        totalGames += seasonLeagueTeams.totalGames();
+        totalPlusMinus += seasonLeagueTeams.pointsFor - seasonLeagueTeams.pointsAgainst;
+      }
     });
 
     result = PoolUserTeams.update({ _id: poolUserTeamId },
