@@ -8,8 +8,8 @@ Games.attachSchema(new SimpleSchema({
   week: { type: Number, optional: true }, // only for NFL
   homeTeamId: { type: String },
   homeScore: { type: Number, optional: true },
-  visitorTeamId: { type: String },
-  visitorScore: { type: Number, optional: true },
+  awayTeamId: { type: String },
+  awayScore: { type: Number, optional: true },
   status: {
     type: String,
     allowedValues: ["scheduled", "in progress", "completed", "postponed", "suspended", "cancelled"],

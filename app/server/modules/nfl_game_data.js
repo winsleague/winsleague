@@ -19,10 +19,10 @@ Modules.server.nflGameData = {
       const quarter = gameData[2];
       const timeRemaining = gameData[3];
       const homeScore = gameData[5];
-      const visitorScore = gameData[7];
+      const awayScore = gameData[7];
 
       const affected = Games.update({ leagueId: league._id, gameId },
-        { $set: { quarter: quarter, timeRemaining: timeRemaining, homeScore: homeScore, visitorScore: visitorScore } }
+        { $set: { quarter: quarter, timeRemaining: timeRemaining, homeScore: homeScore, awayScore: awayScore } }
       );
 
       log.info(`Updated game with leagueId: ${league._id} and gsis: ${gsis} (affected: ${affected})`);
@@ -69,8 +69,8 @@ Modules.server.nflGameData = {
       week: week,
       homeTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.h })._id,
       homeScore: game.hs,
-      visitorTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.v })._id,
-      visitorScore: game.vs,
+      awayTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.v })._id,
+      awayScore: game.vs,
       period: Modules.server.nflGameData.cleanPeriod(game.q),
       status: Modules.server.nflGameData.cleanStatus(game.q)
     });
