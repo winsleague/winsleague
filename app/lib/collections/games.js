@@ -50,13 +50,13 @@ Games.attachSchema(new SimpleSchema({
 
 /* Hooks */
 Games.after.insert(function (userId, doc) {
-  Modules.server.seasonLeagueTeams.refreshTeam(doc.leagueId, doc.seasonId, doc.homeTeamId);
-  Modules.server.seasonLeagueTeams.refreshTeam(doc.leagueId, doc.seasonId, doc.awayTeamId);
+  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 });
 
 Games.after.update(function (userId, doc, fieldNames, modifier, options) {
-  Modules.server.seasonLeagueTeams.refreshTeam(doc.leagueId, doc.seasonId, doc.homeTeamId);
-  Modules.server.seasonLeagueTeams.refreshTeam(doc.leagueId, doc.seasonId, doc.awayTeamId);
+  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 }, { fetchPrevious: false });
 
 

@@ -1,8 +1,8 @@
 let prettyjson = Meteor.npmRequire( 'prettyjson' );
 
 Modules.server.seasonLeagueTeams = {
-  refreshTeam(leagueId, seasonId, leagueTeamId) {
-    log.info(`Refreshing seasonLeagueTeams for: ${leagueTeamId}`);
+  refreshTeamStats(leagueId, seasonId, leagueTeamId) {
+    log.info(`Refreshing stats for seasonLeagueTeam: ${leagueTeamId}`);
 
     const games = Games.find({ leagueId, seasonId, status: "completed",
       $or: [{ homeTeamId: leagueTeamId },{ awayTeamId: leagueTeamId }] });
