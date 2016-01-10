@@ -16,13 +16,13 @@ Modules.server.nflGameData = {
     for (let gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = parseInt(gameData[10]);
-      const quarter = gameData[2];
+      const period = gameData[2];
       const timeRemaining = gameData[3];
       const homeScore = gameData[5];
       const awayScore = gameData[7];
 
       const affected = Games.update({ leagueId: league._id, gameId },
-        { $set: { quarter: quarter, timeRemaining: timeRemaining, homeScore: homeScore, awayScore: awayScore } }
+        { $set: { period, timeRemaining, homeScore, awayScore } }
       );
 
       log.info(`Updated game with leagueId: ${league._id} and gameId: ${gameId} (affected: ${affected})`);
