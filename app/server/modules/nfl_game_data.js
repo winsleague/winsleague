@@ -30,9 +30,11 @@ Modules.server.nflGameData = {
   },
 
   ingestSeasonData(season) {
-    if (season == null) { throw new Error(`Season is null!`) }
+    if (season == null) { throw new Error(`Season is null!`); }
 
     const league = Modules.server.nflGameData.getLeague();
+    if (league == null) { throw new Error(`League is not found!`); }
+
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
     for (let week = 1; week <= 17; week++) {
@@ -82,6 +84,7 @@ Modules.server.nflGameData = {
 
   getSeason(year = (new Date()).getFullYear()) {
     const league = Modules.server.nflGameData.getLeague();
+    if (league == null) { throw new Error(`NFL League not found!`); }
     return Seasons.findOne({ leagueId: league._id, year })
   },
 
