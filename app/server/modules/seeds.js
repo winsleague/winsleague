@@ -1,5 +1,7 @@
 Modules.server.seeds = {
   createLeagues: () => {
+    log.info(`Creating leagues and teams`);
+
     Leagues.remove({});
     LeagueTeams.remove({});
     Seasons.remove({});
