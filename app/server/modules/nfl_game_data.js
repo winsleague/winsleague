@@ -25,7 +25,7 @@ Modules.server.nflGameData = {
         { $set: { quarter: quarter, timeRemaining: timeRemaining, homeScore: homeScore, awayScore: awayScore } }
       );
 
-      log.info(`Updated game with leagueId: ${league._id} and gsis: ${gsis} (affected: ${affected})`);
+      log.info(`Updated game with leagueId: ${league._id} and gameId: ${gameId} (affected: ${affected})`);
     }
   },
 
