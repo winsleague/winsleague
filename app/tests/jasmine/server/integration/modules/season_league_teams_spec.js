@@ -1,5 +1,5 @@
-describe("Season League Teams", function () {
-  describe("Refresh Team Stats", function () {
+describe("Season League Teams", function() {
+  describe("Refresh Team Stats", function() {
     afterEach(function() {
       log.info(`Cleaned up ${Games.remove({})} Games`);
       log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
