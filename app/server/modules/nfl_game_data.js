@@ -18,8 +18,8 @@ Modules.server.nflGameData = {
       const gameId = parseInt(gameData[10]);
       const period = gameData[2].toLowerCase();
       const timeRemaining = gameData[3];
-      const homeScore = gameData[5];
-      const awayScore = gameData[7];
+      const homeScore = gameData[7];
+      const awayScore = gameData[5];
 
       const affected = Games.update({ leagueId: league._id, gameId },
         { $set: { period, timeRemaining, homeScore, awayScore } }
