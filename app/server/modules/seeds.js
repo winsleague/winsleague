@@ -1,11 +1,13 @@
 Modules.server.seeds = {
   createLeagues: () => {
+    log.info(`Creating leagues and teams`);
+
     Leagues.remove({});
     LeagueTeams.remove({});
     Seasons.remove({});
 
-    let nflId = Leagues.insert({ name: "NFL" });
-    let teams = [
+    const leagueId = Leagues.insert({ name: "NFL" });
+    const teams = [
       { cityName: "Baltimore", mascotName: "Ravens", abbreviation: "BAL", conference: "AFC", division: "North" },
       { cityName: "Cincinnati", mascotName: "Bengals", abbreviation: "CIN", conference: "AFC", division: "North" },
       { cityName: "Cleveland", mascotName: "Browns", abbreviation: "CLE", conference: "AFC", division: "North" },
@@ -40,10 +42,10 @@ Modules.server.seeds = {
       { cityName: "St. Louis", mascotName: "Rams", abbreviation: "STL", conference: "NFC", division: "West" }
     ];
     for (var team of teams) {
-      team.leagueId = nflId;
+      team.leagueId = leagueId;
       LeagueTeams.insert(team);
     }
 
-    Seasons.insert({ leagueId: nflId, year: 2015 });
+    Seasons.insert({ leagueId, year: 2015 });
   }
 };

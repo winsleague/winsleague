@@ -1,27 +1,20 @@
-NflGames = new Mongo.Collection('nfl_games');
+SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
-NflGames.attachSchema(new SimpleSchema({
+SeasonLeagueTeams.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
-  week: { type: Number },
-  eid: { type: Number }, // a date representation (e.g. 2016010302)
-  gsis: { type: Number }, // a game ID used by the NFL
-  day: { type: String, allowedValues: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] },
-  time: { type: String },
-  quarter: {
-    type: String,
-    allowedValues: ["Pregame", "1", "2", "Halftime", "3", "4", "OT?", "Final", "Final Overtime"],
-    autoValue: function() {
-      if (this.value == "P") { return "Pregame"; }
-      if (this.value == "F") { return "Final"; }
-      if (this.value == "FO" || this.value == "final overtime") { return "Final Overtime"; }
-    }
-  },
-  timeRemaining: { type: String, optional: true },
-  homeTeamId: { type: String },
-  homeScore: { type: Number, optional: true },
-  visitorTeamId: { type: String },
-  visitorScore: { type: Number, optional: true },
+  leagueTeamId: { type: String },
+  wins: { type: Number },
+  losses: { type: Number },
+  ties: { type: Number },
+  homeWins: { type: Number },
+  homeLosses: { type: Number },
+  homeTies: { type: Number },
+  awayWins: { type: Number },
+  awayLosses: { type: Number },
+  awayTies: { type: Number },
+  pointsFor: { type: Number },
+  pointsAgainst: { type: Number },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -47,11 +40,31 @@ NflGames.attachSchema(new SimpleSchema({
     },
     denyInsert: true,
     optional: true
-  },
+  }
 }));
 
+
+/*Helpers */
+SeasonLeagueTeams.helpers({
+  totalGames: function () {
+    return this.wins + this.losses + this.ties;
+  }
+});
+
+
+/* Hooks */
+SeasonLeagueTeams.after.insert(function (userId, doc) {
+  Modules.server.poolUserTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
+});
+
+SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
+  Modules.server.poolUserTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
+}, { fetchPrevious: false });
+
+
+/* Access control */
 if (Meteor.isServer) {
-  NflGames.allow({
+  SeasonLeagueTeams.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -65,7 +78,7 @@ if (Meteor.isServer) {
     }
   });
 
-  NflGames.deny({
+  SeasonLeagueTeams.deny({
     insert: function (userId, doc) {
       return true;
     },

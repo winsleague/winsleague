@@ -10,13 +10,13 @@ template(name='Leaderboard')
           th Games
           th +/-
       tbody
-        +each teams
+        +each poolUserTeams
           tr
             td= userTeamName
             td= userTeamName
-            td= prettyLeagueTeamMascotNames
+            td= teamSummary
             td= totalWins
             td= totalGames
             td= totalPlusMinus
   else
-    .div Loading...
+    div Loading...
