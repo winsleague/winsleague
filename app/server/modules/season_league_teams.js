@@ -1,4 +1,4 @@
-let prettyjson = Meteor.npmRequire( 'prettyjson' );
+let prettyjson = Meteor.npmRequire('prettyjson');
 
 Modules.server.seasonLeagueTeams = {
   refreshTeamStats(leagueId, seasonId, leagueTeamId) {
