@@ -1,7 +1,7 @@
 let prettyjson = Meteor.npmRequire( 'prettyjson' );
 
 Modules.server.nflGameData = {
-  updateScores() {
+  updateLiveScores() {
     const url = `http://www.nfl.com/liveupdate/scorestrip/scorestrip.json`;
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
