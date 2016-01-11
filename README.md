@@ -48,6 +48,10 @@
     $ (cd app; tail -f .meteor/local/log/jasmine-client-integration.log)
     ```
 
+    ### Other tips:
+
+    # Change `describe()` to `fdescribe`
+
 
 ## Debugging
 
