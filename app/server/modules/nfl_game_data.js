@@ -16,7 +16,7 @@ Modules.server.nflGameData = {
     for (let gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = parseInt(gameData[10]);
-      const period = gameData[2];
+      const period = gameData[2].toLowerCase();
       const timeRemaining = gameData[3];
       const homeScore = gameData[5];
       const awayScore = gameData[7];
