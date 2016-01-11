@@ -1,7 +1,7 @@
 let prettyjson = Meteor.npmRequire('prettyjson');
 
 describe("Pool User Teams", function() {
-  fdescribe("Refresh Team Stats", function () {
+  describe("Refresh Team Stats", function () {
     afterEach(function () {
       log.info(`Cleaned up ${Games.remove({})} Games`);
       log.info(`Cleaned up ${Pools.remove({})} Pools`);
@@ -16,10 +16,11 @@ describe("Pool User Teams", function() {
         seasonId: season._id,
         name: "Dummy"
       });
-      
 
       const giantsTeamId = LeagueTeams.findOne({ abbreviation: "NYG" })._id;
+      log.info(`giantsTeamId: ${giantsTeamId}`);
       const seahawksTeamId = LeagueTeams.findOne({ abbreviation: "SEA" })._id;
+      log.info(`seahawksTeamId: ${seahawksTeamId}`);
 
       const poolUserTeamId = PoolUserTeams.insert({
         leagueId: season.leagueId,
@@ -30,7 +31,6 @@ describe("Pool User Teams", function() {
         leagueTeamIds: [giantsTeamId],
         pickNumbers: [1]
       });
-      const poolUserTeam = PoolUserTeams.findOne({ _id: poolUserTeamId });
 
       Games.insert( {
         leagueId: season.leagueId,
@@ -45,11 +45,14 @@ describe("Pool User Teams", function() {
         period: "final"
       } );
 
-      Modules.server.poolUserTeams.refreshPoolUserTeam(season.leagueId, season._id, poolUserTeam);
+      // Games.insert will automatically refresh all PoolUserTeams that are affected
 
-      console.log(prettyjson.render(poolUserTeam));
+      const poolUserTeam = PoolUserTeams.findOne({ _id: poolUserTeamId });
+      log.debug(prettyjson.render(poolUserTeam));
 
-      expect(poolUserTeam.totalWins).toBe(1)
+      expect(poolUserTeam.totalWins).toBe(1);
+      expect(poolUserTeam.totalGames).toBe(1);
+      expect(poolUserTeam.totalPlusMinus).toBe(7);
     });
   });
 });

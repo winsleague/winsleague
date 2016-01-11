@@ -8,10 +8,12 @@ Modules.server.poolUserTeams = {
     poolUserTeams.forEach(function(poolUserTeam) {
       Modules.server.poolUserTeams.refreshPoolUserTeam(leagueId, seasonId, poolUserTeam);
     });
+
+    log.info(`Done finding PoolUserTeams`);
   },
 
   refreshPoolUserTeam(leagueId, seasonId, poolUserTeam) {
-    log.info(`Refreshing PoolUserTeam: ${poolUserTeam._id}`);
+    log.info(`Refreshing PoolUserTeam: ${poolUserTeam.userTeamName} - ${poolUserTeam._id}`);
 
     var totalWins = 0, totalGames = 0, totalPlusMinus = 0;
     poolUserTeam.leagueTeamIds.forEach(function(leagueTeamId) {
