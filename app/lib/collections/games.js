@@ -12,7 +12,7 @@ Games.attachSchema(new SimpleSchema({
   awayScore: { type: Number, optional: true },
   status: {
     type: String,
-    allowedValues: ["scheduled", "in progress", "completed", "postponed", "suspended", "cancelled"],
+    allowedValues: ["scheduled", "in progress", "completed", "postponed", "suspended", "cancelled"]
   },
   period: { // quarter if NFL or NBA, inning if MLB, period if NHL
     type: String,
