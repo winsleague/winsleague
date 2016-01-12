@@ -23,4 +23,4 @@ template(name='MasterLayout')
               li
                 a(href='#') Sign In
   .container
-    +yield
+    +Template.dynamic(template=content)

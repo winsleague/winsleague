@@ -15,8 +15,11 @@ Template.Leaderboard.helpers({
 /* Leaderboard: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Leaderboard.onCreated(function () {
-  this.subscribe('leaderboard', function(){
-    log.info(`Leaderboard data ready: ${PoolUserTeams.find().count()} teams`);
+  var self = this;
+  self.autorun(function() {
+    self.subscribe('leaderboard', function () {
+      log.info(`Leaderboard data ready: ${PoolUserTeams.find().count()} teams`);
+    });
   });
 });
 

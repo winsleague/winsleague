@@ -64,7 +64,7 @@
     ### Database Admin
 
     ```bash
-    $ http://localhost:3000/admin
+    $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-local-meteor-mongodb
     ```
 
 
