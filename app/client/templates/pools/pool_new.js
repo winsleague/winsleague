@@ -16,6 +16,9 @@ Template.poolNew.onCreated(function() {
     self.subscribe('leagues', function() {
       log.info(`League data ready: ${Leagues.find().count()} leagues`);
     });
+    self.subscribe('seasons', function() {
+      log.info(`Season data ready: ${Seasons.find().count()} seasons`);
+    });
   });
 });
 

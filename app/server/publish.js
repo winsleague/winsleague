@@ -12,3 +12,7 @@ Meteor.publish('leaderboard', function () {
 Meteor.publish('leagues', function () {
   return Leagues.find({});
 });
+
+Meteor.publish('seasons', function () {
+  return Seasons.find({});
+});
