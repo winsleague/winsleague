@@ -15,12 +15,6 @@ template(name="masterLayout")
           li
             a(href="/pools/new") New Pool
         ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a.dropdown-toggle(href="#", data-toggle="dropdown")
-              | Account
-              span.caret
-            ul.dropdown-menu(role="menu")
-              li
-                a(href="#") Sign In
+          +loginButtons
   .container
     +Template.dynamic(template=content)
