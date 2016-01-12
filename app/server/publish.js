@@ -8,3 +8,7 @@ Meteor.publish('leaderboard', function () {
 
   return this.ready();
 });
+
+Meteor.publish('leagues', function () {
+  return Leagues.find({});
+});
