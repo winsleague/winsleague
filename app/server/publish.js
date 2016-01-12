@@ -16,3 +16,9 @@ Meteor.publish('leagues', function () {
 Meteor.publish('seasons', function () {
   return Seasons.find({});
 });
+
+Meteor.publish('singlePool', function(id) {
+  const pool = Pools.find({ _id: id });
+  const users = PoolUserTeams.find({ poolId: id });
+  return [pool, users];
+});

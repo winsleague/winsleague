@@ -18,8 +18,9 @@ pools.route( '/new', {
 
 // http://app.com/pools/:_id
 pools.route( '/:_id', {
-  action: function() {
-    console.log( "We're viewing a single document." );
+  action: function(params) {
+    console.log(`We're viewing a single document: ${FlowRouter.getParam('_id')}`);
+    BlazeLayout.render("masterLayout", { content: "poolShow" });
   }
 });
 
