@@ -4,6 +4,6 @@ template(name="poolNew")
   +autoForm(collection="Pools" id="insertPoolForm" type="insert")
     fieldset
       if Template.subscriptionsReady
-        +afQuickField(name="leagueId" options=leagueOptions defaultValue="nfl")
+        +afQuickField(name="leagueId" options=leagueOptions defaultValue=nflLeagueId)
       +afQuickField(name="name")
-  button.btn.btn-primary(type="submit") Create
+    button.btn.btn-primary(type="submit") Create
