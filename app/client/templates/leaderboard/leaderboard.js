@@ -1,20 +1,20 @@
 /*****************************************************************************/
 /* Leaderboard: Event Handlers */
 /*****************************************************************************/
-Template.Leaderboard.events({
+Template.leaderboard.events({
 });
 
 /*****************************************************************************/
 /* Leaderboard: Helpers */
 /*****************************************************************************/
-Template.Leaderboard.helpers({
+Template.leaderboard.helpers({
   poolUserTeams: () => { return PoolUserTeams.find() }
 });
 
 /*****************************************************************************/
 /* Leaderboard: Lifecycle Hooks */
 /*****************************************************************************/
-Template.Leaderboard.onCreated(function () {
+Template.leaderboard.onCreated(function () {
   var self = this;
   self.autorun(function() {
     self.subscribe('leaderboard', function () {
@@ -23,8 +23,8 @@ Template.Leaderboard.onCreated(function () {
   });
 });
 
-Template.Leaderboard.onRendered(function () {
+Template.leaderboard.onRendered(function () {
 });
 
-Template.Leaderboard.onDestroyed(function () {
+Template.leaderboard.onDestroyed(function () {
 });

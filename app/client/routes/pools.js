@@ -12,7 +12,7 @@ pools.route( '/', {
 // http://app.com/pools/new
 pools.route( '/new', {
   action: function() {
-    BlazeLayout.render("MasterLayout", { content: "poolNew" });
+    BlazeLayout.render("masterLayout", { content: "poolNew" });
   }
 });
 

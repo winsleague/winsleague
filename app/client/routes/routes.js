@@ -1,11 +1,11 @@
 FlowRouter.route('/', {
   action: function() {
-    BlazeLayout.render("MasterLayout", { content: "Home" });
+    BlazeLayout.render("masterLayout", { content: "home" });
   }
 });
 
 FlowRouter.notFound = {
   action: function() {
-    BlazeLayout.render("MasterLayout", { content: "NotFound" });
+    BlazeLayout.render("masterLayout", { content: "notFound" });
   }
 };
