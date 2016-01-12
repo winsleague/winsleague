@@ -9,13 +9,14 @@ Pools.attachSchema(new SimpleSchema({
     }
   },
   seasonId: { type: String },
-  name: { type: String, max: 50 }
+  name: { type: String, max: 50 },
+  commissionerUserId: { type: String }
 }));
 
 if (Meteor.isServer) {
   Pools.allow({
     insert: function (userId, doc) {
-      return false;
+      return true;
     },
 
     update: function (userId, doc, fieldNames, modifier) {
@@ -29,7 +30,7 @@ if (Meteor.isServer) {
 
   Pools.deny({
     insert: function (userId, doc) {
-      return true;
+      return false;
     },
 
     update: function (userId, doc, fieldNames, modifier) {
