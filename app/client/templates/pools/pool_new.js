@@ -27,3 +27,12 @@ Template.poolNew.onRendered(function() {
 
 Template.poolNew.onDestroyed(function() {
 });
+
+
+AutoForm.hooks({
+  insertPoolForm: {
+    onSuccess: function(operation, poolId) {
+      FlowRouter.go("poolShow", { _id: poolId });
+    }
+  }
+});
