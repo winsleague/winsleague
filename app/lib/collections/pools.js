@@ -29,7 +29,7 @@ Pools.attachSchema(new SimpleSchema({
     type: String,
     autoValue: function() {
       if (this.isInsert) {
-        return this.userId;
+        return Meteor.userId(); // so we can easily stub this in tests
       }
     }
   },
