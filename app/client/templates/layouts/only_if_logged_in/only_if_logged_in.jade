@@ -1,0 +1,9 @@
+template(name="onlyIfLoggedIn")
+  if authInProcess
+    p loading ...
+  else
+    if canShow
+      +UI.contentBlock
+    else
+      p You are not authorized to view this page.
+      p Please <a href="/login">login</a> to view this page

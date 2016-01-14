@@ -11,6 +11,10 @@ describe("Pool User Teams", function() {
     it("should add up the wins and losses for all completed games", function () {
       const season = Modules.server.nflGameData.getSeason(2015);
 
+      const user = Accounts.findUserByEmail("test@test.com");
+      spyOn(Meteor, 'userId').and.returnValue(user._id);
+
+      // Creating a pool will automatically set commissioner to Meteor.userId
       poolId = Pools.insert({
         leagueId: season.leagueId,
         seasonId: season._id,

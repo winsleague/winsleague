@@ -57,6 +57,7 @@ loadDefaultFixtures = function () {
   console.log('Loading default fixtures');
 
   Modules.server.seeds.createLeagues();
+  Accounts.createUser({ email: "test@test.com" });
 
   console.log('Finished loading default fixtures');
 };

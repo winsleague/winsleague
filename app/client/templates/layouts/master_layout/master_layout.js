@@ -1,5 +1,5 @@
-Template.MasterLayout.helpers({
+Template.masterLayout.helpers({
 });
 
-Template.MasterLayout.events({
+Template.masterLayout.events({
 });
