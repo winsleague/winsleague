@@ -12,13 +12,13 @@ template(name="poolShow")
           th Games
           th +/-
       tbody
-        +each poolUserTeams
+        +each poolUserTeam in poolUserTeams
           tr
-            td= userTeamName
-            td= userTeamName
-            td= teamSummary
-            td= totalWins
-            td= totalGames
-            td= totalPlusMinus
+            td= poolUserTeam.userTeamName
+            td= poolUserTeam.userTeamName
+            td= poolUserTeam.teamSummary
+            td= poolUserTeam.totalWins
+            td= poolUserTeam.totalGames
+            td= poolUserTeam.totalPlusMinus
   else
     div Loading...
