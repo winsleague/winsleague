@@ -11,12 +11,11 @@ Template.poolsNew.helpers({
 });
 
 Template.poolsNew.onCreated(function() {
-  var self = this;
-  self.autorun(function() {
-    self.subscribe('leagues', function() {
+  this.autorun(function() {
+    this.subscribe('leagues', function() {
       log.info(`League data ready: ${Leagues.find().count()} leagues`);
     });
-    self.subscribe('seasons', function() {
+    this.subscribe('seasons', function() {
       log.info(`Season data ready: ${Seasons.find().count()} seasons`);
     });
   });
