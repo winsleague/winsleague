@@ -16,7 +16,10 @@ Template.poolsShow.onCreated(function() {
   self.autorun(function() {
     const poolId = FlowRouter.getParam('_id');
     self.subscribe('singlePool', poolId, function() {
-      log.info(`singlePool subscription ready: ${PoolTeams.find().count()} teams`);
+      log.info(`singlePool subscription ready: ${Pools.find().count()} pools`);
+    });
+    self.subscribe('poolTeams', poolId, function() {
+      log.info(`poolTeams subscription ready: ${PoolTeams.find().count()} teams`);
     });
   });
 });

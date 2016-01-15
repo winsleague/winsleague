@@ -19,7 +19,10 @@ Meteor.publish('seasons', function() {
 
 Meteor.publish('singlePool', function(id) {
   check(id, String);
-  const pool = Pools.find({ _id: id });
-  const users = PoolTeams.find({ poolId: id });
-  return [pool, users];
+  return Pools.find({ _id: id });
+});
+
+Meteor.publish('poolTeams', function(poolId) {
+  check(poolId, String);
+  return PoolTeams.find({ poolId });
 });
