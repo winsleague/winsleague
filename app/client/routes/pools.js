@@ -21,23 +21,23 @@ poolsRoutes.route( '/new', {
 poolsRoutes.route( '/:_id', {
   name: "poolsShow",
   action: function(params) {
-    console.log(`We're viewing a single document: ${FlowRouter.getParam('_id')}`);
+    console.log(`We're viewing a single document: ${params._id}`);
     BlazeLayout.render("masterLayout", { content: "poolsShow" });
-  }
-});
-
-// http://app.com/pools/new
-poolsRoutes.route( '/:_id/players/new', {
-  name: "poolTeamsNew",
-  action: function() {
-    console.log(`We're creating teams for a pool: ${FlowRouter.getParam('_id')}`);
-    BlazeLayout.render("masterLayout", { content: "poolTeamsNew" });
   }
 });
 
 // http://app.com/pools/:_id/edit
 poolsRoutes.route( '/:_id/edit', {
-  action: function() {
-    console.log( "We're editing a single document." );
+  action: function(params) {
+    console.log(`We're editing a single document: ${params._id}`);
+  }
+});
+
+// http://app.com/pools/:_poolId/players/new
+poolsRoutes.route( '/:poolId/players/new', {
+  name: "poolTeamsNew",
+  action: function(params) {
+    console.log(`We're creating teams for a pool: ${params.poolId}`);
+    BlazeLayout.render("masterLayout", { content: "poolTeamsNew" });
   }
 });
