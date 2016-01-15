@@ -20,5 +20,7 @@ template(name="poolsShow")
             td= poolTeam.totalWins
             td= poolTeam.totalGames
             td= poolTeam.totalPlusMinus
+
+    a(href="{{pathFor 'poolTeamsNew' _id=poolId}}") Add Player
   else
     div Loading...

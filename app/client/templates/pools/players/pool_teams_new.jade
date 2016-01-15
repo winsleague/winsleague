@@ -1,0 +1,8 @@
+template(name="poolTeamsNew")
+  h2 Add Player
+
+  +onlyIfLoggedIn
+    +autoForm(collection="PoolTeams" id="insertPoolTeamForm" type="insert")
+      fieldset
+        +afQuickField(name="name")
+      button.btn.btn-primary(type="submit") Create

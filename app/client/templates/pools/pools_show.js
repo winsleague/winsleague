@@ -4,7 +4,10 @@ Template.poolsShow.events({
 Template.poolsShow.helpers({
   poolTeams: () => {
     const poolId = FlowRouter.getParam('_id');
-    return PoolTeams.find({ poolId })
+    return PoolTeams.find({ poolId });
+  },
+  poolId: () => {
+    return FlowRouter.getParam('_id');
   }
 });
 
