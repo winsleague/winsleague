@@ -2,9 +2,9 @@ Template.poolShow.events({
 });
 
 Template.poolShow.helpers({
-  poolUserTeams: () => {
+  poolTeams: () => {
     const poolId = FlowRouter.getParam('_id');
-    return PoolUserTeams.find({ poolId })
+    return PoolTeams.find({ poolId })
   }
 });
 
@@ -13,7 +13,7 @@ Template.poolShow.onCreated(function() {
   self.autorun(function() {
     const poolId = FlowRouter.getParam('_id');
     self.subscribe('singlePool', poolId, function() {
-      log.info(`singlePool subscription ready: ${PoolUserTeams.find().count()} teams`);
+      log.info(`singlePool subscription ready: ${PoolTeams.find().count()} teams`);
     });
   });
 });

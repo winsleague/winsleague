@@ -1,0 +1,24 @@
+template(name="poolShow")
+  h2 Pool
+
+  if Template.subscriptionsReady
+    table.table.table-striped
+      thead
+        tr
+          th Player
+          th Team Name
+          th Teams
+          th Wins
+          th Games
+          th +/-
+      tbody
+        +each poolTeam in poolTeams
+          tr
+            td= poolTeam.userTeamName
+            td= poolTeam.userTeamName
+            td= poolTeam.teamSummary
+            td= poolTeam.totalWins
+            td= poolTeam.totalGames
+            td= poolTeam.totalPlusMinus
+  else
+    div Loading...

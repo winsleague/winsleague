@@ -1,6 +1,6 @@
-PoolUserTeams = new Mongo.Collection('pool_user_teams');
+PoolTeams = new Mongo.Collection('pool_teams');
 
-PoolUserTeams.attachSchema(new SimpleSchema({
+PoolTeams.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
   poolId: { type: String },
@@ -40,7 +40,7 @@ PoolUserTeams.attachSchema(new SimpleSchema({
   }
 }));
 
-PoolUserTeams.helpers({
+PoolTeams.helpers({
   teamSummary: function () {
     let string = '';
     for (var i = 0; i < this.leagueTeamMascotNames.length; i++) {
@@ -53,7 +53,7 @@ PoolUserTeams.helpers({
 });
 
 if (Meteor.isServer) {
-  PoolUserTeams.allow({
+  PoolTeams.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -67,7 +67,7 @@ if (Meteor.isServer) {
     }
   });
 
-  PoolUserTeams.deny({
+  PoolTeams.deny({
     insert: function (userId, doc) {
       return true;
     },

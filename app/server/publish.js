@@ -3,7 +3,7 @@
 
 Meteor.publish('leaderboard', function() {
   const pool = Pools.findOne({}, { fields: {_id: 1} });
-  const users = PoolUserTeams.find({ poolId: pool._id });
+  const users = PoolTeams.find({ poolId: pool._id });
   if (users) { return users; }
 
   return this.ready();
@@ -20,6 +20,6 @@ Meteor.publish('seasons', function() {
 Meteor.publish('singlePool', function(id) {
   check(id, String);
   const pool = Pools.find({ _id: id });
-  const users = PoolUserTeams.find({ poolId: id });
+  const users = PoolTeams.find({ poolId: id });
   return [pool, users];
 });

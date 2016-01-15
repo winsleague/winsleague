@@ -8,7 +8,7 @@ Template.leaderboard.events({
 /* Leaderboard: Helpers */
 /*****************************************************************************/
 Template.leaderboard.helpers({
-  poolUserTeams: () => { return PoolUserTeams.find() }
+  poolTeams: () => { return PoolTeams.find() }
 });
 
 /*****************************************************************************/
@@ -18,7 +18,7 @@ Template.leaderboard.onCreated(function () {
   var self = this;
   self.autorun(function() {
     self.subscribe('leaderboard', function () {
-      log.info(`Leaderboard data ready: ${PoolUserTeams.find().count()} teams`);
+      log.info(`Leaderboard data ready: ${PoolTeams.find().count()} teams`);
     });
   });
 });
