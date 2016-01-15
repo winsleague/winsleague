@@ -26,3 +26,8 @@ Meteor.publish('poolTeams', function(poolId) {
   check(poolId, String);
   return PoolTeams.find({ poolId });
 });
+
+Meteor.publish('leagueTeams', function() {
+  // TODO: only publish league teams in the league that I need (pass leagueId)
+  return LeagueTeams.find({});
+});

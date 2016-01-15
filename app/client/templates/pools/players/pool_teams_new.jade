@@ -6,7 +6,8 @@ template(name="poolTeamsNew")
       fieldset
         if Template.subscriptionsReady
           +afFieldInput(name="leagueId" type="hidden" value="#{leagueId}")
-        +afQuickField(name="name")
+          +afFieldInput(name="seasonId" type="hidden" value="#{seasonId}")
+          +afFieldInput(name="poolId" type="hidden" value="#{poolId}")
+        +afQuickField(name="userTeamName")
+        +afQuickField(name="leagueTeamIds")
       button.btn.btn-primary(type="submit") Create
-
-    div league: #{seasonId}

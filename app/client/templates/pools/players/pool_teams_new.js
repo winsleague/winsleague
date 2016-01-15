@@ -9,6 +9,10 @@ Template.poolTeamsNew.helpers({
   seasonId: () => {
     const instance = Template.instance();
     return instance.getPool().seasonId;
+  },
+  poolId: () => {
+    const instance = Template.instance();
+    return instance.getPoolId();
   }
 });
 
@@ -19,6 +23,9 @@ Template.poolTeamsNew.onCreated(function() {
   this.autorun(() => {
     this.subscribe('singlePool', this.getPoolId(), () => {
       log.info(`singlePool subscription ready: ${Pools.find().count()} pools`);
+    });
+    this.subscribe('leagueTeams', () => {
+      log.info(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
     });
   });
 });

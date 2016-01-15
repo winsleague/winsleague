@@ -6,7 +6,23 @@ PoolTeams.attachSchema(new SimpleSchema({
   poolId: { type: String },
   userId: { type: String },
   userTeamName: { type: String },
-  leagueTeamIds: { type: [String] },
+  leagueTeamIds: {
+    type: [String],
+    autoform: {
+      minCount: 1,
+      maxCount: 4,
+      initialCount: 4
+    }
+  },
+  'leagueTeamIds.$': {
+    autoform: {
+      afFieldInput: {
+        options: function() {
+          return LeagueTeams.find({}).map( function(leagueTeam) { return { label: `${leagueTeam.cityName} ${leagueTeam.mascotName}`, value: leagueTeam._id } } );
+        }
+      }
+    }
+  },
   pickNumbers: { type: [Number] },
   leagueTeamMascotNames: { type: [String], defaultValue: [] },
   totalWins: { type: Number, defaultValue: 0 },
