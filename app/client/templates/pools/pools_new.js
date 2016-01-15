@@ -1,7 +1,7 @@
-Template.poolNew.events({
+Template.poolsNew.events({
 });
 
-Template.poolNew.helpers({
+Template.poolsNew.helpers({
   leagueOptions: function() {
     return Leagues.find({}).map( function(league) { return { label: league.name, value: league._id } } );
   },
@@ -10,7 +10,7 @@ Template.poolNew.helpers({
   }
 });
 
-Template.poolNew.onCreated(function() {
+Template.poolsNew.onCreated(function() {
   var self = this;
   self.autorun(function() {
     self.subscribe('leagues', function() {
@@ -22,17 +22,17 @@ Template.poolNew.onCreated(function() {
   });
 });
 
-Template.poolNew.onRendered(function() {
+Template.poolsNew.onRendered(function() {
 });
 
-Template.poolNew.onDestroyed(function() {
+Template.poolsNew.onDestroyed(function() {
 });
 
 
 AutoForm.hooks({
   insertPoolForm: {
     onSuccess: function(operation, poolId) {
-      FlowRouter.go("poolShow", { _id: poolId });
+      FlowRouter.go("poolsShow", { _id: poolId });
     }
   }
 });

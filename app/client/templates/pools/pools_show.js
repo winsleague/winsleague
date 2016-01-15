@@ -1,14 +1,14 @@
-Template.poolShow.events({
+Template.poolsShow.events({
 });
 
-Template.poolShow.helpers({
+Template.poolsShow.helpers({
   poolTeams: () => {
     const poolId = FlowRouter.getParam('_id');
     return PoolTeams.find({ poolId })
   }
 });
 
-Template.poolShow.onCreated(function() {
+Template.poolsShow.onCreated(function() {
   var self = this;
   self.autorun(function() {
     const poolId = FlowRouter.getParam('_id');
@@ -18,8 +18,8 @@ Template.poolShow.onCreated(function() {
   });
 });
 
-Template.poolShow.onRendered(function() {
+Template.poolsShow.onRendered(function() {
 });
 
-Template.poolShow.onDestroyed(function() {
+Template.poolsShow.onDestroyed(function() {
 });
