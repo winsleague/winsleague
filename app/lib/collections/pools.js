@@ -28,7 +28,7 @@ Pools.attachSchema(new SimpleSchema({
   commissionerUserId: {
     type: String,
     autoValue: function() {
-      if (this.isInsert) {
+      if (this.isInsert && this.isSet == false) {
         return Meteor.userId(); // so we can easily stub this in tests
       }
     }
