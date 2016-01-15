@@ -21,6 +21,6 @@ template(name="poolsShow")
             td= poolTeam.totalGames
             td= poolTeam.totalPlusMinus
 
-    a(href="{{pathFor 'poolTeamsNew' _id=poolId}}") Add Player
+    a(href="{{pathFor 'poolTeamsNew' poolId=poolId}}") Add Player
   else
     div Loading...

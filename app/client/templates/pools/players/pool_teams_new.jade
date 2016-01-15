@@ -2,13 +2,11 @@ template(name="poolTeamsNew")
   h2 Add Player
 
   +onlyIfLoggedIn
-    if Template.subscriptionsReady
-      +autoForm(collection="PoolTeams" id="insertPoolTeamForm" type="insert")
-        fieldset
+    +autoForm(collection="PoolTeams" id="insertPoolTeamForm" type="insert")
+      fieldset
+        if Template.subscriptionsReady
           +afFieldInput(name="leagueId" type="hidden" value="#{leagueId}")
-          +afQuickField(name="name")
-        button.btn.btn-primary(type="submit") Create
+        +afQuickField(name="name")
+      button.btn.btn-primary(type="submit") Create
 
-      div league: #{seasonId}
-    else
-      p Loading...
+    div league: #{seasonId}

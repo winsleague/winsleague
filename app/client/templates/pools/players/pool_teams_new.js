@@ -23,10 +23,10 @@ Template.poolTeamsNew.onCreated(function() {
   });
 });
 
-Template.poolTeamsNew.onRendered(() => {
+Template.poolTeamsNew.onRendered(function() {
 });
 
-Template.poolTeamsNew.onDestroyed(() => {
+Template.poolTeamsNew.onDestroyed(function() {
 });
 
 
