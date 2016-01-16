@@ -1,13 +1,18 @@
 PoolTeams = new Mongo.Collection('pool_teams');
 
 PoolTeams.attachSchema(new SimpleSchema({
-  leagueId: { type: String },
-  seasonId: { type: String },
-  poolId: { type: String },
-  userId: { type: String },
-  userTeamName: { type: String },
+  leagueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  seasonId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  userId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  userTeamName: {
+    label: "Team name",
+    type: String
+  },
   leagueTeamIds: {
+    label: "Drafted teams",
     type: [String],
+    regEx: SimpleSchema.RegEx.Id,
     autoform: {
       minCount: 1,
       maxCount: 4,
