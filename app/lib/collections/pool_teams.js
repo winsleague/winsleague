@@ -18,7 +18,9 @@ PoolTeams.attachSchema(new SimpleSchema({
     autoform: {
       afFieldInput: {
         options: function() {
-          return LeagueTeams.find({}).map( function(leagueTeam) { return { label: `${leagueTeam.cityName} ${leagueTeam.mascotName}`, value: leagueTeam._id } } );
+          return LeagueTeams.find({}).map( function(leagueTeam) {
+            return { label: leagueTeam.fullName(), value: leagueTeam._id }
+          } );
         }
       }
     }
