@@ -29,14 +29,6 @@ PoolTeams.insertFormSchema = new SimpleSchema({
 
 Template.poolTeamsNew.helpers({
   insertPoolTeamSchema: PoolTeams.insertFormSchema,
-  leagueId: () => {
-    const instance = Template.instance();
-    return instance.getPool().leagueId;
-  },
-  seasonId: () => {
-    const instance = Template.instance();
-    return instance.getPool().seasonId;
-  },
   poolId: () => {
     const instance = Template.instance();
     return instance.getPoolId();
@@ -45,14 +37,14 @@ Template.poolTeamsNew.helpers({
 
 Template.poolTeamsNew.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('poolId');
-  this.getPool = () => Pools.findOne({ _id: this.getPoolId() });
+  this.getLeagueId = () => Pools.findOne({ _id: this.getPoolId() }, { fields: { leagueId: 1 } }).leagueId;
 
   this.autorun(() => {
     this.subscribe('singlePool', this.getPoolId(), () => {
-      log.info(`singlePool subscription ready: ${Pools.find().count()} pools`);
-    });
-    this.subscribe('leagueTeams', () => {
-      log.info(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
+      log.info(`pool subscription ready: ${Pools.find().count()} pools`);
+      this.subscribe('leagueTeams', this.getLeagueId(), () => {
+        log.info(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
+      });
     });
   });
 });
