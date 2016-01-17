@@ -1,8 +1,20 @@
 PoolTeams = new Mongo.Collection('pool_teams');
 
 PoolTeams.schema = new SimpleSchema({
-  leagueId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  seasonId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  leagueId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    autoValue: function() {
+      return Pools.findOne({ _id: doc.poolId }).leagueId;
+    }
+  },
+  seasonId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    autoValue: function() {
+      return Pools.findOne({ _id: doc.poolId }).seasonId;
+    }
+  },
   poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
   userId: {
     type: String,
@@ -27,13 +39,23 @@ PoolTeams.schema = new SimpleSchema({
       afFieldInput: {
         options: function() {
           return LeagueTeams.find({}).map( function(leagueTeam) {
-            return { label: leagueTeam.fullName(), value: leagueTeam._id }
+            return { label: leagueTeam.fullName(), value: leagueTeam._id };
           } );
         }
       }
     }
   },
-  pickNumbers: { type: [Number], optional: true },
+  pickNumbers: {
+    type: [Number],
+    autoValue: function() {
+      // TODO: this is placeholder until we wire this up
+      let numbers = [];
+      for (var leagueTeamId of this.field("leagueTeamIds").value) {
+        numbers.push(0);
+      }
+      return numbers;
+    }
+  },
   leagueTeamMascotNames: {
     type: [String],
     autoValue: function() {
