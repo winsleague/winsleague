@@ -8,9 +8,6 @@ Meteor.methods({
   insertPoolTeam: function (doc) {
     log.info(`doc: ${prettyjson.render(doc)}`);
 
-    const pool = Pools.findOne({ _id: doc.poolId });
-    doc.leagueId = pool.leagueId;
-    doc.seasonId = pool.seasonId;
     doc.userId = createOrExistingUserId(doc.userEmail);
     delete doc.userEmail;
 
