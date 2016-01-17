@@ -18,7 +18,7 @@ PoolTeams.insertFormSchema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options: function () {
-          return LeagueTeams.find({}).map(function (leagueTeam) {
+          return LeagueTeams.find({}, {sort: ["cityName", "asc"]}).map(function (leagueTeam) {
             return {label: leagueTeam.fullName(), value: leagueTeam._id}
           });
         }
@@ -66,8 +66,9 @@ Template.poolTeamsNew.onDestroyed(function() {
 
 AutoForm.hooks({
   insertPoolPlayerForm: {
-    onSuccess: (operation, poolId) => {
-      FlowRouter.go("poolsShow", { _id: poolId });
+    onSuccess: (operation, poolTeamId) => {
+      // TODO: redirect to poolId, not poolTeamId
+      FlowRouter.go("poolsShow", { _id: poolTeamId });
     }
   }
 });
