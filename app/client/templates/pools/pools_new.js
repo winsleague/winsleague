@@ -11,7 +11,7 @@ Template.poolsNew.helpers({
 });
 
 Template.poolsNew.onCreated(function() {
-  this.autorun(function() {
+  this.autorun(() => {
     this.subscribe('leagues', function() {
       log.info(`League data ready: ${Leagues.find().count()} leagues`);
     });
