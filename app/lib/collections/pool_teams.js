@@ -1,10 +1,13 @@
 PoolTeams = new Mongo.Collection('pool_teams');
 
-PoolTeams.attachSchema(new SimpleSchema({
+PoolTeams.schema = new SimpleSchema({
   leagueId: { type: String, regEx: SimpleSchema.RegEx.Id },
   seasonId: { type: String, regEx: SimpleSchema.RegEx.Id },
   poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  userId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  userId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
   userTeamName: {
     label: "Team name",
     type: String
@@ -30,8 +33,18 @@ PoolTeams.attachSchema(new SimpleSchema({
       }
     }
   },
-  pickNumbers: { type: [Number] },
-  leagueTeamMascotNames: { type: [String], defaultValue: [] },
+  pickNumbers: { type: [Number], optional: true },
+  leagueTeamMascotNames: {
+    type: [String],
+    autoValue: function() {
+      let mascots = [];
+      for (var leagueTeamId of this.field("leagueTeamIds").value) {
+        const leagueTeam = LeagueTeams.findOne({ _id: leagueTeamId });
+        mascots.push(leagueTeam.mascotName);
+      }
+      return mascots;
+    }
+  },
   totalWins: { type: Number, defaultValue: 0 },
   totalGames: { type: Number, defaultValue: 0 },
   totalPlusMinus: { type: Number, defaultValue: 0 },
@@ -61,7 +74,8 @@ PoolTeams.attachSchema(new SimpleSchema({
     denyInsert: true,
     optional: true
   }
-}));
+});
+PoolTeams.attachSchema(PoolTeams.schema);
 
 PoolTeams.helpers({
   teamSummary: function () {
