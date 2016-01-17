@@ -5,14 +5,20 @@ PoolTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue: function() {
-      return Pools.findOne({ _id: doc.poolId }).leagueId;
+      if (this.isInsert) {
+        log.warn(`poolId value: ${this.field("poolId").value}`);
+        log.warn(`userId value: ${this.field("userId").value}`);
+        return Pools.findOne({_id: this.field("poolId").value}).leagueId;
+      }
     }
   },
   seasonId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue: function() {
-      return Pools.findOne({ _id: doc.poolId }).seasonId;
+      if (this.isInsert) {
+        return Pools.findOne({_id: this.field("poolId").value}).seasonId;
+      }
     }
   },
   poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
@@ -49,22 +55,26 @@ PoolTeams.schema = new SimpleSchema({
     type: [Number],
     autoValue: function() {
       // TODO: this is placeholder until we wire this up
-      let numbers = [];
-      for (var leagueTeamId of this.field("leagueTeamIds").value) {
-        numbers.push(0);
+      if (this.isInsert) {
+        let numbers = [];
+        for (var leagueTeamId of this.field("leagueTeamIds").value) {
+          numbers.push(0);
+        }
+        return numbers;
       }
-      return numbers;
     }
   },
   leagueTeamMascotNames: {
     type: [String],
     autoValue: function() {
-      let mascots = [];
-      for (var leagueTeamId of this.field("leagueTeamIds").value) {
-        const leagueTeam = LeagueTeams.findOne({ _id: leagueTeamId });
-        mascots.push(leagueTeam.mascotName);
+      if (this.isInsert) {
+        let mascots = [];
+        for (var leagueTeamId of this.field("leagueTeamIds").value) {
+          const leagueTeam = LeagueTeams.findOne({_id: leagueTeamId});
+          mascots.push(leagueTeam.mascotName);
+        }
+        return mascots;
       }
-      return mascots;
     }
   },
   totalWins: { type: Number, defaultValue: 0 },

@@ -27,10 +27,8 @@ describe("Pool Teams", function() {
       log.info(`seahawksTeamId: ${seahawksTeamId}`);
 
       const poolTeamId = PoolTeams.insert({
-        leagueId: season.leagueId,
-        seasonId: season._id,
         poolId,
-        userId: "dummy",
+        userId: Meteor.userId(),
         userTeamName: "Dummy",
         leagueTeamIds: [giantsTeamId],
         pickNumbers: [1]
