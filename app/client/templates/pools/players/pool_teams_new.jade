@@ -9,7 +9,5 @@ template(name="poolTeamsNew")
         +afQuickField(name="userTeamName")
         +afQuickField(name="leagueTeamIds")
       button.btn.btn-primary(type="submit") Create
-
-    p
-    div
-      a(href="{{pathFor 'poolsShow' _id=poolId}}") Back to Pool
+      | &nbsp;
+      a.btn.btn-default(href="{{pathFor 'poolsShow' _id=poolId}}") Back to Pool
