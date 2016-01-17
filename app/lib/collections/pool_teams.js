@@ -6,9 +6,7 @@ PoolTeams.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     autoValue: function() {
       if (this.isInsert) {
-        log.warn(`poolId value: ${this.field("poolId").value}`);
-        log.warn(`userId value: ${this.field("userId").value}`);
-        return Pools.findOne({_id: this.field("poolId").value}).leagueId;
+        return Pools.findOne({ _id: this.field("poolId").value }).leagueId;
       }
     }
   },
@@ -17,7 +15,7 @@ PoolTeams.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     autoValue: function() {
       if (this.isInsert) {
-        return Pools.findOne({_id: this.field("poolId").value}).seasonId;
+        return Pools.findOne({ _id: this.field("poolId").value }).seasonId;
       }
     }
   },
