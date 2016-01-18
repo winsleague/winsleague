@@ -10,13 +10,14 @@
   "globals": {
     "Modules": false,
     "log": false,
+    "AutoForm": false,
     "FlowRouter": false,
-    "Games": false,
-    "LeagueTeams": false,
-    "Leagues": false,
-    "PoolTeams": false,
-    "Pools": false,
-    "SeasonLeagueTeams": false,
-    "Seasons": false
+    "Games": true,
+    "LeagueTeams": true,
+    "Leagues": true,
+    "PoolTeams": true,
+    "Pools": true,
+    "SeasonLeagueTeams": true,
+    "Seasons": true
   }
 }
