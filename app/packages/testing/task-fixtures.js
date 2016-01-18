@@ -9,13 +9,13 @@ function resetDatabase() {
 
   const db = MongoInternals.defaultRemoteCollectionDriver().mongo.db;
   const collections = Meteor.wrapAsync(db.collections, db)();
-  const appCollections = _.reject(collections, function(col) {
+  const appCollections = _.reject(collections, (col) => {
     return col.collectionName.indexOf('velocity') === 0 ||
       col.collectionName === 'system.indexes' ||
       col.collectionName === 'users';
   });
 
-  _.each(appCollections, function(appCollection) {
+  _.each(appCollections, (appCollection) => {
     log.info('remove ' + appCollection.collectionName);
     Meteor.wrapAsync(appCollection.remove, appCollection)();
   });

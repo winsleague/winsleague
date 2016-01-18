@@ -4,7 +4,7 @@ const page = {
   },
 };
 
-describe("pools new page", () => {
+describe('pools new page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(goToPoolsNewPage);
 
