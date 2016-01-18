@@ -33,9 +33,11 @@ function resetTestingEnvironment() {
 }
 
 function createUser(userData) {
-  let user = Meteor.users.findOne({ email: userData.email });
+  let user = Accounts.findUserByEmail(userData.email);
+  log.info(`Users.findOne: ${user}`);
 
   if (!user) {
+    log.info(`Creating user!`);
     const userId = Accounts.createUser(userData);
     user = Meteor.users.findOne(userId);
   }
@@ -56,12 +58,14 @@ function createDefaultLeagues() {
     abbreviation: 'NYG', conference: 'NFC', division: 'East' });
   LeagueTeams.insert({ leagueId, cityName: 'Seattle', mascotName: 'Seahawks',
     abbreviation: 'SEA', conference: 'NFC', division: 'West' });
+  Seasons.insert({ leagueId, year: 2015 });
 
   leagueId = Leagues.insert({ name: 'NBA' });
   LeagueTeams.insert({ leagueId, cityName: 'New York', mascotName: 'Knicks',
     abbreviation: 'NYK', conference: 'East' });
   LeagueTeams.insert({ leagueId, cityName: 'Seattle', mascotName: 'Supersonics',
     abbreviation: 'SEA', conference: 'West' });
+  Seasons.insert({ leagueId, year: 2015 });
 }
 
 function createPool(pool) {
