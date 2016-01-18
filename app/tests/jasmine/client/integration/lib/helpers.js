@@ -83,6 +83,10 @@ goToRoute = function(pathDef, params, queryParams) {
   };
 };
 
+goToHomePage = function(done) {
+  return goToRoute('/')(done);
+};
+
 goToPoolsNewPage = function(done) {
   return goToRoute('/pools/new')(done);
 };

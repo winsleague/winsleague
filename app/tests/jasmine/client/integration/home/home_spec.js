@@ -1,5 +1,7 @@
-describe("The homepage", function() {
-  it("should have a title", function() {
+describe('The homepage', () => {
+  beforeEach(goToHomePage);
+
+  it('should have a title', () => {
     expect($('h2').text()).toEqual('Leaderboard');
   });
 });
