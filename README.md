@@ -3,6 +3,7 @@
 ## Getting Started
 
 1. [Install Meteor](https://www.meteor.com/install)
+2. [Install ESLint packages](https://www.npmjs.com/package/eslint-config-airbnb)
 
 
 ## Developing Locally
@@ -50,7 +51,7 @@
 
     ### Other tips:
 
-    # Change `describe()` to `fdescribe`
+    # Change `describe()` to `fdescribe()`
 
 
 ## Debugging

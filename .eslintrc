@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "meteor": true,
+    "mocha": true,
+    "node": true
+  },
+  "globals": {
+    "Modules": false,
+    "log": false,
+    "Games": false,
+    "LeagueTeams": false,
+    "Leagues": false,
+    "PoolTeams": false,
+    "Pools": false,
+    "SeasonLeagueTeams": false,
+    "Seasons": false
+  }
+}
