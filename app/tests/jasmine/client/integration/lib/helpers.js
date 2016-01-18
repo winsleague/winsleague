@@ -10,9 +10,9 @@
  */
 
 function createMethodResultHandler(done, hook) {
-  return function funcHandler(error, result) {
+  return (error, result) => {
     if (error) {
-      console.error(error);
+      log.error(error);
     }
     if (hook) {
       hook(error, result);
@@ -21,43 +21,39 @@ function createMethodResultHandler(done, hook) {
   };
 }
 
-deferAfterFlush = function(callback) {
-  Tracker.afterFlush(function () {
+deferAfterFlush = (callback) => {
+  Tracker.afterFlush(() => {
     Meteor.defer(callback);
   });
 };
 
-resetTestingEnvironment = function(done) {
+resetTestingEnvironment = (done) => {
   Meteor.call('resetTestingEnvironment', createMethodResultHandler(done));
 };
 
-createDefaultLeagues = function() {
+createDefaultLeagues = () => {
   Meteor.call('fixtures/leagues/createDefault');
 };
 
-createDefaultPool = function(done) {
-  var self = this;
-
+createDefaultPool = (done) => {
   Meteor.call(
     'fixtures/pools/createDefault',
-    createMethodResultHandler(done, function (error, pool) {
-      self.pool = pool;
+    createMethodResultHandler(done, (error, pool) => {
+      this.pool = pool;
     })
   );
 };
 
-createDefaultUser = function(done) {
-  var self = this;
-
+createDefaultUser = (done) => {
   Meteor.call(
     'fixtures/users/createDefault',
-    createMethodResultHandler(done, function (error, user) {
-      self.user = user;
+    createMethodResultHandler(done, (error, user) => {
+      this.user = user;
     })
   );
 };
 
-loginWithDefaultUser = function(done) {
+loginWithDefaultUser = (done) => {
   Meteor.loginWithPassword(
     'test@test.com',
     'test',
@@ -65,8 +61,8 @@ loginWithDefaultUser = function(done) {
   );
 };
 
-waitForRouter = function(done) {
-  Tracker.autorun(function (computation) {
+waitForRouter = (done) => {
+  Tracker.autorun((computation) => {
     if (FlowRouter.subsReady()) {
       computation.stop();
       deferAfterFlush(done);
@@ -74,8 +70,8 @@ waitForRouter = function(done) {
   });
 };
 
-goToRoute = function(pathDef, params, queryParams) {
-  return function (done) {
+goToRoute = (pathDef, params, queryParams) => {
+  return (done) => {
     queryParams = queryParams || {};
     queryParams.jasmine = true;
     FlowRouter.go(pathDef, params, queryParams);
@@ -83,10 +79,10 @@ goToRoute = function(pathDef, params, queryParams) {
   };
 };
 
-goToHomePage = function(done) {
+goToHomePage = (done) => {
   return goToRoute('/')(done);
 };
 
-goToPoolsNewPage = function(done) {
+goToPoolsNewPage = (done) => {
   return goToRoute('/pools/new')(done);
 };

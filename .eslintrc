@@ -10,6 +10,7 @@
   "globals": {
     "Modules": false,
     "log": false,
+    "FlowRouter": false,
     "Games": false,
     "LeagueTeams": false,
     "Leagues": false,
