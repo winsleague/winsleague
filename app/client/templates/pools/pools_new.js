@@ -9,7 +9,10 @@ Template.poolsNew.helpers({
 });
 
 Template.poolsNew.onCreated(function() {
-  this.getNflLeagueId = () => Leagues.findOne({ name: 'NFL' }, { fields: { _id: 1 } })._id;
+  this.getNflLeagueId = () => {
+    const league = Leagues.findOne({ name: 'NFL' }, { fields: { _id: 1 } });
+    if (league) return league._id;
+  };
 
   this.autorun(() => {
     this.subscribe('leagues', () => {
