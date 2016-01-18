@@ -12,6 +12,7 @@
     "log": false,
     "AutoForm": false,
     "FlowRouter": false,
+    "SimpleSchema": false,
     "Games": true,
     "LeagueTeams": true,
     "Leagues": true,
