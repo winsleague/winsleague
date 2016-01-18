@@ -34,10 +34,8 @@ function resetTestingEnvironment() {
 
 function createUser(userData) {
   let user = Accounts.findUserByEmail(userData.email);
-  log.info(`Users.findOne: ${user}`);
 
   if (!user) {
-    log.info(`Creating user!`);
     const userId = Accounts.createUser(userData);
     user = Meteor.users.findOne(userId);
   }
