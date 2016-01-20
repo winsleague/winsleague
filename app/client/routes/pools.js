@@ -33,8 +33,8 @@ poolsRoutes.route( '/:_id/edit', {
   }
 });
 
-// http://app.com/pools/:_poolId/players/new
-poolsRoutes.route( '/:poolId/players/new', {
+// http://app.com/pools/:_poolId/teams/new
+poolsRoutes.route( '/:poolId/teams/new', {
   name: "poolTeamsNew",
   action: function(params) {
     console.log(`We're creating teams for a pool: ${params.poolId}`);
