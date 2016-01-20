@@ -51,7 +51,7 @@
 
     ### Other tips:
 
-    1. Change `describe()` to `fdescribe()`
+    1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
     2. To disable specific testing modes, use these environment variables:
 
     ```bash
