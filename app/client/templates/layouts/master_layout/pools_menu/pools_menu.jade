@@ -1,0 +1,6 @@
+template(name="poolsMenu")
+  +onlyIfLoggedIn
+    if Template.subscriptionsReady
+      +each pool in pools
+        li
+          a(href="{{pathFor 'poolsShow' _id=pool._id}}")= pool.name
