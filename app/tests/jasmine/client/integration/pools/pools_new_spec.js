@@ -1,13 +1,13 @@
 const page = {
   getFirstLeagueField() {
-    return $('input[name="leagueId"]');
+    return $('input[name="leagueId"]:first');
   },
   getNameField() {
     return $('input[name="name"]');
   },
 };
 
-describe('pools new page', () => {
+describe('poolsNew page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(goToPoolsNewPage);
 
@@ -18,11 +18,8 @@ describe('pools new page', () => {
     }, DEFAULT_DELAY);
   });
 
-  it('should display the name field', (done) => {
-    setTimeout(() => {
-      expect(page.getNameField()).toExist();
-      done();
-    }, DEFAULT_DELAY);
+  it('should display the name field', () => {
+    expect(page.getNameField()).toExist();
   });
 
   it('should create new pool', (done) => {

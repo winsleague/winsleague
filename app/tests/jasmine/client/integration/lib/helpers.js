@@ -9,6 +9,8 @@
  goToDefaultTeamPage: true
  */
 
+// compensate for slight delay in retrieving from database
+// http://experimentsinmeteor.com/meteor-testing-with-velocity-and-jasmine-part-1/index.html
 DEFAULT_DELAY = 500;
 
 function createMethodResultHandler(done, hook) {
