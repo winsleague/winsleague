@@ -69,17 +69,19 @@ function createDefaultLeagues() {
 }
 
 function createPool(pool) {
+  log.debug(`Creating pool: %j`, pool);
   const poolId = Pools.insert(pool);
   return Pools.findOne(poolId);
 }
 
 function createDefaultPool() {
-  const leagueId = Leagues.findOne({ name: 'NFL' }, { fields: { leagueId: 1 } });
-  const seasonId = Seasons.findOne({ leagueId }, { fields: { seasonId: 1 } });
+  const leagueId = Leagues.findOne({ name: 'NFL' }, { fields: { _id: 1 } })._id;
+  const seasonId = Seasons.findOne({ leagueId }, { fields: { _id: 1 } })._id;
   const pool = {
     leagueId,
     seasonId,
     name: 'test',
+    commissionerUserId: Meteor.userId(),
   };
 
   return createPool(pool);
