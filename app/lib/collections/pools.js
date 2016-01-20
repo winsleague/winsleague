@@ -3,26 +3,26 @@ Pools = new Mongo.Collection('pools');
 Pools.attachSchema(new SimpleSchema({
   leagueId: {
     type: String,
-    label: "League",
+    label: 'League',
     autoform: {
-      type: "select-radio-inline"
-    }
+      type: 'select-radio-inline',
+    },
   },
   seasonId: {
     type: String,
-    autoValue: function() {
+    autoValue() {
       if (this.isInsert) {
         // select latest season for league
-        const leagueIdField = this.field("leagueId");
+        const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
           const leagueId = leagueIdField.value;
-          const latestSeason = Seasons.findOne({leagueId}, {sort: ["year", "desc"]});
+          const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
+          if (!latestSeason) log.error(`No season found for leagueId ${leagueId}`);
           return latestSeason._id;
-        } else {
-          this.unset();
         }
+        this.unset();
       }
-    }
+    },
   },
   name: { type: String, max: 50 },
   commissionerUserId: {

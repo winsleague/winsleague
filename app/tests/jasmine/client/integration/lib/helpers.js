@@ -29,10 +29,12 @@ deferAfterFlush = (callback) => {
 
 resetTestingEnvironment = (done) => {
   Meteor.call('resetTestingEnvironment', createMethodResultHandler(done));
+  log.debug(`called resetTestingEnvironment`);
 };
 
-createDefaultLeagues = () => {
-  Meteor.call('fixtures/leagues/createDefault');
+createDefaultLeagues = (done) => {
+  Meteor.call('fixtures/leagues/createDefault', createMethodResultHandler(done));
+  log.debug(`called createDefaultLeagues`);
 };
 
 createDefaultPool = (done) => {
@@ -74,6 +76,7 @@ goToRoute = (pathDef, params, queryParams) => {
   return (done) => {
     queryParams = queryParams || {};
     queryParams.jasmine = true;
+    log.debug(`Navigating to ${pathDef}/${params}?${queryParams}`);
     FlowRouter.go(pathDef, params, queryParams);
     waitForRouter(done);
   };

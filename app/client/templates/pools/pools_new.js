@@ -16,10 +16,12 @@ Template.poolsNew.onCreated(function() {
 
   this.autorun(() => {
     this.subscribe('leagues', () => {
-      log.info(`League data ready: ${Leagues.find().count()} leagues`);
+      const leagues = Leagues.find({}).map(league => { return league._id; });
+      log.info(`League data ready: ${Leagues.find().count()} leagues, %j`, leagues);
     });
     this.subscribe('seasons', () => {
-      log.info(`Season data ready: ${Seasons.find().count()} seasons`);
+      const seasons = Seasons.find({}).map(season => { return season._id; });
+      log.info(`Season data ready: ${Seasons.find().count()} seasons, %j`, seasons);
     });
   });
 });
@@ -38,3 +40,4 @@ AutoForm.hooks({
     },
   },
 });
+
