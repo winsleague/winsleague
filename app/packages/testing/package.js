@@ -14,6 +14,7 @@ Package.onUse(function (api) {
     'promise',
     'underscore',
     'mongo',
+    'practicalmeteor:loglevel',
     'stevezhu:lodash@3.10.1',
   ], 'server');
   api.addFiles('task-fixtures.js', 'server');
