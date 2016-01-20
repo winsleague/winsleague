@@ -74,8 +74,11 @@ function createPool(pool) {
 }
 
 function createDefaultPool() {
+  const leagueId = Leagues.findOne({ name: 'NFL' }, { fields: { leagueId: 1 } });
+  const seasonId = Seasons.findOne({ leagueId }, { fields: { seasonId: 1 } });
   const pool = {
-    leagueId: Leagues.findOne({ name: 'NFL' }, { fields: { leagueId: 1 } }),
+    leagueId,
+    seasonId,
     name: 'test',
   };
 
