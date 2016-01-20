@@ -9,6 +9,8 @@
  goToDefaultTeamPage: true
  */
 
+DEFAULT_DELAY = 500;
+
 function createMethodResultHandler(done, hook) {
   return (error, result) => {
     if (error) {
