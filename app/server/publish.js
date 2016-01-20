@@ -15,6 +15,7 @@ Meteor.publish('poolTeams', poolId => {
 Meteor.publish('userPoolTeams', userId => {
   check(userId, String);
   return Pools.find({ commissionerUserId: userId });
+  // TODO: this should also return Pools that users are a part of, but aren't a commissioner in
 });
 
 Meteor.publish('leagueTeams', leagueId => {
