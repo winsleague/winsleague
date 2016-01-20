@@ -7,6 +7,13 @@ dependencies:
   cache_directories:
     - "~/.meteor"
     - "~/_opt"
+    # from https://github.com/xolvio/automated-testing-best-practices/blob/master/circle.yml
+    - "app/.meteor/local/build"
+    - "app/.meteor/local/bundler-cache"
+    - "app/.meteor/local/db"
+    - "app/.meteor/local/isopacks"
+    - "app/.meteor/local/plugin-cache"
+    - "app/.meteor/local/mirrors"
 
   override:
     # -- CACHE CHROME (from https://github.com/xolvio/Letterpress/blob/master/circle.yml) --
