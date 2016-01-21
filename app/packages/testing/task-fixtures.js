@@ -69,8 +69,9 @@ function createDefaultLeagues() {
 }
 
 function createPool(pool) {
-  log.debug(`Creating pool: %j`, pool);
+  log.debug(`Creating pool:`, pool);
   const poolId = Pools.insert(pool);
+  log.debug(`poolId: ${poolId}`);
   return Pools.findOne(poolId);
 }
 
