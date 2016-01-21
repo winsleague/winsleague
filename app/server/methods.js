@@ -2,40 +2,40 @@
 /*  Server Methods */
 /*****************************************************************************/
 
-let prettyjson = Meteor.npmRequire( 'prettyjson' );
-
-Meteor.methods({
-  insertPoolTeam: function (doc) {
-    log.info(`doc: ${prettyjson.render(doc)}`);
-
-    doc.userId = createOrExistingUserId(doc.userEmail);
-    delete doc.userEmail;
-
-    PoolTeams.schema.clean(doc, {
-      extendAutoValueContext: {
-        isInsert: true,
-        isUpdate: false,
-        isUpsert: false,
-        isFromTrustedCode: false
-      }
-    });
-
-    log.info(`doc: ${prettyjson.render(doc)}`);
-
-    check(doc, PoolTeams.schema);
-    PoolTeams.insert(doc);
-  }
-});
-
-var createOrExistingUserId = (email) => {
+function createOrExistingUserId(email) {
   const existingUser = Accounts.findUserByEmail(email);
   if (existingUser) {
     log.info(`Using existingUser: ${existingUser._id}`);
     return existingUser._id;
-  } else {
-    const newUser = Accounts.createUser({email: email});
-    log.info(`Created new user: ${newUser._id}`);
-    // TODO: Accounts.sendEnrollmentMail() so user can login
-    return newUser._id;
   }
-};
+
+  const newUser = Accounts.createUser({ email });
+  log.info(`Created new user: ${newUser._id}`);
+  // TODO: Accounts.sendEnrollmentMail() so user can login
+  return newUser._id;
+}
+
+Meteor.methods({
+  insertPoolTeam(doc) {
+    let newDoc = doc;
+    log.info(`newDoc: `, newDoc);
+
+    newDoc.userId = createOrExistingUserId(newDoc.userEmail);
+    delete newDoc.userEmail;
+
+    PoolTeams.schema.clean(newDoc, {
+      extendAutoValueContext: {
+        isInsert: true,
+        isUpdate: false,
+        isUpsert: false,
+        isFromTrustedCode: false,
+      },
+    });
+
+    log.info(`newDoc: `, newDoc);
+
+    check(newDoc, PoolTeams.schema);
+    PoolTeams.insert(newDoc);
+  },
+});
+
