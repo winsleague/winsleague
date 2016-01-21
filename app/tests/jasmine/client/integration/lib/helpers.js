@@ -80,7 +80,7 @@ goToRoute = (pathDef, params, queryParams) => {
   return (done) => {
     queryParams = queryParams || {};
     queryParams.jasmine = true;
-    log.debug(`Navigating to ${pathDef}/${params}?${queryParams}`);
+    log.info(`Navigating to ${pathDef}/`, params);
     FlowRouter.go(pathDef, params, queryParams);
     waitForRouter(done);
   };
@@ -92,4 +92,12 @@ goToHomePage = (done) => {
 
 goToPoolsNewPage = (done) => {
   return goToRoute('/pools/new')(done);
+};
+
+goToPoolTeamsNewPage = done => {
+  const pool = Pools.findOne({});
+  if (!pool) log.error(`No pool found!`);
+  const poolId = pool._id;
+
+  return goToRoute('poolTeamsNew', { poolId })(done);
 };
