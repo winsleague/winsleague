@@ -17,5 +17,10 @@ Package.onUse(function (api) {
     'practicalmeteor:loglevel',
     'stevezhu:lodash@3.10.1',
   ], 'server');
-  api.addFiles('task-fixtures.js', 'server');
+  api.addFiles([
+    'reset.js',
+    'league_fixtures.js',
+    'pool_fixtures.js',
+    'user_fixtures.js',
+  ], 'server');
 });
