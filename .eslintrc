@@ -11,6 +11,7 @@
     "Modules": false,
     "log": false,
     "AutoForm": false,
+    "BlazeLayout": false,
     "FlowRouter": false,
     "SimpleSchema": false,
     "Games": true,
