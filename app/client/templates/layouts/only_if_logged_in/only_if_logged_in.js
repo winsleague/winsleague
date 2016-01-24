@@ -1,8 +1,8 @@
 Template.onlyIfLoggedIn.helpers({
-  authInProcess: function() {
+  authInProcess() {
     return Meteor.loggingIn();
   },
-  canShow: function() {
+  canShow() {
     return !!Meteor.user();
-  }
+  },
 });
