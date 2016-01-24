@@ -1,4 +1,7 @@
 Template.poolsMenu.helpers({
+  canShow() {
+    return !!Meteor.user();
+  },
   pools: () => { return Pools.find({}); },
 });
 

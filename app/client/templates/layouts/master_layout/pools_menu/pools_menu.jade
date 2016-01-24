@@ -1,5 +1,5 @@
 template(name="poolsMenu")
-  +onlyIfLoggedIn
+  if canShow
     if Template.subscriptionsReady
       +each pool in pools
         li
