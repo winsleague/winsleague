@@ -34,7 +34,7 @@ describe('poolTeamsNew page', () => {
       page.getFirstLeagueTeamField().find('option:eq(1)').prop('selected', true);
 
       $('form').submit();
-    }, DEFAULT_DELAY * 2);
+    }, DEFAULT_DELAY * 5);
 
     setTimeout(() => {
       const poolTeam = PoolTeams.findOne({ userTeamName });
@@ -44,6 +44,6 @@ describe('poolTeamsNew page', () => {
       expect(poolTeam.leagueTeamIds[0]).toBe(leagueTeamId);
 
       done();
-    }, DEFAULT_DELAY * 5);
+    }, DEFAULT_DELAY * 10);
   });
 });
