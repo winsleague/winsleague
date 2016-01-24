@@ -12,7 +12,8 @@ Meteor.publish('poolTeams', poolId => {
   return PoolTeams.find({ poolId });
 });
 
-Meteor.publish('userPoolTeams', userId => {
+Meteor.publish('userPoolTeams', function(userId) {
+  if (!userId) return this.ready();
   check(userId, String);
   return Pools.find({ commissionerUserId: userId });
   // TODO: this should also return Pools that users are a part of, but aren't a commissioner in

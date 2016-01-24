@@ -7,10 +7,8 @@ Template.poolsMenu.helpers({
 
 Template.poolsMenu.onCreated(function() {
   this.autorun(() => {
-    if (!!Meteor.user()) {
-      this.subscribe('userPoolTeams', Meteor.userId(), () => {
-        log.info(`userPoolTeams subscription ready: ${Pools.find({}).count()} pools`);
-      });
-    }
+    this.subscribe('userPoolTeams', Meteor.userId(), () => {
+      log.info(`userPoolTeams subscription ready: ${Pools.find({}).count()} pools`);
+    });
   });
 });
