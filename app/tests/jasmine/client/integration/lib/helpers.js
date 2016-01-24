@@ -49,6 +49,7 @@ createDefaultPool = (done) => {
       this.pool = pool;
     })
   );
+  log.debug(`called createDefaultPool`);
 };
 
 createDefaultUser = (done) => {
@@ -58,6 +59,7 @@ createDefaultUser = (done) => {
       this.user = user;
     })
   );
+  log.debug(`called createDefaultUser`);
 };
 
 loginWithDefaultUser = (done) => {
@@ -66,10 +68,12 @@ loginWithDefaultUser = (done) => {
     'test',
     createMethodResultHandler(done)
   );
+  log.debug(`called loginWithDefaultUser`);
 };
 
 logoutUser = () => {
   Meteor.logout();
+  log.debug(`called logoutUser`);
 };
 
 waitForRouter = done => {
@@ -79,6 +83,7 @@ waitForRouter = done => {
       deferAfterFlush(done);
     }
   });
+  log.debug(`called waitForRouter`);
 };
 
 goToRoute = (pathDef, params, queryParams) => {
