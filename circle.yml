@@ -12,8 +12,8 @@ dependencies:
     - "app/.meteor/local/bundler-cache"
     - "app/.meteor/local/db"
     - "app/.meteor/local/isopacks"
-    - "app/.meteor/local/plugin-cache"
     - "app/.meteor/local/mirrors"
+    - "app/.meteor/local/plugin-cache"
 
   override:
     # -- CACHE CHROME (from https://github.com/xolvio/Letterpress/blob/master/circle.yml) --
