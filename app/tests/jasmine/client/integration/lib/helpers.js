@@ -4,6 +4,7 @@
  createDefaultTeam: true,
  createDefaultUser: true,
  loginWithDefaultUser: true,
+ logoutUser: true,
  waitForRouter: true,
  goToRoute: true,
  goToDefaultTeamPage: true
@@ -67,7 +68,11 @@ loginWithDefaultUser = (done) => {
   );
 };
 
-waitForRouter = (done) => {
+logoutUser = () => {
+  Meteor.logout();
+};
+
+waitForRouter = done => {
   Tracker.autorun((computation) => {
     if (FlowRouter.subsReady()) {
       computation.stop();
@@ -86,12 +91,12 @@ goToRoute = (pathDef, params, queryParams) => {
   };
 };
 
-goToHomePage = (done) => {
+goToHomePage = done => {
   return goToRoute('/')(done);
 };
 
-goToPoolsNewPage = (done) => {
-  return goToRoute('/pools/new')(done);
+goToPoolsNewPage = done => {
+  return goToRoute('poolsNew')(done);
 };
 
 goToPoolTeamsNewPage = done => {
