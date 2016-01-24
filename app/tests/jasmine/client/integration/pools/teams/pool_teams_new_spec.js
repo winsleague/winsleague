@@ -10,7 +10,7 @@ const page = {
   },
 };
 
-fdescribe('poolTeamsNew page', () => {
+describe('poolTeamsNew page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(createDefaultPool);
   beforeEach(done => {
