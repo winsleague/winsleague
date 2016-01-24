@@ -7,8 +7,8 @@ Template.poolsMenu.helpers({
 
 Template.poolsMenu.onCreated(function() {
   this.autorun(() => {
-    this.subscribe('userPoolTeams', Meteor.userId(), () => {
-      log.info(`userPoolTeams subscription ready: ${Pools.find({}).count()} pools`);
+    this.subscribe('userPools', Meteor.userId(), () => {
+      log.info(`userPools subscription ready: ${Pools.find({}).count()} pools`);
     });
   });
 });

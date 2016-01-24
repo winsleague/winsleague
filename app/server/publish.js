@@ -12,7 +12,7 @@ Meteor.publish('poolTeams', poolId => {
   return PoolTeams.find({ poolId });
 });
 
-Meteor.publish('userPoolTeams', function(userId) {
+Meteor.publish('userPools', function(userId) {
   if (!userId) return this.ready();
   check(userId, String);
   return Pools.find({ commissionerUserId: userId });
@@ -23,4 +23,3 @@ Meteor.publish('leagueTeams', leagueId => {
   check(leagueId, String);
   return LeagueTeams.find({ leagueId });
 });
-
