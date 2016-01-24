@@ -10,7 +10,6 @@ const page = {
 describe('poolsNew page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(goToPoolsNewPage);
-  afterEach(logoutUser);
 
   it('should display the league field', (done) => {
     setTimeout(() => {
