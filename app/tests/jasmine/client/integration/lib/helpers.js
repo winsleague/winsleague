@@ -135,9 +135,10 @@ goToPoolsNewPage = done => {
 };
 
 goToPoolTeamsNewPage = done => {
-  const pool = Pools.findOne({});
-  if (!pool) log.error(`No pool found!`);
-  const poolId = pool._id;
+  waitForSubscription(Pools.find({}), function () {
+    const pool = Pools.findOne({});
+    const poolId = pool._id;
 
-  return goToRoute('poolTeamsNew', { poolId })(done);
+    return goToRoute('poolTeamsNew', { poolId })(done);
+  });
 };
