@@ -1,9 +1,9 @@
 const page = {
-  getFirstLeagueField() {
-    return $('input[name="leagueId"]:first');
+  getFirstLeagueSelector() {
+    return 'input[name="leagueId"]:first';
   },
-  getNameField() {
-    return $('input[name="name"]');
+  getNameSelector() {
+    return 'input[name="name"]';
   },
 };
 
@@ -11,28 +11,25 @@ describe('poolsNew page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(goToPoolsNewPage);
 
-  it('should display the league field', (done) => {
-    setTimeout(() => {
-      expect(page.getFirstLeagueField()).toExist();
-      done();
-    }, DEFAULT_DELAY);
+  it('should display the league field', done => {
+    waitForElement(page.getFirstLeagueSelector(), done);
   });
 
-  it('should display the name field', () => {
-    expect(page.getNameField()).toExist();
+  it('should display the name field', done => {
+    waitForElement(page.getNameSelector(), done);
   });
 
   it('should create new pool', (done) => {
-    setTimeout(() => {
-      const poolName = 'Dummy';
-      page.getNameField().val(poolName);
-      $('form').submit();
+    const poolName = 'Dummy';
+    $(page.getNameSelector()).val(poolName);
+    $('form').submit();
 
+    waitForSubscription(Pools.find({}), function() {
       const pool = Pools.findOne({ name: poolName });
       expect(pool).not.toBe(undefined);
       expect(pool.leagueId).not.toBe(undefined);
       expect(pool.seasonId).not.toBe(undefined);
       done();
-    }, DEFAULT_DELAY);
+    });
   });
 });

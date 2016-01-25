@@ -26,6 +26,36 @@ function createMethodResultHandler(done, hook) {
   };
 }
 
+waitForElement = (selector, successCallback) => {
+  var checkInterval = 50;
+  var timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  var startTime = Date.now();
+  var intervalId = Meteor.setInterval(function () {
+    if (Date.now() > startTime + timeoutInterval) {
+      Meteor.clearInterval(intervalId);
+      // Jasmine will handle the test timeout error
+    } else if ($(selector).length > 0) {
+      Meteor.clearInterval(intervalId);
+      successCallback();
+    }
+  }, checkInterval);
+};
+
+waitForSubscription = (query, successCallback) => {
+  var checkInterval = 100;
+  var timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  var startTime = Date.now();
+  var intervalId = Meteor.setInterval(function () {
+    if (Date.now() > startTime + timeoutInterval) {
+      Meteor.clearInterval(intervalId);
+      // Jasmine will handle the test timeout error
+    } else if (query.count() > 0) {
+      Meteor.clearInterval(intervalId);
+      successCallback();
+    }
+  }, checkInterval);
+};
+
 deferAfterFlush = (callback) => {
   Tracker.afterFlush(() => {
     Meteor.defer(callback);
