@@ -1,33 +1,43 @@
-const pools = FlowRouter.group({
-  prefix: '/pools'
+const poolsRoutes = FlowRouter.group({
+  prefix: '/pools',
 });
 
 // http://app.com/pools
-pools.route( '/', {
-  action: function() {
-    console.log( "We're viewing a list of pools." );
-  }
+poolsRoutes.route('/', {
+  action() {
+    log.debug("We're viewing a list of pools.");
+  },
 });
 
 // http://app.com/pools/new
-pools.route( '/new', {
-  action: function() {
-    BlazeLayout.render("masterLayout", { content: "poolNew" });
-  }
+poolsRoutes.route('/new', {
+  name: 'poolsNew',
+  action() {
+    BlazeLayout.render('masterLayout', { content: 'poolsNew' });
+  },
 });
 
 // http://app.com/pools/:_id
-pools.route( '/:_id', {
-  name: "poolShow",
-  action: function(params) {
-    console.log(`We're viewing a single document: ${FlowRouter.getParam('_id')}`);
-    BlazeLayout.render("masterLayout", { content: "poolShow" });
-  }
+poolsRoutes.route('/:_id', {
+  name: 'poolsShow',
+  action(params) {
+    log.debug(`We're viewing a single document: ${params._id}`);
+    BlazeLayout.render('masterLayout', { content: 'poolsShow' });
+  },
 });
 
 // http://app.com/pools/:_id/edit
-pools.route( '/:_id/edit', {
-  action: function() {
-    console.log( "We're editing a single document." );
-  }
+poolsRoutes.route('/:_id/edit', {
+  action(params) {
+    log.debug(`We're editing a single document: ${params._id}`);
+  },
+});
+
+// http://app.com/pools/:_poolId/teams/new
+poolsRoutes.route('/:poolId/teams/new', {
+  name: 'poolTeamsNew',
+  action(params) {
+    log.debug(`We're creating teams for a pool: ${params.poolId}`);
+    BlazeLayout.render('masterLayout', { content: 'poolTeamsNew' });
+  },
 });

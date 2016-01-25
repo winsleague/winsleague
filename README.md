@@ -3,6 +3,7 @@
 ## Getting Started
 
 1. [Install Meteor](https://www.meteor.com/install)
+2. [Install ESLint packages](https://www.npmjs.com/package/eslint-config-airbnb)
 
 
 ## Developing Locally
@@ -50,7 +51,15 @@
 
     ### Other tips:
 
-    # Change `describe()` to `fdescribe`
+    1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
+    2. To disable specific testing modes, use these environment variables:
+
+    ```bash
+    JASMINE_SERVER_UNIT=0
+    JASMINE_SERVER_INTEGRATION=0
+    JASMINE_CLIENT_UNIT=0
+    JASMINE_CLIENT_INTEGRATION=0
+    ```
 
 
 ## Debugging

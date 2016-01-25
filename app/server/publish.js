@@ -1,25 +1,25 @@
+Meteor.publish('leagues', () => Leagues.find({}));
 
+Meteor.publish('seasons', () => Seasons.find({}));
 
-
-Meteor.publish('leaderboard', function() {
-  const pool = Pools.findOne({}, { fields: {_id: 1} });
-  const users = PoolUserTeams.find({ poolId: pool._id });
-  if (users) { return users; }
-
-  return this.ready();
+Meteor.publish('singlePool', _id => {
+  check(_id, String);
+  return Pools.find({ _id });
 });
 
-Meteor.publish('leagues', function() {
-  return Leagues.find({});
+Meteor.publish('poolTeams', poolId => {
+  check(poolId, String);
+  return PoolTeams.find({ poolId });
 });
 
-Meteor.publish('seasons', function() {
-  return Seasons.find({});
+Meteor.publish('userPools', function(userId) {
+  if (!userId) return this.ready();
+  check(userId, String);
+  return Pools.find({ commissionerUserId: userId });
+  // TODO: this should also return Pools that users are a part of, but aren't a commissioner in
 });
 
-Meteor.publish('singlePool', function(id) {
-  check(id, String);
-  const pool = Pools.find({ _id: id });
-  const users = PoolUserTeams.find({ poolId: id });
-  return [pool, users];
+Meteor.publish('leagueTeams', leagueId => {
+  check(leagueId, String);
+  return LeagueTeams.find({ leagueId });
 });

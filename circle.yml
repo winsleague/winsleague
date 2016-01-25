@@ -1,7 +1,3 @@
-machine:
-  node:
-    version: 0.10.40 # match this to app/.meteor/local/build/.node_version.txt
-
 general:
   artifacts:
     - "app/.meteor/local/log"
@@ -9,15 +5,45 @@ general:
 
 dependencies:
   cache_directories:
-    - ~/.meteor
+    - "~/.meteor"
+    - "~/_opt"
+    # from https://github.com/xolvio/automated-testing-best-practices/blob/master/circle.yml
+    - "app/.meteor/local/build"
+    - "app/.meteor/local/bundler-cache"
+    - "app/.meteor/local/db"
+    - "app/.meteor/local/isopacks"
+    - "app/.meteor/local/mirrors"
+    - "app/.meteor/local/plugin-cache"
+
   override:
-    - meteor || curl https://install.meteor.com | /bin/sh
+    # -- CACHE CHROME (from https://github.com/xolvio/Letterpress/blob/master/circle.yml) --
+    # ...remove default ChromeDriver for safety
+    - sudo rm -rf /usr/local/bin/chromedriver*
+    # ...update to the latest chrome if the version is v38x (TODO need a better grep)
+    - sudo rm /tmp/update-chrome || true
+    - /opt/google/chrome/chrome --version | grep '38' &> /dev/null; if [ $? == 0 ]; then echo UPDATE_CHROME > /tmp/update-chrome; fi
+    # ...check if we already have a tarred version and untar that
+    - if [ -e /tmp/update-chrome ] && [ -e ~/_opt/google-chrome.tar ]; then sudo tar -xvf ~/_opt/google-chrome.tar -C /; fi
+    # ...otherwise download chrome and tar it
+    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -; fi
+    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'; fi
+    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get update; fi
+    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get install google-chrome-stable; fi
+    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then mkdir ~/_opt; tar -cvf ~/_opt/google-chrome.tar /opt/google/chrome/; fi
+
+    # -- CACHE METEOR --
+    # Restore the meteor symlink
+    - if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+    # Install Meteor if the cache didn't restore it
+    - if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+
+    # -- INSTALL METEOR PACKAGES --
     - (cd app; meteor list) # triggers the packages to download and install
 
 test:
   override:
     # Run tests
-    - (cd app; meteor run --test)
+    - (cd app; DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor run --test)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     # Disabled until we get tests reporting to lcov again
     # - npm install -g codeclimate-test-reporter@0.1.1

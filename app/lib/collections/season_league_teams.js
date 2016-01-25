@@ -54,11 +54,11 @@ SeasonLeagueTeams.helpers({
 
 /* Hooks */
 SeasonLeagueTeams.after.insert(function (userId, doc) {
-  Modules.server.poolUserTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
+  Modules.server.poolTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
 });
 
 SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
-  Modules.server.poolUserTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
+  Modules.server.poolTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
 }, { fetchPrevious: false });
 
 

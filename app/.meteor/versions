@@ -9,6 +9,7 @@ aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
 amplify@1.0.0
 anti:i18n@0.4.3
+arillo:flow-router-helpers@0.4.7
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
@@ -104,9 +105,11 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
+stevezhu:lodash@3.10.1
 stylus@2.511.1
 templating@1.1.5
 templating-tools@1.0.0
+testing@0.0.0
 tracker@1.0.9
 twbs:bootstrap@3.3.6
 ui@1.0.8
@@ -122,3 +125,4 @@ velocity:shim@0.1.0
 velocity:source-map-support@0.3.2_1
 webapp@1.2.3
 webapp-hashing@1.0.5
+zimme:active-route@2.3.2

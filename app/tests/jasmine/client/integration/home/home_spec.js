@@ -1,5 +1,10 @@
-describe("The homepage", function() {
-  it("should have a title", function() {
-    expect($('h2').text()).toEqual('Leaderboard');
-  })
+describe('The homepage', () => {
+  beforeEach(goToHomePage);
+
+  it('should have a title', done => {
+    setTimeout(() => {
+      expect($('h2').text()).toEqual('Simple Fantasy Sports');
+      done();
+    }, DEFAULT_DELAY);
+  });
 });
