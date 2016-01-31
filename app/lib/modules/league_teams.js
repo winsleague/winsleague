@@ -1,5 +1,5 @@
 Modules.leagueTeams = {
-  getLeagueTeam(league, cityName, mascotName) {
+  getByName(league, cityName, mascotName) {
     return LeagueTeams.findOne({ leagueId: league._id, cityName, mascotName });
   },
 };
