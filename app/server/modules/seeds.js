@@ -1,11 +1,16 @@
 Modules.server.seeds = {
-  createLeagues: () => {
+  createLeagues() {
     log.info(`Creating leagues and teams`);
 
     Leagues.remove({});
     LeagueTeams.remove({});
     Seasons.remove({});
 
+    Modules.server.seeds.createNflLeague();
+    Modules.server.seeds.createNbaLeague();
+  },
+
+  createNflLeague() {
     const leagueId = Leagues.insert({ name: 'NFL' });
     const teams = [
       { cityName: 'Baltimore', mascotName: 'Ravens', abbreviation: 'BAL', conference: 'AFC', division: 'North' },
@@ -39,9 +44,51 @@ Modules.server.seeds = {
       { cityName: 'Arizona', mascotName: 'Cardinals', abbreviation: 'ARI', conference: 'NFC', division: 'West' },
       { cityName: 'San Francisco', mascotName: '49ers', abbreviation: 'SF', conference: 'NFC', division: 'West' },
       { cityName: 'Seattle', mascotName: 'Seahawks', abbreviation: 'SEA', conference: 'NFC', division: 'West' },
-      { cityName: 'St. Louis', mascotName: 'Rams', abbreviation: 'STL', conference: 'NFC', division: 'West' }
+      { cityName: 'St. Louis', mascotName: 'Rams', abbreviation: 'STL', conference: 'NFC', division: 'West' },
     ];
-    for (let team of teams) {
+    for (const team of teams) {
+      team.leagueId = leagueId;
+      LeagueTeams.insert(team);
+    }
+
+    Seasons.insert({ leagueId, year: 2015 });
+  },
+
+  createNbaLeague() {
+    const leagueId = Leagues.insert({ name: 'NBA' });
+    const teams = [
+      { cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL', conference: 'East', division: 'Southeast' },
+      { cityName: 'Boston', mascotName: 'Celtics', abbreviation: 'BOS', conference: 'East', division: 'Atlantic' },
+      { cityName: 'Brooklyn', mascotName: 'Nets', abbreviation: 'BKN', conference: 'East', division: 'Atlantic' },
+      { cityName: 'Charlotte', mascotName: 'Hornets', abbreviation: 'CHA', conference: 'East', division: 'Southeast' },
+      { cityName: 'Chicago', mascotName: 'Bulls', abbreviation: 'CHI', conference: 'East', division: 'Central' },
+      { cityName: 'Cleveland', mascotName: 'Cavaliers', abbreviation: 'CLE', conference: 'East', division: 'Central' },
+      { cityName: 'Dallas', mascotName: 'Mavericks', abbreviation: 'DAL', conference: 'West', division: 'Southwest' },
+      { cityName: 'Denver', mascotName: 'Nuggets', abbreviation: 'DEN', conference: 'West', division: 'Northwest' },
+      { cityName: 'Detroit', mascotName: 'Pistons', abbreviation: 'DET', conference: 'East', division: 'Central' },
+      { cityName: 'Golden State', mascotName: 'Warriors', abbreviation: 'GS', conference: 'West', division: 'Pacific' },
+      { cityName: 'Houston', mascotName: 'Rockets', abbreviation: 'HOU', conference: 'West', division: 'Southwest' },
+      { cityName: 'Indiana', mascotName: 'Pacers', abbreviation: 'IND', conference: 'East', division: 'Central' },
+      { cityName: 'Los Angeles', mascotName: 'Clippers', abbreviation: 'LAC', conference: 'West', division: 'Pacific' },
+      { cityName: 'Los Angeles', mascotName: 'Lakers', abbreviation: 'LAL', conference: 'West', division: 'Pacific' },
+      { cityName: 'Memphis', mascotName: 'Grizzlies', abbreviation: 'MEM', conference: 'West', division: 'Southwest' },
+      { cityName: 'Miami', mascotName: 'Heat', abbreviation: 'MIA', conference: 'East', division: 'Southeast' },
+      { cityName: 'Milwaukee', mascotName: 'Bucks', abbreviation: 'MIL', conference: 'East', division: 'Central' },
+      { cityName: 'Minnesota', mascotName: 'Timberwolves', abbreviation: 'MIN', conference: 'West', division: 'Northwest' },
+      { cityName: 'New Orleans', mascotName: 'Pelicans', abbreviation: 'NO', conference: 'West', division: 'Southwest' },
+      { cityName: 'New York', mascotName: 'Knicks', abbreviation: 'NY', conference: 'East', division: 'Atlantic' },
+      { cityName: 'Oklahoma City', mascotName: 'Thunder', abbreviation: 'OKC', conference: 'West', division: 'Northwest' },
+      { cityName: 'Orlando', mascotName: 'Magic', abbreviation: 'ORL', conference: 'East', division: 'Southeast' },
+      { cityName: 'Philadelphia', mascotName: '76ers', abbreviation: 'PHI', conference: 'East', division: 'Atlantic' },
+      { cityName: 'Phoenix', mascotName: 'Suns', abbreviation: 'PHO', conference: 'West', division: 'Pacific' },
+      { cityName: 'Portland', mascotName: 'Trail Blazers', abbreviation: 'POR', conference: 'West', division: 'Northwest' },
+      { cityName: 'Sacramento', mascotName: 'Kings', abbreviation: 'SAC', conference: 'West', division: 'Pacific' },
+      { cityName: 'San Antonio', mascotName: 'Spurs', abbreviation: 'SA', conference: 'West', division: 'Southwest' },
+      { cityName: 'Toronto', mascotName: 'Raptors', abbreviation: 'TOR', conference: 'East', division: 'Atlantic' },
+      { cityName: 'Utah', mascotName: 'Jazz', abbreviation: 'UTA', conference: 'West', division: 'Northwest' },
+      { cityName: 'Washington', mascotName: 'Wizards', abbreviation: 'WAS', conference: 'East', division: 'Southeast' },
+    ];
+    for (const team of teams) {
       team.leagueId = leagueId;
       LeagueTeams.insert(team);
     }
