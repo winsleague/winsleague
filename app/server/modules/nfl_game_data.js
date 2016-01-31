@@ -11,7 +11,7 @@ Modules.server.nflGameData = {
     const json = JSON.parse(content);
     log.debug(`parsed json: ${prettyjson.render(json)}`);
 
-    const league = Modules.server.nflGameData.getLeague();
+    const league = Modules.leagues.getByName('NFL');
 
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
@@ -32,7 +32,7 @@ Modules.server.nflGameData = {
   ingestSeasonData(season) {
     if (!season) { throw new Error(`Season is null!`); }
 
-    const league = Modules.server.nflGameData.getLeague();
+    const league = Modules.leagues.getByName('NFL');
     if (!league) { throw new Error(`League is not found!`); }
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
@@ -61,7 +61,7 @@ Modules.server.nflGameData = {
 
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
-    const league = Modules.server.nflGameData.getLeague();
+    const league = Modules.leagues.getByName('NFL');
     const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
     Games.insert({
       leagueId: league._id,
@@ -76,16 +76,6 @@ Modules.server.nflGameData = {
       period: Modules.server.nflGameData.cleanPeriod(game.q),
       status: Modules.server.nflGameData.cleanStatus(game.q),
     });
-  },
-
-  getLeague() {
-    return Leagues.findOne({ name: 'NFL' });
-  },
-
-  getSeason(year = (new Date()).getFullYear()) {
-    const league = Modules.server.nflGameData.getLeague();
-    if (!league) { throw new Error(`NFL League not found!`); }
-    return Seasons.findOne({ leagueId: league._id, year });
   },
 
   cleanPeriod(old) {

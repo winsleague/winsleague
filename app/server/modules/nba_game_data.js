@@ -2,7 +2,7 @@ const prettyjson = Meteor.npmRequire('prettyjson');
 
 Modules.server.nbaGameData = {
   ingestSeasonData() {
-    const league = Modules.server.nbaGameData.getLeague();
+    const league = Modules.leagues.getByName('NBA');
     if (!league) { throw new Error(`League is not found!`); }
 
     const season = Modules.seasons.getLatest(league);
@@ -35,9 +35,5 @@ Modules.server.nbaGameData = {
         awayWins: teamData.away_won, awayLosses: teamData.away_lost, awayTies: 0,
         pointsFor: teamData.points_for, pointsAgainst: teamData.points_against,
       } });
-  },
-
-  getLeague() {
-    return Leagues.findOne({ name: 'NBA' });
   },
 };

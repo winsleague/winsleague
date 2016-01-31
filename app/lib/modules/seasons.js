@@ -1,6 +1,9 @@
 Modules.seasons = {
+  getByYear(league, year = (new Date()).getFullYear()) {
+    return Seasons.findOne({ leagueId: league._id, year });
+  },
+
   getLatest(league) {
-    const leagueId = league._id;
-    return Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
+    return Seasons.findOne({ leagueId: league._id }, { sort: ['year', 'desc'] });
   },
 };

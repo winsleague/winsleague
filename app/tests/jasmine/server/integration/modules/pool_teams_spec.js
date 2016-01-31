@@ -8,33 +8,34 @@ describe("Pool Teams", function() {
       log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
     });
 
-    it("should add up the wins and losses for all completed games", function () {
-      const season = Modules.server.nflGameData.getSeason(2015);
+    it('should add up the wins and losses for all completed games', () => {
+      const league = Modules.leagues.getByName('NFL');
+      const season = Modules.seasons.getByYear(league, 2015);
 
-      const user = Accounts.findUserByEmail("test@test.com");
+      const user = Accounts.findUserByEmail('test@test.com');
       spyOn(Meteor, 'userId').and.returnValue(user._id);
 
       // Creating a pool will automatically set commissioner to Meteor.userId
-      poolId = Pools.insert({
+      const poolId = Pools.insert({
         leagueId: season.leagueId,
         seasonId: season._id,
-        name: "Dummy"
+        name: 'Dummy'
       });
 
-      const giantsTeamId = LeagueTeams.findOne({ abbreviation: "NYG" })._id;
+      const giantsTeamId = LeagueTeams.findOne({ abbreviation: 'NYG' })._id;
       log.info(`giantsTeamId: ${giantsTeamId}`);
-      const seahawksTeamId = LeagueTeams.findOne({ abbreviation: "SEA" })._id;
+      const seahawksTeamId = LeagueTeams.findOne({ abbreviation: 'SEA' })._id;
       log.info(`seahawksTeamId: ${seahawksTeamId}`);
 
       const poolTeamId = PoolTeams.insert({
         poolId,
         userId: Meteor.userId(),
-        userTeamName: "Dummy",
+        userTeamName: 'Dummy',
         leagueTeamIds: [giantsTeamId],
-        pickNumbers: [1]
+        pickNumbers: [1],
       });
 
-      Games.insert( {
+      Games.insert({
         leagueId: season.leagueId,
         seasonId: season._id,
         gameId: 1,
@@ -43,18 +44,18 @@ describe("Pool Teams", function() {
         homeScore: 17,
         awayTeamId: seahawksTeamId,
         awayScore: 10,
-        status: "completed",
-        period: "final"
-      } );
+        status: 'completed',
+        period: 'final',
+      });
 
       // Games.insert will automatically refresh all PoolTeams that are affected
 
       const poolTeam = PoolTeams.findOne({ _id: poolTeamId });
       log.debug(prettyjson.render(poolTeam));
 
-      expect(poolTeam.totalWins).toBe(1);
-      expect(poolTeam.totalGames).toBe(1);
-      expect(poolTeam.totalPlusMinus).toBe(7);
+      expect(poolTeam.totalWins).toBe(1, 'totalWins');
+      expect(poolTeam.totalGames).toBe(1, 'totalGames');
+      expect(poolTeam.totalPlusMinus).toBe(7, 'totalPlusMinus');
     });
   });
 });
