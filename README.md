@@ -3,7 +3,7 @@
 ## Getting Started
 
 1. [Install Meteor](https://www.meteor.com/install)
-2. [Install ESLint packages](https://www.npmjs.com/package/eslint-config-airbnb)
+2. (optional) [Install ESLint packages](https://www.npmjs.com/package/eslint-config-airbnb)
 
 
 ## Developing Locally
@@ -14,7 +14,7 @@
     $ (cd app; meteor)
     ```
 
-2. Open a browser to view changes:
+2. Open a browser to view the app:
 
     ```bash
     $ http://localhost:3000
@@ -25,42 +25,45 @@
 
 ## Testing
 
-    ### Running tests
+### Running tests
 
-    ```bash
-    $ (cd app; meteor run --test)
-    ```
+```
+$ (cd app; meteor run --test)
+```
 
-    ### Running Meteor without tests running automatically
+### Running Meteor without tests running automatically
 
-    ```bash
-    $ (cd app; VELOCITY=0 meteor run)
-    ```
+```
+$ (cd app; VELOCITY=0 meteor run)
+```
 
-    ### Running tests in debug mode
-    ```bash
-    $ (cd app; DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor)
-    ```
+### Running tests in debug mode
 
-    ### Viewing test logs
+```
+$ (cd app; DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor)
+```
 
-    ```bash
-    $ (cd app; tail -f .meteor/local/log/jasmine-server-integration.log)
-    $ (cd app; tail -f .meteor/local/log/jasmine-client-integration.log)
-    ```
+### Viewing test logs
 
-    ### Running Flow check
+These are best run in a separate Terminal window while Meteor is running.
 
-    ```bash
-    $ flow check --all
-    ```
+```
+$ (cd app; tail -f .meteor/local/log/jasmine-server-integration.log)
+$ (cd app; tail -f .meteor/local/log/jasmine-client-integration.log)
+```
 
-    Note that Flow doesn't yet support TypeScript declarations so it will complain about a bunch of Meteor global variables.
+### Running [Flow check](http://flowtype.org)
 
-    ### Other tips:
+```
+$ flow check --all
+```
 
-    1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
-    2. To disable specific testing modes, use these environment variables:
+Note that Flow doesn't yet support TypeScript declarations so it will complain about a bunch of Meteor global variables.
+
+### Other tips:
+
+1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
+2. To disable specific testing modes, use these environment variables:
 
     ```bash
     JASMINE_SERVER_UNIT=0
@@ -72,21 +75,21 @@
 
 ## Debugging
 
-    ### Interactive Development Console
+### Interactive Development Console
 
-    ```bash
-    $ (cd app; meteor shell)
-    ```
+```
+$ (cd app; meteor shell)
+```
 
-    ### Database Admin
+### Database Admin
 
-    ```bash
-    $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-local-meteor-mongodb
-    ```
+```
+$ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-local-meteor-mongodb
+```
 
 
 ## Deploying to Production
 
-    ```bash
-    $ (cd app; meteor deploy)
-    ```
+```
+$ (cd app; meteor deploy)
+```
