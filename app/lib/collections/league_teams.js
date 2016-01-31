@@ -11,8 +11,10 @@ LeagueTeams.attachSchema(new SimpleSchema({
   },
   division: {
     type: String,
-    allowedValues: ['North', 'South', 'East', 'West'],
-    optional: true,
+    allowedValues: [
+      'North', 'South', 'East', 'West',
+      'Atlantic', 'Pacific', 'Northwest', 'Southeast', 'Southwest', 'Central',
+    ],
   },
 }));
 
