@@ -7,9 +7,22 @@ Meteor.publish('singlePool', _id => {
   return Pools.find({ _id });
 });
 
-Meteor.publish('poolTeams', poolId => {
+Meteor.publish('poolTeams', function (poolId, seasonId = null) {
   check(poolId, String);
-  return PoolTeams.find({ poolId });
+  let actualSeasonId;
+  if (seasonId) {
+    check(seasonId, String);
+    actualSeasonId = seasonId;
+  } else {
+    const leagueId = Pools.findOne({ _id: poolId }).leagueId;
+    const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
+    if (!latestSeason) {
+      log.error(`No season found for leagueId ${leagueId}`);
+      return this.ready();
+    }
+    actualSeasonId = latestSeason._id;
+  }
+  return PoolTeams.find({ poolId, seasonId: actualSeasonId });
 });
 
 Meteor.publish('userPools', function(userId) {

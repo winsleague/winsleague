@@ -15,11 +15,24 @@ PoolTeams.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
       if (this.isInsert) {
-        return Pools.findOne(this.field('poolId').value).seasonId;
+        // select latest season for league
+        const leagueIdField = this.field('leagueId');
+        if (leagueIdField.isSet) {
+          const leagueId = leagueIdField.value;
+          const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
+          if (latestSeason) {
+            return latestSeason._id;
+          }
+          log.error(`No season found for leagueId ${leagueId}`);
+        }
+        this.unset();
       }
     },
   },
-  poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  poolId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
   userId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,

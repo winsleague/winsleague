@@ -8,22 +8,6 @@ Pools.attachSchema(new SimpleSchema({
       type: 'select-radio-inline',
     },
   },
-  seasonId: {
-    type: String,
-    autoValue() {
-      if (this.isInsert) {
-        // select latest season for league
-        const leagueIdField = this.field('leagueId');
-        if (leagueIdField.isSet) {
-          const leagueId = leagueIdField.value;
-          const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
-          if (!latestSeason) log.error(`No season found for leagueId ${leagueId}`);
-          return latestSeason._id;
-        }
-        this.unset();
-      }
-    },
-  },
   name: { type: String, max: 50 },
   commissionerUserId: {
     type: String,

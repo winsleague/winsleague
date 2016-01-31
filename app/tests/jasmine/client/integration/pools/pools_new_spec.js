@@ -26,9 +26,8 @@ describe('poolsNew page', () => {
 
     waitForSubscription(Pools.find({}), function() {
       const pool = Pools.findOne({ name: poolName });
-      expect(pool).not.toBe(undefined);
-      expect(pool.leagueId).not.toBe(undefined);
-      expect(pool.seasonId).not.toBe(undefined);
+      expect(pool).not.toBe(undefined, 'pool');
+      expect(pool.leagueId).not.toBe(undefined, 'leagueId');
       done();
     });
   });
