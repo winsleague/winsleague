@@ -10,9 +10,9 @@ function createDefaultLeagues() {
   leagueId = Leagues.insert({ name: 'NBA' });
   log.debug(`Created NBA league: ${leagueId}`);
   LeagueTeams.insert({ leagueId, cityName: 'New York', mascotName: 'Knicks',
-    abbreviation: 'NYK', conference: 'East' });
+    abbreviation: 'NYK', conference: 'East', division: 'Atlantic' });
   LeagueTeams.insert({ leagueId, cityName: 'Seattle', mascotName: 'Supersonics',
-    abbreviation: 'SEA', conference: 'West' });
+    abbreviation: 'SEA', conference: 'West', division: 'Northwest' });
   Seasons.insert({ leagueId, year: 2015 });
 }
 
