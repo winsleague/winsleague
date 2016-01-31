@@ -49,6 +49,14 @@
     $ (cd app; tail -f .meteor/local/log/jasmine-client-integration.log)
     ```
 
+    ### Running Flow check
+
+    ```bash
+    $ flow check --all
+    ```
+
+    Note that Flow doesn't yet support TypeScript declarations so it will complain about a bunch of Meteor global variables.
+
     ### Other tips:
 
     1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
