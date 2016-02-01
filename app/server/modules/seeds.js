@@ -97,7 +97,9 @@ Modules.server.seeds = {
   },
 
   removeLeague(leagueName) {
-    const leagueId = Modules.leagues.getByName(leagueName)._id;
+    const league = Modules.leagues.getByName(leagueName);
+    if (!league) return;
+    const leagueId = league._id;
     Games.remove({ leagueId });
     LeagueTeams.remove({ leagueId });
     PoolTeams.remove({ leagueId });
@@ -105,5 +107,5 @@ Modules.server.seeds = {
     SeasonLeagueTeams.remove({ leagueId });
     Seasons.remove({ leagueId });
     Leagues.remove({ _id: leagueId });
-  }
+  },
 };
