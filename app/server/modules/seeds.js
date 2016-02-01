@@ -2,16 +2,17 @@ Modules.server.seeds = {
   createLeagues() {
     log.info(`Creating leagues and teams`);
 
-    Leagues.remove({});
-    LeagueTeams.remove({});
-    Seasons.remove({});
-
     Modules.server.seeds.createNflLeague();
     Modules.server.seeds.createNbaLeague();
   },
 
   createNflLeague() {
-    const leagueId = Leagues.insert({ name: 'NFL' });
+    let leagueId = Modules.leagues.getByName('NFL')._id;
+    LeagueTeams.remove({ leagueId });
+    Seasons.remove({ leagueId });
+    Leagues.remove({ name: 'NFL' });
+
+    leagueId = Leagues.insert({ name: 'NFL' });
     const teams = [
       { cityName: 'Baltimore', mascotName: 'Ravens', abbreviation: 'BAL', conference: 'AFC', division: 'North' },
       { cityName: 'Cincinnati', mascotName: 'Bengals', abbreviation: 'CIN', conference: 'AFC', division: 'North' },
@@ -55,7 +56,12 @@ Modules.server.seeds = {
   },
 
   createNbaLeague() {
-    const leagueId = Leagues.insert({ name: 'NBA' });
+    let leagueId = Modules.leagues.getByName('NBA')._id;
+    LeagueTeams.remove({ leagueId });
+    Seasons.remove({ leagueId });
+    Leagues.remove({ name: 'NBA' });
+
+    leagueId = Leagues.insert({ name: 'NBA' });
     const teams = [
       { cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL', conference: 'East', division: 'Southeast' },
       { cityName: 'Boston', mascotName: 'Celtics', abbreviation: 'BOS', conference: 'East', division: 'Atlantic' },
