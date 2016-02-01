@@ -14,6 +14,7 @@
     "BlazeLayout": false,
     "FlowRouter": false,
     "SimpleSchema": false,
+    "SyncedCron": false,
     "Games": true,
     "LeagueTeams": true,
     "Leagues": true,

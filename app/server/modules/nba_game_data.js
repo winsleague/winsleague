@@ -13,6 +13,7 @@ Modules.server.nbaGameData = {
     const response = HTTP.get(url, {
       headers: { 'user-agent': 'Meteor/1.2 (https://github.com/league-wins-pool/league-wins-pool)' },
     });
+    // clean the JSON because the keys don't have quotes
     const cleanJSON = response.content.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?: /g, '"$2": ');
     log.debug(`cleanJSON: ${cleanJSON}`);
     const parsedJSON = JSON.parse(cleanJSON);

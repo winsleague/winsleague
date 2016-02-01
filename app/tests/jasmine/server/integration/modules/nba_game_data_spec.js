@@ -980,7 +980,7 @@ streak_total: 9
     log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
   });
 
-  fdescribe('Ingest Standings Data', () => {
+  describe('Ingest Standings Data', () => {
     it('should ingest standings', () => {
       const league = Modules.leagues.getByName('NBA');
       const season = Modules.seasons.getLatest(league);

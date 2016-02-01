@@ -2,15 +2,13 @@ Modules.server.seeds = {
   createLeagues() {
     log.info(`Creating leagues and teams`);
 
-    Leagues.remove({});
-    LeagueTeams.remove({});
-    Seasons.remove({});
-
     Modules.server.seeds.createNflLeague();
     Modules.server.seeds.createNbaLeague();
   },
 
   createNflLeague() {
+    Modules.server.seeds.removeLeague('NFL');
+
     const leagueId = Leagues.insert({ name: 'NFL' });
     const teams = [
       { cityName: 'Baltimore', mascotName: 'Ravens', abbreviation: 'BAL', conference: 'AFC', division: 'North' },
@@ -55,6 +53,8 @@ Modules.server.seeds = {
   },
 
   createNbaLeague() {
+    Modules.server.seeds.removeLeague('NBA');
+
     const leagueId = Leagues.insert({ name: 'NBA' });
     const teams = [
       { cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL', conference: 'East', division: 'Southeast' },
@@ -94,5 +94,18 @@ Modules.server.seeds = {
     }
 
     Seasons.insert({ leagueId, year: 2015 });
+  },
+
+  removeLeague(leagueName) {
+    const league = Modules.leagues.getByName(leagueName);
+    if (!league) return;
+    const leagueId = league._id;
+    Games.remove({ leagueId });
+    LeagueTeams.remove({ leagueId });
+    PoolTeams.remove({ leagueId });
+    Pools.remove({ leagueId });
+    SeasonLeagueTeams.remove({ leagueId });
+    Seasons.remove({ leagueId });
+    Leagues.remove({ _id: leagueId });
   },
 };
