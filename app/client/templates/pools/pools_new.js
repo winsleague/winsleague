@@ -19,10 +19,6 @@ Template.poolsNew.onCreated(function() {
       const leagues = Leagues.find({}).map(league => { return league._id; });
       log.info(`League data ready: ${Leagues.find().count()} leagues, %j`, leagues);
     });
-    this.subscribe('seasons', () => {
-      const seasons = Seasons.find({}).map(season => { return season._id; });
-      log.info(`Season data ready: ${Seasons.find().count()} seasons, %j`, seasons);
-    });
   });
 });
 

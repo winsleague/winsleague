@@ -10,7 +10,7 @@ Template.poolsShow.helpers({
   poolId: () => {
     const instance = Template.instance();
     return instance.getPoolId();
-  }
+  },
 });
 
 Template.poolsShow.onCreated(function() {
