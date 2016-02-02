@@ -1,3 +1,13 @@
+log.info('Initializing SyncedCron');
+
+const SyncedCronLogger = opts => {
+  log.log(opts.level, `${opts.tag}: ${opts.message}`);
+};
+
+SyncedCron.config({
+  logger: SyncedCronLogger,
+});
+
 SyncedCron.add({
   name: 'Refresh NBA standings',
   schedule(parser) {
