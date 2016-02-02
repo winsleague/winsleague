@@ -1,14 +1,25 @@
 Modules.server.loggly = {
   init() {
+    if (! Modules.server.loggly.token()) {
+      log.warn('LOGGLY_TOKEN not found!');
+      return;
+    }
+
     const options = {
       'level': 'info',
       'subdomain': 'leaguewinspool',
-      'inputToken': process.env.LOGGLY_TOKEN,
+      'inputToken': Modules.server.loggly.token(),
       'json': true,
       'tags': ['meteor'],
       'handleExceptions': true,
     };
 
     Winston.add(Winston_Loggly, options);
+  },
+
+  token() {
+    // Deploying from local settings.json will set Meteor.settings
+    // CircleCI will set process.env.LOGGLY_TOKEN
+    return Meteor.settings.private.logglyToken || process.env.LOGGLY_TOKEN;
   },
 };
