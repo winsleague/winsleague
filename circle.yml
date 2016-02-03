@@ -54,8 +54,7 @@ deployment:
     branch: master
     commands:
       - npm install -g mup # install meteor-up for deployment
-      - echo $PEM > ~/.ssh/id_leaguewinspool
-      - DEBUG=* mup deploy
+      - (cd config/production; DEBUG=* mup deploy)
 
       # Notify Rollbar about deploy
       - ENVIRONMENT=production

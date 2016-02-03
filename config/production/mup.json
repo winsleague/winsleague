@@ -3,8 +3,7 @@
   "servers": [
     {
       "host": "www.leaguewinspool.com",
-      "username": "root",
-      "pem": "~/.ssh/id_leaguewinspool"
+      "username": "root"
     }
   ],
 
