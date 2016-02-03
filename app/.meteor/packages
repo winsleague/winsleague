@@ -48,3 +48,5 @@ infinitedg:winston
 infinitedg:winston-loggly
 brentjanderson:winston-client
 saucecode:rollbar
+kadira:debug
+meteorhacks:kadira
