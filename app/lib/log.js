@@ -1,1 +1,2 @@
-log = loglevel.createAppLogger();
+log = Winston;
+log.info('Initialized log = Winston');

@@ -1,0 +1,14 @@
+template(name="poolTeamsNew")
+  h2 Add Player
+
+  +onlyIfLoggedIn
+    +autoForm(schema=insertPoolTeamSchema id="insertPoolTeamForm" type="method" meteormethod="insertPoolTeam")
+      fieldset
+        +afFieldInput(name="poolId" type="hidden" value=poolId)
+        +afQuickField(name="userEmail")
+        +afQuickField(name="userTeamName")
+        if Template.subscriptionsReady
+          +afQuickField(name="leagueTeamIds")
+      button.btn.btn-primary(type="submit") Create
+      | &nbsp;
+      a.btn.btn-default(href="{{pathFor 'poolsShow' _id=poolId}}") Back to Pool

@@ -5,14 +5,23 @@ LeagueTeams.attachSchema(new SimpleSchema({
   cityName: { type: String },
   mascotName: { type: String },
   abbreviation: { type: String },
-  conference: { type: String, allowedValues: ["AFC", "NFC"] },
-  division: { type: String, allowedValues: ["North", "South", "East", "West"] }
+  conference: {
+    type: String,
+    allowedValues: ['AFC', 'NFC', 'East', 'West'],
+  },
+  division: {
+    type: String,
+    allowedValues: [
+      'North', 'South', 'East', 'West',
+      'Atlantic', 'Pacific', 'Northwest', 'Southeast', 'Southwest', 'Central',
+    ],
+  },
 }));
 
 LeagueTeams.helpers({
-  fullName: function () {
+  fullName() {
     return this.cityName + ' ' + this.mascotName;
-  }
+  },
 });
 
 if (Meteor.isServer) {
