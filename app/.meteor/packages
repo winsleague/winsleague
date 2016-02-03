@@ -47,3 +47,4 @@ percolate:synced-cron
 infinitedg:winston
 infinitedg:winston-loggly
 brentjanderson:winston-client
+saucecode:rollbar
