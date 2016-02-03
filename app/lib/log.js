@@ -1,2 +1,2 @@
-log = loglevel.createAppLogger();
-log.setLevel('debug');
+log = Winston;
+log.info('Initialized log = Winston');

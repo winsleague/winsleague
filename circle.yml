@@ -48,3 +48,11 @@ test:
     # Disabled until we get tests reporting to lcov again
     # - npm install -g codeclimate-test-reporter@0.1.1
     # - (cd src/webapp; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < log/coverage/report-lcov/lcov.info)
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - npm install -g mup # install meteor-up for deployment
+      - echo $PEM > ~/.ssh/id_leaguewinspool
+      - DEBUG=* mup deploy
