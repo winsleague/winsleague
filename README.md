@@ -90,6 +90,6 @@ $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-
 
 ## Deploying to Production
 
-```
-$ (cd app; meteor deploy)
-```
+CircleCI automatically does this when tests pass.
+
+If a change to `config/production/mup.json` is needed, make sure to run `gpg -c mup.json` and commit the updated `mup.json.gpg`.
