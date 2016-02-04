@@ -54,9 +54,8 @@ deployment:
     branch: develop # while we're in early development, deploy from develop branch
     commands:
       # Decrypt Meteor Up config
-      - cd config/production
-      - gpg --passphrase $MUP_PASSPHRASE -o mup.json -d mup.json.gpg
-      
+      - (cd config/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.json -d mup.json.gpg)
+
       # Deploy
       - npm install -g mup # install meteor-up for deployment
       - DEBUG=* mup deploy
