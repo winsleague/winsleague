@@ -1,0 +1,13 @@
+template(name="poolTeamsEdit")
+  h2 Edit Player
+
+  +onlyIfLoggedIn
+    if Template.subscriptionsReady
+      +autoForm(schema=updatePoolTeamSchema id="updatePoolTeamForm" doc=poolTeamDoc type="method" meteormethod="updatePoolTeam")
+        fieldset
+          +afQuickField(name="userEmail")
+          +afQuickField(name="userTeamName")
+          +afQuickField(name="leagueTeamIds")
+        button.btn.btn-primary(type="submit") Save
+        | &nbsp;
+        a.btn.btn-default(href="{{pathFor 'poolsShow' _id=poolId}}") Back to Pool

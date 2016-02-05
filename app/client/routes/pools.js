@@ -33,11 +33,20 @@ poolsRoutes.route('/:_id/edit', {
   },
 });
 
-// http://app.com/pools/:_poolId/teams/new
+// http://app.com/pools/:poolId/teams/new
 poolsRoutes.route('/:poolId/teams/new', {
   name: 'poolTeamsNew',
   action(params) {
     log.debug(`We're creating teams for a pool: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolTeamsNew' });
+  },
+});
+
+// http://app.com/pools/:poolId/teams/:poolTeamId/edit
+poolsRoutes.route('/:poolId/teams/:poolTeamId/edit', {
+  name: 'poolTeamsEdit',
+  action(params) {
+    log.debug(`We're editing a pool team: ${params.poolId} and ${params.poolTeamId}`);
+    BlazeLayout.render('masterLayout', { content: 'poolTeamsEdit' });
   },
 });

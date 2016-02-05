@@ -16,7 +16,7 @@ Meteor.publish('poolTeams.of_pool', function (poolId, seasonId = null) {
   return PoolTeams.find({ poolId, seasonId: actualSeasonId });
 });
 
-Meteor.publish('poolTeam.single', function (poolTeamId) {
-  check(poolTeamId, String);
-  return PoolTeams.findOne({ _id: poolTeamId });
+Meteor.publish('poolTeams.single', function (_id) {
+  check(_id, String);
+  return PoolTeams.find({ _id });
 });
