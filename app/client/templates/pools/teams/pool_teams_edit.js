@@ -29,10 +29,7 @@ PoolTeams.updateFormSchema = new SimpleSchema({
 
 Template.poolTeamsEdit.helpers({
   updatePoolTeamSchema: PoolTeams.updateFormSchema,
-  poolId: () => {
-    const instance = Template.instance();
-    return instance.getPoolId();
-  },
+  poolId: () => Template.instance().getPoolId(),
   poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
 });
 
@@ -40,7 +37,7 @@ Template.poolTeamsEdit.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('poolId');
   this.getPoolTeamId = () => FlowRouter.getParam('poolTeamId');
   this.getLeagueId = () => Pools.findOne(this.getPoolId(), { fields: { leagueId: 1 } }).leagueId;
-  this.getPoolTeamDoc = () => PoolTeams.findOne(this.getPoolId());
+  this.getPoolTeamDoc = () => PoolTeams.findOne(this.getPoolTeamId());
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
