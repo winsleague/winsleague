@@ -66,26 +66,22 @@ PoolTeams.schema = new SimpleSchema({
     type: [Number],
     autoValue() {
       // TODO: this is placeholder until we wire this up
-      if (this.isInsert) {
-        let numbers = [];
-        for (let leagueTeamId of this.field('leagueTeamIds').value) {
-          numbers.push(0);
-        }
-        return numbers;
+      let numbers = [];
+      for (let leagueTeamId of this.field('leagueTeamIds').value) {
+        numbers.push(0);
       }
+      return numbers;
     },
   },
   leagueTeamMascotNames: {
     type: [String],
     autoValue() {
-      if (this.isInsert) {
-        let mascots = [];
-        for (let leagueTeamId of this.field('leagueTeamIds').value) {
-          const leagueTeam = LeagueTeams.findOne(leagueTeamId);
-          mascots.push(leagueTeam.mascotName);
-        }
-        return mascots;
+      let mascots = [];
+      for (let leagueTeamId of this.field('leagueTeamIds').value) {
+        const leagueTeam = LeagueTeams.findOne(leagueTeamId);
+        mascots.push(leagueTeam.mascotName);
       }
+      return mascots;
     },
   },
   totalWins: { type: Number, defaultValue: 0 },
@@ -119,6 +115,34 @@ PoolTeams.schema = new SimpleSchema({
 });
 PoolTeams.attachSchema(PoolTeams.schema);
 
+PoolTeams.formSchema = new SimpleSchema({
+  poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  userTeamName: { label: 'Team name', type: String },
+  userEmail: { label: 'Email', type: String, regEx: SimpleSchema.RegEx.Email },
+  leagueTeamIds: {
+    label: 'Drafted teams',
+    type: [String],
+    autoform: {
+      minCount: 1,
+      maxCount: 4,
+      initialCount: 4,
+    },
+  },
+  'leagueTeamIds.$': {
+    autoform: {
+      afFieldInput: {
+        options() {
+          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(function (leagueTeam) {
+            return { label: leagueTeam.fullName(), value: leagueTeam._id };
+          });
+        },
+      },
+    },
+  },
+});
+
+
+
 PoolTeams.helpers({
   teamSummary() {
     let string = '';
@@ -137,25 +161,19 @@ if (Meteor.isServer) {
     },
 
     update(userId, doc, fieldNames, modifier) {
-      return false;
+      // verify userId either owns PoolTeam or is commissioner of pool
+      const poolId = doc.poolId;
+      const pool = Pools.findOne(poolId);
+      return (userId === doc.userId ||
+        userId === pool.commissionerUserId);
     },
 
     remove(userId, doc) {
-      return false;
-    },
-  });
-
-  PoolTeams.deny({
-    insert(userId, doc) {
-      return true;
-    },
-
-    update(userId, doc, fieldNames, modifier) {
-      return true;
-    },
-
-    remove(userId, doc) {
-      return true;
+      // verify userId either owns PoolTeam or is commissioner of pool
+      const poolId = doc.poolId;
+      const pool = Pools.findOne(poolId);
+      return (userId === doc.userId ||
+      userId === pool.commissionerUserId);
     },
   });
 }

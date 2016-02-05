@@ -26,7 +26,7 @@ Modules.server.poolTeams = {
     });
 
     const numberAffected = PoolTeams.update({ _id: poolTeam._id },
-      { $set: { totalWins, totalGames, totalPlusMinus } } );
+      { $set: { totalWins, totalGames, totalPlusMinus } });
     log.info(`PoolTeams.update numberAffected: ${numberAffected}`);
-  }
+  },
 };

@@ -2,7 +2,7 @@ template(name="poolTeamsNew")
   h2 Add Player
 
   +onlyIfLoggedIn
-    +autoForm(schema=insertPoolTeamSchema id="insertPoolTeamForm" type="method" meteormethod="insertPoolTeam")
+    +autoForm(schema=schema id="insertPoolTeamForm" type="method" meteormethod="PoolTeams.methods.insert")
       fieldset
         +afFieldInput(name="poolId" type="hidden" value=poolId)
         +afQuickField(name="userEmail")

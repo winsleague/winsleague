@@ -3,9 +3,8 @@ template(name="poolTeamsEdit")
 
   +onlyIfLoggedIn
     if Template.subscriptionsReady
-      +autoForm(schema=updatePoolTeamSchema id="updatePoolTeamForm" doc=poolTeamDoc type="method-update" meteormethod="updatePoolTeam")
+      +autoForm(collection="PoolTeams" id="updatePoolTeamForm" doc=poolTeamDoc type="update")
         fieldset
-          +afQuickField(name="userEmail")
           +afQuickField(name="userTeamName")
           +afQuickField(name="leagueTeamIds")
         button.btn.btn-primary(type="submit") Save
