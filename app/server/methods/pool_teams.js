@@ -37,5 +37,9 @@ Meteor.methods({
     check(newDoc, PoolTeams.schema);
     PoolTeams.insert(newDoc);
   },
+
+  updatePoolTeam(doc) {
+
+  },
 });
 
