@@ -66,22 +66,26 @@ PoolTeams.schema = new SimpleSchema({
     type: [Number],
     autoValue() {
       // TODO: this is placeholder until we wire this up
-      let numbers = [];
-      for (let leagueTeamId of this.field('leagueTeamIds').value) {
-        numbers.push(0);
+      if (this.field('leagueTeamIds').isSet) {
+        let numbers = [];
+        for (let leagueTeamId of this.field('leagueTeamIds').value) {
+          numbers.push(0);
+        }
+        return numbers;
       }
-      return numbers;
     },
   },
   leagueTeamMascotNames: {
     type: [String],
     autoValue() {
-      let mascots = [];
-      for (let leagueTeamId of this.field('leagueTeamIds').value) {
-        const leagueTeam = LeagueTeams.findOne(leagueTeamId);
-        mascots.push(leagueTeam.mascotName);
+      if (this.field('leagueTeamIds').isSet) {
+        let mascots = [];
+        for (let leagueTeamId of this.field('leagueTeamIds').value) {
+          const leagueTeam = LeagueTeams.findOne(leagueTeamId);
+          mascots.push(leagueTeam.mascotName);
+        }
+        return mascots;
       }
-      return mascots;
     },
   },
   totalWins: { type: Number, defaultValue: 0 },
