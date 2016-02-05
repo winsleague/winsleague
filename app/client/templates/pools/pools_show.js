@@ -17,10 +17,10 @@ Template.poolsShow.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('_id');
 
   this.autorun(() => {
-    this.subscribe('singlePool', this.getPoolId(), () => {
-      log.info(`singlePool subscription ready: ${Pools.find().count()} pools`);
+    this.subscribe('pools.single', this.getPoolId(), () => {
+      log.info(`pools.single subscription ready: ${Pools.find().count()} pools`);
     });
-    this.subscribe('poolTeams', this.getPoolId(), () => {
+    this.subscribe('poolTeams.of_pool', this.getPoolId(), () => {
       log.info(`poolTeams subscription ready: ${PoolTeams.find().count()} teams`);
     });
   });

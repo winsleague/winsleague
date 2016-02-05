@@ -40,9 +40,9 @@ Template.poolTeamsNew.onCreated(function() {
   this.getLeagueId = () => Pools.findOne(this.getPoolId(), { fields: { leagueId: 1 } }).leagueId;
 
   this.autorun(() => {
-    this.subscribe('singlePool', this.getPoolId(), () => {
+    this.subscribe('pools.single', this.getPoolId(), () => {
       log.info(`pool subscription ready: ${Pools.find().count()} pools`);
-      this.subscribe('leagueTeams', this.getLeagueId(), () => {
+      this.subscribe('leagueTeams.of_league', this.getLeagueId(), () => {
         log.info(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
       });
     });
