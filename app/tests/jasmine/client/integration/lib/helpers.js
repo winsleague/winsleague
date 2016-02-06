@@ -82,6 +82,16 @@ createDefaultPool = (done) => {
   log.debug(`called createDefaultPool`);
 };
 
+createDefaultPoolTeam = (done) => {
+  Meteor.call(
+    'fixtures/pool_teams/createDefault',
+    createMethodResultHandler(done, (error, poolTeam) => {
+      this.poolTeam = poolTeam;
+    })
+  );
+  log.debug(`called createDefaultPoolTeam`);
+};
+
 createDefaultUser = (done) => {
   Meteor.call(
     'fixtures/users/createDefault',
@@ -134,11 +144,32 @@ goToPoolsNewPage = done => {
   return goToRoute('poolsNew')(done);
 };
 
+goToPoolsShowPage = done => {
+  waitForSubscription(Pools.find({}), function () {
+    const pool = Pools.findOne({});
+    const _id = pool._id;
+
+    return goToRoute('poolsShow', { _id })(done);
+  });
+};
+
 goToPoolTeamsNewPage = done => {
   waitForSubscription(Pools.find({}), function () {
     const pool = Pools.findOne({});
     const poolId = pool._id;
 
     return goToRoute('poolTeamsNew', { poolId })(done);
+  });
+};
+
+goToPoolTeamsEditPage = done => {
+  log.debug('goToPoolTeamsEditPage');
+  waitForSubscription(PoolTeams.find({}), function () {
+    log.debug('got subscription!');
+    const poolTeam = PoolTeams.findOne({});
+    const poolId = poolTeam.poolId;
+    const poolTeamId = poolTeam._id;
+
+    return goToRoute('poolTeamsEdit', { poolId, poolTeamId })(done);
   });
 };
