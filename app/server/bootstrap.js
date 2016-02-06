@@ -1,5 +1,5 @@
 Meteor.startup(() => {
-  Modules.server.loggly.init();
+  if (process.env.NODE_ENV === 'production') Modules.server.loggly.init();
 
   // Note: this is not called when the test runner restarts due to a changed spec
   log.info(`Meteor.startup()`);
