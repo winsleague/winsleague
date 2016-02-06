@@ -15,6 +15,7 @@ Modules.server.loggly = {
     };
 
     log.add(Winston_Loggly, options);
+    log.info('Loggly setup complete');
   },
 
   token() {
