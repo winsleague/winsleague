@@ -154,6 +154,16 @@ goToPoolsShowPage = done => {
   });
 };
 
+goToPoolsEditPage = done => {
+  log.debug('goToPoolsEditPage called');
+  waitForSubscription(Pools.find(), function () {
+    const pool = Pools.findOne();
+    const _id = pool._id;
+
+    return goToRoute('poolsEdit', { _id })(done);
+  });
+};
+
 goToPoolTeamsNewPage = done => {
   log.debug('goToPoolsShowPage called');
   waitForSubscription(Pools.find(), function () {

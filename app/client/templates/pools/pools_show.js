@@ -22,10 +22,10 @@ Template.poolsShow.onCreated(function() {
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
-      log.info(`pools.single subscription ready: ${Pools.find().count()} pools`);
+      log.debug(`pools.single subscription ready: ${Pools.find().count()}`);
     });
     this.subscribe('poolTeams.of_pool', this.getPoolId(), () => {
-      log.info(`poolTeams subscription ready: ${PoolTeams.find().count()} teams`);
+      log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);
     });
   });
 });

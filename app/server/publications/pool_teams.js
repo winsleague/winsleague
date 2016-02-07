@@ -5,12 +5,11 @@ Meteor.publish('poolTeams.of_pool', function (poolId, seasonId = null) {
     check(seasonId, String);
     actualSeasonId = seasonId;
   } else {
-    const leagueId = Pools.findOne({ _id: poolId }).leagueId;
+    const pool = Pools.findOne({ _id: poolId });
+    if (!pool) return this.ready();
+    const leagueId = pool.leagueId;
     const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
-    if (!latestSeason) {
-      log.error(`No season found for leagueId ${leagueId}`);
-      return this.ready();
-    }
+    if (!latestSeason) throw new Error(`No season found for leagueId ${leagueId}`);
     actualSeasonId = latestSeason._id;
   }
   return PoolTeams.find({ poolId, seasonId: actualSeasonId });

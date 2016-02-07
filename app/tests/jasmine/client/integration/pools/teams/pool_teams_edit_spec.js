@@ -14,7 +14,7 @@ describe('poolTeamsEdit page', () => {
   beforeEach(goToPoolsShowPage); // needed so we get subscription to PoolTeams
   beforeEach(goToPoolTeamsEditPage);
 
-  it('should create edit pool team', done => {
+  it('should edit a pool team', done => {
     const userTeamName = "Billy's Dummies";
     let leagueTeamId;
 
