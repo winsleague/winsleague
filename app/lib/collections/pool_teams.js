@@ -146,7 +146,6 @@ PoolTeams.formSchema = new SimpleSchema({
 });
 
 
-
 PoolTeams.helpers({
   teamSummary() {
     let string = '';
