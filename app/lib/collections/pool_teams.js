@@ -19,11 +19,9 @@ PoolTeams.schema = new SimpleSchema({
         const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
           const leagueId = leagueIdField.value;
-          const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
-          if (latestSeason) {
-            return latestSeason._id;
-          }
-          log.error(`No season found for leagueId ${leagueId}`);
+          const latestSeason = Modules.seasons.getLatestByLeagueId(leagueId);
+          if (latestSeason) return latestSeason._id;
+          throw new Error(`No season found for leagueId ${leagueId}`);
         }
         this.unset();
       }

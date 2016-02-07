@@ -5,7 +5,7 @@ Modules.server.nbaGameData = {
     const league = Modules.leagues.getByName('NBA');
     if (!league) { throw new Error(`League is not found!`); }
 
-    const season = Modules.seasons.getLatest(league);
+    const season = Modules.seasons.getLatestByLeague(league);
 
     const url = `https://erikberg.com/nba/standings.json`;
 

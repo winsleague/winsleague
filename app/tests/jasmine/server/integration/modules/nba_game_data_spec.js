@@ -983,7 +983,7 @@ streak_total: 9
   describe('Ingest Standings Data', () => {
     it('should ingest standings', () => {
       const league = Modules.leagues.getByName('NBA');
-      const season = Modules.seasons.getLatest(league);
+      const season = Modules.seasons.getLatestByLeague(league);
       const leagueTeam = Modules.leagueTeams.getByName(league, 'New York', 'Knicks');
 
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({
