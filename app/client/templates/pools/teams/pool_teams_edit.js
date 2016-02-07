@@ -1,34 +1,7 @@
 Template.poolTeamsEdit.events({
 });
 
-PoolTeams.updateFormSchema = new SimpleSchema({
-  poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  userTeamName: { label: 'Team name', type: String },
-  userEmail: { label: 'Email', type: String, regEx: SimpleSchema.RegEx.Email },
-  leagueTeamIds: {
-    label: 'Drafted teams',
-    type: [String],
-    autoform: {
-      minCount: 1,
-      maxCount: 4,
-      initialCount: 4,
-    },
-  },
-  'leagueTeamIds.$': {
-    autoform: {
-      afFieldInput: {
-        options() {
-          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(function (leagueTeam) {
-            return { label: leagueTeam.fullName(), value: leagueTeam._id };
-          });
-        },
-      },
-    },
-  },
-});
-
 Template.poolTeamsEdit.helpers({
-  updatePoolTeamSchema: PoolTeams.updateFormSchema,
   poolId: () => Template.instance().getPoolId(),
   poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
 });

@@ -19,47 +19,36 @@ SeasonLeagueTeams.attachSchema(new SimpleSchema({
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
     type: Date,
-    autoValue: function() {
+    autoValue() {
       if (this.isInsert) {
         return new Date();
       } else if (this.isUpsert) {
-        return {$setOnInsert: new Date()};
-      } else {
-        this.unset();  // Prevent user from supplying their own value
+        return { $setOnInsert: new Date() };
       }
-    }
+      this.unset();  // Prevent user from supplying their own value
+    },
   },
   updatedAt: {
     // Force value to be current date (on server) upon update
     // and don't allow it to be set upon insert.
     type: Date,
-    autoValue: function() {
+    autoValue() {
       if (this.isUpdate) {
         return new Date();
       }
     },
     denyInsert: true,
-    optional: true
-  }
+    optional: true,
+  },
 }));
 
 
-/*Helpers */
+/* Helpers */
 SeasonLeagueTeams.helpers({
-  totalGames: function () {
+  totalGames() {
     return this.wins + this.losses + this.ties;
-  }
+  },
 });
-
-
-/* Hooks */
-SeasonLeagueTeams.after.insert(function (userId, doc) {
-  Modules.server.poolTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
-});
-
-SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
-  Modules.server.poolTeams.refreshWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
-}, { fetchPrevious: false });
 
 
 /* Access control */

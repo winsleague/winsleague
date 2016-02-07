@@ -55,7 +55,7 @@ PoolTeams.schema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options() {
-          return LeagueTeams.find().map(leagueTeam => {
+          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => {
             return { label: leagueTeam.fullName(), value: leagueTeam._id };
           });
         },
@@ -146,6 +146,7 @@ PoolTeams.formSchema = new SimpleSchema({
 });
 
 
+/* Helpers */
 PoolTeams.helpers({
   teamSummary() {
     let string = '';
@@ -157,6 +158,8 @@ PoolTeams.helpers({
   },
 });
 
+
+/* Access control */
 if (Meteor.isServer) {
   PoolTeams.allow({
     insert(userId, doc) {
