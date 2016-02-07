@@ -1,19 +1,19 @@
-<template name="poolTeamsEdit">
-  <h2>Edit Player</h2>
+<template name="poolsEdit">
+  <h2>Edit Pool</h2>
 
   {{#onlyIfLoggedIn}}
     {{#if Template.subscriptionsReady}}
-      {{#autoForm collection="PoolTeams" id="updatePoolTeamForm" doc=poolTeamDoc type="update"}}
+      {{#autoForm collection="Pools" id="updatePoolForm" doc=poolDoc type="update"}}
         <fieldset>
-          {{> afQuickField name="userTeamName"}}
-          {{> afQuickField name="leagueTeamIds"}}
+          {{> afQuickField name="name"}}
         </fieldset>
+
         <button class="btn btn-primary" type="submit">Save</button>
         &nbsp;
         <a class="btn btn-default" href="{{pathFor 'poolsShow' _id=poolId}}">Back to Pool</a>
         &nbsp;
         {{> autoformModals}}
-        {{#afModal class="btn btn-danger" collection="PoolTeams" operation="remove" doc=poolTeamDoc._id}}
+        {{#afModal class="btn btn-danger" collection="Pools" operation="remove" doc=poolDoc._id}}
           Delete
         {{/afModal}}
       {{/autoForm}}

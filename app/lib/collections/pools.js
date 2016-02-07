@@ -51,25 +51,11 @@ if (Meteor.isServer) {
     },
 
     update(userId, doc, fieldNames, modifier) {
-      return false;
+      return (userId === doc.commissionerUserId);
     },
 
     remove(userId, doc) {
-      return false;
-    },
-  });
-
-  Pools.deny({
-    insert(userId, doc) {
-      return false;
-    },
-
-    update(userId, doc, fieldNames, modifier) {
-      return true;
-    },
-
-    remove(userId, doc) {
-      return true;
+      return (userId === doc.commissionerUserId);
     },
   });
 }

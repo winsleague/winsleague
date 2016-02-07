@@ -14,13 +14,20 @@ Template.poolTeamsEdit.onCreated(function() {
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
-      log.info(`pools.single subscription ready: ${Pools.find().count()} pools`);
+      log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()} pools`);
+      if (Pools.find(this.getPoolId()).count() === 0) {
+        FlowRouter.go('/');
+        return;
+      }
       this.subscribe('leagueTeams.of_league', this.getLeagueId(), () => {
-        log.info(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
+        log.debug(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
       });
     });
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
-      log.info(`poolTeams.single subscription ready`);
+      log.debug(`poolTeams.single subscription ready`);
+      if (PoolTeams.find({ poolId: this.getPoolId() }).count() === 0) {
+        FlowRouter.go('poolsShow', { _id: this.getPoolId() });
+      }
     });
   });
 });

@@ -28,8 +28,10 @@ poolsRoutes.route('/:_id', {
 
 // http://app.com/pools/:_id/edit
 poolsRoutes.route('/:_id/edit', {
+  name: 'poolsEdit',
   action(params) {
     log.debug(`We're editing a single document: ${params._id}`);
+    BlazeLayout.render('masterLayout', { content: 'poolsEdit' });
   },
 });
 

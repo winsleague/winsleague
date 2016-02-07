@@ -16,7 +16,7 @@ function resetDatabase() {
   });
 
   _.each(appCollections, (appCollection) => {
-    log.info('remove ' + appCollection.collectionName);
+    log.debug('reset collection ' + appCollection.collectionName);
     Meteor.wrapAsync(appCollection.remove, appCollection)();
   });
 }
