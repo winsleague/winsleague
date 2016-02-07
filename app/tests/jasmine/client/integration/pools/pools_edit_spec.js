@@ -42,7 +42,7 @@ describe('poolEdit page', () => {
         $(page.getDeleteButtonInModalSelector()).click();
       });
 
-      waitForEmptySubscription(Pools.find({ name }), function() {
+      waitForEmptySubscription(Pools.find(), function() {
         done();
       });
     });
