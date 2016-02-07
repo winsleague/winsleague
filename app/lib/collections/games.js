@@ -48,18 +48,6 @@ Games.attachSchema(new SimpleSchema({
 }));
 
 
-/* Hooks */
-Games.after.insert((userId, doc) => {
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
-});
-
-Games.after.update((userId, doc, fieldNames, modifier, options) => {
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
-}, { fetchPrevious: false });
-
-
 /* Access control */
 if (Meteor.isServer) {
   Games.allow({
