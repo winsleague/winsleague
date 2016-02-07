@@ -55,7 +55,7 @@ PoolTeams.schema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options() {
-          return LeagueTeams.find({}).map(leagueTeam => {
+          return LeagueTeams.find().map(leagueTeam => {
             return { label: leagueTeam.fullName(), value: leagueTeam._id };
           });
         },

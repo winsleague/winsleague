@@ -1,1 +1,1 @@
-Meteor.publish('leagues.list', () => Leagues.find({}));
+Meteor.publish('leagues.list', () => Leagues.find());

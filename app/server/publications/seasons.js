@@ -1,1 +1,1 @@
-Meteor.publish('seasons.list', () => Seasons.find({}));
+Meteor.publish('seasons.list', () => Seasons.find());

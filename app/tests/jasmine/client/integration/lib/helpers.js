@@ -146,8 +146,8 @@ goToPoolsNewPage = done => {
 
 goToPoolsShowPage = done => {
   log.debug('goToPoolsShowPage called');
-  waitForSubscription(Pools.find({}), function () {
-    const pool = Pools.findOne({});
+  waitForSubscription(Pools.find(), function () {
+    const pool = Pools.findOne();
     const _id = pool._id;
 
     return goToRoute('poolsShow', { _id })(done);
@@ -156,8 +156,8 @@ goToPoolsShowPage = done => {
 
 goToPoolTeamsNewPage = done => {
   log.debug('goToPoolsShowPage called');
-  waitForSubscription(Pools.find({}), function () {
-    const pool = Pools.findOne({});
+  waitForSubscription(Pools.find(), function () {
+    const pool = Pools.findOne();
     const poolId = pool._id;
 
     return goToRoute('poolTeamsNew', { poolId })(done);
@@ -166,8 +166,8 @@ goToPoolTeamsNewPage = done => {
 
 goToPoolTeamsEditPage = done => {
   log.debug('goToPoolTeamsEditPage called');
-  waitForSubscription(PoolTeams.find({}), function () {
-    const poolTeam = PoolTeams.findOne({});
+  waitForSubscription(PoolTeams.find(), function () {
+    const poolTeam = PoolTeams.findOne();
     const poolId = poolTeam.poolId;
     const poolTeamId = poolTeam._id;
 
