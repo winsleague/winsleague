@@ -1,23 +1,25 @@
-let prettyjson = Meteor.npmRequire( 'prettyjson' );
+let prettyjson = Meteor.npmRequire('prettyjson');
 
 Modules.server.poolTeams = {
   refreshWhoPickedLeagueTeam(leagueId, seasonId, leagueTeamId) {
     log.info(`Finding PoolTeams who picked leagueTeamId: ${leagueTeamId}`);
 
     const poolTeams = PoolTeams.find({ leagueId, seasonId, leagueTeamIds: leagueTeamId });
-    poolTeams.forEach(function(poolTeam) {
-      Modules.server.poolTeams.refreshPoolTeam(leagueId, seasonId, poolTeam);
+    poolTeams.forEach(poolTeam => {
+      Modules.server.poolTeams.refreshPoolTeam(poolTeam);
     });
 
     log.info(`Done finding PoolTeams`);
   },
 
-  refreshPoolTeam(leagueId, seasonId, poolTeam) {
+  refreshPoolTeam(poolTeam) {
     log.info(`Refreshing PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
 
-    var totalWins = 0, totalGames = 0, totalPlusMinus = 0;
-    poolTeam.leagueTeamIds.forEach(function(leagueTeamId) {
-      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ leagueId, seasonId, leagueTeamId });
+    let totalWins = 0;
+    let totalGames = 0;
+    let totalPlusMinus = 0;
+    poolTeam.leagueTeamIds.forEach(leagueTeamId => {
+      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ leagueTeamId });
       if (seasonLeagueTeams) {
         totalWins += seasonLeagueTeams.wins;
         totalGames += seasonLeagueTeams.totalGames();
@@ -25,7 +27,9 @@ Modules.server.poolTeams = {
       }
     });
 
-    const numberAffected = PoolTeams.update({ _id: poolTeam._id },
+    // .direct is needed to avoid an infinite recursion loop
+    // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
+    const numberAffected = PoolTeams.direct.update({ _id: poolTeam._id },
       { $set: { totalWins, totalGames, totalPlusMinus } });
     log.info(`PoolTeams.update numberAffected: ${numberAffected}`);
   },
