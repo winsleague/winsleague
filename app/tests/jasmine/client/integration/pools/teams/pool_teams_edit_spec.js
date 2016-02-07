@@ -7,7 +7,7 @@ const page = {
   },
 };
 
-fdescribe('poolTeamsEdit page', () => {
+describe('poolTeamsEdit page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(createDefaultPool);
   beforeEach(createDefaultPoolTeam);
@@ -18,19 +18,17 @@ fdescribe('poolTeamsEdit page', () => {
     const userTeamName = "Billy's Dummies";
     let leagueTeamId;
 
-    waitForSubscription(PoolTeams.find({}), function() {
-      log.info('form loaded');
-
+    waitForSubscription(PoolTeams.find(), function() {
       $(page.getUserTeamNameSelector()).val(userTeamName);
 
       // select second team
-      leagueTeamId = LeagueTeams.find({}, { skip: 1, limit: 1 })._id;
       $(page.getFirstLeagueTeamSelector()).find('option:eq(2)').prop('selected', true);
+      leagueTeamId = LeagueTeams.findOne({}, { sort: ['cityName', 'asc'], skip: 1 })._id;
+      log.info(`expecting leagueTeamId: ${leagueTeamId}`);
 
       $('form').submit();
-      log.info('form submitted!');
 
-      waitForSubscription(PoolTeams.find(), function() {
+      waitForSubscription(PoolTeams.find({ userTeamName }), function() {
         const poolTeam = PoolTeams.findOne({ userTeamName });
         expect(poolTeam).not.toBe(undefined);
         log.info(`poolTeam: `, poolTeam);
