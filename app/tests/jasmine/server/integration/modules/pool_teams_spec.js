@@ -1,8 +1,8 @@
-let prettyjson = Meteor.npmRequire('prettyjson');
+const prettyjson = Meteor.npmRequire('prettyjson');
 
-describe("Pool Teams", function() {
-  describe("Refresh Team Stats", function () {
-    afterEach(function () {
+describe('Pool Teams', () => {
+  describe('Refresh Team Stats', () => {
+    afterEach(() => {
       log.info(`Cleaned up ${Games.remove({})} Games`);
       log.info(`Cleaned up ${Pools.remove({})} Pools`);
       log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
@@ -19,7 +19,7 @@ describe("Pool Teams", function() {
       const poolId = Pools.insert({
         leagueId: season.leagueId,
         seasonId: season._id,
-        name: 'Dummy'
+        name: 'Dummy',
       });
 
       const giantsTeamId = LeagueTeams.findOne({ abbreviation: 'NYG' })._id;
