@@ -1,0 +1,42 @@
+<template name="poolsShow">
+  <h2>Pool</h2>
+
+  {{#if Template.subscriptionsReady}}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Team Name</th>
+          <th>Teams</th>
+          <th>Wins</th>
+          <th>Games</th>
+          <th>+/-</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each poolTeam in poolTeams}}
+          <tr>
+            <td>{{poolTeam.userTeamName}}</td>
+            <td>{{poolTeam.userTeamName}}</td>
+            <td>{{poolTeam.teamSummary}}</td>
+            <td>{{poolTeam.totalWins}}</td>
+            <td>{{poolTeam.totalGames}}</td>
+            <td>{{poolTeam.totalPlusMinus}}</td>
+            {{#if editAllowed poolTeam}}
+              <td>
+                <a href="{{pathFor 'poolTeamsEdit' poolId=poolId poolTeamId=poolTeam._id}}">Edit</a>
+              </td>
+            {{/if}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    {{#if isCommissioner}}
+      <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
+    {{/if}}
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>
