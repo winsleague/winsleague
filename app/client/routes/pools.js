@@ -35,6 +35,15 @@ poolsRoutes.route('/:_id/edit', {
   },
 });
 
+// http://app.com/pools/:_id/seasons/:seasonId
+poolsRoutes.route('/:_id/seasons/:seasonId', {
+  name: 'poolsShowSeason',
+  action(params) {
+    log.debug(`We're viewing a single document: ${params._id} with season ${params.seasonId}`);
+    BlazeLayout.render('masterLayout', { content: 'poolsShow' });
+  },
+});
+
 // http://app.com/pools/:poolId/teams/new
 poolsRoutes.route('/:poolId/teams/new', {
   name: 'poolTeamsNew',

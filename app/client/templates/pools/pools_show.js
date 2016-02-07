@@ -14,18 +14,20 @@ Template.poolsShow.helpers({
     return (Meteor.userId() === poolTeam.userId ||
       Meteor.userId() === pool.commissionerUserId);
   },
+  isLatestSeason: () => ! Template.instance().getSeasonId(),
 });
 
 Template.poolsShow.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('_id');
   this.getPool = () => Pools.findOne(this.getPoolId());
+  this.getSeasonId = () => FlowRouter.getParam('seasonId');
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
       if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
-    this.subscribe('poolTeams.of_pool', this.getPoolId(), () => {
+    this.subscribe('poolTeams.of_pool', this.getPoolId(), this.getSeasonId(), () => {
       log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);
     });
   });

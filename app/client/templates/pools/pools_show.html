@@ -34,8 +34,10 @@
     </table>
 
     {{#if isCommissioner}}
-      <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
-      <br/>
+      {{#if isLatestSeason}}
+        <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
+        <br/>
+      {{/if}}
       <a href="{{pathFor 'poolsEdit' _id=poolId}}">Edit Pool</a>
     {{/if}}
   {{else}}
