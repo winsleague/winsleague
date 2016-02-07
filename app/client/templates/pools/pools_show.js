@@ -10,7 +10,7 @@ Template.poolsShow.helpers({
   },
   isCommissioner: () => Meteor.userId() === Template.instance().getPool().commissionerUserId,
   editAllowed: (poolTeam) => {
-    const pool = Pools.findOne({ _id: poolTeam.poolId });
+    const pool = Pools.findOne(poolTeam.poolId);
     return (Meteor.userId() === poolTeam.userId ||
       Meteor.userId() === pool.commissionerUserId);
   },
@@ -18,11 +18,12 @@ Template.poolsShow.helpers({
 
 Template.poolsShow.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('_id');
-  this.getPool = () => Pools.findOne({ _id: this.getPoolId() });
+  this.getPool = () => Pools.findOne(this.getPoolId());
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
-      log.debug(`pools.single subscription ready: ${Pools.find().count()}`);
+      log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
+      if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
     this.subscribe('poolTeams.of_pool', this.getPoolId(), () => {
       log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);

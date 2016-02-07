@@ -12,7 +12,10 @@
         &nbsp;
         <a class="btn btn-default" href="{{pathFor 'poolsShow' _id=poolId}}">Back to Pool</a>
         &nbsp;
-        {{> quickRemoveButton collection="Pools" _id=poolDoc._id onSuccess=onRemoveSuccess beforeRemove=beforeRemove class="btn btn-danger"}}
+        {{> autoformModals}}
+        {{#afModal class="btn btn-danger" collection="Pools" operation="remove" doc=poolDoc._id}}
+          Delete
+        {{/afModal}}
       {{/autoForm}}
     {{/if}}
   {{/onlyIfLoggedIn}}

@@ -4,20 +4,6 @@ Template.poolsEdit.events({
 Template.poolsEdit.helpers({
   poolId: () => Template.instance().getPoolId(),
   poolDoc: () => Template.instance().getPoolDoc(),
-  onRemoveSuccess() {
-    return function (result) {
-      alert("Pool deleted!");
-      FlowRouter.go('/');
-    };
-  },
-  beforeRemove() {
-    return function (collection, id) {
-      const doc = collection.findOne(id);
-      if (confirm('Really delete "' + doc.name + '"?')) {
-        this.remove();
-      }
-    };
-  },
 });
 
 Template.poolsEdit.onCreated(function() {
@@ -26,7 +12,8 @@ Template.poolsEdit.onCreated(function() {
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
-      log.debug(`pools.single subscription ready: ${Pools.find().count()} pools`);
+      log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
+      if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
   });
 });

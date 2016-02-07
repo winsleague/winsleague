@@ -2,6 +2,12 @@ const page = {
   getNameSelector() {
     return 'input[name="name"]';
   },
+  getDeleteButtonSelector() {
+    return 'a[href="#afModal"]';
+  },
+  getDeleteButtonInModalSelector() {
+    return 'button.btn-danger'; // fragile way of doing this but good enough for now
+  },
 };
 
 describe('poolEdit page', () => {
@@ -23,6 +29,20 @@ describe('poolEdit page', () => {
         log.info(`pool: `, pool);
         expect(pool.name).toBe(name, 'name');
 
+        done();
+      });
+    });
+  });
+
+  it('should delete a pool', done => {
+    waitForSubscription(Pools.find(), function() {
+      $(page.getDeleteButtonSelector()).click();
+
+      waitForElement(page.getDeleteButtonInModalSelector(), function() {
+        $(page.getDeleteButtonInModalSelector()).click();
+      });
+
+      waitForEmptySubscription(Pools.find({ name }), function() {
         done();
       });
     });

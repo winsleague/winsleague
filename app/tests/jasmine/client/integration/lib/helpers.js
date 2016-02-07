@@ -27,10 +27,11 @@ function createMethodResultHandler(done, hook) {
 }
 
 waitForElement = (selector, successCallback) => {
-  var checkInterval = 50;
-  var timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-  var startTime = Date.now();
-  var intervalId = Meteor.setInterval(function () {
+  log.debug(`waitForElement called for ${selector}`);
+  const checkInterval = 50;
+  const timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  const startTime = Date.now();
+  const intervalId = Meteor.setInterval(function () {
     if (Date.now() > startTime + timeoutInterval) {
       Meteor.clearInterval(intervalId);
       // Jasmine will handle the test timeout error
@@ -42,14 +43,31 @@ waitForElement = (selector, successCallback) => {
 };
 
 waitForSubscription = (query, successCallback) => {
-  var checkInterval = 100;
-  var timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-  var startTime = Date.now();
-  var intervalId = Meteor.setInterval(function () {
+  log.debug('waitForSubscription called');
+  const checkInterval = 100;
+  const timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  const startTime = Date.now();
+  const intervalId = Meteor.setInterval(function () {
     if (Date.now() > startTime + timeoutInterval) {
       Meteor.clearInterval(intervalId);
       // Jasmine will handle the test timeout error
     } else if (query.count() > 0) {
+      Meteor.clearInterval(intervalId);
+      successCallback();
+    }
+  }, checkInterval);
+};
+
+waitForEmptySubscription = (query, successCallback) => {
+  log.debug('waitForEmptySubscription called');
+  const checkInterval = 100;
+  const timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  const startTime = Date.now();
+  const intervalId = Meteor.setInterval(function () {
+    if (Date.now() > startTime + timeoutInterval) {
+      Meteor.clearInterval(intervalId);
+      // Jasmine will handle the test timeout error
+    } else if (query.count() == 0) {
       Meteor.clearInterval(intervalId);
       successCallback();
     }
