@@ -1,0 +1,19 @@
+<template name="poolTeamsNew">
+  <h2>Add Player</h2>
+
+  {{#onlyIfLoggedIn}}
+    {{#autoForm schema=schema id="insertPoolTeamForm" type="method" meteormethod="PoolTeams.methods.insert"}}
+      <fieldset>
+        {{> afFieldInput name="poolId" type="hidden" value=poolId}}
+        {{> afQuickField name="userEmail"}}
+        {{> afQuickField name="userTeamName"}}
+        {{#if Template.subscriptionsReady}}
+          {{> afQuickField name="leagueTeamIds"}}
+        {{/if}}
+      </fieldset>
+      <button class="btn btn-primary" type="submit">Create</button>
+      &nbsp;
+      <a class="btn btn-default" href="{{pathFor 'poolsShow' _id=poolId}}">Back to Pool</a>
+    {{/autoForm}}
+  {{/onlyIfLoggedIn}}
+</template>
