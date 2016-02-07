@@ -2,11 +2,12 @@ Template.poolsShow.events({
 });
 
 Template.poolsShow.helpers({
+  poolId: () => Template.instance().getPoolId(),
+  poolName: () => Template.instance().getPool().name,
   poolTeams: () => {
     const poolId = Template.instance().getPoolId();
     return PoolTeams.find({ poolId });
   },
-  poolId: () => Template.instance().getPoolId(),
   isCommissioner: () => Meteor.userId() === Template.instance().getPool().commissionerUserId,
   editAllowed: (poolTeam) => {
     const pool = Pools.findOne({ _id: poolTeam.poolId });

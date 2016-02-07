@@ -1,7 +1,7 @@
 <template name="poolsShow">
-  <h2>Pool</h2>
-
   {{#if Template.subscriptionsReady}}
+    <h2>{{poolName}}</h2>
+
     <table class="table table-striped">
       <thead>
         <tr>
@@ -35,6 +35,8 @@
 
     {{#if isCommissioner}}
       <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
+      <br/>
+      <a href="{{pathFor 'poolsEdit' _id=poolId}}">Edit Pool</a>
     {{/if}}
   {{else}}
     <div>Loading...</div>
