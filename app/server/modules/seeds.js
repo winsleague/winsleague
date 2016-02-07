@@ -49,6 +49,7 @@ Modules.server.seeds = {
       LeagueTeams.insert(team);
     }
 
+    Seasons.insert({ leagueId, year: 2014 });
     Seasons.insert({ leagueId, year: 2015 });
   },
 
