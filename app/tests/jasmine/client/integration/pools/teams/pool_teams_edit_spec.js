@@ -5,6 +5,12 @@ const page = {
   getFirstLeagueTeamSelector() {
     return 'select[name="leagueTeamIds.0"]';
   },
+  getDeleteButtonSelector() {
+    return 'a[href="#afModal"]';
+  },
+  getDeleteButtonInModalSelector() {
+    return 'button.btn-danger'; // fragile way of doing this but good enough for now
+  },
 };
 
 describe('poolTeamsEdit page', () => {
@@ -35,6 +41,20 @@ describe('poolTeamsEdit page', () => {
         expect(poolTeam.userTeamName).toBe(userTeamName, 'userTeamName');
         expect(poolTeam.leagueTeamIds[0]).toBe(leagueTeamId, 'leagueTeamId');
 
+        done();
+      });
+    });
+  });
+
+  it('should delete a pool team', done => {
+    waitForSubscription(PoolTeams.find(), function() {
+      $(page.getDeleteButtonSelector()).click();
+
+      waitForElement(page.getDeleteButtonInModalSelector(), function() {
+        $(page.getDeleteButtonInModalSelector()).click();
+      });
+
+      waitForEmptySubscription(PoolTeams.find(), function() {
         done();
       });
     });
