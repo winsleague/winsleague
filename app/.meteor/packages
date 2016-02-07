@@ -50,3 +50,5 @@ brentjanderson:winston-client
 saucecode:rollbar
 kadira:debug
 meteorhacks:kadira
+mdg:validated-method
+tunifight:loggedin-mixin

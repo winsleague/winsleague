@@ -24,7 +24,7 @@ describe('poolsNew page', () => {
     $(page.getNameSelector()).val(poolName);
     $('form').submit();
 
-    waitForSubscription(Pools.find({}), function() {
+    waitForSubscription(Pools.find(), function() {
       const pool = Pools.findOne({ name: poolName });
       expect(pool).not.toBe(undefined, 'pool');
       expect(pool.leagueId).not.toBe(undefined, 'leagueId');

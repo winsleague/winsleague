@@ -1,0 +1,12 @@
+template(name="poolTeamsEdit")
+  h2 Edit Player
+
+  +onlyIfLoggedIn
+    if Template.subscriptionsReady
+      +autoForm(collection="PoolTeams" id="updatePoolTeamForm" doc=poolTeamDoc type="update")
+        fieldset
+          +afQuickField(name="userTeamName")
+          +afQuickField(name="leagueTeamIds")
+        button.btn.btn-primary(type="submit") Save
+        | &nbsp;
+        a.btn.btn-default(href="{{pathFor 'poolsShow' _id=poolId}}") Back to Pool

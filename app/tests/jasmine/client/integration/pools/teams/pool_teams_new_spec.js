@@ -20,7 +20,7 @@ describe('poolTeamsNew page', () => {
     const userTeamName = "Dummy's Dummies";
     let leagueTeamId;
 
-    waitForSubscription(LeagueTeams.find({}), function() {
+    waitForSubscription(LeagueTeams.find(), function() {
       log.info('form loaded');
 
       $(page.getUserEmailSelector()).val(userEmail);
@@ -28,13 +28,13 @@ describe('poolTeamsNew page', () => {
       $(page.getUserTeamNameSelector()).val(userTeamName);
 
       // select first team
-      leagueTeamId = LeagueTeams.findOne({})._id;
+      leagueTeamId = LeagueTeams.findOne()._id;
       $(page.getFirstLeagueTeamSelector()).find('option:eq(1)').prop('selected', true);
 
       $('form').submit();
       log.info('form submitted!');
 
-      waitForSubscription(PoolTeams.find({}), function() {
+      waitForSubscription(PoolTeams.find(), function() {
         const poolTeam = PoolTeams.findOne({ userTeamName });
         expect(poolTeam).not.toBe(undefined);
         log.info(`poolTeam: `, poolTeam);

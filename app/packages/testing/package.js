@@ -14,13 +14,15 @@ Package.onUse(function (api) {
     'promise',
     'underscore',
     'mongo',
-    'practicalmeteor:loglevel',
+    'infinitedg:winston',
     'stevezhu:lodash@3.10.1',
   ], 'server');
   api.addFiles([
-    'reset.js',
+    'lib/log.js',
     'league_fixtures.js',
     'pool_fixtures.js',
+    'pool_team_fixtures.js',
+    'reset.js',
     'user_fixtures.js',
   ], 'server');
 });

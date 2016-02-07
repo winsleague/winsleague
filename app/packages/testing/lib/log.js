@@ -1,2 +1,3 @@
-log = loglevel.createPackageLogger('testing');
-log.setLevel('debug');
+log = Winston;
+log.level = 'debug';
+log.info('Initialized testing logger');

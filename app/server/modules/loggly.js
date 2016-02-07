@@ -14,7 +14,8 @@ Modules.server.loggly = {
       'handleExceptions': true,
     };
 
-    Winston.add(Winston_Loggly, options);
+    log.add(Winston_Loggly, options);
+    log.info('Loggly setup complete');
   },
 
   token() {
