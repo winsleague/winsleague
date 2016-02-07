@@ -11,6 +11,8 @@
         <button class="btn btn-primary" type="submit">Save</button>
         &nbsp;
         <a class="btn btn-default" href="{{pathFor 'poolsShow' _id=poolId}}">Back to Pool</a>
+        &nbsp;
+        {{> quickRemoveButton collection="Pools" _id=poolDoc._id onSuccess=onRemoveSuccess beforeRemove=beforeRemove class="btn btn-danger"}}
       {{/autoForm}}
     {{/if}}
   {{/onlyIfLoggedIn}}

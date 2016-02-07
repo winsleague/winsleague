@@ -55,7 +55,7 @@ if (Meteor.isServer) {
     },
 
     remove(userId, doc) {
-      return false;
+      return (userId === doc.commissionerUserId);
     },
   });
 }
