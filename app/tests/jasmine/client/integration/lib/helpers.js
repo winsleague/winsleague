@@ -145,6 +145,7 @@ goToPoolsNewPage = done => {
 };
 
 goToPoolsShowPage = done => {
+  log.debug('goToPoolsShowPage called');
   waitForSubscription(Pools.find({}), function () {
     const pool = Pools.findOne({});
     const _id = pool._id;
@@ -154,6 +155,7 @@ goToPoolsShowPage = done => {
 };
 
 goToPoolTeamsNewPage = done => {
+  log.debug('goToPoolsShowPage called');
   waitForSubscription(Pools.find({}), function () {
     const pool = Pools.findOne({});
     const poolId = pool._id;
@@ -163,9 +165,8 @@ goToPoolTeamsNewPage = done => {
 };
 
 goToPoolTeamsEditPage = done => {
-  log.debug('goToPoolTeamsEditPage');
+  log.debug('goToPoolTeamsEditPage called');
   waitForSubscription(PoolTeams.find({}), function () {
-    log.debug('got subscription!');
     const poolTeam = PoolTeams.findOne({});
     const poolId = poolTeam.poolId;
     const poolTeamId = poolTeam._id;
