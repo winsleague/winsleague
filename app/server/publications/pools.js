@@ -1,6 +1,6 @@
 Meteor.publish('pools.single', _id => {
   check(_id, String);
-  return Pools.find({ _id });
+  return Pools.find(_id);
 });
 
 Meteor.publish('pools.of_user', function(userId) {
