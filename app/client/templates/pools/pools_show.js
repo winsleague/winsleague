@@ -1,6 +1,3 @@
-Template.poolsShow.events({
-});
-
 Template.poolsShow.helpers({
   poolId: () => Template.instance().getPoolId(),
   poolName: () => Template.instance().getPool().name,
@@ -14,9 +11,15 @@ Template.poolsShow.helpers({
     return (Meteor.userId() === poolTeam.userId ||
       Meteor.userId() === pool.commissionerUserId);
   },
-  isLatestSeason: () => ! Template.instance().getSeasonId(),
-  seasons: () => Seasons.find(),
-  isMultipleSeasons: () => Seasons.find().count() > 1,
+  seasonYear: () => {
+    let season;
+    if (Template.instance().getSeasonId()) {
+      season = Seasons.findOne(Template.instance().getSeasonId());
+    } else {
+      season = Modules.seasons.getLatestByLeagueId(Template.instance().getPool().leagueId);
+    }
+    return season.year;
+  },
 });
 
 Template.poolsShow.onCreated(function() {
@@ -36,10 +39,4 @@ Template.poolsShow.onCreated(function() {
       log.debug(`seasons.of_pool subscription ready: ${Seasons.find().count()}`);
     });
   });
-});
-
-Template.poolsShow.onRendered(function() {
-});
-
-Template.poolsShow.onDestroyed(function() {
 });

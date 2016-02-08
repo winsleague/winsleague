@@ -1,6 +1,6 @@
 <template name="poolsShow">
   {{#if Template.subscriptionsReady}}
-    <h2>{{poolName}}</h2>
+    <h2>{{seasonYear}} {{poolName}}</h2>
 
     <table class="table table-striped">
       <thead>
@@ -33,13 +33,7 @@
       </tbody>
     </table>
 
-    {{#if isMultipleSeasons}}
-      {{#each season in seasons}}
-        <a href="{{pathFor 'poolsShowSeason' _id=poolId seasonId=season._id}}">{{season.year}}</a>
-        <br/>
-      {{/each}}
-      <br/>
-    {{/if}}
+    {{> seasonSwitcher}}
 
     {{#if isCommissioner}}
       {{#if isLatestSeason}}
