@@ -50,7 +50,7 @@ createDefaultPool = (done) => {
 
 createDefaultPoolTeam = (done) => {
   Meteor.call(
-    'fixtures/pool_teams/createDefault',
+    'fixtures/poolTeams/createDefault',
     createMethodResultHandler(done, (error, poolTeam) => {
       this.poolTeam = poolTeam;
     })
