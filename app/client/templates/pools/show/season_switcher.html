@@ -2,7 +2,7 @@
   {{#if Template.subscriptionsReady}}
     {{#if isMultipleSeasons}}
       {{#each season in seasons}}
-        <a href="{{pathFor 'poolsShowSeason' _id=poolId seasonId=season._id}}">{{season.year}}</a>
+        <a href="{{pathFor 'poolsShowSeason' _id=poolId seasonId=season._id}}" id="{{season._id}}">{{season.year}}</a>
         <br/>
       {{/each}}
       <br/>
