@@ -22,12 +22,6 @@ createMethodResultHandler = (done, hook) => {
   };
 };
 
-deferAfterFlush = (callback) => {
-  Tracker.afterFlush(() => {
-    Meteor.defer(callback);
-  });
-};
-
 resetTestingEnvironment = (done) => {
   Meteor.call('resetTestingEnvironment', createMethodResultHandler(done));
   log.debug(`called resetTestingEnvironment`);
@@ -36,6 +30,21 @@ resetTestingEnvironment = (done) => {
 createDefaultLeagues = (done) => {
   Meteor.call('fixtures/leagues/createDefault', createMethodResultHandler(done));
   log.debug(`called createDefaultLeagues`);
+};
+
+createDefaultUser = (done) => {
+  Meteor.call(
+    'fixtures/users/createDefault',
+    createMethodResultHandler(done, (error, user) => {
+      this.user = user;
+    })
+  );
+  log.debug(`called createDefaultUser`);
+};
+
+createOldSeason = (done) => {
+  Meteor.call('fixtures/seasons/createOld', createMethodResultHandler(done));
+  log.debug(`called createOldSeason`);
 };
 
 createDefaultPool = (done) => {
@@ -58,12 +67,12 @@ createDefaultPoolTeam = (done) => {
   log.debug(`called createDefaultPoolTeam`);
 };
 
-createDefaultUser = (done) => {
+createOldPoolTeam = (done) => {
   Meteor.call(
-    'fixtures/users/createDefault',
-    createMethodResultHandler(done, (error, user) => {
-      this.user = user;
+    'fixtures/poolTeams/createOld',
+    createMethodResultHandler(done, (error, poolTeam) => {
+      this.poolTeam = poolTeam;
     })
   );
-  log.debug(`called createDefaultUser`);
+  log.debug(`called createOldPoolTeam`);
 };

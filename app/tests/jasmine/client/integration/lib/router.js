@@ -32,6 +32,12 @@ goToRoute = (pathDef, params, queryParams) => {
   };
 };
 
+deferAfterFlush = (callback) => {
+  Tracker.afterFlush(() => {
+    Meteor.defer(callback);
+  });
+};
+
 goToHomePage = done => {
   return goToRoute('/')(done);
 };
