@@ -14,7 +14,7 @@ PoolTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert) {
+      if (this.isInsert && ! this.isSet) {
         // select latest season for league
         const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
