@@ -27,6 +27,20 @@ PoolTeams.schema = new SimpleSchema({
       }
     },
   },
+  seasonYear: {
+    type: Number,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        const seasonIdField = this.field('seasonId');
+        if (seasonIdField.isSet) {
+          const seasonId = seasonIdField.value;
+          const season = Seasons.findOne(seasonId);
+          if (season) return season.year;
+          throw new Error(`No season found for seasonId ${seasonId}`);
+        }
+      }
+    },
+  },
   poolId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,

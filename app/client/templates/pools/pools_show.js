@@ -1,31 +1,40 @@
 Template.poolsShow.helpers({
   poolId: () => Template.instance().getPoolId(),
+
   poolName: () => Template.instance().getPool().name,
+
   poolTeams: () => {
     const poolId = Template.instance().getPoolId();
     return PoolTeams.find({ poolId });
   },
+
   isCommissioner: () => Meteor.userId() === Template.instance().getPool().commissionerUserId,
+
   editAllowed: (poolTeam) => {
     const pool = Pools.findOne(poolTeam.poolId);
     return (Meteor.userId() === poolTeam.userId ||
       Meteor.userId() === pool.commissionerUserId);
   },
+
   isLatestSeason: () => ! Template.instance().getSeasonId(),
+
   seasonYear: () => {
-    let season;
-    if (Template.instance().getSeasonId()) {
-      season = Seasons.findOne(Template.instance().getSeasonId());
+    const poolTeam = PoolTeams.findOne();
+    if (poolTeam) {
+      // just pick seasonYear from one of the PoolTeams
+      return poolTeam.seasonYear;
     } else {
-      season = Modules.seasons.getLatestByLeagueId(Template.instance().getPool().leagueId);
+      // no pool teams exist, so pick latest year
+      return Seasons.findOne().year;
     }
-    return season.year;
   },
 });
 
 Template.poolsShow.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('_id');
+
   this.getPool = () => Pools.findOne(this.getPoolId());
+
   this.getSeasonId = () => FlowRouter.getParam('seasonId');
 
   this.autorun(() => {
@@ -33,12 +42,13 @@ Template.poolsShow.onCreated(function() {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
       if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
+
     this.subscribe('poolTeams.of_pool', this.getPoolId(), this.getSeasonId(), () => {
       log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);
     });
-    this.subscribe('seasons.of_pool', this.getPoolId(), () => {
-      log.debug(`seasons.of_pool subscription ready: ${Seasons.find().count()}`);
-    });
+
+    this.subscribe('seasons.single', this.getSeasonId());
+
     this.subscribe('pools.single.latestSeason', this.getPoolId());
   });
 });
