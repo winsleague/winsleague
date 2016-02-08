@@ -51,6 +51,7 @@ ian:accounts-ui-bootstrap-3@1.2.84
 id-map@1.0.4
 infinitedg:winston@0.7.3
 infinitedg:winston-loggly@1.0.1
+jcbernack:reactive-aggregate@0.6.0
 jquery@1.11.4
 kadira:blaze-layout@2.3.0
 kadira:debug@3.0.1

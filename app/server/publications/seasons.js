@@ -1,11 +1,14 @@
 Meteor.publish('seasons.list', () => Seasons.find());
 
-Meteor.publish('seasons.of_pool', function(poolId) {
+Meteor.publish('seasons.single', seasonId => {
+  check(seasonId, String);
+  return Seasons.find(seasonId);
+});
+
+Meteor.publish('seasonIds.of_pool', function(poolId) {
   check(poolId, String);
 
-  var self = this;
-
-  const seasons = PoolTeams.aggregate([
+  ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
         poolId: poolId,
@@ -16,11 +19,11 @@ Meteor.publish('seasons.of_pool', function(poolId) {
         _id: '$seasonId',
       },
     },
-  ]);
-  seasons.forEach(seasonObject => {
-    const season = Seasons.findOne(seasonObject._id);
-    self.added('seasons', season._id, season);
-  });
-  this.ready();
+  ],
+    {
+      observeSelector: { poolId },
+      clientCollection: 'season_ids',
+    }
+  );
 });
 
