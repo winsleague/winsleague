@@ -6,14 +6,31 @@ function createPoolTeam(poolTeam) {
 }
 
 function createDefaultPoolTeam() {
-  const leagueId = Leagues.findOne({}, { fields: { _id: 1 } })._id;
-  const poolId = Pools.findOne({ leagueId }, { fields: { _id: 1 } })._id;
-  const leagueTeamId = LeagueTeams.findOne({ leagueId }, { fields: { _id: 1 } })._id;
+  const leagueId = Leagues.findOne()._id;
+  const poolId = Pools.findOne({ leagueId })._id;
+  const leagueTeamId = LeagueTeams.findOne({ leagueId })._id;
   const poolTeam = {
     leagueId,
     poolId,
     userTeamName: 'test',
-    userId: Meteor.userId(),
+    userId: getDefaultUserId(),
+    leagueTeamIds: [leagueTeamId],
+  };
+
+  return createPoolTeam(poolTeam);
+}
+
+function createOldPoolTeam() {
+  const leagueId = Leagues.findOne()._id;
+  const seasonId = Seasons.findOne({ leagueId, year: 2014 })._id;
+  const poolId = Pools.findOne({ leagueId })._id;
+  const leagueTeamId = LeagueTeams.findOne({ leagueId })._id;
+  const poolTeam = {
+    leagueId,
+    seasonId,
+    poolId,
+    userTeamName: 'old test',
+    userId: getDefaultUserId(),
     leagueTeamIds: [leagueTeamId],
   };
 
@@ -21,6 +38,7 @@ function createDefaultPoolTeam() {
 }
 
 Meteor.methods({
-  'fixtures/pool_teams/create': createPoolTeam,
-  'fixtures/pool_teams/createDefault': createDefaultPoolTeam,
+  'fixtures/poolTeams/create': createPoolTeam,
+  'fixtures/poolTeams/createDefault': createDefaultPoolTeam,
+  'fixtures/poolTeams/createOld': createOldPoolTeam,
 });
