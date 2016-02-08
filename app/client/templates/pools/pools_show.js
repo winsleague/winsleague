@@ -11,6 +11,7 @@ Template.poolsShow.helpers({
     return (Meteor.userId() === poolTeam.userId ||
       Meteor.userId() === pool.commissionerUserId);
   },
+  isLatestSeason: () => ! Template.instance().getSeasonId(),
   seasonYear: () => {
     let season;
     if (Template.instance().getSeasonId()) {
@@ -35,12 +36,9 @@ Template.poolsShow.onCreated(function() {
     this.subscribe('poolTeams.of_pool', this.getPoolId(), this.getSeasonId(), () => {
       log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);
     });
-    this.subscribe('seasonIds.of_pool', this.getPoolId(), () => {
-      log.debug(`seasonIds.of_pool subscription ready: ${SeasonIds.find().count()}`);
-      SeasonIds.find().forEach(season => {
-        log.debug(`subscribe to `, season);
-        this.subscribe('seasons.single', season._id);
-      });
+    this.subscribe('seasons.of_pool', this.getPoolId(), () => {
+      log.debug(`seasons.of_pool subscription ready: ${Seasons.find().count()}`);
     });
+    this.subscribe('pools.single.latestSeason', this.getPoolId());
   });
 });

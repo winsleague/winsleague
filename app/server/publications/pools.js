@@ -10,3 +10,9 @@ Meteor.publish('pools.of_user', function(userId) {
   // TODO: this should also return Pools that users are a part of, but aren't a commissioner in
 });
 
+Meteor.publish('pools.single.latestSeason', _id => {
+  check(_id, String);
+  const pool = Pools.findOne(_id);
+  const leagueId = pool.leagueId;
+  return Modules.seasons.getLatestCursorByLeagueId(leagueId);
+});
