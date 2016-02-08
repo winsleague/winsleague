@@ -10,7 +10,7 @@ function createDefaultPool() {
   const pool = {
     leagueId,
     name: 'test',
-    commissionerUserId: Meteor.userId(),
+    commissionerUserId: getDefaultUserId(),
   };
 
   return createPool(pool);

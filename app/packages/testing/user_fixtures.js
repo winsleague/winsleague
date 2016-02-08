@@ -28,6 +28,12 @@ function createDefaultUser() {
   });
 }
 
+getDefaultUserId = () => {
+  if (Meteor.userId()) return Meteor.userId();
+
+  return Accounts.findUserByEmail('test@test.com')._id;
+};
+
 Meteor.methods({
   'fixtures/users/create': createUser,
   'fixtures/users/createDefault': createDefaultUser,
