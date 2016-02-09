@@ -17,7 +17,7 @@ describe('poolsShow page', () => {
     });
   });
 
-  fdescribe('when a pool spans multiple seasons', () => {
+  describe('when a pool spans multiple seasons', () => {
     beforeEach(createOldSeason);
     beforeEach(createOldPoolTeam);
 
