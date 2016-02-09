@@ -5,7 +5,7 @@ Template.poolsShow.helpers({
 
   poolTeams: () => {
     const poolId = Template.instance().getPoolId();
-    return PoolTeams.find({ poolId });
+    return PoolTeams.find({ poolId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
   },
 
   isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(), 'commissionerUserId'),
