@@ -163,7 +163,7 @@ PoolTeams.helpers({
   teamSummary() {
     let string = '';
     for (let i = 0; i < this.leagueTeamMascotNames.length; i++) {
-      string += `${this.leagueTeamMascotNames[i]} #${this.pickNumbers[i]}, `;
+      string += `${this.leagueTeamMascotNames[i]}, `;
     }
     if (string.length > 0) string = string.substr(0, string.length - 2);
     return string;

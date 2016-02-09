@@ -6,7 +6,6 @@
       <thead>
         <tr>
           <th>Player</th>
-          <th>Team Name</th>
           <th>Teams</th>
           <th>Wins</th>
           <th>Games</th>
@@ -17,7 +16,6 @@
       <tbody>
         {{#each poolTeam in poolTeams}}
           <tr id="{{poolTeam._id}}">
-            <td>{{poolTeam.userTeamName}}</td>
             <td>{{poolTeam.userTeamName}}</td>
             <td>{{poolTeam.teamSummary}}</td>
             <td>{{poolTeam.totalWins}}</td>
