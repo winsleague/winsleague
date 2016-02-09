@@ -38,7 +38,7 @@ Template.poolTeamsEdit.onCreated(function() {
 
 AutoForm.hooks({
   updatePoolTeamForm: {
-    onSuccess: (operation, doc) => {
+    onSuccess: (formType, result) => {
       FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('poolId') });
     },
   },

@@ -20,7 +20,7 @@ Template.poolsEdit.onCreated(function() {
 
 AutoForm.hooks({
   updatePoolForm: {
-    onSuccess: (operation, doc) => {
+    onSuccess: (formType, result) => {
       FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('_id') });
     },
   },
