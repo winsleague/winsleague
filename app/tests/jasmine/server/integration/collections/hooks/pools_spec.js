@@ -6,7 +6,7 @@ describe('Pool collection hooks', () => {
     spyOn(Meteor, 'userId').and.returnValue(user._id);
 
     Meteor.call('fixtures/pools/createDefault');
-    const poolTeam = Meteor.call('fixtures/pool_teams/createDefault');
+    const poolTeam = Meteor.call('fixtures/poolTeams/createDefault');
     const poolId = poolTeam.poolId;
 
     let poolTeamsCount = PoolTeams.find({ poolId }).count();
