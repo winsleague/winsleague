@@ -16,7 +16,14 @@ Template.poolsShow.helpers({
       Meteor.userId() === _.get(pool, 'commissionerUserId'));
   },
 
-  isLatestSeason: () => ! Template.instance().getSeasonId(),
+  isLatestSeason: () => {
+    if (Template.instance().getSeasonId()) {
+      const latestSeason = Modules.seasons.getLatestByLeagueId(Template.instance().getLeagueId());
+      return _.get(latestSeason, '_id') === Template.instance().getSeasonId();
+    } else {
+      return true;
+    }
+  },
 
   seasonYear: () => {
     const poolTeam = PoolTeams.findOne();
