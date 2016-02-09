@@ -1,7 +1,7 @@
 Template.seasonSwitcher.helpers({
   poolId: () => Template.instance().getPoolId(),
 
-  seasons: () => Seasons.find(),
+  seasons: () => Seasons.find({}, { sort: { year: -1 } }),
 
   isMultipleSeasons: () => Seasons.find().count() > 1,
 });
