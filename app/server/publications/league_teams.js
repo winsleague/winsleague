@@ -1,4 +1,4 @@
-Meteor.publish('leagueTeams.of_league', leagueId => {
+Meteor.publish('leagueTeams.ofLeague', leagueId => {
   check(leagueId, String);
   return LeagueTeams.find({ leagueId });
 });

@@ -1,13 +1,12 @@
-Template.poolsEdit.events({
-});
-
 Template.poolsEdit.helpers({
   poolId: () => Template.instance().getPoolId(),
+
   poolDoc: () => Template.instance().getPoolDoc(),
 });
 
 Template.poolsEdit.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('_id');
+
   this.getPoolDoc = () => Pools.findOne(this.getPoolId());
 
   this.autorun(() => {
@@ -16,12 +15,6 @@ Template.poolsEdit.onCreated(function() {
       if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
   });
-});
-
-Template.poolsEdit.onRendered(function() {
-});
-
-Template.poolsEdit.onDestroyed(function() {
 });
 
 

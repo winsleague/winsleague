@@ -1,4 +1,4 @@
-Meteor.publish('poolTeams.of_pool', function (poolId, seasonId = null) {
+Meteor.publish('poolTeams.ofPool', function (poolId, seasonId = null) {
   check(poolId, String);
   let actualSeasonId;
   if (seasonId) {

@@ -23,6 +23,7 @@ Package.onUse(function (api) {
     'pool_fixtures.js',
     'pool_team_fixtures.js',
     'reset.js',
+    'season_fixtures.js',
     'user_fixtures.js',
   ], 'server');
 });

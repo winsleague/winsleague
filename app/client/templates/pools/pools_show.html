@@ -1,6 +1,6 @@
 <template name="poolsShow">
   {{#if Template.subscriptionsReady}}
-    <h2>{{poolName}}</h2>
+    <h2>{{seasonYear}} {{poolName}}</h2>
 
     <table class="table table-striped">
       <thead>
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         {{#each poolTeam in poolTeams}}
-          <tr>
+          <tr id="{{poolTeam._id}}">
             <td>{{poolTeam.userTeamName}}</td>
             <td>{{poolTeam.userTeamName}}</td>
             <td>{{poolTeam.teamSummary}}</td>
@@ -33,9 +33,13 @@
       </tbody>
     </table>
 
+    {{> seasonSwitcher}}
+
     {{#if isCommissioner}}
-      <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
-      <br/>
+      {{#if isLatestSeason}}
+        <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
+        <br/>
+      {{/if}}
       <a href="{{pathFor 'poolsEdit' _id=poolId}}">Edit Pool</a>
     {{/if}}
   {{else}}

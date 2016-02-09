@@ -1,6 +1,6 @@
 <template name="onlyIfLoggedIn">
   {{#if authInProcess}}
-    <p>loading ...</p>
+    <p>Loading...</p>
   {{else}}
     {{#if canShow}}
       {{> Template.contentBlock}}
