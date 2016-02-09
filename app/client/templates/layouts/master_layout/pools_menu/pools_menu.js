@@ -1,8 +1,7 @@
 Template.poolsMenu.helpers({
-  canShow() {
-    return !!Meteor.user();
-  },
-  pools: () => { return Pools.find(); },
+  canShow: () => !!Meteor.user(),
+
+  pools: () => Pools.find(),
 });
 
 Template.poolsMenu.onCreated(function() {

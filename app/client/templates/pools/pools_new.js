@@ -1,11 +1,7 @@
-Template.poolsNew.events({
-});
-
 Template.poolsNew.helpers({
-  leagueOptions() {
-    return Leagues.find().map(league => { return { label: league.name, value: league._id }; });
-  },
-  nflLeagueId() { return Template.instance().getNflLeagueId(); },
+  leagueOptions: () => Leagues.find().map(league => { return { label: league.name, value: league._id }; }),
+
+  nflLeagueId: () => Template.instance().getNflLeagueId(),
 });
 
 Template.poolsNew.onCreated(function() {
@@ -20,12 +16,6 @@ Template.poolsNew.onCreated(function() {
       log.debug(`leagues.list subscription ready: ${Leagues.find().count()} leagues, %j`, leagues);
     });
   });
-});
-
-Template.poolsNew.onRendered(function() {
-});
-
-Template.poolsNew.onDestroyed(function() {
 });
 
 

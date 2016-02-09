@@ -1,19 +1,19 @@
 Template.poolsShow.helpers({
   poolId: () => Template.instance().getPoolId(),
 
-  poolName: () => Template.instance().getPool().name,
+  poolName: () => _.get(Template.instance().getPool(), 'name'),
 
   poolTeams: () => {
     const poolId = Template.instance().getPoolId();
     return PoolTeams.find({ poolId });
   },
 
-  isCommissioner: () => Meteor.userId() === Template.instance().getPool().commissionerUserId,
+  isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(), 'commissionerUserId'),
 
   editAllowed: (poolTeam) => {
     const pool = Pools.findOne(poolTeam.poolId);
     return (Meteor.userId() === poolTeam.userId ||
-      Meteor.userId() === pool.commissionerUserId);
+      Meteor.userId() === _.get(pool, 'commissionerUserId'));
   },
 
   isLatestSeason: () => ! Template.instance().getSeasonId(),
@@ -25,7 +25,7 @@ Template.poolsShow.helpers({
       return poolTeam.seasonYear;
     } else {
       // no pool teams exist, so pick latest year
-      return Seasons.findOne().year;
+      return _.get(Seasons.findOne(), 'year');
     }
   },
 });
