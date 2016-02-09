@@ -35,7 +35,7 @@ Template.poolsShow.onCreated(function() {
 
   this.getPool = () => Pools.findOne(this.getPoolId());
 
-  this.getLeagueId = () => this.getPool().leagueId;
+  this.getLeagueId = () => _.get(this.getPool(), 'leagueId');
 
   this.getSeasonId = () => FlowRouter.getParam('seasonId');
 

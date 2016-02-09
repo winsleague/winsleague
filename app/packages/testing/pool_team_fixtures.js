@@ -22,12 +22,14 @@ function createDefaultPoolTeam() {
 
 function createOldPoolTeam() {
   const leagueId = Leagues.findOne()._id;
-  const seasonId = Seasons.findOne({ leagueId, year: 2014 })._id;
+  const seasonYear = 2014;
+  const seasonId = Seasons.findOne({ leagueId, year: seasonYear })._id;
   const poolId = Pools.findOne({ leagueId })._id;
   const leagueTeamId = LeagueTeams.findOne({ leagueId })._id;
   const poolTeam = {
     leagueId,
     seasonId,
+    seasonYear,
     poolId,
     userTeamName: 'old test',
     userId: getDefaultUserId(),
