@@ -4,6 +4,13 @@ Meteor.publish('seasons.single', function(_id) {
   return Seasons.find(_id);
 });
 
+Meteor.publish('seasons.latest.of_league', function(leagueId) {
+  if (! leagueId) return this.ready();
+  check(leagueId, String);
+  return Modules.seasons.getLatestCursorByLeagueId(leagueId);
+});
+
+
 Meteor.publish('seasons.of_pool', function(poolId) {
   check(poolId, String);
 
@@ -21,7 +28,7 @@ Meteor.publish('seasons.of_pool', function(poolId) {
     },
   ],
     {
-      observeSelector: { poolId },
+      observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
       clientCollection: 'seasons',
     }
   );

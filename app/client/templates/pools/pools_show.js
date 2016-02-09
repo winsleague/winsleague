@@ -35,6 +35,8 @@ Template.poolsShow.onCreated(function() {
 
   this.getPool = () => Pools.findOne(this.getPoolId());
 
+  this.getLeagueId = () => this.getPool().leagueId;
+
   this.getSeasonId = () => FlowRouter.getParam('seasonId');
 
   this.autorun(() => {
@@ -49,6 +51,6 @@ Template.poolsShow.onCreated(function() {
 
     this.subscribe('seasons.single', this.getSeasonId());
 
-    this.subscribe('pools.single.latestSeason', this.getPoolId());
+    this.subscribe('seasons.latest.of_league', this.getLeagueId());
   });
 });
