@@ -45,12 +45,12 @@ Template.poolsShow.onCreated(function() {
       if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
 
-    this.subscribe('poolTeams.of_pool', this.getPoolId(), this.getSeasonId(), () => {
+    this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId(), () => {
       log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);
     });
 
     this.subscribe('seasons.single', this.getSeasonId());
 
-    this.subscribe('seasons.latest.of_league', this.getLeagueId());
+    this.subscribe('seasons.latest.ofLeague', this.getLeagueId());
   });
 });

@@ -7,7 +7,7 @@ Template.poolsMenu.helpers({
 
 Template.poolsMenu.onCreated(function() {
   this.autorun(() => {
-    this.subscribe('pools.of_user', Meteor.userId(), () => {
+    this.subscribe('pools.ofUser', Meteor.userId(), () => {
       log.debug(`pools.of_user subscription ready: ${Pools.find().count()} pools`);
     });
   });

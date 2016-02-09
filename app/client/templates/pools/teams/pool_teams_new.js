@@ -15,9 +15,9 @@ Template.poolTeamsNew.onCreated(function() {
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
-      log.info(`pool subscription ready: ${Pools.find().count()} pools`);
-      this.subscribe('leagueTeams.of_league', this.getLeagueId(), () => {
-        log.info(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
+      log.debug(`pools.single subscription ready: ${Pools.find().count()} pools`);
+      this.subscribe('leagueTeams.ofLeague', this.getLeagueId(), () => {
+        log.debug(`leagueTeams.of_league subscription ready: ${LeagueTeams.find().count()} teams`);
       });
     });
   });

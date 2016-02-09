@@ -4,14 +4,14 @@ Meteor.publish('seasons.single', function(_id) {
   return Seasons.find(_id);
 });
 
-Meteor.publish('seasons.latest.of_league', function(leagueId) {
+Meteor.publish('seasons.latest.ofLeague', function(leagueId) {
   if (! leagueId) return this.ready();
   check(leagueId, String);
   return Modules.seasons.getLatestCursorByLeagueId(leagueId);
 });
 
 
-Meteor.publish('seasons.of_pool', function(poolId) {
+Meteor.publish('seasons.ofPool', function(poolId) {
   check(poolId, String);
 
   ReactiveAggregate(this, PoolTeams, [

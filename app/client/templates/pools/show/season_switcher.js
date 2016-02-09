@@ -1,7 +1,7 @@
 Template.seasonSwitcher.helpers({
   poolId: () => Template.instance().getPoolId(),
   seasons: () => Seasons.find(),
-  isMultipleSeasons: () => Seasons.find().count() > 1,
+  isMultipleSeasons: () => true, // Seasons.find().count() > 1,
 });
 
 Template.seasonSwitcher.onCreated(function() {
@@ -9,7 +9,7 @@ Template.seasonSwitcher.onCreated(function() {
   this.getSeasonId = () => FlowRouter.getParam('seasonId');
 
   this.autorun(() => {
-    this.subscribe('seasons.of_pool', this.getPoolId(), () => {
+    this.subscribe('seasons.ofPool', this.getPoolId(), () => {
       log.debug(`seasons.of_pool subscription ready: ${Seasons.find().count()}`);
     });
   });

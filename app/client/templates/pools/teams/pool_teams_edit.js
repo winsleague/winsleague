@@ -19,7 +19,7 @@ Template.poolTeamsEdit.onCreated(function() {
         FlowRouter.go('/');
         return;
       }
-      this.subscribe('leagueTeams.of_league', this.getLeagueId(), () => {
+      this.subscribe('leagueTeams.ofLeague', this.getLeagueId(), () => {
         log.debug(`leagueTeams subscription ready: ${LeagueTeams.find().count()} teams`);
       });
     });
