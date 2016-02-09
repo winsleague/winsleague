@@ -15,11 +15,12 @@ Modules.server.poolTeams = {
   refreshPoolTeam(poolTeam) {
     log.info(`Refreshing PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
 
+    const seasonId = poolTeam.seasonId;
     let totalWins = 0;
     let totalGames = 0;
     let totalPlusMinus = 0;
     poolTeam.leagueTeamIds.forEach(leagueTeamId => {
-      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ leagueTeamId });
+      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
       if (seasonLeagueTeams) {
         totalWins += seasonLeagueTeams.wins;
         totalGames += seasonLeagueTeams.totalGames();
