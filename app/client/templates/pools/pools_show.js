@@ -1,8 +1,6 @@
 Template.poolsShow.helpers({
   poolId: () => Template.instance().getPoolId(),
 
-  poolName: () => _.get(Template.instance().getPool(), 'name'),
-
   poolTeams: () => {
     const poolId = Template.instance().getPoolId();
     return PoolTeams.find({ poolId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
@@ -22,17 +20,6 @@ Template.poolsShow.helpers({
       return _.get(latestSeason, '_id') === Template.instance().getSeasonId();
     } else {
       return true;
-    }
-  },
-
-  seasonYear: () => {
-    const poolTeam = PoolTeams.findOne();
-    if (poolTeam) {
-      // just pick seasonYear from one of the PoolTeams
-      return poolTeam.seasonYear;
-    } else {
-      // no pool teams exist, so pick latest year
-      return _.get(Seasons.findOne(), 'year');
     }
   },
 });

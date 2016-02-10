@@ -1,5 +1,7 @@
 Meteor.publish('poolTeams.ofPool', function (poolId, seasonId = null) {
+  if (!poolId) return this.ready();
   check(poolId, String);
+
   let actualSeasonId;
   if (seasonId) {
     check(seasonId, String);
@@ -21,7 +23,7 @@ Meteor.publish('poolTeams.single', function (_id) {
   return PoolTeams.find(_id);
 });
 
-Meteor.publish('poolTeamsMostWinsAllTime.ofPool', function(poolId) {
+Meteor.publish('poolUsersMostWinsAllTime.ofPool', function(poolId) {
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
@@ -46,7 +48,7 @@ Meteor.publish('poolTeamsMostWinsAllTime.ofPool', function(poolId) {
   ],
     {
       observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
-      clientCollection: 'pool_teams_most_wins_all_time',
+      clientCollection: 'pool_users_most_wins_all_time',
     }
   );
 });
