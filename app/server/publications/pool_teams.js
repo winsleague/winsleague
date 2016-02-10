@@ -46,7 +46,7 @@ Meteor.publish('poolTeamsMostWinsAllTime.ofPool', function(poolId) {
   ],
     {
       observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
-      clientCollection: 'pool_teams_most_wins_all_time'
+      clientCollection: 'pool_teams_most_wins_all_time',
     }
   );
 });
