@@ -23,7 +23,7 @@ Meteor.publish('poolTeams.single', function (_id) {
   return PoolTeams.find(_id);
 });
 
-Meteor.publish('poolUsersMostWinsAllTime.ofPool', function(poolId) {
+Meteor.publish('poolUsersMostAllTime.ofPool', function(poolId, field) {
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
@@ -36,9 +36,9 @@ Meteor.publish('poolUsersMostWinsAllTime.ofPool', function(poolId) {
         userTeamName: {
           $first: '$userTeamName',
         },
-        wins: {
+        metric: {
           // In this case, we're running summation.
-          $sum: '$totalWins',
+          $sum: `$${field}`,
         },
       },
     },
@@ -48,7 +48,7 @@ Meteor.publish('poolUsersMostWinsAllTime.ofPool', function(poolId) {
   ],
     {
       observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
-      clientCollection: 'pool_users_most_wins_all_time',
+      clientCollection: `pool_users_most_${field}_all_time`,
     }
   );
 });

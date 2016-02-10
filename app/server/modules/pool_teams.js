@@ -17,12 +17,14 @@ Modules.server.poolTeams = {
 
     const seasonId = poolTeam.seasonId;
     let totalWins = 0;
+    let totalLosses = 0;
     let totalGames = 0;
     let totalPlusMinus = 0;
     poolTeam.leagueTeamIds.forEach(leagueTeamId => {
       const seasonLeagueTeams = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
       if (seasonLeagueTeams) {
         totalWins += seasonLeagueTeams.wins;
+        totalLosses += seasonLeagueTeams.losses;
         totalGames += seasonLeagueTeams.totalGames();
         totalPlusMinus += seasonLeagueTeams.pointsFor - seasonLeagueTeams.pointsAgainst;
       }
@@ -31,7 +33,7 @@ Modules.server.poolTeams = {
     // .direct is needed to avoid an infinite recursion loop
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
     const numberAffected = PoolTeams.direct.update({ _id: poolTeam._id },
-      { $set: { totalWins, totalGames, totalPlusMinus } });
+      { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
     log.info(`PoolTeams.update numberAffected: ${numberAffected}`);
   },
 };

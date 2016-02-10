@@ -1,0 +1,23 @@
+<template name="poolsRecordsPoolUsersMostAllTime">
+  <h4>Most {{metricTitle}}, All Time</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>{{metricTitle}}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each poolUser in poolUsers}}
+        <tr>
+          <td>{{poolUser.userTeamName}}</td>
+          <td>{{poolUser.metric}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <br/>
+</template>
