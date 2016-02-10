@@ -5,7 +5,8 @@
         <a href="{{pathFor 'poolsShowSeason' _id=poolId seasonId=season._id}}" id="{{season._id}}">{{season.year}}</a>
         <br/>
       {{/each}}
-      <br/>
     {{/if}}
+    <a href="{{pathFor 'poolsRecords' _id=poolId}}" id="records">Records</a><br/>
+    <br/>
   {{/if}}
 </template>

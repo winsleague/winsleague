@@ -1,0 +1,28 @@
+<template name="poolsRecords">
+  {{#if Template.subscriptionsReady}}
+    <h2>{{poolName}}</h2>
+
+    <h3>Most Wins, All Time</h3>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Player</th>
+        <th>Wins</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each poolTeam in poolTeamsMostWinsAllTime}}
+        <tr>
+          <td>{{poolTeam.userTeamName}}</td>
+          <td>{{poolTeam.wins}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+
+    {{> seasonSwitcher}}
+
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>
