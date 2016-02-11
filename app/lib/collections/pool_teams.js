@@ -101,6 +101,7 @@ PoolTeams.schema = new SimpleSchema({
     },
   },
   totalWins: { type: Number, defaultValue: 0 },
+  totalLosses: { type: Number, defaultValue: 0 },
   totalGames: { type: Number, defaultValue: 0 },
   totalPlusMinus: { type: Number, defaultValue: 0 },
   createdAt: {

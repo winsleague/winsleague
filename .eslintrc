@@ -8,19 +8,20 @@
     "node": true
   },
   "globals": {
-    "Modules": false,
-    "log": false,
     "AutoForm": false,
     "BlazeLayout": false,
     "FlowRouter": false,
-    "SimpleSchema": false,
-    "SyncedCron": false,
     "Games": true,
     "LeagueTeams": true,
     "Leagues": true,
+    "log": false,
+    "Migrations": false,
+    "Modules": false,
     "PoolTeams": true,
     "Pools": true,
     "SeasonLeagueTeams": true,
-    "Seasons": true
+    "Seasons": true,
+    "SimpleSchema": false,
+    "SyncedCron": false
   }
 }

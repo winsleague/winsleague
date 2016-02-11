@@ -1,5 +1,7 @@
 <template name="poolsEdit">
-  <h2>Edit Pool</h2>
+  {{> poolsHeader }}
+
+  <h3>Edit Pool</h3>
 
   {{#onlyIfLoggedIn}}
     {{#if Template.subscriptionsReady}}

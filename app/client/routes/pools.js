@@ -44,6 +44,15 @@ poolsRoutes.route('/:_id/seasons/:seasonId', {
   },
 });
 
+// http://app.com/pools/:_id/records
+poolsRoutes.route('/:_id/records', {
+  name: 'poolsRecords',
+  action(params) {
+    log.debug(`We're viewing records for a single pool: ${params._id}`);
+    BlazeLayout.render('masterLayout', { content: 'poolsRecords' });
+  },
+});
+
 // http://app.com/pools/:poolId/teams/new
 poolsRoutes.route('/:poolId/teams/new', {
   name: 'poolTeamsNew',

@@ -24,6 +24,7 @@ Package.onUse(function (api) {
     'pool_team_fixtures.js',
     'reset.js',
     'season_fixtures.js',
+    'season_league_team_fixtures.js',
     'user_fixtures.js',
   ], 'server');
 });

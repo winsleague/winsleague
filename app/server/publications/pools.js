@@ -1,4 +1,5 @@
-Meteor.publish('pools.single', _id => {
+Meteor.publish('pools.single', function(_id) {
+  if (!_id) return this.ready();
   check(_id, String);
   return Pools.find(_id);
 });

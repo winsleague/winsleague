@@ -56,6 +56,16 @@ goToPoolsShowPage = done => {
   });
 };
 
+goToPoolsRecordsPage = done => {
+  log.debug('goToPoolsRecordsPage called');
+  waitForSubscription(Pools.find(), function () {
+    const pool = Pools.findOne();
+    const _id = pool._id;
+
+    return goToRoute('poolsRecords', { _id })(done);
+  });
+};
+
 goToPoolsEditPage = done => {
   log.debug('goToPoolsEditPage called');
   waitForSubscription(Pools.find(), function () {

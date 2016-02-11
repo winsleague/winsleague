@@ -1,0 +1,57 @@
+<template name="poolsRecords">
+  {{> poolsHeader }}
+
+  {{#if Template.subscriptionsReady}}
+    <h3>Records</h3>
+
+    <div class="row">
+      <div class="col-md-5">
+
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Most Wins, All Time"
+          metricTitle="Wins"
+          metricField="totalWins"
+          collectionName="pool_users_most_wins_all_time"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Most Losses, All Time"
+          metricTitle="Losses"
+          metricField="totalLosses"
+          collectionName="pool_users_most_losses_all_time"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Best Point Differential, All Time"
+          metricTitle="Point +/-"
+          metricField="totalPlusMinus"
+          collectionName="pool_users_best_plus_minus_all_time"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Worst Point Differential, All Time"
+          metricTitle="Point +/-"
+          metricField="totalPlusMinus"
+          collectionName="pool_users_worst_plus_minus_all_time"
+          sort=1
+        }}
+
+      </div>
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-5">
+
+        Season records will go here
+
+      </div>
+    </div>
+
+    {{> seasonSwitcher}}
+
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>
