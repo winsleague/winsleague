@@ -7,15 +7,43 @@
     <div class="row">
       <div class="col-md-6">
 
-        {{> poolsRecordsPoolUsersMostAllTime metric="totalWins" }}
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Most Wins, All Time"
+          metricTitle="Wins"
+          metricField="totalWins"
+          collectionName="pool_users_most_wins_all_time"
+          sort=-1
+        }}
 
-        {{> poolsRecordsPoolUsersMostAllTime metric="totalLosses" }}
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Most Losses, All Time"
+          metricTitle="Losses"
+          metricField="totalLosses"
+          collectionName="pool_users_most_losses_all_time"
+          sort=-1
+        }}
 
-        {{> poolsRecordsPoolUsersMostAllTime metric="totalPlusMinus" }}
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Best Plus/Minus, All Time"
+          metricTitle="Plus/Minus"
+          metricField="totalPlusMinus"
+          collectionName="pool_users_best_plus_minus_all_time"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolUsersMostAllTime
+          recordTitle="Worst Plus/Minus, All Time"
+          metricTitle="Plus/Minus"
+          metricField="totalPlusMinus"
+          collectionName="pool_users_worst_plus_minus_all_time"
+          sort=1
+        }}
 
       </div>
       <div class="col-md-6">
-        ...
+
+        Season records will go here
+
       </div>
     </div>
 

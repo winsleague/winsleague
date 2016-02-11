@@ -2,23 +2,25 @@ Template.poolsRecordsPoolUsersMostAllTime.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   poolUsers: () => {
-    let collection;
-    switch (Template.currentData().metric) {
-      case 'totalWins': { collection = PoolUsersMostWinsAllTime; break; }
-      case 'totalLosses': { collection = PoolUsersMostLossesAllTime; break; }
-      case 'totalPlusMinus': { collection = PoolUsersMostPlusMinusAllTime; break; }
-    }
-
-    return collection.find({}, { sort: { metric: -1 } });
+    const collection = new Mongo.Collection(Template.currentData().collectionName);
+    const sort = Template.currentData().sort;
+    return collection.find({}, { sort: { metric: sort } });
   },
 
-  metricTitle: () => _.capitalize(Template.currentData().metric),
 });
 
 Template.poolsRecordsPoolUsersMostAllTime.onCreated(function() {
+  new SimpleSchema({
+    recordTitle: { type: String },
+    metricTitle: { type: String },
+    metricField: { type: String },
+    sort: { type: Number, allowedValues: [1, -1] },
+    collectionName: { type: String },
+  }).validate(Template.currentData());
+
   this.getPoolId = () => FlowRouter.getParam('_id');
 
   this.autorun(() => {
-    this.subscribe('poolUsersMostAllTime.ofPool', this.getPoolId(), Template.currentData().metric);
+    this.subscribe('poolUsersMostAllTime.ofPool', this.getPoolId(), Template.currentData().metricField, Template.currentData().collectionName);
   });
 });

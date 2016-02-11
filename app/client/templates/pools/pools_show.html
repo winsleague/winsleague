@@ -36,6 +36,9 @@
 
     {{> seasonSwitcher}}
 
+    <a href="{{pathFor 'poolsRecords' _id=poolId}}" id="records">Records</a><br/>
+    <br/>
+
     {{#if isCommissioner}}
       {{#if isLatestSeason}}
         <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>

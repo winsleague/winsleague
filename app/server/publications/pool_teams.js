@@ -23,7 +23,7 @@ Meteor.publish('poolTeams.single', function (_id) {
   return PoolTeams.find(_id);
 });
 
-Meteor.publish('poolUsersMostAllTime.ofPool', function(poolId, field) {
+Meteor.publish('poolUsersMostAllTime.ofPool', function(poolId, field, collectionName) {
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
@@ -48,7 +48,7 @@ Meteor.publish('poolUsersMostAllTime.ofPool', function(poolId, field) {
   ],
     {
       observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
-      clientCollection: `pool_users_most_${field}_all_time`,
+      clientCollection: collectionName,
     }
   );
 });
