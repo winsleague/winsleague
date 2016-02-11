@@ -4,7 +4,7 @@ Template.poolsRecordsPoolUsersMostAllTime.helpers({
   poolUsers: () => {
     const collection = Modules.collectionCache.getCollection(Template.currentData().collectionName);
     const sort = Template.currentData().sort;
-    return collection.find({}, { sort: { metric: sort } });
+    return collection.find({}, { sort: { metric: sort }, limit: 3 });
   },
 
 });

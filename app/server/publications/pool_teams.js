@@ -42,9 +42,6 @@ Meteor.publish('poolUsersMostAllTime.ofPool', function(poolId, field, collection
         },
       },
     },
-    {
-      $limit: 3,
-    },
   ],
     {
       observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
