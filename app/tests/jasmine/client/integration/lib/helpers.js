@@ -76,3 +76,14 @@ createOldPoolTeam = (done) => {
   );
   log.debug(`called createOldPoolTeam`);
 };
+
+createDefaultSeasonLeagueTeam = (done) => {
+  Meteor.call(
+    'fixtures/seasonLeagueTeams/createDefault',
+    createMethodResultHandler(done, (error, seasonLeagueTeam) => {
+      this.seasonLeagueTeam = seasonLeagueTeam;
+    })
+  );
+  log.debug(`called createDefaultSeasonLeagueTeam`);
+};
+
