@@ -2,7 +2,7 @@ Template.poolsRecordsPoolUsersMostAllTime.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   poolUsers: () => {
-    const collection = new Mongo.Collection(Template.currentData().collectionName);
+    const collection = Modules.collectionCache.getCollection(Template.currentData().collectionName);
     const sort = Template.currentData().sort;
     return collection.find({}, { sort: { metric: sort } });
   },
