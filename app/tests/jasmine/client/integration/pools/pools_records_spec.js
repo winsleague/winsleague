@@ -9,7 +9,7 @@ fdescribe('poolsRecord page', () => {
   beforeEach(loginWithDefaultUser); // needed so we have a subscription to the Pools collection
   beforeEach(createDefaultSeasonLeagueTeam);
   beforeEach(createDefaultPool);
-  beforeEach(createDefaultPoolTeam);
+  beforeEach(createDefaultPoolTeam); // TODO: add other pool teams in this season and in others to validate record numbers
   beforeEach(goToPoolsRecordsPage);
 
   it('should display the teams with the most wins of all time', done => {
