@@ -1,6 +1,8 @@
 Template.poolsShow.helpers({
   poolId: () => Template.instance().getPoolId(),
 
+  seasonId: () => Template.instance().getSeasonId(),
+
   poolTeams: () => {
     const poolId = Template.instance().getPoolId();
     return PoolTeams.find({ poolId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
@@ -31,7 +33,12 @@ Template.poolsShow.onCreated(function() {
 
   this.getLeagueId = () => _.get(this.getPool(), 'leagueId');
 
-  this.getSeasonId = () => FlowRouter.getParam('seasonId');
+  this.getSeasonId = () => {
+    const seasonId = FlowRouter.getParam('seasonId');
+    if (seasonId) return seasonId;
+    const season = Modules.seasons.getLatestByLeagueId(this.getLeagueId());
+    return _.get(season, '_id');
+  };
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {

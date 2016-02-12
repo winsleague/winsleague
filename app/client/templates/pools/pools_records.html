@@ -1,7 +1,7 @@
 <template name="poolsRecords">
-  {{> poolsHeader }}
-
   {{#if Template.subscriptionsReady}}
+    {{> poolsHeader poolId=poolId }}
+
     <h3>Records</h3>
 
     <div class="row">
@@ -44,7 +44,33 @@
       </div>
       <div class="col-md-5">
 
-        Season records will go here
+        {{> poolsRecordsPoolTeamsMostSeason
+          recordTitle="Most Wins, Season"
+          metricTitle="Wins"
+          metricField="totalWins"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolTeamsMostSeason
+          recordTitle="Most Losses, Season"
+          metricTitle="Losses"
+          metricField="totalLosses"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolTeamsMostSeason
+          recordTitle="Best Point Differential, Season"
+          metricTitle="Point +/-"
+          metricField="totalPlusMinus"
+          sort=-1
+        }}
+
+        {{> poolsRecordsPoolTeamsMostSeason
+          recordTitle="Worst Point Differential, Season"
+          metricTitle="Point +/-"
+          metricField="totalPlusMinus"
+          sort=1
+        }}
 
       </div>
     </div>
