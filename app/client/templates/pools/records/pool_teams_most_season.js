@@ -10,8 +10,6 @@ Template.poolsRecordsPoolTeamsMostSeason.helpers({
   },
 
   getMetric: (poolTeam) => {
-    log.info('poolTeam ', poolTeam);
-    log.info('metric ', Template.currentData().metricField);
     return _.get(poolTeam, Template.currentData().metricField);
   },
 });
