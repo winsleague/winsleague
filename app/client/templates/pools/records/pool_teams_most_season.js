@@ -4,7 +4,9 @@ Template.poolsRecordsPoolTeamsMostSeason.helpers({
   poolTeams: () => {
     const metricField = Template.currentData().metricField;
     const sort = Template.currentData().sort;
-    return PoolTeams.find({}, { sort: { metricField: sort }, limit: 3 });
+    const filter = { sort: {}, limit: 3 };
+    filter.sort[metricField] = sort;
+    return PoolTeams.find({}, filter);
   },
 
   getMetric: (poolTeam) => {
