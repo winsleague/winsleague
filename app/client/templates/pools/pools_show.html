@@ -1,6 +1,7 @@
 <template name="poolsShow">
-  {{> poolsHeader }}
   {{#if Template.subscriptionsReady}}
+    {{> poolsHeader poolId=poolId seasonId=seasonId }}
+
     <h3>Leaderboard</h3>
 
     <div class="table-responsive">

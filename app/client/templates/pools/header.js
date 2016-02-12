@@ -8,35 +8,31 @@ Template.poolsHeader.helpers({
 });
 
 Template.poolsHeader.onCreated(function() {
-  this.getPoolId = () => FlowRouter.getParam('_id');
+  new SimpleSchema({
+    poolId: { type: String },
+    seasonId: { type: String, optional: true },
+  }).validate(Template.currentData());
+
+  this.getPoolId = () => this.data.poolId;
 
   this.getPool = () => Pools.findOne(this.getPoolId());
 
-  this.getLeagueId = () => _.get(this.getPool(), 'leagueId');
-
-  this.getSeasonId = () => FlowRouter.getParam('seasonId');
+  this.getSeasonId = () => this.data.seasonId;
 
   this.seasonYear = () => {
-    const poolTeam = PoolTeams.findOne();
-    if (poolTeam) {
-      // just pick seasonYear from one of the PoolTeams
-      return poolTeam.seasonYear;
-    } else {
-      // no pool teams exist, so pick latest year
-      return _.get(Seasons.findOne(), 'year');
-    }
+    if (! this.getSeasonId()) return null;
+
+    return _.get(Seasons.findOne(this.getSeasonId()), 'year');
   };
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
-      log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
+       log.debug(`header: pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
       if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
     });
 
-    this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId());
-
-    this.subscribe('seasons.single', this.getSeasonId());
-
-    this.subscribe('seasons.latest.ofLeague', this.getLeagueId());
+    this.subscribe('seasons.single', this.getSeasonId(), () => {
+      log.debug(`header: seasons.single ready`);
+    });
   });
 });
