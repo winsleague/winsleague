@@ -81,6 +81,10 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 $ (cd app; meteor shell)
 ```
 
+### View and Edit Client Documents
+
+Open app in the browser and press Control + M. See [Mongol documentation](https://github.com/msavin/Mongol) for more.
+
 ### Database Admin
 
 ```
