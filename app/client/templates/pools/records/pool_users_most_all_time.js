@@ -11,6 +11,7 @@ Template.poolsRecordsPoolUsersMostAllTime.helpers({
 
 Template.poolsRecordsPoolUsersMostAllTime.onCreated(function() {
   new SimpleSchema({
+    poolId: { type: String },
     recordTitle: { type: String },
     metricTitle: { type: String },
     metricField: { type: String },
@@ -18,7 +19,7 @@ Template.poolsRecordsPoolUsersMostAllTime.onCreated(function() {
     collectionName: { type: String },
   }).validate(Template.currentData());
 
-  this.getPoolId = () => FlowRouter.getParam('_id');
+  this.getPoolId = () => this.data.poolId;
 
   this.autorun(() => {
     this.subscribe('poolUsersMostAllTime.ofPool', this.getPoolId(), Template.currentData().metricField, Template.currentData().collectionName);

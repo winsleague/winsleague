@@ -16,13 +16,15 @@ Template.poolsRecordsPoolTeamsMostSeason.helpers({
 
 Template.poolsRecordsPoolTeamsMostSeason.onCreated(function() {
   new SimpleSchema({
+    poolId: { type: String },
     recordTitle: { type: String },
     metricTitle: { type: String },
     metricField: { type: String },
-    sort: { type: Number, allowedValues: [1, -1] }
-  }).validate(Template.currentData());
+    sort: { type: Number, allowedValues: [1, -1] },
+    tableId: { type: String },
+  }).validate(this.data);
 
-  this.getPoolId = () => FlowRouter.getParam('_id');
+  this.getPoolId = () => this.data.poolId;
 
   this.autorun(() => {
     this.subscribe('poolTeams.ofPool', this.getPoolId());

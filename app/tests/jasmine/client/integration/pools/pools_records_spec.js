@@ -3,6 +3,11 @@ const page = {
   getMostLossesAllTimeCellSelector: () => `table#pool_users_most_losses_all_time tbody tr td.metric`,
   getBestPlusMinusAllTimeCellSelector: () => `table#pool_users_best_plus_minus_all_time tbody tr td.metric`,
   getWorstPlusMinusAllTimeCellSelector: () => `table#pool_users_worst_plus_minus_all_time tbody tr td.metric`,
+
+  getMostWinsSeasonCellSelector: () => `table#pool_teams_most_wins_season tbody tr td.metric`,
+  getMostLossesSeasonCellSelector: () => `table#pool_teams_most_losses_season tbody tr td.metric`,
+  getBestPlusMinusSeasonCellSelector: () => `table#pool_teams_best_plus_minus_season tbody tr td.metric`,
+  getWorstPlusMinusSeasonCellSelector: () => `table#pool_teams_worst_plus_minus_season tbody tr td.metric`,
 };
 
 fdescribe('poolsRecord page', () => {
@@ -34,6 +39,34 @@ fdescribe('poolsRecord page', () => {
   });
 
   it('should display the teams with the worst point differential of all time', done => {
+    waitForElement(page.getWorstPlusMinusAllTimeCellSelector(), function() {
+      const plusMinus = $(page.getWorstPlusMinusAllTimeCellSelector()).text();
+      expect(plusMinus).toBe('3');
+    });
+  });
+
+  it('should display the teams with the most wins in a single season', done => {
+    waitForElement(page.getMostWinsAllTimeCellSelector(), function() {
+      const wins = $(page.getMostWinsAllTimeCellSelector()).text();
+      expect(wins).toBe('10');
+    });
+  });
+
+  it('should display the teams with the most losses in a single season', done => {
+    waitForElement(page.getMostLossesAllTimeCellSelector(), function() {
+      const losses = $(page.getMostLossesAllTimeCellSelector()).text();
+      expect(losses).toBe('6');
+    });
+  });
+
+  it('should display the teams with the best point differential in a single season', done => {
+    waitForElement(page.getBestPlusMinusAllTimeCellSelector(), function() {
+      const plusMinus = $(page.getBestPlusMinusAllTimeCellSelector()).text();
+      expect(plusMinus).toBe('3');
+    });
+  });
+
+  it('should display the teams with the worst point differential in a single season', done => {
     waitForElement(page.getWorstPlusMinusAllTimeCellSelector(), function() {
       const plusMinus = $(page.getWorstPlusMinusAllTimeCellSelector()).text();
       expect(plusMinus).toBe('3');

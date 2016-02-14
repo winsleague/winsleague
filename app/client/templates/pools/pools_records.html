@@ -8,6 +8,7 @@
       <div class="col-md-5">
 
         {{> poolsRecordsPoolUsersMostAllTime
+          poolId=poolId
           recordTitle="Most Wins, All Time"
           metricTitle="Wins"
           metricField="totalWins"
@@ -16,6 +17,7 @@
         }}
 
         {{> poolsRecordsPoolUsersMostAllTime
+          poolId=poolId
           recordTitle="Most Losses, All Time"
           metricTitle="Losses"
           metricField="totalLosses"
@@ -24,6 +26,7 @@
         }}
 
         {{> poolsRecordsPoolUsersMostAllTime
+          poolId=poolId
           recordTitle="Best Point Differential, All Time"
           metricTitle="Point +/-"
           metricField="totalPlusMinus"
@@ -32,6 +35,7 @@
         }}
 
         {{> poolsRecordsPoolUsersMostAllTime
+          poolId=poolId
           recordTitle="Worst Point Differential, All Time"
           metricTitle="Point +/-"
           metricField="totalPlusMinus"
@@ -45,31 +49,39 @@
       <div class="col-md-5">
 
         {{> poolsRecordsPoolTeamsMostSeason
+          poolId=poolId
           recordTitle="Most Wins, Season"
           metricTitle="Wins"
           metricField="totalWins"
           sort=-1
+          tableId="pool_teams_most_wins_season"
         }}
 
         {{> poolsRecordsPoolTeamsMostSeason
+          poolId=poolId
           recordTitle="Most Losses, Season"
           metricTitle="Losses"
           metricField="totalLosses"
           sort=-1
+          tableId="pool_teams_most_losses_season"
         }}
 
         {{> poolsRecordsPoolTeamsMostSeason
+          poolId=poolId
           recordTitle="Best Point Differential, Season"
           metricTitle="Point +/-"
           metricField="totalPlusMinus"
           sort=-1
+          tableId="pool_teams_best_plus_minus_season"
         }}
 
         {{> poolsRecordsPoolTeamsMostSeason
+          poolId=poolId
           recordTitle="Worst Point Differential, Season"
           metricTitle="Point +/-"
           metricField="totalPlusMinus"
           sort=1
+          tableId="pool_teams_worst_plus_minus_season"
         }}
 
       </div>
