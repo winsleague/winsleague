@@ -3,20 +3,20 @@
 
   {{#onlyIfLoggedIn}}
     {{#if Template.subscriptionsReady}}
-      {{#autoForm collection="PoolTeams" id="updatePoolTeamForm" doc=poolTeamDoc type="update"}}
+      {{#autoForm collection="PoolTeams" id="updatePoolTeamForm" type="update" doc=poolTeamDoc}}
         <fieldset>
           {{> afQuickField name="userTeamName"}}
           {{> afQuickField name="leagueTeamIds"}}
         </fieldset>
         <button class="btn btn-primary" type="submit">Save</button>
-        &nbsp;
-        <a class="btn btn-default" href="{{pathFor 'poolsShow' _id=poolId}}">Back to Pool</a>
-        &nbsp;
-        {{> autoformModals}}
-        {{#afModal class="btn btn-danger" collection="PoolTeams" operation="remove" doc=poolTeamDoc._id}}
-          Delete
-        {{/afModal}}
       {{/autoForm}}
+      <br/>
+      <a class="btn btn-default" href="{{pathFor 'poolsShow' _id=poolId}}">Back to Pool</a>
+      &nbsp;
+      {{> autoformModals}}
+      {{#afModal class="btn btn-danger" collection="PoolTeams" operation="remove" doc=poolTeamDoc._id onSuccess=onRemoveSuccess}}
+        Delete
+      {{/afModal}}
     {{/if}}
   {{/onlyIfLoggedIn}}
 </template>

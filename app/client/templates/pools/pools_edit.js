@@ -2,6 +2,14 @@ Template.poolsEdit.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   poolDoc: () => Template.instance().getPoolDoc(),
+
+  onRemoveSuccess: () => {
+    // check to see if doc exists because of https://github.com/yogiben/meteor-autoform-modals/issues/79
+    if (! Template.instance().getPoolDoc()) {
+      $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
+      FlowRouter.go('/');
+    }
+  },
 });
 
 Template.poolsEdit.onCreated(function() {
