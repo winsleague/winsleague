@@ -56,3 +56,5 @@ jcbernack:reactive-aggregate
 stevezhu:lodash
 percolate:migrations
 msavin:mongol
+momentjs:moment
+mrt:moment-timezone

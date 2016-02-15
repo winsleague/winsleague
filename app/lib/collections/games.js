@@ -17,6 +17,7 @@ Games.attachSchema(new SimpleSchema({
   period: { // quarter if NFL or NBA, inning if MLB, period if NHL
     type: String,
     allowedValues: ['pregame', '1', '2', 'halftime', '3', '4',
+      '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
       'overtime', 'final', 'final overtime'],
   },
   timeRemaining: { type: String, optional: true },

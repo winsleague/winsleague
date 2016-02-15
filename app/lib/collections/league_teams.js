@@ -7,7 +7,7 @@ LeagueTeams.attachSchema(new SimpleSchema({
   abbreviation: { type: String },
   conference: {
     type: String,
-    allowedValues: ['AFC', 'NFC', 'East', 'West'],
+    allowedValues: ['AFC', 'NFC', 'East', 'West', 'American', 'National'],
   },
   division: {
     type: String,
