@@ -88,4 +88,28 @@ Modules.server.mlbGameData = {
       }
     );
   },
+
+  refreshStandings() {
+    const league = Modules.leagues.getByName('MLB');
+    if (! league) throw new Error(`League is not found!`);
+    const season = Modules.seasons.getLatestByLeague(league);
+
+    const today = moment();
+
+    // only run during season
+    if (today.isBefore(season.startDate)) {
+      log.info(`Not refreshing MLB standings because ${today.toDate()} is before ${season.startDate}`);
+      return;
+    }
+    if (today.isAfter(season.endDate)) {
+      log.info(`Not refreshing MLB standings because ${today.toDate()} is after ${season.endDate}`);
+      return;
+    }
+
+    const year = today.year();
+    const month = today.month() + 1; // moment months are zero-based
+    const day = today.day();
+
+    Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
+  },
 };
