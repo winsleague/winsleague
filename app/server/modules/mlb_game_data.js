@@ -24,8 +24,6 @@ Modules.server.mlbGameData = {
 
     if (! season) season = Modules.seasons.getLatestByLeague(league);
 
-    Games.remove({ leagueId: league._id, seasonId: season._id });
-
     const startDate = moment(season.startDate);
     const endDate = moment(season.endDate);
 
