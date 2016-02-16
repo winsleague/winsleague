@@ -76,16 +76,6 @@ PoolTeams.schema = new SimpleSchema({
   },
   pickNumbers: {
     type: [Number],
-    autoValue() {
-      // TODO: this is placeholder until we wire this up
-      if (this.field('leagueTeamIds').isSet) {
-        let numbers = [];
-        for (let leagueTeamId of this.field('leagueTeamIds').value) {
-          numbers.push(0);
-        }
-        return numbers;
-      }
-    },
   },
   leagueTeamMascotNames: {
     type: [String],
@@ -156,6 +146,26 @@ PoolTeams.formSchema = new SimpleSchema({
       },
     },
   },
+  pickNumbers: {
+    type: [Number],
+    label: 'Draft pick numbers',
+    autoform: {
+      minCount: 1,
+      maxCount: 4,
+      initialCount: 4,
+    },
+  },
+  'pickNumbers.$': {
+    autoform: {
+      afFieldInput: {
+        options() {
+          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
+            return { label: number, value: number };
+          });
+        },
+      },
+    },
+  },
 });
 
 
@@ -164,7 +174,7 @@ PoolTeams.helpers({
   teamSummary() {
     let string = '';
     for (let i = 0; i < this.leagueTeamMascotNames.length; i++) {
-      string += `${this.leagueTeamMascotNames[i]}, `;
+      string += `${this.leagueTeamMascotNames[i]} #${this.pickNumbers[i]}, `;
     }
     if (string.length > 0) string = string.substr(0, string.length - 2);
     return string;
