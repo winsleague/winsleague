@@ -1,6 +1,6 @@
 Migrations.add({
   version: 3,
-  name: 'Ingest data for the MLB 2015 season',
+  name: 'Ingest data for the MLB 2016 season',
   up: () => {
     if (! Modules.environment.isProduction()) return; // only do this in production
 
