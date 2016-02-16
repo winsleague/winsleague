@@ -125,7 +125,7 @@ Modules.server.seeds = {
       { cityName: 'Houston', mascotName: 'Astros', abbreviation: 'HOU', conference: 'American', division: 'West' },
       { cityName: 'Kansas City', mascotName: 'Royals', abbreviation: 'KC', conference: 'American', division: 'Central' },
       { cityName: 'Los Angeles', mascotName: 'Angels', abbreviation: 'LAA', conference: 'American', division: 'West' },
-      { cityName: 'Los Angeles', mascotName: 'Dodges', abbreviation: 'LAD', conference: 'National', division: 'West' },
+      { cityName: 'Los Angeles', mascotName: 'Dodgers', abbreviation: 'LAD', conference: 'National', division: 'West' },
       { cityName: 'Miami', mascotName: 'Marlins', abbreviation: 'MIA', conference: 'National', division: 'East' },
       { cityName: 'Milwaukee', mascotName: 'Brewers', abbreviation: 'MIL', conference: 'National', division: 'Central' },
       { cityName: 'Minnesota', mascotName: 'Twins', abbreviation: 'MIN', conference: 'American', division: 'Central' },

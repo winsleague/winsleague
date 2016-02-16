@@ -15,7 +15,7 @@ describe('Season League Teams', () => {
       Games.insert({
         leagueId: season.leagueId,
         seasonId: season._id,
-        gameId: 1,
+        gameId: '1',
         gameDate: new Date(),
         homeTeamId: homeLeagueTeam._id,
         homeScore: 17,
