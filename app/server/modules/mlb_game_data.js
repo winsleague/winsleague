@@ -1,11 +1,28 @@
-const prettyjson = Meteor.npmRequire('prettyjson');
+function getLeagueTeamIdByAbbreviation(league, abbreviation) {
+  return LeagueTeams.findOne({ leagueId: league._id, abbreviation })._id;
+}
+
+function padZeros(n, width) {
+  const nAsString = n + '';
+  return nAsString.length >= width ? nAsString : new Array(width - nAsString.length + 1).join('0') + nAsString;
+}
+
+function cleanStatus(status) {
+  // 'scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
+  if (status === 'Preview') return 'scheduled';
+  if (status === 'Final') return 'completed';
+  if (status === 'Postponed') return 'postponed';
+  if (status === 'Completed Early') return 'suspended';
+  // TODO: figure out what status refers to 'in progress'
+}
+
 
 Modules.server.mlbGameData = {
-  ingestSeasonData() {
+  ingestSeasonData(season) {
     const league = Modules.leagues.getByName('MLB');
-    if (! league) { throw new Error(`League is not found!`); }
+    if (! league) throw new Error(`League is not found!`);
 
-    const season = Modules.seasons.getLatestByLeague(league);
+    if (! season) season = Modules.seasons.getLatestByLeague(league);
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
@@ -29,14 +46,14 @@ Modules.server.mlbGameData = {
 
     if (Array.isArray(parsedJSON.data.games.game)) {
       parsedJSON.data.games.game.forEach(game => {
-        Modules.server.mlbGameData.insertGame(league, season, game);
+        Modules.server.mlbGameData.upsertGame(league, season, game);
       });
     } else { // this happens when there's only one game that day (http://gd2.mlb.com/components/game/mlb/year_2016/month_07/day_12/miniscoreboard.json)
-      Modules.server.mlbGameData.insertGame(league, season, parsedJSON.data.games.game);
+      Modules.server.mlbGameData.upsertGame(league, season, parsedJSON.data.games.game);
     }
   },
 
-  insertGame(league, season, game) {
+  upsertGame(league, season, game) {
     if (game.game_type !== 'R') {
       /*
        game_types:
@@ -54,24 +71,23 @@ Modules.server.mlbGameData = {
 
     log.info(`game: ${game.gameday_link}`);
     const gameDate = moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD HH:MM A', 'EST').toDate(); // all times are in EST
-    Games.insert({
-      leagueId: league._id,
-      seasonId: season._id,
-      gameId: game.gameday_link,
-      gameDate,
-      homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
-      awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
-      period: 'pregame',
-      status: 'scheduled',
-    });
+    Games.upsert(
+      {
+        leagueId: league._id,
+        seasonId: season._id,
+        gameId: game.gameday_link,
+      },
+      {
+        $set: {
+          gameDate,
+          homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
+          homeScore: _.get(game, 'home_team_runs', 0),
+          awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
+          awayScore: _.get(game, 'away_team_runs', 0),
+          period: _.get(game, 'inning', 'pregame'),
+          status: cleanStatus(game.status),
+        },
+      }
+    );
   },
 };
-
-function getLeagueTeamIdByAbbreviation(league, abbreviation) {
-  return LeagueTeams.findOne({ leagueId: league._id, abbreviation })._id;
-}
-
-function padZeros(n, width) {
-  const nAsString = n + '';
-  return nAsString.length >= width ? nAsString : new Array(width - nAsString.length + 1).join('0') + nAsString;
-}
