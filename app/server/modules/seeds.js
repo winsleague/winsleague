@@ -50,8 +50,14 @@ Modules.server.seeds = {
       LeagueTeams.insert(team);
     }
 
-    Seasons.insert({ leagueId, year: 2014 });
-    Seasons.insert({ leagueId, year: 2015 });
+    Seasons.insert({ leagueId, year: 2014,
+      startDate: moment('2014-09-04').toDate(),
+      endDate: moment('2015-12-28').toDate(),
+    });
+    Seasons.insert({ leagueId, year: 2015,
+      startDate: moment('2015-09-10').toDate(),
+      endDate: moment('2016-01-03').toDate(),
+    });
   },
 
   createNbaLeague() {
@@ -95,7 +101,10 @@ Modules.server.seeds = {
       LeagueTeams.insert(team);
     }
 
-    Seasons.insert({ leagueId, year: 2015 });
+    Seasons.insert({ leagueId, year: 2015,
+      startDate: moment('2015-10-27').toDate(),
+      endDate: moment('2016-04-13').toDate(),
+    });
   },
 
   createMlbLeague() {
@@ -139,7 +148,10 @@ Modules.server.seeds = {
       LeagueTeams.insert(team);
     }
 
-    Seasons.insert({ leagueId, year: 2016 });
+    Seasons.insert({ leagueId, year: 2016,
+      startDate: moment('2016-04-03').toDate(),
+      endDate: moment('2016-10-02').toDate(),
+    });
   },
 
   removeLeague(leagueName) {

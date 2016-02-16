@@ -3,7 +3,7 @@ Games = new Mongo.Collection('games');
 Games.attachSchema(new SimpleSchema({
   leagueId: { type: String },
   seasonId: { type: String },
-  gameId: { type: Number },
+  gameId: { type: String },
   gameDate: { type: Date },
   week: { type: Number, optional: true }, // only for NFL
   homeTeamId: { type: String },

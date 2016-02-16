@@ -9,8 +9,8 @@ Modules.server.mlbGameData = {
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
-    const startDate = moment(`${season.year}-03-01`, 'YYYY-MM-DD');
-    const endDate = moment(`${season.year}-10-31`, 'YYYY-MM-DD');
+    const startDate = moment(season.startDate);
+    const endDate = moment(season.endDate);
 
     for (const date = startDate; date.isBefore(endDate); date.add(1, 'days')) {
       // month is zero-indexed so we add 1
@@ -19,8 +19,6 @@ Modules.server.mlbGameData = {
   },
 
   ingestDayData(league, season, year, month, day) {
-    log.debug(month);
-    log.debug(`day: `, day);
     const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
     log.debug(`url: `, url);
     const response = HTTP.get(url);
@@ -29,10 +27,13 @@ Modules.server.mlbGameData = {
 
     if (! parsedJSON.data.games.game) return; // no games on that day
 
-    parsedJSON.data.games.game.forEach(game => {
-      log.debug(`game: `, game);
-      Modules.server.mlbGameData.insertGame(league, season, game);
-    });
+    if (Array.isArray(parsedJSON.data.games.game)) {
+      parsedJSON.data.games.game.forEach(game => {
+        Modules.server.mlbGameData.insertGame(league, season, game);
+      });
+    } else { // this happens when there's only one game that day (http://gd2.mlb.com/components/game/mlb/year_2016/month_07/day_12/miniscoreboard.json)
+      Modules.server.mlbGameData.insertGame(league, season, parsedJSON.data.games.game);
+    }
   },
 
   insertGame(league, season, game) {
@@ -52,22 +53,22 @@ Modules.server.mlbGameData = {
     }
 
     log.info(`game: ${game.gameday_link}`);
-    const gameDate = moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD HH:MM A', 'EST'); // all times are in EST
+    const gameDate = moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD HH:MM A', 'EST').toDate(); // all times are in EST
     Games.insert({
       leagueId: league._id,
       seasonId: season._id,
       gameId: game.gameday_link,
       gameDate,
-      homeTeamId: getLeagueTeamIdByAbbreviation(game.home_name_abbrev),
-      awayTeamId: getLeagueTeamIdByAbbreviation(game.away_name_abbrev),
+      homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
+      awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
       period: 'pregame',
       status: 'scheduled',
     });
   },
 };
 
-function getLeagueTeamIdByAbbreviation(abbreviation) {
-  return LeagueTeams.findOne({ leagueId: league._id, abbreviation })._id
+function getLeagueTeamIdByAbbreviation(league, abbreviation) {
+  return LeagueTeams.findOne({ leagueId: league._id, abbreviation })._id;
 }
 
 function padZeros(n, width) {
