@@ -15,7 +15,7 @@ Modules.server.nflGameData = {
 
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
-      const gameId = parseInt(gameData[10], 10);
+      const gameId = gameData[10];
       const period = gameData[2].toLowerCase();
       const timeRemaining = gameData[3];
       const homeScore = gameData[7];
@@ -30,10 +30,10 @@ Modules.server.nflGameData = {
   },
 
   ingestSeasonData(season) {
-    if (!season) { throw new Error(`Season is null!`); }
+    if (! season) throw new Error(`Season is null!`);
 
     const league = Modules.leagues.getByName('NFL');
-    if (!league) { throw new Error(`League is not found!`); }
+    if (! league) throw new Error(`League is not found!`);
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 

@@ -2,7 +2,14 @@ Seasons = new Mongo.Collection('seasons');
 
 Seasons.attachSchema(new SimpleSchema({
   leagueId: { type: String },
-  year: { type: Number }
+  year: { type: Number },
+  startDate: { type: Date },
+  endDate: { type: Date },
+  status: {
+    type: String,
+    allowedValues: ['scheduled', 'in progress', 'completed'],
+    defaultValue: 'scheduled',
+  },
 }));
 
 if (Meteor.isServer) {

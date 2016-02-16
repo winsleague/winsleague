@@ -17,6 +17,7 @@
     "log": false,
     "Migrations": false,
     "Modules": false,
+    "moment": false,
     "PoolTeams": true,
     "Pools": true,
     "SeasonLeagueTeams": true,
