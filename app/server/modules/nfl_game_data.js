@@ -30,10 +30,10 @@ Modules.server.nflGameData = {
   },
 
   ingestSeasonData(season) {
-    if (!season) { throw new Error(`Season is null!`); }
+    if (! season) throw new Error(`Season is null!`);
 
     const league = Modules.leagues.getByName('NFL');
-    if (!league) { throw new Error(`League is not found!`); }
+    if (! league) throw new Error(`League is not found!`);
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
