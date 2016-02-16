@@ -84,7 +84,7 @@ PoolTeams.schema = new SimpleSchema({
         let mascots = [];
         for (let leagueTeamId of this.field('leagueTeamIds').value) {
           const leagueTeam = LeagueTeams.findOne(leagueTeamId);
-          mascots.push(leagueTeam.mascotName);
+          mascots.push(leagueTeam.abbreviation);
         }
         return mascots;
       }
