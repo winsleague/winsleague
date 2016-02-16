@@ -92,6 +92,11 @@ $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-
 ```
 
 
+## Migrations
+
+Migrations are done with [percolate:migrations](https://github.com/percolatestudio/meteor-migrations).
+
+
 ## Deploying to Production
 
 CircleCI automatically does this when tests pass.
