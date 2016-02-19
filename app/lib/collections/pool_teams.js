@@ -76,6 +76,23 @@ PoolTeams.schema = new SimpleSchema({
   },
   pickNumbers: {
     type: [Number],
+    label: 'Draft pick numbers',
+    autoform: {
+      minCount: 1,
+      maxCount: 4,
+      initialCount: 4,
+    },
+  },
+  'pickNumbers.$': {
+    autoform: {
+      afFieldInput: {
+        options() {
+          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
+            return { label: number, value: number };
+          });
+        },
+      },
+    },
   },
   leagueTeamMascotNames: {
     type: [String],

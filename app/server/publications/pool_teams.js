@@ -11,6 +11,7 @@ Meteor.publish('poolTeams.ofPool', function (poolId, seasonId = null) {
 });
 
 Meteor.publish('poolTeams.single', function (_id) {
+  if (!_id) return this.ready();
   check(_id, String);
   return PoolTeams.find(_id);
 });
