@@ -3,6 +3,7 @@ Migrations.add({
   name: 'Adds startDate and endDate to Seasons',
   up: () => {
     const nflLeague = Modules.leagues.getByName('NFL');
+    if (! nflLeague) throw new Error('NFL league not found!');
     Seasons.update({ leagueId: nflLeague._id, year: 2015 },
       { $set: {
         startDate: moment('2015-09-10').toDate(),
@@ -17,6 +18,7 @@ Migrations.add({
     );
 
     const nbaLeague = Modules.leagues.getByName('NBA');
+    if (! nbaLeague) throw new Error('NBA league not found!');
     Seasons.update({ leagueId: nbaLeague._id, year: 2015 },
       { $set: {
         startDate: moment('2015-10-27').toDate(),
