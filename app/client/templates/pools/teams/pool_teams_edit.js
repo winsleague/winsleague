@@ -24,7 +24,7 @@ Template.poolTeamsEdit.onCreated(function() {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()} pools`);
       if (Pools.find(this.getPoolId()).count() === 0) {
-        log.debug(`redirecting because no Pools found for `, this.getPoolId());
+        log.warn(`poolTeamsEdit: redirecting to / because no Pools found for `, this.getPoolId());
         FlowRouter.go('/');
         return;
       }
@@ -37,6 +37,7 @@ Template.poolTeamsEdit.onCreated(function() {
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
       log.debug(`poolTeams.single subscription ready`);
       if (PoolTeams.find({ poolId: this.getPoolId() }).count() === 0) {
+        log.warn('poolTeamsEdit: Redirecting to poolsShow because PoolTeams.count=0');
         FlowRouter.go('poolsShow', { _id: this.getPoolId() });
       }
     });
