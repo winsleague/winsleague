@@ -1,13 +1,8 @@
 const page = {
-  getUserEmailSelector() {
-    return 'input[name="userEmail"]';
-  },
-  getUserTeamNameSelector() {
-    return 'input[name="userTeamName"]';
-  },
-  getFirstLeagueTeamSelector() {
-    return 'select[name="leagueTeamIds.0"]';
-  },
+  getUserEmailSelector: () => 'input[name="userEmail"]',
+  getUserTeamNameSelector: () => 'input[name="userTeamName"]',
+  getFirstLeagueTeamSelector: () => 'select[name="leagueTeamIds.0"]',
+  getFirstPickNumberSelector: () => 'select[name="pickNumbers.0"]',
 };
 
 describe('poolTeamsNew page', () => {
@@ -21,18 +16,18 @@ describe('poolTeamsNew page', () => {
     let leagueTeamId;
 
     waitForSubscription(LeagueTeams.find(), function() {
-      log.info('form loaded');
-
       $(page.getUserEmailSelector()).val(userEmail);
-
       $(page.getUserTeamNameSelector()).val(userTeamName);
 
-      // select first team
+      // choose first team
       leagueTeamId = LeagueTeams.findOne()._id;
       $(page.getFirstLeagueTeamSelector()).find('option:eq(1)').prop('selected', true);
 
+      // change to pick number #2
+      $(page.getFirstPickNumberSelector()).find('option:eq(2)').prop('selected', true);
+
       $('form').submit();
-      log.info('form submitted!');
+      log.debug('form submitted!');
 
       waitForSubscription(PoolTeams.find(), function() {
         const poolTeam = PoolTeams.findOne({ userTeamName });
@@ -40,6 +35,7 @@ describe('poolTeamsNew page', () => {
         log.debug(`poolTeam: `, poolTeam);
         expect(poolTeam.userTeamName).toBe(userTeamName, 'userTeamName');
         expect(poolTeam.leagueTeamIds[0]).toBe(leagueTeamId, 'leagueTeamId');
+        expect(poolTeam.leagueTeamIds[1]).toBe(2, 'pickNumber');
 
         done();
       });

@@ -1,10 +1,8 @@
 const page = {
-  getTitleSelector() {
-    return 'h2:contains("Simple Fantasy Sports")';
-  },
+  getTitleSelector: () => 'h2:contains("Simple Fantasy Sports")',
 };
 
-describe('The homepage', () => {
+describe('homepage', () => {
   beforeEach(goToHomePage);
 
   it('should have a title', done => {

@@ -15,6 +15,7 @@ function createDefaultPoolTeam() {
     userTeamName: 'test',
     userId: getDefaultUserId(),
     leagueTeamIds: [leagueTeamId],
+    pickNumbers: [1],
   };
 
   return createPoolTeam(poolTeam);
@@ -34,6 +35,7 @@ function createOldPoolTeam() {
     userTeamName: 'old test',
     userId: getDefaultUserId(),
     leagueTeamIds: [leagueTeamId],
+    pickNumbers: [1],
   };
 
   return createPoolTeam(poolTeam);
