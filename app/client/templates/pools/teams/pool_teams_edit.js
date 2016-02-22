@@ -4,11 +4,10 @@ Template.poolTeamsEdit.helpers({
   poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
 
   onRemoveSuccess: () => {
-    // check to see if doc exists because of https://github.com/yogiben/meteor-autoform-modals/issues/79
-    if (! Template.instance().getPoolTeamDoc()) {
+    return () => {
       $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
-      FlowRouter.go('poolsShow', { _id: Template.instance().getPoolId() });
-    }
+      FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('poolId') });
+    };
   },
 });
 
