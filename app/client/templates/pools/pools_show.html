@@ -13,22 +13,22 @@
             <th>Wins</th>
             <th>Games</th>
             <th>+/-</th>
-            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           {{#each poolTeam in poolTeams}}
             <tr id="{{poolTeam._id}}">
-              <td>{{poolTeam.userTeamName}}</td>
+              <td>
+                {{#if editAllowed poolTeam}}
+                  <a href="{{pathFor 'poolTeamsEdit' poolId=poolId poolTeamId=poolTeam._id}}">{{poolTeam.userTeamName}}</a>
+                {{else}}
+                  {{poolTeam.userTeamName}}
+                {{/if}}
+              </td>
               <td>{{poolTeam.teamSummary}}</td>
               <td>{{poolTeam.totalWins}}</td>
               <td>{{poolTeam.totalGames}}</td>
               <td>{{poolTeam.totalPlusMinus}}</td>
-              {{#if editAllowed poolTeam}}
-                <td>
-                  <a href="{{pathFor 'poolTeamsEdit' poolId=poolId poolTeamId=poolTeam._id}}">Edit</a>
-                </td>
-              {{/if}}
             </tr>
           {{/each}}
         </tbody>
