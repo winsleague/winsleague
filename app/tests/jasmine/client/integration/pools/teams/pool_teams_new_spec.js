@@ -37,7 +37,7 @@ describe('poolTeamsNew page', () => {
       waitForSubscription(PoolTeams.find(), function() {
         const poolTeam = PoolTeams.findOne({ userTeamName });
         expect(poolTeam).not.toBe(undefined, 'poolTeam');
-        log.info(`poolTeam: `, poolTeam);
+        log.debug(`poolTeam: `, poolTeam);
         expect(poolTeam.userTeamName).toBe(userTeamName, 'userTeamName');
         expect(poolTeam.leagueTeamIds[0]).toBe(leagueTeamId, 'leagueTeamId');
 
