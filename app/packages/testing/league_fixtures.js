@@ -5,7 +5,10 @@ function createDefaultLeagues() {
     abbreviation: 'NYG', conference: 'NFC', division: 'East' });
   LeagueTeams.insert({ leagueId, cityName: 'Seattle', mascotName: 'Seahawks',
     abbreviation: 'SEA', conference: 'NFC', division: 'West' });
-  Seasons.insert({ leagueId, year: 2015 });
+  Seasons.insert({ leagueId, year: 2015,
+    startDate: moment('2015-09-10').toDate(),
+    endDate: moment('2016-01-03').toDate(),
+  });
 
   leagueId = Leagues.insert({ name: 'NBA' });
   log.debug(`Created NBA league: ${leagueId}`);
@@ -13,7 +16,10 @@ function createDefaultLeagues() {
     abbreviation: 'NYK', conference: 'East', division: 'Atlantic' });
   LeagueTeams.insert({ leagueId, cityName: 'Seattle', mascotName: 'Supersonics',
     abbreviation: 'SEA', conference: 'West', division: 'Northwest' });
-  Seasons.insert({ leagueId, year: 2015 });
+  Seasons.insert({ leagueId, year: 2015,
+    startDate: moment('2015-10-10').toDate(),
+    endDate: moment('2016-05-03').toDate(),
+  });
 }
 
 Meteor.methods({

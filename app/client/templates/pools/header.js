@@ -28,7 +28,10 @@ Template.poolsHeader.onCreated(function() {
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`header: pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
-      if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
+      if (Pools.find(this.getPoolId()).count() === 0) {
+        log.warn('poolsHeader: Redirecting to / because Pools.count=0');
+        FlowRouter.go('/');
+      }
     });
 
     this.subscribe('seasons.single', this.getSeasonId(), () => {

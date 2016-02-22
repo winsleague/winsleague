@@ -21,6 +21,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getMostWinsAllTimeCellSelector(), function() {
       const wins = $(page.getMostWinsAllTimeCellSelector()).text();
       expect(wins).toBe('10');
+      done();
     });
   });
 
@@ -28,6 +29,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getMostLossesAllTimeCellSelector(), function() {
       const losses = $(page.getMostLossesAllTimeCellSelector()).text();
       expect(losses).toBe('6');
+      done();
     });
   });
 
@@ -35,6 +37,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getBestPlusMinusAllTimeCellSelector(), function() {
       const plusMinus = $(page.getBestPlusMinusAllTimeCellSelector()).text();
       expect(plusMinus).toBe('3');
+      done();
     });
   });
 
@@ -42,6 +45,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getWorstPlusMinusAllTimeCellSelector(), function() {
       const plusMinus = $(page.getWorstPlusMinusAllTimeCellSelector()).text();
       expect(plusMinus).toBe('3');
+      done();
     });
   });
 
@@ -49,6 +53,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getMostWinsSeasonCellSelector(), function() {
       const wins = $(page.getMostWinsSeasonCellSelector()).text();
       expect(wins).toBe('10');
+      done();
     });
   });
 
@@ -56,6 +61,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getMostLossesSeasonCellSelector(), function() {
       const losses = $(page.getMostLossesSeasonCellSelector()).text();
       expect(losses).toBe('6');
+      done();
     });
   });
 
@@ -63,6 +69,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getBestPlusMinusSeasonCellSelector(), function() {
       const plusMinus = $(page.getBestPlusMinusSeasonCellSelector()).text();
       expect(plusMinus).toBe('3');
+      done();
     });
   });
 
@@ -70,6 +77,7 @@ describe('poolsRecord page', () => {
     waitForElement(page.getWorstPlusMinusSeasonCellSelector(), function() {
       const plusMinus = $(page.getWorstPlusMinusSeasonCellSelector()).text();
       expect(plusMinus).toBe('3');
+      done();
     });
   });
 });

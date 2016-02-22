@@ -11,3 +11,9 @@ Template.poolsMenu.onCreated(function() {
     });
   });
 });
+
+Template.poolsMenu.events({
+  'click .menuLink': function (event) {
+    $('.navbar-toggle').click();
+  },
+});

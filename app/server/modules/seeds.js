@@ -1,10 +1,10 @@
 Modules.server.seeds = {
-  createLeagues() {
-    log.info(`Creating leagues and teams`);
+  initializeLeagues() {
+    log.info(`Initializing leagues and teams`);
 
-    Modules.server.seeds.createNflLeague();
-    Modules.server.seeds.createNbaLeague();
-    Modules.server.seeds.createMlbLeague();
+    if (! Modules.leagues.getByName('NFL')) Modules.server.seeds.createNflLeague();
+    if (! Modules.leagues.getByName('NBA')) Modules.server.seeds.createNbaLeague();
+    if (! Modules.leagues.getByName('MLB')) Modules.server.seeds.createMlbLeague();
   },
 
   createNflLeague() {

@@ -9,7 +9,7 @@ Modules.server.poolTeams = {
       Modules.server.poolTeams.refreshPoolTeam(poolTeam);
     });
 
-    log.info(`Done finding PoolTeams`);
+    log.debug(`Done finding PoolTeams who picked leagueTeamId`);
   },
 
   refreshPoolTeam(poolTeam) {
@@ -34,6 +34,6 @@ Modules.server.poolTeams = {
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
     const numberAffected = PoolTeams.direct.update({ _id: poolTeam._id },
       { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
-    log.info(`PoolTeams.update numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update numberAffected: ${numberAffected}`);
   },
 };

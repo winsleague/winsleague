@@ -12,7 +12,10 @@ Template.poolsRecords.onCreated(function() {
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
-      if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
+      if (Pools.find(this.getPoolId()).count() === 0) {
+        log.warn('poolsRecords: Redirecting to / because Pools.count=0');
+        FlowRouter.go('/');
+      }
     });
   });
 });

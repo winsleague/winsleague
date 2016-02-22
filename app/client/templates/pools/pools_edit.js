@@ -4,11 +4,12 @@ Template.poolsEdit.helpers({
   poolDoc: () => Template.instance().getPoolDoc(),
 
   onRemoveSuccess: () => {
-    // check to see if doc exists because of https://github.com/yogiben/meteor-autoform-modals/issues/79
-    if (! Template.instance().getPoolDoc()) {
+    return () => {
+      log.debug('onRemoveSuccess called');
       $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
+      log.debug(`poolsEdit: onRemoveSuccess: redirect to /`);
       FlowRouter.go('/');
-    }
+    };
   },
 });
 
@@ -20,7 +21,10 @@ Template.poolsEdit.onCreated(function() {
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
-      if (Pools.find(this.getPoolId()).count() === 0) FlowRouter.go('/');
+      if (Pools.find(this.getPoolId()).count() === 0) {
+        log.warn('poolsEdit: Redirecting to / because Pools.count=0');
+        FlowRouter.go('/');
+      }
     });
   });
 });
@@ -29,7 +33,8 @@ Template.poolsEdit.onCreated(function() {
 AutoForm.hooks({
   updatePoolForm: {
     onSuccess: (formType, result) => {
-      FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('_id') });
+      log.debug(`redirect to poolsShow`, FlowRouter.getParam('_id'));
+      return FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('_id') });
     },
   },
 });
