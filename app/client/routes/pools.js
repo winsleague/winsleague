@@ -1,16 +1,12 @@
-const poolsRoutes = FlowRouter.group({
-  prefix: '/pools',
-});
-
 // http://app.com/pools
-poolsRoutes.route('/', {
+Routes.pools.route('/', {
   action() {
     log.debug("We're viewing a list of pools.");
   },
 });
 
 // http://app.com/pools/new
-poolsRoutes.route('/new', {
+Routes.pools.route('/new', {
   name: 'poolsNew',
   action() {
     BlazeLayout.render('masterLayout', { content: 'poolsNew' });
@@ -18,7 +14,7 @@ poolsRoutes.route('/new', {
 });
 
 // http://app.com/pools/:_id
-poolsRoutes.route('/:_id', {
+Routes.pools.route('/:_id', {
   name: 'poolsShow',
   action(params) {
     log.debug(`We're viewing a single document: ${params._id}`);
@@ -27,7 +23,7 @@ poolsRoutes.route('/:_id', {
 });
 
 // http://app.com/pools/:_id/edit
-poolsRoutes.route('/:_id/edit', {
+Routes.pools.route('/:_id/edit', {
   name: 'poolsEdit',
   action(params) {
     log.debug(`We're editing a single document: ${params._id}`);
@@ -36,7 +32,7 @@ poolsRoutes.route('/:_id/edit', {
 });
 
 // http://app.com/pools/:_id/seasons/:seasonId
-poolsRoutes.route('/:_id/seasons/:seasonId', {
+Routes.pools.route('/:_id/seasons/:seasonId', {
   name: 'poolsShowSeason',
   action(params) {
     log.debug(`We're viewing a single document: ${params._id} with season ${params.seasonId}`);
@@ -45,7 +41,7 @@ poolsRoutes.route('/:_id/seasons/:seasonId', {
 });
 
 // http://app.com/pools/:_id/records
-poolsRoutes.route('/:_id/records', {
+Routes.pools.route('/:_id/records', {
   name: 'poolsRecords',
   action(params) {
     log.debug(`We're viewing records for a single pool: ${params._id}`);
@@ -53,20 +49,3 @@ poolsRoutes.route('/:_id/records', {
   },
 });
 
-// http://app.com/pools/:poolId/teams/new
-poolsRoutes.route('/:poolId/teams/new', {
-  name: 'poolTeamsNew',
-  action(params) {
-    log.debug(`We're creating teams for a pool: ${params.poolId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolTeamsNew' });
-  },
-});
-
-// http://app.com/pools/:poolId/teams/:poolTeamId/edit
-poolsRoutes.route('/:poolId/teams/:poolTeamId/edit', {
-  name: 'poolTeamsEdit',
-  action(params) {
-    log.debug(`We're editing a pool team: ${params.poolId} and ${params.poolTeamId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolTeamsEdit' });
-  },
-});
