@@ -14,7 +14,7 @@ Template.poolsEdit.helpers({
 });
 
 Template.poolsEdit.onCreated(function() {
-  this.getPoolId = () => FlowRouter.getParam('_id');
+  this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPoolDoc = () => Pools.findOne(this.getPoolId());
 
@@ -33,8 +33,8 @@ Template.poolsEdit.onCreated(function() {
 AutoForm.hooks({
   updatePoolForm: {
     onSuccess: (formType, result) => {
-      log.debug(`redirect to poolsShow`, FlowRouter.getParam('_id'));
-      return FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('_id') });
+      log.debug(`redirect to poolsShow`, FlowRouter.getParam('poolId'));
+      return FlowRouter.go('poolsShow', { poolId: FlowRouter.getParam('poolId') });
     },
   },
 });

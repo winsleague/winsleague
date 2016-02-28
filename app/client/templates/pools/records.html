@@ -84,6 +84,24 @@
           tableId="pool_teams_worst_plus_minus_season"
         }}
 
+        {{> poolsRecordsPoolTeamPicksMostSeason
+          poolId=poolId
+          recordTitle="Best Pick Quality, Season"
+          metricTitle="Quality"
+          metricField="pickQuality"
+          sort=-1
+          tableId="pool_team_picks_best_pick_quality_season"
+        }}
+
+        {{> poolsRecordsPoolTeamPicksMostSeason
+          poolId=poolId
+          recordTitle="Worst Pick Quality, Season"
+          metricTitle="Quality"
+          metricField="pickQuality"
+          sort=1
+          tableId="pool_team_picks_worst_pick_quality_season"
+        }}
+
       </div>
     </div>
 

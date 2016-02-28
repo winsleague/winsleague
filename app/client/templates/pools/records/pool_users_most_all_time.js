@@ -1,12 +1,9 @@
 Template.poolsRecordsPoolUsersMostAllTime.helpers({
-  poolId: () => Template.instance().getPoolId(),
-
   poolUsers: () => {
     const collection = Modules.collectionCache.getCollection(Template.currentData().collectionName);
     const sort = Template.currentData().sort;
     return collection.find({}, { sort: { metric: sort }, limit: 3 });
   },
-
 });
 
 Template.poolsRecordsPoolUsersMostAllTime.onCreated(function() {
@@ -17,11 +14,9 @@ Template.poolsRecordsPoolUsersMostAllTime.onCreated(function() {
     metricField: { type: String },
     sort: { type: Number, allowedValues: [1, -1] },
     collectionName: { type: String },
-  }).validate(Template.currentData());
-
-  this.getPoolId = () => this.data.poolId;
+  }).validate(this.data);
 
   this.autorun(() => {
-    this.subscribe('poolUsersMostAllTime.ofPool', this.getPoolId(), Template.currentData().metricField, Template.currentData().collectionName);
+    this.subscribe('poolUsersMostAllTime.ofPool', this.data.poolId, this.data.metricField, this.data.collectionName);
   });
 });

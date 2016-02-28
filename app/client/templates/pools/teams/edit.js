@@ -1,12 +1,14 @@
 Template.poolTeamsEdit.helpers({
   poolId: () => Template.instance().getPoolId(),
 
+  poolTeamId: () => Template.instance().getPoolTeamId(),
+
   poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
 
   onRemoveSuccess: () => {
     return () => {
       $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
-      FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('poolId') });
+      FlowRouter.go('poolsShow', { poolId: FlowRouter.getParam('poolId') });
     };
   },
 });
@@ -38,7 +40,7 @@ Template.poolTeamsEdit.onCreated(function() {
       log.debug(`poolTeams.single subscription ready`);
       if (PoolTeams.find({ poolId: this.getPoolId() }).count() === 0) {
         log.warn('poolTeamsEdit: Redirecting to poolsShow because PoolTeams.count=0');
-        FlowRouter.go('poolsShow', { _id: this.getPoolId() });
+        FlowRouter.go('poolsShow', { poolId: this.getPoolId() });
       }
     });
   });
@@ -48,8 +50,11 @@ Template.poolTeamsEdit.onCreated(function() {
 AutoForm.hooks({
   updatePoolTeamForm: {
     onSuccess: (formType, result) => {
-      log.debug(`updatePoolTeamForm.onSuccess() ==> redirect to poolsShow/`, FlowRouter.getParam('poolId'));
-      FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('poolId') });
+      log.debug(`updatePoolTeamForm.onSuccess() ==> redirect to poolTeamsShow/`, FlowRouter.getParam('poolId'));
+      FlowRouter.go('poolTeamsShow', {
+        poolId: FlowRouter.getParam('poolId'),
+        poolTeamId: FlowRouter.getParam('poolTeamId'),
+      });
     },
   },
 });

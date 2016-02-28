@@ -3,7 +3,7 @@ Migrations.add({
   name: 'Adds totalLosses field to PoolTeams and populates it',
   up: () => {
     PoolTeams.find().forEach(poolTeam => {
-      Modules.server.poolTeams.refreshPoolTeam(poolTeam);
+      Modules.server.poolTeams.updatePoolTeamWins(poolTeam);
     });
   },
   down: () => {

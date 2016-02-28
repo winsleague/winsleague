@@ -1,18 +1,16 @@
 Template.seasonSwitcher.helpers({
-  poolId: () => Template.instance().getPoolId(),
-
   seasons: () => Seasons.find({}, { sort: { year: -1 } }),
 
   isMultipleSeasons: () => Seasons.find().count() > 1,
 });
 
 Template.seasonSwitcher.onCreated(function() {
-  this.getPoolId = () => FlowRouter.getParam('_id');
-
-  this.getSeasonId = () => FlowRouter.getParam('seasonId');
+  new SimpleSchema({
+    poolId: { type: String },
+  }).validate(this.data);
 
   this.autorun(() => {
-    this.subscribe('seasons.ofPool', this.getPoolId(), () => {
+    this.subscribe('seasons.ofPool', this.data.poolId, () => {
       log.debug(`seasons.of_pool subscription ready: ${Seasons.find().count()}`);
     });
   });

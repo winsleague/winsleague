@@ -130,7 +130,7 @@ stevezhu:lodash@3.10.1
 stylus@2.511.1
 templating@1.1.5
 templating-tools@1.0.0
-testing@0.0.0
+testing@0.1.0
 tracker@1.0.9
 tunifight:loggedin-mixin@0.0.9
 twbs:bootstrap@3.3.6

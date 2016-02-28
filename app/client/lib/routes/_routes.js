@@ -1,3 +1,5 @@
+Routes = {};
+
 FlowRouter.route('/', {
   action() {
     BlazeLayout.render('masterLayout', { content: 'home' });

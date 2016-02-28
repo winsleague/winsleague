@@ -3,18 +3,9 @@ Template.poolsShow.helpers({
 
   seasonId: () => Template.instance().getSeasonId(),
 
-  poolTeams: () => {
-    const poolId = Template.instance().getPoolId();
-    return PoolTeams.find({ poolId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
-  },
+  leagueId: () => Template.instance().getLeagueId(),
 
   isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(), 'commissionerUserId'),
-
-  editAllowed: (poolTeam) => {
-    const pool = Pools.findOne(poolTeam.poolId);
-    return (Meteor.userId() === poolTeam.userId ||
-      Meteor.userId() === _.get(pool, 'commissionerUserId'));
-  },
 
   isLatestSeason: () => {
     if (Template.instance().getSeasonId()) {
@@ -27,7 +18,7 @@ Template.poolsShow.helpers({
 });
 
 Template.poolsShow.onCreated(function() {
-  this.getPoolId = () => FlowRouter.getParam('_id');
+  this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPool = () => Pools.findOne(this.getPoolId());
 
@@ -47,10 +38,6 @@ Template.poolsShow.onCreated(function() {
         log.warn('poolsShow: Redirecting to / because Pools.count=0');
         FlowRouter.go('/');
       }
-    });
-
-    this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId(), () => {
-      log.debug(`poolTeams.of_pool subscription ready: ${PoolTeams.find().count()}`);
     });
 
     this.subscribe('seasons.single', this.getSeasonId());

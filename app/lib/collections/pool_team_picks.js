@@ -1,12 +1,12 @@
-PoolTeams = new Mongo.Collection('pool_teams');
+PoolTeamPicks = new Mongo.Collection('pool_team_picks');
 
-PoolTeams.schema = new SimpleSchema({
+PoolTeamPicks.schema = new SimpleSchema({
   leagueId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
       if (this.isInsert) {
-        return Pools.findOne(this.field('poolId').value).leagueId;
+        return PoolTeams.findOne(this.field('poolTeamId').value).leagueId;
       }
     },
   },
@@ -15,15 +15,7 @@ PoolTeams.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
       if (this.isInsert && ! this.isSet) {
-        // select latest season for league
-        const leagueIdField = this.field('leagueId');
-        if (leagueIdField.isSet) {
-          const leagueId = leagueIdField.value;
-          const latestSeason = Modules.seasons.getLatestByLeagueId(leagueId);
-          if (latestSeason) return latestSeason._id;
-          throw new Error(`No season found for leagueId ${leagueId}`);
-        }
-        this.unset();
+        return PoolTeams.findOne(this.field('poolTeamId').value).seasonId;
       }
     },
   },
@@ -44,33 +36,55 @@ PoolTeams.schema = new SimpleSchema({
   poolId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        return PoolTeams.findOne(this.field('poolTeamId').value).poolId;
+      }
+    },
   },
-  userId: {
+  poolTeamId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
-  userTeamName: {
-    label: 'Team name',
+  leagueTeamId: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    label: 'Drafted team',
+    autoform: {
+      afFieldInput: {
+        options() {
+          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => {
+            return { label: leagueTeam.fullName(), value: leagueTeam._id };
+          });
+        },
+      },
+    },
   },
-  teamSummary: {
-    type: String,
-    defaultValue: '',
+  pickNumber: {
+    type: Number,
+    label: 'Pick number',
+    autoform: {
+      afFieldInput: {
+        options() {
+          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
+            return { label: number, value: number };
+          });
+        },
+      },
+    },
   },
-  totalWins: {
+  actualWins: {
     type: Number,
     defaultValue: 0,
   },
-  totalLosses: {
+  expectedWins: {
     type: Number,
+    decimal: true,
     defaultValue: 0,
   },
-  totalGames: {
+  pickQuality: {
     type: Number,
-    defaultValue: 0,
-  },
-  totalPlusMinus: {
-    type: Number,
+    decimal: true,
     defaultValue: 0,
   },
   createdAt: {
@@ -99,46 +113,35 @@ PoolTeams.schema = new SimpleSchema({
     optional: true,
   },
 });
-PoolTeams.attachSchema(PoolTeams.schema);
-
-PoolTeams.formSchema = new SimpleSchema({
-  poolId: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  userTeamName: {
-    label: 'Team name',
-    type: String
-  },
-  userEmail: {
-    label: 'Email',
-    type: String,
-    regEx: SimpleSchema.RegEx.Email
-  },
-});
+PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
 
 
 /* Access control */
+function isPoolTeamOwner(userId, poolTeamId) {
+  const poolTeam = PoolTeams.findOne(poolTeamId);
+  return userId === poolTeam.userId;
+}
+
+function isCommissioner(userId, poolId) {
+  const pool = Pools.findOne(poolId);
+  return userId === pool.commissionerUserId;
+}
+
 if (Meteor.isServer) {
-  PoolTeams.allow({
+  PoolTeamPicks.allow({
     insert(userId, doc) {
-      return false;
+      return isPoolTeamOwner(userId, doc.poolTeamId) ||
+        isCommissioner(userId, doc.poolId);
     },
 
     update(userId, doc, fieldNames, modifier) {
-      // verify userId either owns PoolTeam or is commissioner of pool
-      const poolId = doc.poolId;
-      const pool = Pools.findOne(poolId);
-      return (userId === doc.userId ||
-        userId === pool.commissionerUserId);
+      return isPoolTeamOwner(userId, doc.poolTeamId) ||
+        isCommissioner(userId, doc.poolId);
     },
 
     remove(userId, doc) {
-      // verify userId either owns PoolTeam or is commissioner of pool
-      const poolId = doc.poolId;
-      const pool = Pools.findOne(poolId);
-      return (userId === doc.userId ||
-      userId === pool.commissionerUserId);
+      return isPoolTeamOwner(userId, doc.poolTeamId) ||
+        isCommissioner(userId, doc.poolId);
     },
   });
 }

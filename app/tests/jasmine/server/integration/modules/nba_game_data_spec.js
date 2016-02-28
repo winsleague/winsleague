@@ -975,11 +975,6 @@ streak_total: 9
     Modules.server.nbaGameData.ingestSeasonData();
   });
 
-  afterEach(() => {
-    log.info(`Cleaned up ${Games.remove({})} Games`);
-    log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
-  });
-
   describe('Ingest Standings Data', () => {
     it('should ingest standings', () => {
       const league = Modules.leagues.getByName('NBA');

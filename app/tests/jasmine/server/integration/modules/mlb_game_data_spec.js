@@ -20,11 +20,6 @@ describe('MLB Game Data', () => {
     Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
   });
 
-  afterEach(() => {
-    log.info(`Cleaned up ${Games.remove({})} Games`);
-    log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
-  });
-
   describe('Ingest Day Data', () => {
     it('should ingest all games for on June 15, 2016', () => {
       const game = Games.findOne({ gameId: '2016_06_15_lanmlb_arimlb_1' });

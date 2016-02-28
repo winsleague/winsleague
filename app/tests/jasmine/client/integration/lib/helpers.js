@@ -77,6 +77,16 @@ createOldPoolTeam = (done) => {
   log.debug(`called createOldPoolTeam`);
 };
 
+createDefaultPoolTeamPick = (done) => {
+  Meteor.call(
+    'fixtures/poolTeamPicks/createDefault',
+    createMethodResultHandler(done, (error, poolTeamPick) => {
+      this.poolTeamPick = poolTeamPick;
+    })
+  );
+  log.debug(`called createDefaultPoolTeam`);
+};
+
 createDefaultSeasonLeagueTeam = (done) => {
   Meteor.call(
     'fixtures/seasonLeagueTeams/createDefault',

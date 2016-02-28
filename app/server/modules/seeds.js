@@ -18,7 +18,7 @@ Modules.server.seeds = {
       { cityName: 'Pittsburgh', mascotName: 'Steelers', abbreviation: 'PIT', conference: 'AFC', division: 'North' },
       { cityName: 'Houston', mascotName: 'Texans', abbreviation: 'HOU', conference: 'AFC', division: 'South' },
       { cityName: 'Indianapolis', mascotName: 'Colts', abbreviation: 'IND', conference: 'AFC', division: 'South' },
-      { cityName: 'Jacksonville', mascotName: 'Janguars', abbreviation: 'JAC', conference: 'AFC', division: 'South' },
+      { cityName: 'Jacksonville', mascotName: 'Jaguars', abbreviation: 'JAC', conference: 'AFC', division: 'South' },
       { cityName: 'Tennessee', mascotName: 'Titans', abbreviation: 'TEN', conference: 'AFC', division: 'South' },
       { cityName: 'Buffalo', mascotName: 'Bills', abbreviation: 'BUF', conference: 'AFC', division: 'East' },
       { cityName: 'Miami', mascotName: 'Dolphins', abbreviation: 'MIA', conference: 'AFC', division: 'East' },
@@ -57,6 +57,49 @@ Modules.server.seeds = {
     Seasons.insert({ leagueId, year: 2015,
       startDate: moment('2015-09-10').toDate(),
       endDate: moment('2016-01-03').toDate(),
+    });
+
+    Modules.server.seeds.insertNflExpectedWins();
+  },
+
+  insertNflExpectedWins() {
+    const leagueId = Modules.leagues.getByName('NFL')._id;
+    const expectedWins = [
+      13.77,
+      12.85,
+      12.46,
+      12.08,
+      11.54,
+      11.00,
+      10.62,
+      10.38,
+      10.23,
+      9.77,
+      9.54,
+      9.38,
+      9.08,
+      8.62,
+      8.38,
+      8.31,
+      7.85,
+      7.62,
+      7.38,
+      7.08,
+      6.77,
+      6.69,
+      6.31,
+      6.00,
+      5.54,
+      5.08,
+      4.62,
+      4.38,
+      4.00,
+      3.62,
+      2.85,
+      1.85,
+    ];
+    expectedWins.forEach((element, index) => {
+      LeaguePickExpectedWins.insert({ leagueId, rank: index + 1, wins: element });
     });
   },
 
