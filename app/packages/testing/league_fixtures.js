@@ -10,6 +10,44 @@ function createDefaultLeagues() {
     endDate: moment('2016-01-03').toDate(),
   });
 
+  const expectedWins = [
+    13.77,
+    12.85,
+    12.46,
+    12.08,
+    11.54,
+    11.00,
+    10.62,
+    10.38,
+    10.23,
+    9.77,
+    9.54,
+    9.38,
+    9.08,
+    8.62,
+    8.38,
+    8.31,
+    7.85,
+    7.62,
+    7.38,
+    7.08,
+    6.77,
+    6.69,
+    6.31,
+    6.00,
+    5.54,
+    5.08,
+    4.62,
+    4.38,
+    4.00,
+    3.62,
+    2.85,
+    1.85,
+  ];
+  expectedWins.forEach((element, index) => {
+    LeaguePickExpectedWins.insert({ leagueId, rank: index + 1, wins: element });
+  });
+
   leagueId = Leagues.insert({ name: 'NBA' });
   log.debug(`Created NBA league: ${leagueId}`);
   LeagueTeams.insert({ leagueId, cityName: 'New York', mascotName: 'Knicks',
