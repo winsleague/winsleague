@@ -22,7 +22,7 @@ Template.poolsNew.onCreated(function() {
 AutoForm.hooks({
   insertPoolForm: {
     onSuccess: (formType, poolId) => {
-      FlowRouter.go('poolsShow', { _id: poolId });
+      FlowRouter.go('poolsShow', { poolId });
     },
   },
 });

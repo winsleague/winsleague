@@ -7,7 +7,7 @@ Template.seasonSwitcher.helpers({
 });
 
 Template.seasonSwitcher.onCreated(function() {
-  this.getPoolId = () => FlowRouter.getParam('_id');
+  this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getSeasonId = () => FlowRouter.getParam('seasonId');
 

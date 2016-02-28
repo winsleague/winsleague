@@ -34,7 +34,7 @@ AutoForm.hooks({
   updatePoolForm: {
     onSuccess: (formType, result) => {
       log.debug(`redirect to poolsShow`, FlowRouter.getParam('poolId'));
-      return FlowRouter.go('poolsShow', { _id: FlowRouter.getParam('poolId') });
+      return FlowRouter.go('poolsShow', { poolId: FlowRouter.getParam('poolId') });
     },
   },
 });
