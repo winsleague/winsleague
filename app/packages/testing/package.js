@@ -22,6 +22,7 @@ Package.onUse(function (api) {
     'league_fixtures.js',
     'pool_fixtures.js',
     'pool_team_fixtures.js',
+    'pool_team_pick_fixtures.js',
     'reset.js',
     'season_fixtures.js',
     'season_league_team_fixtures.js',
