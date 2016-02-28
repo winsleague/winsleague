@@ -12,6 +12,7 @@ Modules.server.poolTeamPicks = {
       rank: poolTeamPick.pickNumber,
     }).wins;
 
+    // TODO: expectedWins should account for how many games have been played
     const pickQuality = actualWins - expectedWins;
 
     log.info(`Updating PoolTeamPick:`, poolTeamPick, actualWins, expectedWins, pickQuality);
