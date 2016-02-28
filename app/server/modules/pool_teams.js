@@ -1,30 +1,28 @@
-let prettyjson = Meteor.npmRequire('prettyjson');
-
 Modules.server.poolTeams = {
-  updateWhoPickedLeagueTeam(leagueId, seasonId, leagueTeamId) {
+  updateWhoPickedLeagueTeam(leagueTeamId) {
     log.info(`Finding PoolTeams who picked leagueTeamId: ${leagueTeamId}`);
 
-    const poolTeams = PoolTeams.find({ leagueId, seasonId, leagueTeamIds: leagueTeamId });
-    poolTeams.forEach(poolTeam => {
-      Modules.server.poolTeams.updatePoolTeamWins(poolTeam);
-      Modules.server.poolTeams.updatePoolTeamPickQuality(poolTeam);
+    const poolTeamPicks = PoolTeamPicks.find({ leagueTeamId });
+    poolTeamPicks.forEach(poolTeamPick => {
+      Modules.server.poolTeams.updatePoolTeamWins(poolTeamPick.poolTeamId);
+      Modules.server.poolTeams.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
     log.debug(`Done finding PoolTeams who picked leagueTeamId`);
   },
 
-  updatePoolTeamWins(poolTeam) {
-    log.info(`Updating PoolTeam wins`, poolTeam);
+  updatePoolTeamWins(poolTeamId) {
+    log.info(`Updating PoolTeam wins`, poolTeamId);
 
-    const seasonId = poolTeam.seasonId;
     let totalWins = 0;
     let totalLosses = 0;
     let totalGames = 0;
     let totalPlusMinus = 0;
 
-    const picks = PoolTeamPicks.find({ poolTeamId: poolTeam._id });
+    const picks = PoolTeamPicks.find({ poolTeamId });
 
     picks.forEach(poolTeamPick => {
+      const seasonId = poolTeamPick.seasonId;
       const leagueTeamId = poolTeamPick.leagueTeamId;
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
       log.debug(`Found seasonLeagueTeam`, seasonLeagueTeam);
@@ -38,35 +36,38 @@ Modules.server.poolTeams = {
 
     // .direct is needed to avoid an infinite recursion loop
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
-    const numberAffected = PoolTeams.direct.update(poolTeam._id,
+    const numberAffected = PoolTeams.direct.update(poolTeamId,
       { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
-    log.debug(`PoolTeams.update ${poolTeam._id} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
   },
 
-  updatePoolTeamPickQuality(poolTeam) {
-    PoolTeamPicks.find({ poolTeamId: poolTeam._id }).forEach(poolTeamPick => {
+  updatePoolTeamPickQuality(poolTeamId) {
+    PoolTeamPicks.find({ poolTeamId }).forEach(poolTeamPick => {
       Modules.server.poolTeamPicks.updatePickQuality(poolTeamPick);
     });
   },
 
-  updatePicks(poolTeam) {
-    log.info(`Updating picks for PoolTeam:`, poolTeam);
+  updateTeamSummary(poolTeamId) {
+    log.info(`Updating team summary for PoolTeam:`, poolTeamId);
 
-    const picks = PoolTeamPicks.find({ poolTeamId: poolTeam._id }, { sort: { pickNumber: 1 } });
-    const leagueTeamIds = [];
-    const pickNumbers = [];
+    let teamSummary = '';
+    const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
     picks.forEach(poolTeamPick => {
-      leagueTeamIds.push(poolTeamPick.leagueTeamId);
-      pickNumbers.push(poolTeamPick.pickNumber);
+      const leagueTeam = LeagueTeams.findOne(poolTeamPick.leagueTeamId);
+      teamSummary += `${leagueTeam.abbreviation} #${poolTeamPick.pickNumber}, `;
     });
+    if (teamSummary.length > 0) {
+      teamSummary = teamSummary.substr(0, teamSummary.length - 2);
+    } else {
+      teamSummary = 'No teams drafted!';
+    }
 
-    const numberAffected = PoolTeams.direct.update(poolTeam._id,
+    const numberAffected = PoolTeams.direct.update(poolTeamId,
       {
         $set: {
-          leagueTeamIds,
-          pickNumbers,
+          teamSummary,
         },
       });
-    log.debug(`PoolTeams.update ${poolTeam._id} with leagueTeamIds: ${leagueTeamIds}, pickNumbers: ${pickNumbers}, numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, numberAffected: ${numberAffected}`);
   },
 };

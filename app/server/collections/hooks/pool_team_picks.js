@@ -4,10 +4,9 @@
 PoolTeamPicks.hookOptions.after.update = { fetchPrevious: false };
 
 function updatePoolTeam(doc) {
-  const poolTeam = PoolTeams.findOne(doc.poolTeamId);
-  Modules.server.poolTeams.updatePicks(poolTeam);
-  Modules.server.poolTeams.updatePoolTeamWins(poolTeam);
-  Modules.server.poolTeams.updatePoolTeamPickQuality(poolTeam);
+  Modules.server.poolTeams.updateTeamSummary(doc.poolTeamId);
+  Modules.server.poolTeams.updatePoolTeamWins(doc.poolTeamId);
+  Modules.server.poolTeams.updatePoolTeamPickQuality(doc.poolTeamId);
 }
 
 PoolTeamPicks.after.insert((userId, doc) => {

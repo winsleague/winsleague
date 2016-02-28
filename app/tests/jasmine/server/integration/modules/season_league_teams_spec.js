@@ -1,5 +1,5 @@
 describe('Season League Teams', () => {
-  describe('Refresh Team Stats', () => {
+  describe('Update Team Stats', () => {
     it('should add up the wins and losses for all completed games', () => {
       const league = Modules.leagues.getByName('NFL');
       const season = Modules.seasons.getByYear(league, 2015);

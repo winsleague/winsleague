@@ -53,34 +53,26 @@ PoolTeams.schema = new SimpleSchema({
     label: 'Team name',
     type: String,
   },
-  leagueTeamIds: {
-    label: 'Drafted teams',
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    defaultValue: [],
+  teamSummary: {
+    type: String,
+    defaultValue: '',
   },
-  pickNumbers: {
-    type: [Number],
-    label: 'Draft pick numbers',
-    defaultValue: [],
+  totalWins: {
+    type: Number,
+    defaultValue: 0,
   },
-  leagueTeamMascotNames: {
-    type: [String],
-    autoValue() {
-      if (this.field('leagueTeamIds').isSet) {
-        const mascots = [];
-        for (const leagueTeamId of this.field('leagueTeamIds').value) {
-          const leagueTeam = LeagueTeams.findOne(leagueTeamId);
-          mascots.push(leagueTeam.abbreviation);
-        }
-        return mascots;
-      }
-    },
+  totalLosses: {
+    type: Number,
+    defaultValue: 0,
   },
-  totalWins: { type: Number, defaultValue: 0 },
-  totalLosses: { type: Number, defaultValue: 0 },
-  totalGames: { type: Number, defaultValue: 0 },
-  totalPlusMinus: { type: Number, defaultValue: 0 },
+  totalGames: {
+    type: Number,
+    defaultValue: 0,
+  },
+  totalPlusMinus: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -122,19 +114,6 @@ PoolTeams.formSchema = new SimpleSchema({
     label: 'Email',
     type: String,
     regEx: SimpleSchema.RegEx.Email
-  },
-});
-
-
-/* Helpers */
-PoolTeams.helpers({
-  teamSummary() {
-    let string = '';
-    for (let i = 0; i < this.leagueTeamMascotNames.length; i++) {
-      string += `${this.leagueTeamMascotNames[i]} #${this.pickNumbers[i]}, `;
-    }
-    if (string.length > 0) string = string.substr(0, string.length - 2);
-    return string;
   },
 });
 

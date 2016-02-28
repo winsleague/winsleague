@@ -4,11 +4,11 @@
 SeasonLeagueTeams.hookOptions.after.update = { fetchPrevious: false };
 
 SeasonLeagueTeams.after.insert(function (userId, doc) {
-  Modules.server.poolTeams.updateWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
+  Modules.server.poolTeams.updateWhoPickedLeagueTeam(doc.leagueTeamId);
 });
 
 SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
-  Modules.server.poolTeams.updateWhoPickedLeagueTeam(doc.leagueId, doc.seasonId, doc.leagueTeamId);
+  Modules.server.poolTeams.updateWhoPickedLeagueTeam(doc.leagueTeamId);
 });
 
 
