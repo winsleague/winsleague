@@ -2,20 +2,20 @@ let prettyjson = Meteor.npmRequire('prettyjson');
 
 Modules.server.seasonLeagueTeams = {
   refreshTeamStats(leagueId, seasonId, leagueTeamId) {
-    if (typeof leagueId === 'undefined') { throw new Error("Undefined leagueId!"); }
-    if (typeof seasonId === 'undefined') { throw new Error("Undefined seasonId!"); }
-    if (typeof leagueTeamId === 'undefined') { throw new Error("Undefined leagueTeamId!"); }
+    if (typeof leagueId === 'undefined') { throw new Error('Undefined leagueId!'); }
+    if (typeof seasonId === 'undefined') { throw new Error('Undefined seasonId!'); }
+    if (typeof leagueTeamId === 'undefined') { throw new Error('Undefined leagueTeamId!'); }
 
     log.info(`Refreshing stats for seasonLeagueTeam: ${leagueTeamId}`);
 
     const games = Games.find({ leagueId, seasonId, status: "completed",
-      $or: [{ homeTeamId: leagueTeamId },{ awayTeamId: leagueTeamId }] });
-    var wins = 0, losses = 0, ties = 0,
+      $or: [{ homeTeamId: leagueTeamId }, { awayTeamId: leagueTeamId }] });
+    let wins = 0, losses = 0, ties = 0,
       homeWins = 0, homeLosses = 0, homeTies = 0,
       awayWins = 0, awayLosses = 0, awayTies = 0,
       pointsFor = 0, pointsAgainst = 0;
-    games.forEach(function(game) {
-      if (game.homeTeamId == leagueTeamId) {
+    games.forEach((game) => {
+      if (game.homeTeamId === leagueTeamId) {
         if (game.homeScore > game.awayScore) {
           wins += 1;
           homeWins += 1;
@@ -28,7 +28,7 @@ Modules.server.seasonLeagueTeams = {
         }
         pointsFor += game.homeScore;
         pointsAgainst += game.awayScore;
-      } else if (game.awayTeamId == leagueTeamId) {
+      } else if (game.awayTeamId === leagueTeamId) {
         if (game.awayScore > game.homeScore) {
           wins += 1;
           awayWins += 1;
@@ -44,13 +44,13 @@ Modules.server.seasonLeagueTeams = {
       }
     });
 
-    result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId },
+    const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId },
       { $set: {
         wins, losses, ties,
         homeWins, homeLosses, homeTies,
         awayWins, awayLosses, awayTies,
-        pointsFor, pointsAgainst
-      } } );
+        pointsFor, pointsAgainst,
+      } });
     log.debug(`seasonLeagueTeams.upsert numberAffected: ${result.numberAffected}`);
-  }
+  },
 };

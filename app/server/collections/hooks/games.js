@@ -12,5 +12,3 @@ Games.after.update((userId, doc, fieldNames, modifier, options) => {
   Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
   Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 });
-
-
