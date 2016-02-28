@@ -20,12 +20,10 @@ describe('poolTeamPicksEdit page', () => {
   spec = it('should edit a pool team pick', done => {
     log.info(`spec: `, spec.description);
 
-    let leagueTeamId;
-
     waitForSubscription(PoolTeamPicks.find(), function() {
       // change to second team
       $(page.getLeagueTeamSelector()).find('option:eq(2)').prop('selected', true);
-      leagueTeamId = LeagueTeams.findOne({}, { sort: ['cityName', 'asc'], skip: 1 })._id;
+      const leagueTeamId = LeagueTeams.findOne({}, { sort: ['cityName', 'asc'], skip: 1 })._id;
       log.info(`expecting leagueTeamId: ${leagueTeamId}`);
 
       // change to pick number #2

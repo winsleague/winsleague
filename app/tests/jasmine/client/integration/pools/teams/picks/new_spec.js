@@ -11,11 +11,9 @@ describe('poolTeamPicksNew page', () => {
   beforeEach(goToPoolTeamPicksNewPage);
 
   it('should create new pool team pick', done => {
-    let leagueTeamId;
-
     waitForSubscription(LeagueTeams.find(), function() {
       // choose first team
-      leagueTeamId = LeagueTeams.findOne()._id;
+      const leagueTeamId = LeagueTeams.findOne()._id;
       $(page.getLeagueTeamSelector()).find('option:eq(1)').prop('selected', true);
 
       // change to pick number #2
