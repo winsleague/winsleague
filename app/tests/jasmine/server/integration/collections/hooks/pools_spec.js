@@ -1,5 +1,3 @@
-const prettyjson = Meteor.npmRequire('prettyjson');
-
 describe('Pool collection hooks', () => {
   it('should remove its PoolTeams when Pool is removed', () => {
     const user = Accounts.findUserByEmail('test@test.com');
