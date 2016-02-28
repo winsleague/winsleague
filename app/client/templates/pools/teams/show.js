@@ -42,9 +42,9 @@ Template.poolTeamsShow.onCreated(function() {
   this.getPoolTeamId = () => FlowRouter.getParam('poolTeamId');
   this.getPoolTeam = () => PoolTeams.findOne(this.getPoolTeamId());
 
-  this.getLeagueId = () => _.get(this.getPool(), 'leagueId');
+  this.getLeagueId = () => _.get(this.getPoolTeam(), 'leagueId');
 
-  this.getSeasonId = () => _.get(this.getPool(), 'seasonId');
+  this.getSeasonId = () => _.get(this.getPoolTeam(), 'seasonId');
 
   this.autorun(() => {
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
