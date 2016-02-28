@@ -1,26 +1,31 @@
-Template.poolTeamsEdit.helpers({
+Template.poolTeamPicksEdit.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   poolTeamId: () => Template.instance().getPoolTeamId(),
 
-  poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
+  poolTeamPickDoc: () => Template.instance().getPoolTeamPickDoc(),
 
   onRemoveSuccess: () => {
     return () => {
       $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
-      FlowRouter.go('poolsShow', { poolId: FlowRouter.getParam('poolId') });
+      FlowRouter.go('poolTeamsShow', {
+        poolId: FlowRouter.getParam('poolId'),
+        poolTeamId: FlowRouter.getParam('poolTeamId'),
+      });
     };
   },
 });
 
-Template.poolTeamsEdit.onCreated(function() {
+Template.poolTeamPicksEdit.onCreated(function() {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPoolTeamId = () => FlowRouter.getParam('poolTeamId');
 
+  this.getPoolTeamPickId = () => FlowRouter.getParam('poolTeamPickId');
+
   this.getLeagueId = () => Pools.findOne(this.getPoolId(), { fields: { leagueId: 1 } }).leagueId;
 
-  this.getPoolTeamDoc = () => PoolTeams.findOne(this.getPoolTeamId());
+  this.getPoolTeamPickDoc = () => PoolTeamPicks.findOne(this.getPoolTeamPickId());
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId(), () => {
@@ -36,21 +41,17 @@ Template.poolTeamsEdit.onCreated(function() {
       });
     });
 
-    this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
-      log.debug(`poolTeams.single subscription ready`);
-      if (PoolTeams.find({ poolId: this.getPoolId() }).count() === 0) {
-        log.warn('poolTeamsEdit: Redirecting to poolsShow because PoolTeams.count=0');
-        FlowRouter.go('poolsShow', { poolId: this.getPoolId() });
-      }
+    this.subscribe('poolTeamPicks.single', this.getPoolTeamPickId(), () => {
+      log.debug(`poolTeamPicks.single subscription ready`);
     });
   });
 });
 
 
 AutoForm.hooks({
-  updatePoolTeamForm: {
+  updatePoolTeamPickForm: {
     onSuccess: (formType, result) => {
-      log.debug(`updatePoolTeamForm.onSuccess() ==> redirect to poolTeamsShow/`, FlowRouter.getParam('poolId'));
+      log.debug(`updatePoolTeamPickForm.onSuccess() ==> redirect to poolTeamsShow/`, FlowRouter.getParam('poolTeamId'));
       FlowRouter.go('poolTeamsShow', {
         poolId: FlowRouter.getParam('poolId'),
         poolTeamId: FlowRouter.getParam('poolTeamId'),

@@ -21,6 +21,15 @@ Template.poolTeamsShow.helpers({
       Meteor.userId() === _.get(pool, 'commissionerUserId'));
   },
 
+  isLatestSeason: () => {
+    if (Template.instance().getSeasonId()) {
+      const latestSeason = Modules.seasons.getLatestByLeagueId(Template.instance().getLeagueId());
+      return _.get(latestSeason, '_id') === Template.instance().getSeasonId();
+    } else {
+      return true;
+    }
+  },
+
   leagueTeamName: (leagueTeamId) => {
     return LeagueTeams.findOne(leagueTeamId).fullName();
   },
