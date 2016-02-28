@@ -24,7 +24,9 @@
       sort=1
     }}
 
-    {{> seasonSwitcher}}
+    {{> seasonSwitcher
+      poolId=poolId
+    }}
 
     <a href="{{pathFor 'poolsRecords' poolId=poolId}}" id="records">Records</a><br/>
     <br/>
