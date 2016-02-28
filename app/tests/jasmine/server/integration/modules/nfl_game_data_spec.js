@@ -23,11 +23,6 @@ describe('NFL Game Data', () => {
     Modules.server.nflGameData.ingestWeekData(season, week);
   });
 
-  afterEach(() => {
-    log.info(`Cleaned up ${Games.remove({})} Games`);
-    log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
-  });
-
   describe('Ingest Week Data', () => {
     it('should ingest all games for week 17', () => {
       const game = Games.findOne({ gameId: '56744' });

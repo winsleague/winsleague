@@ -36,7 +36,7 @@ resetDatabase = () => {
             fut.return('fail: ' + e);
           }
           collectionsRemoved++;
-          log.info('Removed collection');
+          log.debug('Removed collection', e);
           if (appCollections.length === collectionsRemoved) {
             log.info('Finished resetting database');
             fut.return('success');
@@ -61,12 +61,10 @@ loadDefaultFixtures = () => {
   log.info('Finished loading default fixtures');
 };
 
-beforeAll(() => {
+beforeEach(() => {
   resetDatabase();
   loadDefaultFixtures();
-});
 
-beforeEach(() => {
   const user = Accounts.findUserByEmail('test@test.com');
   spyOn(Meteor, 'userId').and.returnValue(user._id);
 });
