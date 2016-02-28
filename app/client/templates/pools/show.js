@@ -3,6 +3,8 @@ Template.poolsShow.helpers({
 
   seasonId: () => Template.instance().getSeasonId(),
 
+  leagueId: () => Template.instance().getLeagueId(),
+
   isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(), 'commissionerUserId'),
 
   isLatestSeason: () => {

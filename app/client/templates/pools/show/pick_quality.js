@@ -1,11 +1,12 @@
 Template.poolsShowPickQuality.helpers({
   playerName: (poolTeamPick) => {
-    return _.get(Template.instance().getPoolTeam(poolTeamPick.poolTeamId), 'userTeamName');
+    const poolTeam = Template.instance().getPoolTeam(poolTeamPick.poolTeamId);
+    return _.get(poolTeam, 'userTeamName');
   },
 
   poolTeamPicks: () => {
-    const poolId = Template.instance().getPoolId();
-    const seasonId = Template.instance().getSeasonId();
+    const poolId = Template.currentData().poolId;
+    const seasonId = Template.currentData().seasonId;
     return PoolTeamPicks.find({ seasonId, poolId }, {
       sort: { pickQuality: Template.currentData().sort },
       limit: 5,
@@ -20,32 +21,21 @@ Template.poolsShowPickQuality.helpers({
 });
 
 Template.poolsShowPickQuality.onCreated(function() {
-  this.getPoolId = () => FlowRouter.getParam('poolId');
-
-  this.getPool = () => Pools.findOne(this.getPoolId());
-
-  this.getLeagueId = () => _.get(this.getPool(), 'leagueId');
-
-  this.getSeasonId = () => {
-    const seasonId = FlowRouter.getParam('seasonId');
-    if (seasonId) return seasonId;
-    const season = Modules.seasons.getLatestByLeagueId(this.getLeagueId());
-    return _.get(season, '_id');
-  };
+  new SimpleSchema({
+    leagueId: { type: String },
+    seasonId: { type: String },
+    poolId: { type: String },
+    tableTitle: { type: String },
+    sort: { type: Number }
+  }).validate(this.data);
 
   this.getPoolTeam = (poolTeamId) => PoolTeams.findOne(poolTeamId);
 
   this.autorun(() => {
-    this.subscribe('poolTeamPicks.ofPool', this.getPoolId(), this.getSeasonId());
+    this.subscribe('poolTeamPicks.ofPool', this.data.poolId, this.data.seasonId);
 
-    this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId());
+    this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId);
 
-    this.subscribe('pools.single', this.getPoolId(), () => {
-      this.subscribe('seasons.single', this.getSeasonId());
-
-      this.subscribe('seasons.latest.ofLeague', this.getLeagueId());
-
-      this.subscribe('leagueTeams.ofLeague', this.getLeagueId());
-    });
+    this.subscribe('leagueTeams.ofLeague', this.data.leagueId);
   });
 });

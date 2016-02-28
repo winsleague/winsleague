@@ -12,8 +12,8 @@ Template.poolsShowWins.helpers({
 
 Template.poolsShowWins.onCreated(function() {
   new SimpleSchema({
-    poolId: { type: String },
     seasonId: { type: String },
+    poolId: { type: String },
     isCommissioner: { type: Boolean },
   }).validate(this.data);
 
