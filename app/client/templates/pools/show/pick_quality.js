@@ -7,7 +7,7 @@ Template.poolsShowPickQuality.helpers({
     const poolId = Template.instance().getPoolId();
     const seasonId = Template.instance().getSeasonId();
     return PoolTeamPicks.find({ seasonId, poolId }, {
-      sort: { pickQuality: -1 },
+      sort: { pickQuality: Template.currentData().sort },
       limit: 5,
     });
   },

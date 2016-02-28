@@ -36,7 +36,15 @@
     </div>
     <br/>
 
-    {{> poolsShowPickQuality}}
+    {{> poolsShowPickQuality
+      tableTitle="Best Pick Quality"
+      sort=-1
+    }}
+
+    {{> poolsShowPickQuality
+      tableTitle="Worst Pick Quality"
+      sort=1
+    }}
 
     {{> seasonSwitcher}}
 
