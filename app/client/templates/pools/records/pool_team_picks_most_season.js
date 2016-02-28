@@ -18,7 +18,7 @@ Template.poolsRecordsPoolTeamPicksMostSeason.helpers({
   },
 
   leagueTeamName: (leagueTeamId) => {
-    return LeagueTeams.findOne(leagueTeamId).abbreviation;
+    return _.get(LeagueTeams.findOne(leagueTeamId), 'abbreviation');
   },
 
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(2),
