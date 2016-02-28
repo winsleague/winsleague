@@ -18,7 +18,7 @@ Modules.server.seeds = {
       { cityName: 'Pittsburgh', mascotName: 'Steelers', abbreviation: 'PIT', conference: 'AFC', division: 'North' },
       { cityName: 'Houston', mascotName: 'Texans', abbreviation: 'HOU', conference: 'AFC', division: 'South' },
       { cityName: 'Indianapolis', mascotName: 'Colts', abbreviation: 'IND', conference: 'AFC', division: 'South' },
-      { cityName: 'Jacksonville', mascotName: 'Janguars', abbreviation: 'JAC', conference: 'AFC', division: 'South' },
+      { cityName: 'Jacksonville', mascotName: 'Jaguars', abbreviation: 'JAC', conference: 'AFC', division: 'South' },
       { cityName: 'Tennessee', mascotName: 'Titans', abbreviation: 'TEN', conference: 'AFC', division: 'South' },
       { cityName: 'Buffalo', mascotName: 'Bills', abbreviation: 'BUF', conference: 'AFC', division: 'East' },
       { cityName: 'Miami', mascotName: 'Dolphins', abbreviation: 'MIA', conference: 'AFC', division: 'East' },
