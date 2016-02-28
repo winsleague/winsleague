@@ -14,28 +14,33 @@ Modules.server.poolTeams = {
   },
 
   updatePoolTeamWins(poolTeam) {
-    log.info(`Refreshing PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
+    log.info(`Updating PoolTeam wins`, poolTeam);
 
     const seasonId = poolTeam.seasonId;
     let totalWins = 0;
     let totalLosses = 0;
     let totalGames = 0;
     let totalPlusMinus = 0;
-    poolTeam.leagueTeamIds.forEach(leagueTeamId => {
-      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
-      if (seasonLeagueTeams) {
-        totalWins += seasonLeagueTeams.wins;
-        totalLosses += seasonLeagueTeams.losses;
-        totalGames += seasonLeagueTeams.totalGames();
-        totalPlusMinus += seasonLeagueTeams.pointsFor - seasonLeagueTeams.pointsAgainst;
+
+    const picks = PoolTeamPicks.find({ poolTeamId: poolTeam._id });
+
+    picks.forEach(poolTeamPick => {
+      const leagueTeamId = poolTeamPick.leagueTeamId;
+      const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
+      log.debug(`Found seasonLeagueTeam`, seasonLeagueTeam);
+      if (seasonLeagueTeam) {
+        totalWins += seasonLeagueTeam.wins;
+        totalLosses += seasonLeagueTeam.losses;
+        totalGames += seasonLeagueTeam.totalGames();
+        totalPlusMinus += seasonLeagueTeam.pointsFor - seasonLeagueTeam.pointsAgainst;
       }
     });
 
     // .direct is needed to avoid an infinite recursion loop
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
-    const numberAffected = PoolTeams.direct.update({ _id: poolTeam._id },
+    const numberAffected = PoolTeams.direct.update(poolTeam._id,
       { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
-    log.debug(`PoolTeams.update numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeam._id} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamPickQuality(poolTeam) {
@@ -55,14 +60,13 @@ Modules.server.poolTeams = {
       pickNumbers.push(poolTeamPick.pickNumber);
     });
 
-    log.debug(`Setting PoolTeam with leagueTeamIds`, leagueTeamIds);
-    log.debug(`Setting PoolTeam with pickNumbers`, pickNumbers);
-    PoolTeams.update(poolTeam._id,
+    const numberAffected = PoolTeams.direct.update(poolTeam._id,
       {
         $set: {
-          leagueTeamIds: leagueTeamIds,
-          pickNumbers: pickNumbers,
+          leagueTeamIds,
+          pickNumbers,
         },
       });
+    log.debug(`PoolTeams.update ${poolTeam._id} with leagueTeamIds: ${leagueTeamIds}, pickNumbers: ${pickNumbers}, numberAffected: ${numberAffected}`);
   },
 };
