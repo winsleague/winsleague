@@ -8,14 +8,11 @@ function createPoolTeam(poolTeam) {
 function createDefaultPoolTeam() {
   const leagueId = Leagues.findOne()._id;
   const poolId = Pools.findOne({ leagueId })._id;
-  const leagueTeamId = LeagueTeams.findOne({ leagueId })._id;
   const poolTeam = {
     leagueId,
     poolId,
     userTeamName: 'test',
     userId: getDefaultUserId(),
-    leagueTeamIds: [leagueTeamId],
-    pickNumbers: [1],
   };
 
   return createPoolTeam(poolTeam);
@@ -26,7 +23,6 @@ function createOldPoolTeam() {
   const seasonYear = 2014;
   const seasonId = Seasons.findOne({ leagueId, year: seasonYear })._id;
   const poolId = Pools.findOne({ leagueId })._id;
-  const leagueTeamId = LeagueTeams.findOne({ leagueId })._id;
   const poolTeam = {
     leagueId,
     seasonId,
@@ -34,8 +30,6 @@ function createOldPoolTeam() {
     poolId,
     userTeamName: 'old test',
     userId: getDefaultUserId(),
-    leagueTeamIds: [leagueTeamId],
-    pickNumbers: [1],
   };
 
   return createPoolTeam(poolTeam);

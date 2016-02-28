@@ -50,9 +50,9 @@ goToPoolsShowPage = done => {
   log.debug('goToPoolsShowPage called');
   waitForSubscription(Pools.find(), function () {
     const pool = Pools.findOne();
-    const _id = pool._id;
+    const poolId = pool._id;
 
-    return goToRoute('poolsShow', { _id })(done);
+    return goToRoute('poolsShow', { poolId })(done);
   });
 };
 
@@ -60,9 +60,9 @@ goToPoolsRecordsPage = done => {
   log.debug('goToPoolsRecordsPage called');
   waitForSubscription(Pools.find(), function () {
     const pool = Pools.findOne();
-    const _id = pool._id;
+    const poolId = pool._id;
 
-    return goToRoute('poolsRecords', { _id })(done);
+    return goToRoute('poolsRecords', { poolId })(done);
   });
 };
 
@@ -70,9 +70,9 @@ goToPoolsEditPage = done => {
   log.debug('goToPoolsEditPage called');
   waitForSubscription(Pools.find(), function () {
     const pool = Pools.findOne();
-    const _id = pool._id;
+    const poolId = pool._id;
 
-    return goToRoute('poolsEdit', { _id })(done);
+    return goToRoute('poolsEdit', { poolId })(done);
   });
 };
 
