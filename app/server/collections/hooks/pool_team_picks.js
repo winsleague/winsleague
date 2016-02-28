@@ -4,13 +4,16 @@
 PoolTeamPicks.hookOptions.after.update = { fetchPrevious: false };
 
 PoolTeamPicks.after.insert((userId, doc) => {
-  Modules.server.poolTeams.updatePicks(doc);
+  const poolTeam = PoolTeams.findOne(doc.poolTeamId);
+  Modules.server.poolTeams.updatePicks(poolTeam);
 });
 
 PoolTeamPicks.after.update((userId, doc, fieldNames, modifier, options) => {
-  Modules.server.poolTeams.updatePicks(doc);
+  const poolTeam = PoolTeams.findOne(doc.poolTeamId);
+  Modules.server.poolTeams.updatePicks(poolTeam);
 });
 
 PoolTeamPicks.after.remove((userId, doc) => {
-  Modules.server.poolTeams.updatePicks(doc);
+  const poolTeam = PoolTeams.findOne(doc.poolTeamId);
+  Modules.server.poolTeams.updatePicks(poolTeam);
 });

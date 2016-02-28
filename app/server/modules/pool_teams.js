@@ -38,7 +38,7 @@ Modules.server.poolTeams = {
   },
 
   updatePicks(poolTeam) {
-    log.info(`Updating picks for PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
+    log.info(`Updating picks for PoolTeam:`, poolTeam);
 
     const picks = PoolTeamPicks.find({ poolTeamId: poolTeam._id }, { sort: { pickNumber: 1 } });
     const leagueTeamIds = [];
