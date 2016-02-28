@@ -8,6 +8,9 @@ const page = {
   getMostLossesSeasonCellSelector: () => `table#pool_teams_most_losses_season tbody tr td.metric`,
   getBestPlusMinusSeasonCellSelector: () => `table#pool_teams_best_plus_minus_season tbody tr td.metric`,
   getWorstPlusMinusSeasonCellSelector: () => `table#pool_teams_worst_plus_minus_season tbody tr td.metric`,
+
+  getBestPickQualitySeasonCellSelector: () => `table#pool_team_picks_best_pick_quality_season tbody tr td.metric`,
+  getWorstPickQualitySeasonCellSelector: () => `table#pool_team_picks_worst_pick_quality_season tbody tr td.metric`,
 };
 
 describe('poolsRecord page', () => {
@@ -78,6 +81,22 @@ describe('poolsRecord page', () => {
     waitForElement(page.getWorstPlusMinusSeasonCellSelector(), function() {
       const plusMinus = $(page.getWorstPlusMinusSeasonCellSelector()).text();
       expect(plusMinus).toBe('3');
+      done();
+    });
+  });
+
+  it('should display the teams with the best pick quality in a single season', done => {
+    waitForElement(page.getBestPickQualitySeasonCellSelector(), function() {
+      const pickQuality = $(page.getBestPickQualitySeasonCellSelector()).text();
+      expect(pickQuality).toBe('-3.77');
+      done();
+    });
+  });
+
+  it('should display the teams with the worst pick quality in a single season', done => {
+    waitForElement(page.getWorstPickQualitySeasonCellSelector(), function() {
+      const pickQuality = $(page.getWorstPickQualitySeasonCellSelector()).text();
+      expect(pickQuality).toBe('-3.77');
       done();
     });
   });
