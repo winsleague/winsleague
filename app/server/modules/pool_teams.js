@@ -36,4 +36,26 @@ Modules.server.poolTeams = {
       { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
     log.debug(`PoolTeams.update numberAffected: ${numberAffected}`);
   },
+
+  updatePicks(poolTeam) {
+    log.info(`Updating picks for PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
+
+    const picks = PoolTeamPicks.find({ poolTeamId: poolTeam._id }, { sort: { pickNumber: 1 } });
+    const leagueTeamIds = [];
+    const pickNumbers = [];
+    picks.forEach(poolTeamPick => {
+      leagueTeamIds.push(poolTeamPick.leagueTeamId);
+      pickNumbers.push(poolTeamPick.pickNumber);
+    });
+
+    log.debug(`Setting PoolTeam with leagueTeamIds`, leagueTeamIds);
+    log.debug(`Setting PoolTeam with pickNumbers`, pickNumbers);
+    PoolTeams.update(poolTeam._id,
+      {
+        $set: {
+          leagueTeamIds: leagueTeamIds,
+          pickNumbers: pickNumbers,
+        },
+      });
+  },
 };
