@@ -4,11 +4,11 @@
 Games.hookOptions.after.update = { fetchPrevious: false };
 
 Games.after.insert((userId, doc) => {
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
+  Modules.server.seasonLeagueTeams.updateTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  Modules.server.seasonLeagueTeams.updateTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 });
 
 Games.after.update((userId, doc, fieldNames, modifier, options) => {
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
-  Modules.server.seasonLeagueTeams.refreshTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
+  Modules.server.seasonLeagueTeams.updateTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  Modules.server.seasonLeagueTeams.updateTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 });

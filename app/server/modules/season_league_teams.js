@@ -1,12 +1,12 @@
 let prettyjson = Meteor.npmRequire('prettyjson');
 
 Modules.server.seasonLeagueTeams = {
-  refreshTeamStats(leagueId, seasonId, leagueTeamId) {
+  updateTeamStats(leagueId, seasonId, leagueTeamId) {
     if (typeof leagueId === 'undefined') { throw new Error('Undefined leagueId!'); }
     if (typeof seasonId === 'undefined') { throw new Error('Undefined seasonId!'); }
     if (typeof leagueTeamId === 'undefined') { throw new Error('Undefined leagueTeamId!'); }
 
-    log.info(`Refreshing stats for seasonLeagueTeam: ${leagueTeamId}`);
+    log.info(`Updating stats for seasonLeagueTeam: ${leagueTeamId}`);
 
     const games = Games.find({ leagueId, seasonId, status: 'completed',
       $or: [{ homeTeamId: leagueTeamId }, { awayTeamId: leagueTeamId }] });
