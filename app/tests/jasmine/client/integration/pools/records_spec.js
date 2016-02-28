@@ -15,6 +15,7 @@ describe('poolsRecord page', () => {
   beforeEach(createDefaultSeasonLeagueTeam);
   beforeEach(createDefaultPool);
   beforeEach(createDefaultPoolTeam); // TODO: add other pool teams in this season and in other seasons to validate record numbers
+  beforeEach(createDefaultPoolTeamPick);
   beforeEach(goToPoolsRecordsPage);
 
   it('should display the teams with the most wins of all time', done => {
