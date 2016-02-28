@@ -110,48 +110,18 @@ PoolTeams.schema = new SimpleSchema({
 PoolTeams.attachSchema(PoolTeams.schema);
 
 PoolTeams.formSchema = new SimpleSchema({
-  poolId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  userTeamName: { label: 'Team name', type: String },
-  userEmail: { label: 'Email', type: String, regEx: SimpleSchema.RegEx.Email },
-  leagueTeamIds: {
-    label: 'Drafted teams',
-    type: [String],
-    autoform: {
-      minCount: 1,
-      maxCount: 4,
-      initialCount: 4,
-    },
+  poolId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
   },
-  'leagueTeamIds.$': {
-    autoform: {
-      afFieldInput: {
-        options() {
-          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(function (leagueTeam) {
-            return { label: leagueTeam.fullName(), value: leagueTeam._id };
-          });
-        },
-      },
-    },
+  userTeamName: {
+    label: 'Team name',
+    type: String
   },
-  pickNumbers: {
-    type: [Number],
-    label: 'Draft pick numbers',
-    autoform: {
-      minCount: 1,
-      maxCount: 4,
-      initialCount: 4,
-    },
-  },
-  'pickNumbers.$': {
-    autoform: {
-      afFieldInput: {
-        options() {
-          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
-            return { label: number, value: number };
-          });
-        },
-      },
-    },
+  userEmail: {
+    label: 'Email',
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
   },
 });
 
