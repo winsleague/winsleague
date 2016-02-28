@@ -6,7 +6,7 @@ const page = {
   getHomepageSelector: () => 'h2.home',
 };
 
-describe('poolEdit page', () => {
+describe('poolsEdit page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(createDefaultPool);
   beforeEach(goToPoolsEditPage);
