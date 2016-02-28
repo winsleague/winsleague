@@ -73,8 +73,18 @@ PoolTeamPicks.schema = new SimpleSchema({
       },
     },
   },
+  actualWins: {
+    type: Number,
+    defaultValue: 0,
+  },
+  expectedWins: {
+    type: Number,
+    decimal: true,
+    defaultValue: 0,
+  },
   pickQuality: {
     type: Number,
+    decimal: true,
     defaultValue: 0,
   },
   createdAt: {

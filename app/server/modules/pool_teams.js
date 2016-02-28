@@ -1,18 +1,19 @@
 let prettyjson = Meteor.npmRequire('prettyjson');
 
 Modules.server.poolTeams = {
-  refreshWhoPickedLeagueTeam(leagueId, seasonId, leagueTeamId) {
+  updateWhoPickedLeagueTeam(leagueId, seasonId, leagueTeamId) {
     log.info(`Finding PoolTeams who picked leagueTeamId: ${leagueTeamId}`);
 
     const poolTeams = PoolTeams.find({ leagueId, seasonId, leagueTeamIds: leagueTeamId });
     poolTeams.forEach(poolTeam => {
-      Modules.server.poolTeams.refreshPoolTeam(poolTeam);
+      Modules.server.poolTeams.updatePoolTeamWins(poolTeam);
+      Modules.server.poolTeams.updatePoolTeamPickQuality(poolTeam);
     });
 
     log.debug(`Done finding PoolTeams who picked leagueTeamId`);
   },
 
-  refreshPoolTeam(poolTeam) {
+  updatePoolTeamWins(poolTeam) {
     log.info(`Refreshing PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
 
     const seasonId = poolTeam.seasonId;
@@ -35,6 +36,12 @@ Modules.server.poolTeams = {
     const numberAffected = PoolTeams.direct.update({ _id: poolTeam._id },
       { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
     log.debug(`PoolTeams.update numberAffected: ${numberAffected}`);
+  },
+
+  updatePoolTeamPickQuality(poolTeam) {
+    PoolTeamPicks.find({ poolTeamId: poolTeam._id }).forEach(poolTeamPick => {
+      Modules.server.poolTeamPicks.updatePickQuality(poolTeamPick);
+    });
   },
 
   updatePicks(poolTeam) {
