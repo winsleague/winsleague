@@ -1,10 +1,9 @@
 const page = {
   getUserTeamNameSelector: () => 'input[name="userTeamName"]',
-  getFirstLeagueTeamSelector: () => 'select[name="leagueTeamIds.0"]',
-  getFirstPickNumberSelector: () => 'select[name="pickNumbers.0"]',
   getDeleteButtonSelector: () => 'a[href="#afModal"]',
   getDeleteButtonInModalSelector: () => 'button.btn-danger', // fragile way of doing this but good enough for now
   getPoolShowSelector: () => 'h3.poolsShow',
+  getPoolTeamShowSelector: () => 'h3.poolTeamsShow',
 };
 
 describe('poolTeamsEdit page', () => {
@@ -19,31 +18,20 @@ describe('poolTeamsEdit page', () => {
     log.info(`spec: `, spec.description);
 
     const userTeamName = "Billy's Dummies";
-    let leagueTeamId;
 
     waitForSubscription(PoolTeams.find(), function() {
       $(page.getUserTeamNameSelector()).val(userTeamName);
 
-      // change to second team
-      $(page.getFirstLeagueTeamSelector()).find('option:eq(2)').prop('selected', true);
-      leagueTeamId = LeagueTeams.findOne({}, { sort: ['cityName', 'asc'], skip: 1 })._id;
-      log.info(`expecting leagueTeamId: ${leagueTeamId}`);
-
-      // change to pick number #2
-      $(page.getFirstPickNumberSelector()).find('option:eq(2)').prop('selected', true);
-
       $('form').submit();
 
       // make sure we redirect to poolShow page
-      waitForElement(page.getPoolShowSelector(), function() {
+      waitForElement(page.getPoolTeamShowSelector(), function() {
 
         waitForSubscription(PoolTeams.find({ userTeamName }), function() {
           const poolTeam = PoolTeams.findOne({ userTeamName });
           expect(poolTeam).not.toBe(undefined);
           log.debug(`poolTeam: `, poolTeam);
           expect(poolTeam.userTeamName).toBe(userTeamName, 'userTeamName');
-          expect(poolTeam.leagueTeamIds[0]).toBe(leagueTeamId, 'leagueTeamId');
-          expect(poolTeam.pickNumbers[0]).toBe(2, 'pickNumber');
 
           done();
         });

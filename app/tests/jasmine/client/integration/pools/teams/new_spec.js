@@ -3,7 +3,7 @@ const page = {
   getUserTeamNameSelector: () => 'input[name="userTeamName"]',
 };
 
-fdescribe('poolTeamsNew page', () => {
+describe('poolTeamsNew page', () => {
   beforeEach(loginWithDefaultUser);
   beforeEach(createDefaultPool);
   beforeEach(goToPoolTeamsNewPage);

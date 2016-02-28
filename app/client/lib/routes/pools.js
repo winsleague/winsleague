@@ -21,7 +21,7 @@ Routes.pools.route('/new', {
 Routes.pools.route('/:poolId', {
   name: 'poolsShow',
   action(params) {
-    log.debug(`We're viewing a single document: ${params.poolId}`);
+    log.debug(`We're viewing a single pool: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsShow' });
   },
 });
@@ -30,7 +30,7 @@ Routes.pools.route('/:poolId', {
 Routes.pools.route('/:poolId/edit', {
   name: 'poolsEdit',
   action(params) {
-    log.debug(`We're editing a single document: ${params.poolId}`);
+    log.debug(`We're editing a single pool: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsEdit' });
   },
 });
@@ -39,7 +39,7 @@ Routes.pools.route('/:poolId/edit', {
 Routes.pools.route('/:poolId/seasons/:seasonId', {
   name: 'poolsShowSeason',
   action(params) {
-    log.debug(`We're viewing a single document: ${params.poolId} with season ${params.seasonId}`);
+    log.debug(`We're viewing a single pool: ${params.poolId} with season ${params.seasonId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsShow' });
   },
 });
