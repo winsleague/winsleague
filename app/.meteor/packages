@@ -22,7 +22,6 @@ promise
 meteorhacks:npm
 
 
-npm-container
 http
 peerlibrary:xml2js
 blaze-html-templates

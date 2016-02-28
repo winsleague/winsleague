@@ -1,5 +1,3 @@
-let prettyjson = Meteor.npmRequire('prettyjson');
-
 Modules.server.seasonLeagueTeams = {
   updateTeamStats(leagueId, seasonId, leagueTeamId) {
     if (!leagueId) { throw new Error('Undefined leagueId!'); }
