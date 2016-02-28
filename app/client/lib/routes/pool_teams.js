@@ -20,7 +20,7 @@ Routes.poolTeams.route('/:poolTeamId', {
 Routes.poolTeams.route('/:poolTeamId/edit', {
   name: 'poolTeamsEdit',
   action(params) {
-    log.debug(`We're editing a pool team: ${params.poolId} and ${params.poolTeamId}`);
+    log.debug(`We're editing a pool team: ${params.poolId} and ${params.poolTeamId}`, params);
     BlazeLayout.render('masterLayout', { content: 'poolTeamsEdit' });
   },
 });

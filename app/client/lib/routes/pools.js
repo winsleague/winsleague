@@ -13,38 +13,38 @@ Routes.pools.route('/new', {
   },
 });
 
-// http://app.com/pools/:_id
-Routes.pools.route('/:_id', {
+// http://app.com/pools/:poolId
+Routes.pools.route('/:poolId', {
   name: 'poolsShow',
   action(params) {
-    log.debug(`We're viewing a single document: ${params._id}`);
+    log.debug(`We're viewing a single document: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsShow' });
   },
 });
 
-// http://app.com/pools/:_id/edit
-Routes.pools.route('/:_id/edit', {
+// http://app.com/pools/:poolId/edit
+Routes.pools.route('/:poolId/edit', {
   name: 'poolsEdit',
   action(params) {
-    log.debug(`We're editing a single document: ${params._id}`);
+    log.debug(`We're editing a single document: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsEdit' });
   },
 });
 
-// http://app.com/pools/:_id/seasons/:seasonId
-Routes.pools.route('/:_id/seasons/:seasonId', {
+// http://app.com/pools/:poolId/seasons/:seasonId
+Routes.pools.route('/:poolId/seasons/:seasonId', {
   name: 'poolsShowSeason',
   action(params) {
-    log.debug(`We're viewing a single document: ${params._id} with season ${params.seasonId}`);
+    log.debug(`We're viewing a single document: ${params.poolId} with season ${params.seasonId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsShow' });
   },
 });
 
-// http://app.com/pools/:_id/records
-Routes.pools.route('/:_id/records', {
+// http://app.com/pools/:poolId/records
+Routes.pools.route('/:poolId/records', {
   name: 'poolsRecords',
   action(params) {
-    log.debug(`We're viewing records for a single pool: ${params._id}`);
+    log.debug(`We're viewing records for a single pool: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsRecords' });
   },
 });

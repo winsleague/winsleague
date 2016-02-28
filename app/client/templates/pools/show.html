@@ -20,7 +20,7 @@
             <tr id="{{poolTeam._id}}">
               <td>
                 {{#if editAllowed poolTeam}}
-                  <a href="{{pathFor 'poolTeamsEdit' poolId=poolId poolTeamId=poolTeam._id}}">{{poolTeam.userTeamName}}</a>
+                  <a href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeam._id}}">{{poolTeam.userTeamName}}</a>
                 {{else}}
                   {{poolTeam.userTeamName}}
                 {{/if}}
@@ -37,7 +37,7 @@
 
     {{> seasonSwitcher}}
 
-    <a href="{{pathFor 'poolsRecords' _id=poolId}}" id="records">Records</a><br/>
+    <a href="{{pathFor 'poolsRecords' poolId=poolId}}" id="records">Records</a><br/>
     <br/>
 
     {{#if isCommissioner}}
@@ -45,7 +45,7 @@
         <a href="{{pathFor 'poolTeamsNew' poolId=poolId}}">Add Player</a>
         <br/>
       {{/if}}
-      <a href="{{pathFor 'poolsEdit' _id=poolId}}">Edit Pool</a>
+      <a href="{{pathFor 'poolsEdit' poolId=poolId}}">Edit Pool</a>
     {{/if}}
   {{else}}
     <div>Loading...</div>
