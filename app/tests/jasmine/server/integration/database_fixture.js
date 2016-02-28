@@ -65,3 +65,8 @@ beforeAll(() => {
   resetDatabase();
   loadDefaultFixtures();
 });
+
+beforeEach(() => {
+  const user = Accounts.findUserByEmail('test@test.com');
+  spyOn(Meteor, 'userId').and.returnValue(user._id);
+});

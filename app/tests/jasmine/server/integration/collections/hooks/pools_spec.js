@@ -1,11 +1,9 @@
 describe('Pool collection hooks', () => {
-  it('should remove its PoolTeams when Pool is removed', () => {
-    const user = Accounts.findUserByEmail('test@test.com');
-    spyOn(Meteor, 'userId').and.returnValue(user._id);
+  beforeEach(Package.testing.Fixtures.pools.createDefaultPool);
+  beforeEach(Package.testing.Fixtures.poolTeams.createDefaultPoolTeam);
 
-    Meteor.call('fixtures/pools/createDefault');
-    const poolTeam = Meteor.call('fixtures/poolTeams/createDefault');
-    const poolId = poolTeam.poolId;
+  it('should remove its PoolTeams when Pool is removed', () => {
+    const poolId = Pools.findOne()._id;
 
     let poolTeamsCount = PoolTeams.find({ poolId }).count();
     expect(poolTeamsCount).toBe(1);

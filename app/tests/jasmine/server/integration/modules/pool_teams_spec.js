@@ -1,7 +1,5 @@
-const prettyjson = Meteor.npmRequire('prettyjson');
-
 describe('Pool Teams', () => {
-  describe('Refresh Team Stats', () => {
+  describe('Update Team Stats', () => {
     afterEach(() => {
       log.info(`Cleaned up ${Games.remove({})} Games`);
       log.info(`Cleaned up ${Pools.remove({})} Pools`);
@@ -11,9 +9,6 @@ describe('Pool Teams', () => {
     it('should add up the wins and losses for all completed games', () => {
       const league = Modules.leagues.getByName('NFL');
       const season = Modules.seasons.getByYear(league, 2015);
-
-      const user = Accounts.findUserByEmail('test@test.com');
-      spyOn(Meteor, 'userId').and.returnValue(user._id);
 
       // Creating a pool will automatically set commissioner to Meteor.userId
       const poolId = Pools.insert({
@@ -33,7 +28,7 @@ describe('Pool Teams', () => {
         userTeamName: 'Dummy',
       });
 
-      const poolTeamPickId = PoolTeamPicks.insert({
+      PoolTeamPicks.insert({
         poolTeamId,
         leagueTeamId: giantsTeamId,
         pickNumber: 1,
@@ -55,7 +50,7 @@ describe('Pool Teams', () => {
       // Games.insert will automatically refresh all PoolTeams that are affected
 
       const poolTeam = PoolTeams.findOne({ _id: poolTeamId });
-      log.debug(prettyjson.render(poolTeam));
+      log.debug('poolTeam:', poolTeam);
 
       expect(poolTeam.totalWins).toBe(1, 'totalWins');
       expect(poolTeam.totalGames).toBe(1, 'totalGames');
