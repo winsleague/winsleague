@@ -18,6 +18,11 @@ function createDefaultPoolTeamPick() {
   return createPoolTeamPick(poolTeamPick);
 }
 
+Fixtures.poolTeamPicks = {
+  createPoolTeamPick,
+  createDefaultPoolTeamPick,
+};
+
 Meteor.methods({
   'fixtures/poolTeamPicks/create': createPoolTeamPick,
   'fixtures/poolTeamPicks/createDefault': createDefaultPoolTeamPick,
