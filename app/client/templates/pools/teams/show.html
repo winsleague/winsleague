@@ -1,0 +1,42 @@
+<template name="poolTeamsShow">
+  {{#if Template.subscriptionsReady}}
+    {{> poolsHeader poolId=poolId seasonId=seasonId }}
+
+    <h3 class="poolTeamsShow">Pool Team</h3>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Pick</th>
+          <th>Team</th>
+          <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each poolTeamPick in poolTeamPicks}}
+          <tr id="{{poolTeamPick._id}}">
+            <td>{{poolTeamPick.pickNumber}}</td>
+            <td>{{leagueTeamName poolTeamPick.leagueTeamId}}</td>
+            <td>
+              {{#if editAllowed}}
+                <a href="{{pathFor 'poolTeamPicksEdit' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPick._id}}">Edit</a>
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    {{#if isCommissioner}}
+      {{#if isLatestSeason}}
+        <a href="{{pathFor 'poolTeamPicksNew' poolId=poolId poolTeamId=poolTeamId}}">Add Pick</a>
+        <br/>
+      {{/if}}
+      <a href="{{pathFor 'poolTeamsEdit' poolId=poolId}}">Edit Team</a>
+    {{/if}}
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>
