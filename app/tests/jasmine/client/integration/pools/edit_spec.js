@@ -2,7 +2,7 @@ const page = {
   getNameSelector: () => 'input[name="name"]',
   getDeleteButtonSelector: () => 'a[href="#afModal"]',
   getDeleteButtonInModalSelector: () => 'button.btn-danger', // fragile way of doing this but good enough for now
-  getPoolShowSelector: () => 'h3.poolsShow',
+  getPoolsShowSelector: () => 'h3.poolsShow',
   getHomepageSelector: () => 'h2.home',
 };
 
@@ -20,7 +20,7 @@ describe('poolEdit page', () => {
       $('form').submit();
 
       // make sure we redirect to poolShow page
-      waitForElement(page.getPoolShowSelector(), function() {
+      waitForElement(page.getPoolsShowSelector(), function() {
 
         waitForSubscription(Pools.find({ name }), function() {
           const pool = Pools.findOne({ name });

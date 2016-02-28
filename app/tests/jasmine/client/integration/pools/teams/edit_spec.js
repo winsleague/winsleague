@@ -2,8 +2,8 @@ const page = {
   getUserTeamNameSelector: () => 'input[name="userTeamName"]',
   getDeleteButtonSelector: () => 'a[href="#afModal"]',
   getDeleteButtonInModalSelector: () => 'button.btn-danger', // fragile way of doing this but good enough for now
-  getPoolShowSelector: () => 'h3.poolsShow',
-  getPoolTeamShowSelector: () => 'h3.poolTeamsShow',
+  getPoolsShowSelector: () => 'h3.poolsShow',
+  getPoolTeamsShowSelector: () => 'h3.poolTeamsShow',
 };
 
 describe('poolTeamsEdit page', () => {
@@ -25,7 +25,7 @@ describe('poolTeamsEdit page', () => {
       $('form').submit();
 
       // make sure we redirect to poolShow page
-      waitForElement(page.getPoolTeamShowSelector(), function() {
+      waitForElement(page.getPoolTeamsShowSelector(), function() {
 
         waitForSubscription(PoolTeams.find({ userTeamName }), function() {
           const poolTeam = PoolTeams.findOne({ userTeamName });
@@ -56,7 +56,7 @@ describe('poolTeamsEdit page', () => {
         waitForMissingElement(page.getDeleteButtonInModalSelector(), function() {
 
           // make sure we redirect to poolShow page
-          waitForElement(page.getPoolShowSelector(), function () {
+          waitForElement(page.getPoolsShowSelector(), function () {
 
             // make sure pool team is deleted
             waitForEmptySubscription(PoolTeams.find(), function () {

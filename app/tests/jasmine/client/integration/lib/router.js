@@ -86,6 +86,17 @@ goToPoolTeamsNewPage = done => {
   });
 };
 
+goToPoolTeamsShowPage = done => {
+  log.debug('goToPoolTeamsShowPage called');
+  waitForSubscription(PoolTeams.find(), function () {
+    const pool = PoolTeams.findOne();
+    const poolId = pool.poolId;
+    const poolTeamId = pool._id;
+
+    return goToRoute('poolTeamsShow', { poolId, poolTeamId })(done);
+  });
+};
+
 goToPoolTeamsEditPage = done => {
   log.debug('goToPoolTeamsEditPage called');
   waitForSubscription(PoolTeams.find(), function () {

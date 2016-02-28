@@ -1,11 +1,10 @@
 const page = {
-  getFirstLeagueTeamSelector: () => 'select[name="leagueTeamId"]',
-  getFirstPickNumberSelector: () => 'select[name="pickNumber"]',
+  getLeagueTeamSelector: () => 'select[name="leagueTeamId"]',
+  getPickNumberSelector: () => 'select[name="pickNumber"]',
 };
 
 describe('poolTeamPicksNew page', () => {
   beforeEach(loginWithDefaultUser);
-  beforeEach(createDefaultSeasonLeagueTeam);
   beforeEach(createDefaultPool);
   beforeEach(createDefaultPoolTeam);
   beforeEach(goToPoolsShowPage);
@@ -17,10 +16,10 @@ describe('poolTeamPicksNew page', () => {
     waitForSubscription(LeagueTeams.find(), function() {
       // choose first team
       leagueTeamId = LeagueTeams.findOne()._id;
-      $(page.getFirstLeagueTeamSelector()).find('option:eq(1)').prop('selected', true);
+      $(page.getLeagueTeamSelector()).find('option:eq(1)').prop('selected', true);
 
       // change to pick number #2
-      $(page.getFirstPickNumberSelector()).find('option:eq(2)').prop('selected', true);
+      $(page.getPickNumberSelector()).find('option:eq(2)').prop('selected', true);
 
       $('form').submit();
       log.debug('form submitted!');
