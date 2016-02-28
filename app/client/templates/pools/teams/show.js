@@ -33,7 +33,7 @@ Template.poolTeamsShow.helpers({
   leagueTeamName: (leagueTeamId) => {
     return LeagueTeams.findOne(leagueTeamId).fullName();
   },
-  
+
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(2),
 });
 
