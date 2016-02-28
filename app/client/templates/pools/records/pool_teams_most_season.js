@@ -1,6 +1,4 @@
 Template.poolsRecordsPoolTeamsMostSeason.helpers({
-  poolId: () => Template.instance().getPoolId(),
-
   poolTeams: () => {
     const metricField = Template.currentData().metricField;
     const sort = Template.currentData().sort;
@@ -24,9 +22,7 @@ Template.poolsRecordsPoolTeamsMostSeason.onCreated(function() {
     tableId: { type: String },
   }).validate(this.data);
 
-  this.getPoolId = () => this.data.poolId;
-
   this.autorun(() => {
-    this.subscribe('poolTeams.ofPool', this.getPoolId());
+    this.subscribe('poolTeams.ofPool', this.data.poolId);
   });
 });
