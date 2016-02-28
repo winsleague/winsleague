@@ -2,7 +2,11 @@
   {{#if Template.subscriptionsReady}}
     {{> poolsHeader poolId=poolId seasonId=seasonId }}
 
-    {{> poolsShowWins }}
+    {{> poolsShowWins
+      poolId=poolId
+      seasonId=seasonId
+      isCommissioner=isCommissioner
+    }}
 
     {{> poolsShowPickQuality
       tableTitle="Best Pick Quality"
