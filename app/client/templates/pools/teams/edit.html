@@ -10,7 +10,7 @@
         <button class="btn btn-primary" type="submit">Save</button>
       {{/autoForm}}
       <br/>
-      <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Team</a>
+      <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Player</a>
       &nbsp;
       {{> autoformModals}}
       {{#afModal class="btn btn-danger" collection="PoolTeams" operation="remove" doc=poolTeamDoc._id onSuccess=onRemoveSuccess}}

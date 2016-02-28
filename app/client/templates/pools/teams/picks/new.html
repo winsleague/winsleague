@@ -10,9 +10,9 @@
           {{> afQuickField name="pickNumber"}}
         {{/if}}
       </fieldset>
-      <button class="btn btn-primary" type="submit">Create</button>
+      <button class="btn btn-primary" type="submit">Add</button>
       &nbsp;
-      <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Team</a>
+      <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Player</a>
     {{/autoForm}}
   {{/onlyIfLoggedIn}}
 </template>
