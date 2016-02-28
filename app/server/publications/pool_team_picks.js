@@ -11,3 +11,15 @@ Meteor.publish('poolTeamPicks.ofPoolTeam', function(poolTeamId) {
 
   return PoolTeamPicks.find({ poolTeamId });
 });
+
+Meteor.publish('poolTeamPicks.ofPool', function(poolId, seasonId = null) {
+  if (!poolId) return this.ready();
+  check(poolId, String);
+
+  if (seasonId) {
+    check(seasonId, String);
+    return PoolTeamPicks.find({ poolId, seasonId });
+  } else {
+    return PoolTeamPicks.find({ poolId });
+  }
+});
