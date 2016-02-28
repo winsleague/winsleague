@@ -31,8 +31,12 @@ describe('Pool Teams', () => {
         poolId,
         userId: Meteor.userId(),
         userTeamName: 'Dummy',
-        leagueTeamIds: [giantsTeamId],
-        pickNumbers: [1],
+      });
+
+      const poolTeamPickId = PoolTeamPicks.insert({
+        poolTeamId,
+        leagueTeamId: giantsTeamId,
+        pickNumber: 1,
       });
 
       Games.insert({
