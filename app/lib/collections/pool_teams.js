@@ -57,49 +57,19 @@ PoolTeams.schema = new SimpleSchema({
     label: 'Drafted teams',
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
-    autoform: {
-      minCount: 1,
-      maxCount: 4,
-      initialCount: 4,
-    },
-  },
-  'leagueTeamIds.$': {
-    autoform: {
-      afFieldInput: {
-        options() {
-          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => {
-            return { label: leagueTeam.fullName(), value: leagueTeam._id };
-          });
-        },
-      },
-    },
+    defaultValue: [],
   },
   pickNumbers: {
     type: [Number],
     label: 'Draft pick numbers',
-    autoform: {
-      minCount: 1,
-      maxCount: 4,
-      initialCount: 4,
-    },
-  },
-  'pickNumbers.$': {
-    autoform: {
-      afFieldInput: {
-        options() {
-          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
-            return { label: number, value: number };
-          });
-        },
-      },
-    },
+    defaultValue: [],
   },
   leagueTeamMascotNames: {
     type: [String],
     autoValue() {
       if (this.field('leagueTeamIds').isSet) {
-        let mascots = [];
-        for (let leagueTeamId of this.field('leagueTeamIds').value) {
+        const mascots = [];
+        for (const leagueTeamId of this.field('leagueTeamIds').value) {
           const leagueTeam = LeagueTeams.findOne(leagueTeamId);
           mascots.push(leagueTeam.abbreviation);
         }
