@@ -12,6 +12,7 @@
     "BlazeLayout": false,
     "FlowRouter": false,
     "Games": true,
+    "LeaguePickExpectedWins": true,
     "LeagueTeams": true,
     "Leagues": true,
     "log": false,
