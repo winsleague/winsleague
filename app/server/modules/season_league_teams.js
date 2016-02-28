@@ -8,7 +8,7 @@ Modules.server.seasonLeagueTeams = {
 
     log.info(`Refreshing stats for seasonLeagueTeam: ${leagueTeamId}`);
 
-    const games = Games.find({ leagueId, seasonId, status: "completed",
+    const games = Games.find({ leagueId, seasonId, status: 'completed',
       $or: [{ homeTeamId: leagueTeamId }, { awayTeamId: leagueTeamId }] });
     let wins = 0, losses = 0, ties = 0,
       homeWins = 0, homeLosses = 0, homeTies = 0,
