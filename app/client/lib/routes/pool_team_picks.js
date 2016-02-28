@@ -1,3 +1,7 @@
+Routes.poolTeamPicks = FlowRouter.group({
+  prefix: '/pools/:poolId/teams/:poolTeamId/picks',
+});
+
 // http://app.com/pools/:poolId/teams/:poolTeamId/new
 Routes.poolTeamPicks.route('/new', {
   name: 'poolTeamPicksNew',

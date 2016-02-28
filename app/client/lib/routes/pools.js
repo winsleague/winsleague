@@ -1,3 +1,7 @@
+Routes.pools = FlowRouter.group({
+  prefix: '/pools',
+});
+
 // http://app.com/pools
 Routes.pools.route('/', {
   action() {
