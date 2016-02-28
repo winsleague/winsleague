@@ -96,3 +96,26 @@ goToPoolTeamsEditPage = done => {
     return goToRoute('poolTeamsEdit', { poolId, poolTeamId })(done);
   });
 };
+
+goToPoolTeamPicksNewPage = done => {
+  log.debug('goToPoolTeamPicksNewPage called');
+  waitForSubscription(PoolTeams.find(), function () {
+    const poolTeam = PoolTeams.findOne();
+    const poolId = poolTeam.poolId;
+    const poolTeamId = poolTeam._id;
+
+    return goToRoute('poolTeamPicksNew', { poolId, poolTeamId })(done);
+  });
+};
+
+goToPoolTeamPicksEditPage = done => {
+  log.debug('goToPoolTeamPicksEditPage called');
+  waitForSubscription(PoolTeamPicks.find(), function () {
+    const poolTeamPick = PoolTeamPicks.findOne();
+    const poolId = poolTeamPick.poolId;
+    const poolTeamId = poolTeamPick.poolTeamId;
+    const poolTeamPickId = poolTeamPick._id;
+
+    return goToRoute('poolTeamPicksEdit', { poolId, poolTeamId, poolTeamPickId })(done);
+  });
+};
