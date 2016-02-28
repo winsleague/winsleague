@@ -1,6 +1,6 @@
 Package.describe({
   name: 'testing',
-  version: '0.0.0',
+  version: '0.1.0',
   summary: 'Tools that help us testing the app',
   documentation: 'README.md',
   // Only available in development mode! (for security)
@@ -19,6 +19,7 @@ Package.onUse(function (api) {
   ], 'server');
   api.addFiles([
     'lib/log.js',
+    'lib/namespace.js',
     'league_fixtures.js',
     'pool_fixtures.js',
     'pool_team_fixtures.js',
@@ -28,4 +29,5 @@ Package.onUse(function (api) {
     'season_league_team_fixtures.js',
     'user_fixtures.js',
   ], 'server');
+  api.export('Fixtures', 'server');
 });

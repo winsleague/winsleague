@@ -16,6 +16,11 @@ function createDefaultPool() {
   return createPool(pool);
 }
 
+Fixtures.pools = {
+  createPool,
+  createDefaultPool,
+};
+
 Meteor.methods({
   'fixtures/pools/create': createPool,
   'fixtures/pools/createDefault': createDefaultPool,

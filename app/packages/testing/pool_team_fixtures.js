@@ -35,6 +35,12 @@ function createOldPoolTeam() {
   return createPoolTeam(poolTeam);
 }
 
+Fixtures.poolTeams = {
+  createPoolTeam,
+  createDefaultPoolTeam,
+  createOldPoolTeam,
+};
+
 Meteor.methods({
   'fixtures/poolTeams/create': createPoolTeam,
   'fixtures/poolTeams/createDefault': createDefaultPoolTeam,
