@@ -2,7 +2,7 @@
   {{#if Template.subscriptionsReady}}
     {{> poolsHeader poolId=poolId seasonId=seasonId }}
 
-    <h3 class="poolTeamsShow">Pool Team</h3>
+    <h3 class="poolTeamsShow">{{poolTeamName}}</h3>
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -34,7 +34,7 @@
         <a href="{{pathFor 'poolTeamPicksNew' poolId=poolId poolTeamId=poolTeamId}}">Add Pick</a>
         <br/>
       {{/if}}
-      <a href="{{pathFor 'poolTeamsEdit' poolId=poolId}}">Edit Team</a>
+      <a href="{{pathFor 'poolTeamsEdit' poolId=poolId poolTeamId=poolTeamId}}">Edit Team</a>
     {{/if}}
   {{else}}
     <div>Loading...</div>

@@ -5,6 +5,8 @@ Template.poolTeamsShow.helpers({
 
   seasonId: () => Template.instance().getSeasonId(),
 
+  poolTeamName: () => _.get(Template.instance().getPoolTeam(), 'userTeamName'),
+
   poolTeamPicks: () => {
     const poolTeamId = Template.instance().getPoolTeamId();
     return PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });

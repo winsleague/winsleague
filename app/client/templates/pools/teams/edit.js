@@ -1,6 +1,8 @@
 Template.poolTeamsEdit.helpers({
   poolId: () => Template.instance().getPoolId(),
 
+  poolTeamId: () => Template.instance().getPoolTeamId(),
+
   poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
 
   onRemoveSuccess: () => {
@@ -49,7 +51,10 @@ AutoForm.hooks({
   updatePoolTeamForm: {
     onSuccess: (formType, result) => {
       log.debug(`updatePoolTeamForm.onSuccess() ==> redirect to poolsShow/`, FlowRouter.getParam('poolId'));
-      FlowRouter.go('poolsShow', { poolId: FlowRouter.getParam('poolId') });
+      FlowRouter.go('poolTeamsShow', {
+        poolId: FlowRouter.getParam('poolId'),
+        poolTeamId: FlowRouter.getParam('poolTeamId'),
+      });
     },
   },
 });
