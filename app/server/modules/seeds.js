@@ -148,6 +148,47 @@ Modules.server.seeds = {
       startDate: moment('2015-10-27').toDate(),
       endDate: moment('2016-04-13').toDate(),
     });
+
+    Modules.server.seeds.insertNbaExpectedWins();
+  },
+
+  insertNbaExpectedWins() {
+    const leagueId = Modules.leagues.getByName('NBA')._id;
+    const expectedWins = [
+      63.10,
+      59.70,
+      57.00,
+      54.90,
+      53.20,
+      52.50,
+      51.80,
+      50.10,
+      48.50,
+      47.30,
+      46.20,
+      45.30,
+      44.00,
+      42.60,
+      41.40,
+      40.50,
+      39.40,
+      37.70,
+      36.20,
+      35.00,
+      33.30,
+      31.80,
+      30.50,
+      28.70,
+      26.90,
+      25.40,
+      24.20,
+      22.80,
+      19.70,
+      16.20,
+    ];
+    expectedWins.forEach((element, index) => {
+      LeaguePickExpectedWins.insert({ leagueId, rank: index + 1, wins: element });
+    });
   },
 
   createMlbLeague() {
@@ -195,6 +236,47 @@ Modules.server.seeds = {
       startDate: moment('2016-04-03').toDate(),
       endDate: moment('2016-10-02').toDate(),
     });
+
+    Modules.server.seeds.insertMlbExpectedWins();
+  },
+
+  insertMlbExpectedWins() {
+    const leagueId = Modules.leagues.getByName('MLB')._id;
+    const expectedWins = [
+      98.91,
+      97.00,
+      95.64,
+      94.82,
+      92.82,
+      91.73,
+      90.36,
+      89.45,
+      88.82,
+      88.18,
+      86.73,
+      85.45,
+      84.36,
+      83.27,
+      82.18,
+      81.00,
+      79.64,
+      78.45,
+      77.27,
+      75.91,
+      74.82,
+      74.00,
+      73.55,
+      71.45,
+      70.36,
+      68.45,
+      67.27,
+      65.64,
+      63.36,
+      58.82,
+    ];
+    expectedWins.forEach((element, index) => {
+      LeaguePickExpectedWins.insert({ leagueId, rank: index + 1, wins: element });
+    });
   },
 
   removeLeague(leagueName) {
@@ -210,3 +292,8 @@ Modules.server.seeds = {
     Leagues.remove({ _id: leagueId });
   },
 };
+
+Meteor.methods({
+  'seeds.insertNbaExpectedWins': Modules.server.seeds.insertNbaExpectedWins,
+  'seeds.insertMlbExpectedWins': Modules.server.seeds.insertMlbExpectedWins,
+});
