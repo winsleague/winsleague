@@ -1,5 +1,8 @@
 function createDefaultLeagues() {
-  let leagueId = Leagues.insert({ name: 'NFL' });
+  let leagueId = Leagues.insert({
+    name: 'NFL',
+    seasonGameCount: 16,
+  });
   log.debug(`Created NFL league: ${leagueId}`);
   LeagueTeams.insert({ leagueId, cityName: 'New York', mascotName: 'Giants',
     abbreviation: 'NYG', conference: 'NFC', division: 'East' });
@@ -48,7 +51,10 @@ function createDefaultLeagues() {
     LeaguePickExpectedWins.insert({ leagueId, rank: index + 1, wins: element });
   });
 
-  leagueId = Leagues.insert({ name: 'NBA' });
+  leagueId = Leagues.insert({
+    name: 'NBA',
+    seasonGameCount: 82,
+  });
   log.debug(`Created NBA league: ${leagueId}`);
   LeagueTeams.insert({ leagueId, cityName: 'New York', mascotName: 'Knicks',
     abbreviation: 'NYK', conference: 'East', division: 'Atlantic' });

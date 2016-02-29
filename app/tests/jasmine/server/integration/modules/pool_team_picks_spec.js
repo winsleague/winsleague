@@ -12,7 +12,8 @@ describe('Pool Team Picks', () => {
         leagueId: league._id,
         seasonId: season._id,
         leagueTeamId: leagueTeam._id,
-        wins: 13,
+        wins: 10, // intentionally not 16 games
+        losses: 3,
       });
 
       const poolTeamId = PoolTeams.findOne()._id;
@@ -29,9 +30,9 @@ describe('Pool Team Picks', () => {
       poolTeamPick = PoolTeamPicks.findOne(poolTeamPickId);
       log.debug('poolTeamPick:', poolTeamPick);
 
-      expect(poolTeamPick.actualWins).toBe(13, 'actualWins');
-      expect(poolTeamPick.expectedWins).toBe(10.38, 'expectedWins');
-      expect(poolTeamPick.pickQuality.toFixed(1)).toBe('2.6', 'pickQuality'); // toFixed returns string
+      expect(poolTeamPick.actualWins).toBe(10, 'actualWins');
+      expect(poolTeamPick.expectedWins.toFixed(1)).toBe('8.4', 'expectedWins'); // toFixed returns string
+      expect(poolTeamPick.pickQuality.toFixed(1)).toBe('1.6', 'pickQuality'); // toFixed returns string
     });
   });
 });

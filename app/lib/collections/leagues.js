@@ -1,7 +1,8 @@
 Leagues = new Mongo.Collection('leagues');
 
 Leagues.attachSchema(new SimpleSchema({
-  name: { type: String }
+  name: { type: String },
+  seasonGameCount: { type: Number },
 }));
 
 if (Meteor.isServer) {

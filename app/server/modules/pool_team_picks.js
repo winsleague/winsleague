@@ -7,12 +7,17 @@ Modules.server.poolTeamPicks = {
       leagueTeamId: poolTeamPick.leagueTeamId,
     });
     const actualWins = _.get(seasonLeagueTeam, 'wins', 0);
-    const expectedWins = LeaguePickExpectedWins.findOne({
+    const gamesPlayed = (seasonLeagueTeam ? seasonLeagueTeam.totalGames() : 0);
+
+    const expectedWinsFullSeason = LeaguePickExpectedWins.findOne({
       leagueId: poolTeamPick.leagueId,
       rank: poolTeamPick.pickNumber,
     }).wins;
 
-    // TODO: expectedWins should account for how many games have been played
+    const seasonGameCount = Leagues.findOne(poolTeamPick.leagueId).seasonGameCount;
+
+    const expectedWins = gamesPlayed / seasonGameCount * expectedWinsFullSeason;
+
     const pickQuality = actualWins - expectedWins;
 
     log.info(`Updating PoolTeamPick:`, poolTeamPick, actualWins, expectedWins, pickQuality);
