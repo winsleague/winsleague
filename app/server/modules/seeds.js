@@ -210,7 +210,3 @@ Modules.server.seeds = {
     Leagues.remove({ _id: leagueId });
   },
 };
-
-Meteor.methods({
-  'seeds.insertNflExpectedWins': Modules.server.seeds.insertNflExpectedWins,
-});
