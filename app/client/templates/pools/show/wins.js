@@ -1,7 +1,8 @@
 Template.poolsShowWins.helpers({
   poolTeams: () => {
+    const seasonId = Template.currentData().seasonId;
     const poolId = Template.currentData().poolId;
-    return PoolTeams.find({ poolId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
+    return PoolTeams.find({ poolId, seasonId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
   },
 });
 
