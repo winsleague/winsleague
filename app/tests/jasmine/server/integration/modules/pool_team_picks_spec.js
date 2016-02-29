@@ -31,7 +31,7 @@ describe('Pool Team Picks', () => {
 
       expect(poolTeamPick.actualWins).toBe(13, 'actualWins');
       expect(poolTeamPick.expectedWins).toBe(10.38, 'expectedWins');
-      expect(poolTeamPick.pickQuality.toFixed(2)).toBe('2.62', 'pickQuality'); // toFixed returns string
+      expect(poolTeamPick.pickQuality.toFixed(1)).toBe('2.6', 'pickQuality'); // toFixed returns string
     });
   });
 });

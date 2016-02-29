@@ -3,11 +3,6 @@ Template.poolsShowWins.helpers({
     const poolId = Template.currentData().poolId;
     return PoolTeams.find({ poolId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
   },
-
-  editAllowed: (poolTeam) => {
-    return (Meteor.userId() === poolTeam.userId ||
-      Template.currentData().isCommissioner);
-  },
 });
 
 Template.poolsShowWins.onCreated(function() {

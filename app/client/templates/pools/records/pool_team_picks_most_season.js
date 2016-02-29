@@ -19,7 +19,7 @@ Template.poolsRecordsPoolTeamPicksMostSeason.helpers({
     return _.get(LeagueTeams.findOne(leagueTeamId), 'abbreviation');
   },
 
-  roundedPickQuality: (pickQuality) => pickQuality.toFixed(2),
+  roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
 Template.poolsRecordsPoolTeamPicksMostSeason.onCreated(function() {

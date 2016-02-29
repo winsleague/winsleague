@@ -17,7 +17,7 @@ Template.poolsShowPickQuality.helpers({
     return LeagueTeams.findOne(leagueTeamId).abbreviation;
   },
 
-  roundedPickQuality: (pickQuality) => pickQuality.toFixed(2),
+  roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
 Template.poolsShowPickQuality.onCreated(function() {
@@ -26,7 +26,7 @@ Template.poolsShowPickQuality.onCreated(function() {
     seasonId: { type: String },
     poolId: { type: String },
     tableTitle: { type: String },
-    sort: { type: Number }
+    sort: { type: Number },
   }).validate(this.data);
 
   this.getPoolTeam = (poolTeamId) => PoolTeams.findOne(poolTeamId);

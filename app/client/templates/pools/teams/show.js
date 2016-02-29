@@ -34,7 +34,7 @@ Template.poolTeamsShow.helpers({
     return LeagueTeams.findOne(leagueTeamId).fullName();
   },
 
-  roundedPickQuality: (pickQuality) => pickQuality.toFixed(2),
+  roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
 Template.poolTeamsShow.onCreated(function() {
