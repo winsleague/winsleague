@@ -1,5 +1,5 @@
 Template.masterLayout.events({
-  'click a': function (event) {
+  'click .menuLink': function (event) {
     $('.navbar-toggle').click();
   },
 });
