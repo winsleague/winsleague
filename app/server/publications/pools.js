@@ -5,8 +5,37 @@ Meteor.publish('pools.single', function(_id) {
 });
 
 Meteor.publish('pools.ofUser', function(userId) {
+  const self = this;
   if (!userId) return this.ready();
   check(userId, String);
-  return Pools.find({ commissionerUserId: userId }, { fields: { _id: 1, name: 1 } });
-  // TODO: this should also return Pools that users are a part of, but aren't a commissioner in
+
+  // add Pools whose commissioner is userId
+  const commissionerHandle = Pools.find({ commissionerUserId: userId }).observeChanges({
+    added(id, fields) {
+      self.added('pools', id, fields);
+    },
+    removed(id) {
+      self.removed('pools', id);
+    },
+    // don't care about changed
+  });
+
+  // add PoolTeams who are owned by userId
+  const usersHandle = PoolTeams.find({ userId }).observeChanges({
+    added(id, fields) {
+      const pool = Pools.findOne(fields.poolId);
+      self.added('pools', pool._id, pool);
+    },
+    // don't care about changed or removed since it's rare
+  });
+
+  self.ready();
+
+  // Stop observing the cursor when client unsubs.
+  // Stopping a subscription automatically takes
+  // care of sending the client any removed messages.
+  self.onStop(function () {
+    commissionerHandle.stop();
+    usersHandle.stop();
+  });
 });
