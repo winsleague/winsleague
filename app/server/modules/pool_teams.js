@@ -54,7 +54,7 @@ Modules.server.poolTeams = {
     const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
     picks.forEach(poolTeamPick => {
       const leagueTeam = LeagueTeams.findOne(poolTeamPick.leagueTeamId);
-      teamSummary += `${leagueTeam.abbreviation} #${poolTeamPick.pickNumber}, `;
+      teamSummary += `${leagueTeam.abbreviation}, `;
     });
     if (teamSummary.length > 0) {
       teamSummary = teamSummary.substr(0, teamSummary.length - 2);
