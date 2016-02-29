@@ -88,7 +88,7 @@ describe('poolsRecord page', () => {
   it('should display the teams with the best pick quality in a single season', done => {
     waitForElement(page.getBestPickQualitySeasonCellSelector(), function() {
       const pickQuality = $(page.getBestPickQualitySeasonCellSelector()).text();
-      expect(pickQuality).toBe('-3.77');
+      expect(pickQuality).toBe('-3.8');
       done();
     });
   });
@@ -96,7 +96,7 @@ describe('poolsRecord page', () => {
   it('should display the teams with the worst pick quality in a single season', done => {
     waitForElement(page.getWorstPickQualitySeasonCellSelector(), function() {
       const pickQuality = $(page.getWorstPickQualitySeasonCellSelector()).text();
-      expect(pickQuality).toBe('-3.77');
+      expect(pickQuality).toBe('-3.8');
       done();
     });
   });
