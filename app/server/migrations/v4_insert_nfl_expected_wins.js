@@ -1,6 +1,6 @@
 Migrations.add({
   version: 4,
-  name: 'Insert expected wins for NFL',
+  name: 'Insert expected wins for each NFL pick',
   up: () => {
     if (! Modules.environment.isProduction()) return; // only do this in production
 
