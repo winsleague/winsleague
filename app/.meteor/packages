@@ -19,7 +19,6 @@ sanjo:jasmine
 velocity:console-reporter
 twbs:bootstrap
 promise
-meteorhacks:npm
 
 
 http
