@@ -16,6 +16,7 @@
     "LeagueTeams": true,
     "Leagues": true,
     "log": false,
+    "Mailer": false,
     "Migrations": false,
     "Modules": false,
     "moment": false,
@@ -26,6 +27,8 @@
     "SeasonLeagueTeams": true,
     "Seasons": true,
     "SimpleSchema": false,
-    "SyncedCron": false
+    "SyncedCron": false,
+    "Templates": true,
+    "TemplateHelpers": true
   }
 }
