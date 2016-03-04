@@ -1,6 +1,6 @@
 Package.describe({
   name: 'testing',
-  version: '0.0.0',
+  version: '0.1.0',
   summary: 'Tools that help us testing the app',
   documentation: 'README.md',
   // Only available in development mode! (for security)
@@ -14,13 +14,20 @@ Package.onUse(function (api) {
     'promise',
     'underscore',
     'mongo',
-    'practicalmeteor:loglevel',
+    'infinitedg:winston',
     'stevezhu:lodash@3.10.1',
   ], 'server');
   api.addFiles([
-    'reset.js',
+    'lib/log.js',
+    'lib/namespace.js',
     'league_fixtures.js',
     'pool_fixtures.js',
+    'pool_team_fixtures.js',
+    'pool_team_pick_fixtures.js',
+    'reset.js',
+    'season_fixtures.js',
+    'season_league_team_fixtures.js',
     'user_fixtures.js',
   ], 'server');
+  api.export('Fixtures', 'server');
 });

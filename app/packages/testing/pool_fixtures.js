@@ -6,15 +6,20 @@ function createPool(pool) {
 }
 
 function createDefaultPool() {
-  const leagueId = Leagues.findOne({ name: 'NFL' }, { fields: { _id: 1 } })._id;
+  const leagueId = Leagues.findOne()._id;
   const pool = {
     leagueId,
     name: 'test',
-    commissionerUserId: Meteor.userId(),
+    commissionerUserId: getDefaultUserId(),
   };
 
   return createPool(pool);
 }
+
+Fixtures.pools = {
+  createPool,
+  createDefaultPool,
+};
 
 Meteor.methods({
   'fixtures/pools/create': createPool,

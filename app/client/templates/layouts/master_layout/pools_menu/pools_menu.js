@@ -1,14 +1,19 @@
 Template.poolsMenu.helpers({
-  canShow() {
-    return !!Meteor.user();
-  },
-  pools: () => { return Pools.find({}); },
+  canShow: () => !!Meteor.user(),
+
+  pools: () => Pools.find(),
 });
 
 Template.poolsMenu.onCreated(function() {
   this.autorun(() => {
-    this.subscribe('userPools', Meteor.userId(), () => {
-      log.info(`userPools subscription ready: ${Pools.find({}).count()} pools`);
+    this.subscribe('pools.ofUser', Meteor.userId(), () => {
+      log.debug(`pools.of_user subscription ready: ${Pools.find().count()} pools`);
     });
   });
+});
+
+Template.poolsMenu.events({
+  'click .menuLink': function (event) {
+    $('.navbar-toggle').click();
+  },
 });

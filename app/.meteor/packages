@@ -15,15 +15,12 @@ standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-mquandalle:jade
 sanjo:jasmine
 velocity:console-reporter
 twbs:bootstrap
 promise
-meteorhacks:npm
 
 
-npm-container
 http
 peerlibrary:xml2js
 blaze-html-templates
@@ -50,3 +47,12 @@ brentjanderson:winston-client
 saucecode:rollbar
 kadira:debug
 meteorhacks:kadira
+mdg:validated-method
+tunifight:loggedin-mixin
+yogiben:autoform-modals
+jcbernack:reactive-aggregate
+stevezhu:lodash
+percolate:migrations
+msavin:mongol
+momentjs:moment
+mrt:moment-timezone

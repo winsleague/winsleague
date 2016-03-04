@@ -23,14 +23,9 @@ describe('NFL Game Data', () => {
     Modules.server.nflGameData.ingestWeekData(season, week);
   });
 
-  afterEach(() => {
-    log.info(`Cleaned up ${Games.remove({})} Games`);
-    log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
-  });
-
   describe('Ingest Week Data', () => {
     it('should ingest all games for week 17', () => {
-      const game = Games.findOne({ gameId: 56744 });
+      const game = Games.findOne({ gameId: '56744' });
       expect(game.homeScore).toBe(10);
       expect(game.awayScore).toBe(7);
     });
@@ -40,7 +35,7 @@ describe('NFL Game Data', () => {
     it('should update the games based on live scores', () => {
       Modules.server.nflGameData.updateLiveScores();
 
-      const game = Games.findOne({ gameId: 56744 });
+      const game = Games.findOne({ gameId: '56744' });
       expect(game.homeScore).toBe(22);
       expect(game.awayScore).toBe(17);
     });

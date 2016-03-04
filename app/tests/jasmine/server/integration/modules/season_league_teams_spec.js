@@ -1,10 +1,5 @@
 describe('Season League Teams', () => {
-  describe('Refresh Team Stats', () => {
-    afterEach(function() {
-      log.info(`Cleaned up ${Games.remove({})} Games`);
-      log.info(`Cleaned up ${SeasonLeagueTeams.remove({})} SeasonLeagueTeams`);
-    });
-
+  describe('Update Team Stats', () => {
     it('should add up the wins and losses for all completed games', () => {
       const league = Modules.leagues.getByName('NFL');
       const season = Modules.seasons.getByYear(league, 2015);
@@ -15,7 +10,7 @@ describe('Season League Teams', () => {
       Games.insert({
         leagueId: season.leagueId,
         seasonId: season._id,
-        gameId: 1,
+        gameId: '1',
         gameDate: new Date(),
         homeTeamId: homeLeagueTeam._id,
         homeScore: 17,
@@ -25,7 +20,11 @@ describe('Season League Teams', () => {
         period: 'final',
       });
 
-      Modules.server.seasonLeagueTeams.refreshTeamStats(season.leagueId, season._id, homeLeagueTeam._id);
+      Modules.server.seasonLeagueTeams.updateTeamStats(
+        season.leagueId,
+        season._id,
+        homeLeagueTeam._id
+      );
 
       const homeSeasonLeagueTeam = SeasonLeagueTeams.findOne({
         leagueId: season.leagueId,

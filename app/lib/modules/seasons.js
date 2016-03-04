@@ -3,7 +3,15 @@ Modules.seasons = {
     return Seasons.findOne({ leagueId: league._id, year });
   },
 
-  getLatest(league) {
-    return Seasons.findOne({ leagueId: league._id }, { sort: ['year', 'desc'] });
+  getLatestByLeague(league) {
+    return Modules.seasons.getLatestByLeagueId(league._id);
+  },
+
+  getLatestByLeagueId(leagueId) {
+    return Seasons.findOne({ leagueId }, { sort: { year: -1 } });
+  },
+
+  getLatestCursorByLeagueId(leagueId) {
+    return Seasons.find({ leagueId }, { sort: { year: -1 }, limit: 1 });
   },
 };

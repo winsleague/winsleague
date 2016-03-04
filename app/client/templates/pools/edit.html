@@ -1,0 +1,26 @@
+<template name="poolsEdit">
+  {{#if Template.subscriptionsReady}}
+    {{> poolsHeader poolId=poolId }}
+
+    <h3>Edit Pool</h3>
+  {{/if}}
+
+  {{#onlyIfLoggedIn}}
+    {{#if Template.subscriptionsReady}}
+      {{#autoForm collection="Pools" id="updatePoolForm" type="update" doc=poolDoc}}
+        <fieldset>
+          {{> afQuickField name="name"}}
+        </fieldset>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+      {{/autoForm}}
+      <br/>
+      <a class="btn btn-default" href="{{pathFor 'poolsShow' poolId=poolId}}">Back to Pool</a>
+      &nbsp;
+      {{> autoformModals}}
+      {{#afModal class="btn btn-danger" collection="Pools" operation="remove" doc=poolDoc._id onSuccess=onRemoveSuccess}}
+        Delete
+      {{/afModal}}
+    {{/if}}
+  {{/onlyIfLoggedIn}}
+</template>

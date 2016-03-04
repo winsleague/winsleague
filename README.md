@@ -81,6 +81,10 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 $ (cd app; meteor shell)
 ```
 
+### View and Edit Client Documents
+
+Open app in the browser and press Control + M. See [Mongol documentation](https://github.com/msavin/Mongol) for more.
+
 ### Database Admin
 
 ```
@@ -88,8 +92,13 @@ $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-
 ```
 
 
+## Migrations
+
+Migrations are done with [percolate:migrations](https://github.com/percolatestudio/meteor-migrations).
+
+
 ## Deploying to Production
 
-```
-$ (cd app; meteor deploy)
-```
+CircleCI automatically does this when tests pass.
+
+If a change to `config/production/mup.json` is needed, make sure to run `gpg -c mup.json` and commit the updated `mup.json.gpg`.

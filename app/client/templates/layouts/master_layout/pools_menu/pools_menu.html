@@ -1,0 +1,11 @@
+<template name="poolsMenu">
+  {{#if canShow}}
+    {{#if Template.subscriptionsReady}}
+      {{#each pool in pools}}
+        <li>
+          <a class="menuLink" href="{{pathFor 'poolsShow' poolId=pool._id}}">{{pool.name}}</a>
+        </li>
+      {{/each}}
+    {{/if}}
+  {{/if}}
+</template>

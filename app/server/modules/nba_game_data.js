@@ -1,11 +1,9 @@
-const prettyjson = Meteor.npmRequire('prettyjson');
-
 Modules.server.nbaGameData = {
-  ingestSeasonData() {
+  ingestSeasonData(season) {
     const league = Modules.leagues.getByName('NBA');
-    if (!league) { throw new Error(`League is not found!`); }
+    if (! league) throw new Error(`League is not found!`);
 
-    const season = Modules.seasons.getLatest(league);
+    if (! season) season = Modules.seasons.getLatestByLeague(league);
 
     const url = `https://erikberg.com/nba/standings.json`;
 
@@ -28,9 +26,7 @@ Modules.server.nbaGameData = {
   saveTeam(league, season, teamData) {
     const leagueTeam = Modules.leagueTeams.getByName(
       league, teamData.first_name, teamData.last_name);
-    if (!leagueTeam) {
-      throw new Error(`Unable to find team! ${prettyjson.render(teamData)}`);
-    }
+    if (!leagueTeam) throw new Error('Unable to find team!', teamData);
 
     SeasonLeagueTeams.upsert(
       { leagueId: league._id, seasonId: season._id, leagueTeamId: leagueTeam._id },

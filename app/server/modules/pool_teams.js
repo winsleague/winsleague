@@ -1,32 +1,73 @@
-let prettyjson = Meteor.npmRequire( 'prettyjson' );
-
 Modules.server.poolTeams = {
-  refreshWhoPickedLeagueTeam(leagueId, seasonId, leagueTeamId) {
+  updateWhoPickedLeagueTeam(leagueTeamId) {
     log.info(`Finding PoolTeams who picked leagueTeamId: ${leagueTeamId}`);
 
-    const poolTeams = PoolTeams.find({ leagueId, seasonId, leagueTeamIds: leagueTeamId });
-    poolTeams.forEach(function(poolTeam) {
-      Modules.server.poolTeams.refreshPoolTeam(leagueId, seasonId, poolTeam);
+    const poolTeamPicks = PoolTeamPicks.find({ leagueTeamId });
+    poolTeamPicks.forEach(poolTeamPick => {
+      Modules.server.poolTeams.updatePoolTeamWins(poolTeamPick.poolTeamId);
+      Modules.server.poolTeams.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
-    log.info(`Done finding PoolTeams`);
+    log.debug(`Done finding PoolTeams who picked leagueTeamId`);
   },
 
-  refreshPoolTeam(leagueId, seasonId, poolTeam) {
-    log.info(`Refreshing PoolTeam: ${poolTeam.userTeamName} - ${poolTeam._id}`);
+  updatePoolTeamWins(poolTeamId) {
+    log.info(`Updating PoolTeam wins`, poolTeamId);
 
-    var totalWins = 0, totalGames = 0, totalPlusMinus = 0;
-    poolTeam.leagueTeamIds.forEach(function(leagueTeamId) {
-      const seasonLeagueTeams = SeasonLeagueTeams.findOne({ leagueId, seasonId, leagueTeamId });
-      if (seasonLeagueTeams) {
-        totalWins += seasonLeagueTeams.wins;
-        totalGames += seasonLeagueTeams.totalGames();
-        totalPlusMinus += seasonLeagueTeams.pointsFor - seasonLeagueTeams.pointsAgainst;
+    let totalWins = 0;
+    let totalLosses = 0;
+    let totalGames = 0;
+    let totalPlusMinus = 0;
+
+    const picks = PoolTeamPicks.find({ poolTeamId });
+
+    picks.forEach(poolTeamPick => {
+      const seasonId = poolTeamPick.seasonId;
+      const leagueTeamId = poolTeamPick.leagueTeamId;
+      const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
+      log.debug(`Found seasonLeagueTeam`, seasonLeagueTeam);
+      if (seasonLeagueTeam) {
+        totalWins += seasonLeagueTeam.wins;
+        totalLosses += seasonLeagueTeam.losses;
+        totalGames += seasonLeagueTeam.totalGames();
+        totalPlusMinus += seasonLeagueTeam.pointsFor - seasonLeagueTeam.pointsAgainst;
       }
     });
 
-    const numberAffected = PoolTeams.update({ _id: poolTeam._id },
-      { $set: { totalWins, totalGames, totalPlusMinus } } );
-    log.info(`PoolTeams.update numberAffected: ${numberAffected}`);
-  }
+    // .direct is needed to avoid an infinite recursion loop
+    // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
+    const numberAffected = PoolTeams.direct.update(poolTeamId,
+      { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
+    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
+  },
+
+  updatePoolTeamPickQuality(poolTeamId) {
+    PoolTeamPicks.find({ poolTeamId }).forEach(poolTeamPick => {
+      Modules.server.poolTeamPicks.updatePickQuality(poolTeamPick);
+    });
+  },
+
+  updateTeamSummary(poolTeamId) {
+    log.info(`Updating team summary for PoolTeam:`, poolTeamId);
+
+    let teamSummary = '';
+    const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
+    picks.forEach(poolTeamPick => {
+      const leagueTeam = LeagueTeams.findOne(poolTeamPick.leagueTeamId);
+      teamSummary += `${leagueTeam.abbreviation}, `;
+    });
+    if (teamSummary.length > 0) {
+      teamSummary = teamSummary.substr(0, teamSummary.length - 2);
+    } else {
+      teamSummary = 'No teams drafted!';
+    }
+
+    const numberAffected = PoolTeams.direct.update(poolTeamId,
+      {
+        $set: {
+          teamSummary,
+        },
+      });
+    log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, numberAffected: ${numberAffected}`);
+  },
 };

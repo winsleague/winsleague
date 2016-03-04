@@ -14,18 +14,30 @@ PoolTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert) {
+      if (this.isInsert && ! this.isSet) {
         // select latest season for league
         const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
           const leagueId = leagueIdField.value;
-          const latestSeason = Seasons.findOne({ leagueId }, { sort: ['year', 'desc'] });
-          if (latestSeason) {
-            return latestSeason._id;
-          }
-          log.error(`No season found for leagueId ${leagueId}`);
+          const latestSeason = Modules.seasons.getLatestByLeagueId(leagueId);
+          if (latestSeason) return latestSeason._id;
+          throw new Error(`No season found for leagueId ${leagueId}`);
         }
         this.unset();
+      }
+    },
+  },
+  seasonYear: {
+    type: Number,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        const seasonIdField = this.field('seasonId');
+        if (seasonIdField.isSet) {
+          const seasonId = seasonIdField.value;
+          const season = Seasons.findOne(seasonId);
+          if (season) return season.year;
+          throw new Error(`No season found for seasonId ${seasonId}`);
+        }
       }
     },
   },
@@ -41,56 +53,26 @@ PoolTeams.schema = new SimpleSchema({
     label: 'Team name',
     type: String,
   },
-  leagueTeamIds: {
-    label: 'Drafted teams',
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    autoform: {
-      minCount: 1,
-      maxCount: 4,
-      initialCount: 4,
-    },
+  teamSummary: {
+    type: String,
+    defaultValue: '',
   },
-  'leagueTeamIds.$': {
-    autoform: {
-      afFieldInput: {
-        options() {
-          return LeagueTeams.find({}).map(leagueTeam => {
-            return { label: leagueTeam.fullName(), value: leagueTeam._id };
-          });
-        },
-      },
-    },
+  totalWins: {
+    type: Number,
+    defaultValue: 0,
   },
-  pickNumbers: {
-    type: [Number],
-    autoValue() {
-      // TODO: this is placeholder until we wire this up
-      if (this.isInsert) {
-        let numbers = [];
-        for (let leagueTeamId of this.field('leagueTeamIds').value) {
-          numbers.push(0);
-        }
-        return numbers;
-      }
-    },
+  totalLosses: {
+    type: Number,
+    defaultValue: 0,
   },
-  leagueTeamMascotNames: {
-    type: [String],
-    autoValue() {
-      if (this.isInsert) {
-        let mascots = [];
-        for (let leagueTeamId of this.field('leagueTeamIds').value) {
-          const leagueTeam = LeagueTeams.findOne(leagueTeamId);
-          mascots.push(leagueTeam.mascotName);
-        }
-        return mascots;
-      }
-    },
+  totalGames: {
+    type: Number,
+    defaultValue: 0,
   },
-  totalWins: { type: Number, defaultValue: 0 },
-  totalGames: { type: Number, defaultValue: 0 },
-  totalPlusMinus: { type: Number, defaultValue: 0 },
+  totalPlusMinus: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -119,17 +101,24 @@ PoolTeams.schema = new SimpleSchema({
 });
 PoolTeams.attachSchema(PoolTeams.schema);
 
-PoolTeams.helpers({
-  teamSummary() {
-    let string = '';
-    for (let i = 0; i < this.leagueTeamMascotNames.length; i++) {
-      string += `${this.leagueTeamMascotNames[i]} #${this.pickNumbers[i]}, `;
-    }
-    if (string.length > 0) string = string.substr(0, string.length - 2);
-    return string;
+PoolTeams.formSchema = new SimpleSchema({
+  poolId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  userTeamName: {
+    label: 'Team name',
+    type: String
+  },
+  userEmail: {
+    label: 'Email',
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
   },
 });
 
+
+/* Access control */
 if (Meteor.isServer) {
   PoolTeams.allow({
     insert(userId, doc) {
@@ -137,25 +126,19 @@ if (Meteor.isServer) {
     },
 
     update(userId, doc, fieldNames, modifier) {
-      return false;
+      // verify userId either owns PoolTeam or is commissioner of pool
+      const poolId = doc.poolId;
+      const pool = Pools.findOne(poolId);
+      return (userId === doc.userId ||
+        userId === pool.commissionerUserId);
     },
 
     remove(userId, doc) {
-      return false;
-    },
-  });
-
-  PoolTeams.deny({
-    insert(userId, doc) {
-      return true;
-    },
-
-    update(userId, doc, fieldNames, modifier) {
-      return true;
-    },
-
-    remove(userId, doc) {
-      return true;
+      // verify userId either owns PoolTeam or is commissioner of pool
+      const poolId = doc.poolId;
+      const pool = Pools.findOne(poolId);
+      return (userId === doc.userId ||
+      userId === pool.commissionerUserId);
     },
   });
 }

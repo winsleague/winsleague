@@ -1,5 +1,3 @@
-const prettyjson = Meteor.npmRequire('prettyjson');
-
 Modules.server.nflGameData = {
   updateLiveScores() {
     const url = `http://www.nfl.com/liveupdate/scorestrip/scorestrip.json`;
@@ -9,13 +7,13 @@ Modules.server.nflGameData = {
     content = content.replace(/,,/g, ',"",'); // do it again to address multiple commas in a row
     log.debug(`fixed content: ${content}`);
     const json = JSON.parse(content);
-    log.debug(`parsed json: ${prettyjson.render(json)}`);
+    log.debug('parsed json:', json);
 
     const league = Modules.leagues.getByName('NFL');
 
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
-      const gameId = parseInt(gameData[10], 10);
+      const gameId = gameData[10];
       const period = gameData[2].toLowerCase();
       const timeRemaining = gameData[3];
       const homeScore = gameData[7];
@@ -30,10 +28,10 @@ Modules.server.nflGameData = {
   },
 
   ingestSeasonData(season) {
-    if (!season) { throw new Error(`Season is null!`); }
+    if (! season) throw new Error(`Season is null!`);
 
     const league = Modules.leagues.getByName('NFL');
-    if (!league) { throw new Error(`League is not found!`); }
+    if (! league) throw new Error(`League is not found!`);
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
@@ -51,9 +49,9 @@ Modules.server.nflGameData = {
     log.debug(`xml: ${xmlString}`);
 
     const json = xml2js.parseStringSync(xmlString, { mergeAttrs: true, explicitArray: false });
-    log.debug(`parsed json: ${prettyjson.render(json)}`);
+    log.debug('parsed json:', json);
 
-    log.debug(`parsed json.ss.gms.g: ${prettyjson.render(json.ss.gms.g)}`);
+    log.debug('parsed json.ss.gms.g:', json.ss.gms.g);
     for (const game of json.ss.gms.g) {
       Modules.server.nflGameData.saveGame(game, season, week);
     }

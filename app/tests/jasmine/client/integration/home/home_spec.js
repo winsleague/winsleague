@@ -1,10 +1,11 @@
-describe('The homepage', () => {
+const page = {
+  getTitleSelector: () => 'h2:contains("Simple Fantasy Sports")',
+};
+
+describe('homepage', () => {
   beforeEach(goToHomePage);
 
   it('should have a title', done => {
-    setTimeout(() => {
-      expect($('h2').text()).toEqual('Simple Fantasy Sports');
-      done();
-    }, DEFAULT_DELAY);
+    waitForElement(page.getTitleSelector(), done);
   });
 });

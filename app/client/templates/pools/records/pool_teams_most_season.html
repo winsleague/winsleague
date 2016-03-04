@@ -1,0 +1,27 @@
+<template name="poolsRecordsPoolTeamsMostSeason">
+  <h4>{{recordTitle}}</h4>
+  {{#if Template.subscriptionsReady}}
+    <div class="table-responsive">
+      <table id="{{tableId}}" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th class="col-xs-4 player">Player</th>
+          <th class="col-xs-4 metricTitle">{{metricTitle}}</th>
+          <th class="col-xs-4 season">Season</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each poolTeam in poolTeams}}
+          <tr>
+            <td class="userTeamName">{{poolTeam.userTeamName}}</td>
+            <td class="metric">{{getMetric poolTeam}}</td>
+            <td class="season">{{poolTeam.seasonYear}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+  <br/>
+</template>

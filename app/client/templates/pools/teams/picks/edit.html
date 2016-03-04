@@ -1,0 +1,22 @@
+<template name="poolTeamPicksEdit">
+  <h2>Edit Pick</h2>
+
+  {{#onlyIfLoggedIn}}
+    {{#if Template.subscriptionsReady}}
+      {{#autoForm collection="PoolTeamPicks" id="updatePoolTeamPickForm" type="update" doc=poolTeamPickDoc}}
+        <fieldset>
+            {{> afQuickField name="leagueTeamId"}}
+            {{> afQuickField name="pickNumber"}}
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Save</button>
+      {{/autoForm}}
+      <br/>
+      <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Team</a>
+      &nbsp;
+      {{> autoformModals}}
+      {{#afModal class="btn btn-danger" collection="PoolTeamPicks" operation="remove" doc=poolTeamPickDoc._id onSuccess=onRemoveSuccess}}
+        Delete
+      {{/afModal}}
+    {{/if}}
+  {{/onlyIfLoggedIn}}
+</template>

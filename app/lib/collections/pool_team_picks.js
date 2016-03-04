@@ -1,0 +1,147 @@
+PoolTeamPicks = new Mongo.Collection('pool_team_picks');
+
+PoolTeamPicks.schema = new SimpleSchema({
+  leagueId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    autoValue() {
+      if (this.isInsert) {
+        return PoolTeams.findOne(this.field('poolTeamId').value).leagueId;
+      }
+    },
+  },
+  seasonId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        return PoolTeams.findOne(this.field('poolTeamId').value).seasonId;
+      }
+    },
+  },
+  seasonYear: {
+    type: Number,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        const seasonIdField = this.field('seasonId');
+        if (seasonIdField.isSet) {
+          const seasonId = seasonIdField.value;
+          const season = Seasons.findOne(seasonId);
+          if (season) return season.year;
+          throw new Error(`No season found for seasonId ${seasonId}`);
+        }
+      }
+    },
+  },
+  poolId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        return PoolTeams.findOne(this.field('poolTeamId').value).poolId;
+      }
+    },
+  },
+  poolTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  leagueTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    label: 'Drafted team',
+    autoform: {
+      afFieldInput: {
+        options() {
+          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => {
+            return { label: leagueTeam.fullName(), value: leagueTeam._id };
+          });
+        },
+      },
+    },
+  },
+  pickNumber: {
+    type: Number,
+    label: 'Pick number',
+    autoform: {
+      afFieldInput: {
+        options() {
+          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
+            return { label: number, value: number };
+          });
+        },
+      },
+    },
+  },
+  actualWins: {
+    type: Number,
+    defaultValue: 0,
+  },
+  expectedWins: {
+    type: Number,
+    decimal: true,
+    defaultValue: 0,
+  },
+  pickQuality: {
+    type: Number,
+    decimal: true,
+    defaultValue: 0,
+  },
+  createdAt: {
+    // Force value to be current date (on server) upon insert
+    // and prevent updates thereafter.
+    type: Date,
+    autoValue() {
+      if (this.isInsert) {
+        return new Date();
+      } else if (this.isUpsert) {
+        return { $setOnInsert: new Date() };
+      }
+      this.unset();  // Prevent user from supplying their own value
+    },
+  },
+  updatedAt: {
+    // Force value to be current date (on server) upon update
+    // and don't allow it to be set upon insert.
+    type: Date,
+    autoValue() {
+      if (this.isUpdate) {
+        return new Date();
+      }
+    },
+    denyInsert: true,
+    optional: true,
+  },
+});
+PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
+
+
+/* Access control */
+function isPoolTeamOwner(userId, poolTeamId) {
+  const poolTeam = PoolTeams.findOne(poolTeamId);
+  return userId === poolTeam.userId;
+}
+
+function isCommissioner(userId, poolId) {
+  const pool = Pools.findOne(poolId);
+  return userId === pool.commissionerUserId;
+}
+
+if (Meteor.isServer) {
+  PoolTeamPicks.allow({
+    insert(userId, doc) {
+      return isPoolTeamOwner(userId, doc.poolTeamId) ||
+        isCommissioner(userId, doc.poolId);
+    },
+
+    update(userId, doc, fieldNames, modifier) {
+      return isPoolTeamOwner(userId, doc.poolTeamId) ||
+        isCommissioner(userId, doc.poolId);
+    },
+
+    remove(userId, doc) {
+      return isPoolTeamOwner(userId, doc.poolTeamId) ||
+        isCommissioner(userId, doc.poolId);
+    },
+  });
+}
