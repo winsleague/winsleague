@@ -13,9 +13,12 @@ Templates.weekly = {
     data(params) {
       const poolId = params.poolId;
       const seasonId = params.seasonId;
+      const pool = Pools.findOne(poolId);
+      const poolName = pool.name;
       const poolTeams = PoolTeams.find({ poolId, seasonId },
         { sort: { totalWins: -1, totalPlusMinus: -1 } });
       return {
+        poolName,
         poolTeams,
       };
     },
