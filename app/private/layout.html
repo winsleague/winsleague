@@ -9,55 +9,60 @@
       {{{css}}}
   </style>
 </head>
-<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+<body bgcolor="#f6f6f6">
 
-<!-- start body table -->
-<table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%" class="body-table">
+<!-- body -->
+<table class="body-wrap" bgcolor="#f6f6f6">
   <tr>
-    <td class="body" align="center" valign="top">
+    <td></td>
+    <td class="container" bgcolor="#FFFFFF">
 
-      <p class="hide preview-text">{{#if preview}}{{preview}}{{else}}Default preview.{{/if}}</p>
+      <!-- content -->
+      <div class="content">
+        <table>
+          <tr>
+            <td>
 
-      <!-- begin all -->
-      <table cellspacing="0" cellpadding="0" border="0" width="100%">
+              <p class="hide preview-text">{{#if preview}}{{preview}}{{else}}Default preview.{{/if}}</p>
 
-        <!-- start header -->
-        <tr class="header"><td align="center">
+              {{{ body }}}
 
-          <table cellspacing="0" cellpadding="0" border="0" class="container">
-            <tr>
-              <td class="header__content" valign="top" align="center">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- /content -->
 
-                <h1>League Wins Pool</h1>
-
-              </td>
-            </tr>
-          </table>
-        </td></tr><!-- end header -->
-
-        <!-- MAIN TEMPLATE CONTENT -->
-
-        <tr class="template-content">
-          <td align="center">
-            {{{ body }}}
-          </td>
-        </tr>
-
-        <!-- end MAIN TEMPLATE CONTENT -->
-
-
-        <!-- begin footer -->
-        <tr class="footer">
-          <td>
-            <p><small></small></p>
-          </td>
-        </tr>
-        <!-- end footer -->
-
-      </table><!-- end -->
     </td>
+    <td></td>
   </tr>
-</table><!-- end body table -->
+</table>
+<!-- /body -->
+
+<!-- footer -->
+<table class="footer-wrap">
+  <tr>
+    <td></td>
+    <td class="container">
+
+      <!-- content -->
+      <div class="content">
+        <table>
+          <tr>
+            <td align="center">
+              <p>Don't like these annoying emails? <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- /content -->
+
+    </td>
+    <td></td>
+  </tr>
+</table>
+<!-- /footer -->
 
 </body>
 </html>

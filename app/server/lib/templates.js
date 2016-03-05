@@ -5,7 +5,9 @@ Templates.weekly = {
   scss: 'weekly-email/style.scss',       // Mail specific SCSS.
 
   helpers: {
-
+    preview() {
+      return `Weekly Wins Leaderboard for ${this.poolName}`;
+    },
   },
 
   route: {
