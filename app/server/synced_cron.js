@@ -6,14 +6,15 @@ const SyncedCronLogger = opts => {
 
 SyncedCron.config({
   logger: SyncedCronLogger,
+  utc: true,
 });
+
+// parser is a later.parse object
 
 SyncedCron.add({
   name: 'Refresh NBA standings',
   schedule(parser) {
-    // parser is a later.parse object
-    return parser.recur()
-      .on(5).hour(); // every 5am (just in case this runs ET)
+    return parser.recur().on(12).hour();
   },
   job() {
     Modules.server.nbaGameData.ingestSeasonData();
@@ -23,12 +24,20 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Refresh MLB standings',
   schedule(parser) {
-    // parser is a later.parse object
-    return parser.recur()
-      .every(1).hour();
+    return parser.recur().every(1).hour();
   },
   job() {
     Modules.server.mlbGameData.refreshStandings();
+  },
+});
+
+SyncedCron.add({
+  name: 'Send weekly emails',
+  schedule(parser) {
+    return parser.text('at 1:00 pm on Tuesday');
+  },
+  job() {
+    Modules.server.weeklyReport.emailReports();
   },
 });
 
