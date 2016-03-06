@@ -1,0 +1,28 @@
+<h2>Wins Leaderboard for {{poolName}}</h2>
+
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th class="col-xs-6">Player</th>
+    <th class="col-xs-2">W</th>
+    <th class="col-xs-2">GP</th>
+    <th class="col-xs-2">+/-</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each poolTeam in poolTeams}}
+    <tr id="{{poolTeam._id}}">
+      <td>
+        <a href="http://www.leaguewinspool.com/pools/{{poolTeam.poolId}}/teams/{{poolTeam._id}}">{{poolTeam.userTeamName}}</a>
+      </td>
+      <td>{{poolTeam.totalWins}}</td>
+      <td>{{poolTeam.totalGames}}</td>
+      <td>{{poolTeam.totalPlusMinus}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+<br/>
+
+<a href="http://www.leaguewinspool.com/pools/{{poolTeam.poolId}}">View your pool on League Wins Pool</a>
