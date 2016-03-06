@@ -1,6 +1,6 @@
 Templates = {};
 
-Templates.weekly = {
+Templates.weeklyEmail = {
   path: 'weekly-email/template.html',    // Relative to the 'private' dir.
   scss: 'weekly-email/style.scss',       // Mail specific SCSS.
 
@@ -20,6 +20,8 @@ Templates.weekly = {
       const poolTeams = PoolTeams.find({ poolId, seasonId },
         { sort: { totalWins: -1, totalPlusMinus: -1 } });
       return {
+        poolId,
+        seasonId,
         poolName,
         poolTeams,
       };
