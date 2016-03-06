@@ -1,6 +1,5 @@
 Mailer.config({
-  from: 'League Wins Pool <team@leaguewinspool.com>',
-  replyTo: 'League Wins Pool <team@leaguewinspool.com>',
+  from: 'League Wins Pool <no-reply@leaguewinspool.com>',
   routePrefix: 'emails',              // Route prefix.
   baseUrl: process.env.ROOT_URL,      // The base domain to build absolute link URLs from in the emails.
   testEmail: 'team@leaguewinspool.com',  // Default address to send test emails to.
