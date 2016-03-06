@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{{preview}}</title>
+
+  <style type="text/css">
+      {{{css}}}
+  </style>
+</head>
+<body bgcolor="#f6f6f6">
+
+<!-- body -->
+<table class="body-wrap" bgcolor="#f6f6f6">
+  <tr>
+    <td></td>
+    <td class="container" bgcolor="#FFFFFF">
+
+      <!-- content -->
+      <div class="content">
+        <table>
+          <tr>
+            <td>
+
+              <p class="hide preview-text">{{#if preview}}{{preview}}{{else}}Default preview.{{/if}}</p>
+
+              {{{ body }}}
+
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- /content -->
+
+    </td>
+    <td></td>
+  </tr>
+</table>
+<!-- /body -->
+
+<!-- footer -->
+<table class="footer-wrap">
+  <tr>
+    <td></td>
+    <td class="container">
+
+      <!-- content -->
+      <div class="content">
+        <table>
+          <tr>
+            <td align="center">
+              <p>Don't like these annoying emails? <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- /content -->
+
+    </td>
+    <td></td>
+  </tr>
+</table>
+<!-- /footer -->
+
+</body>
+</html>
