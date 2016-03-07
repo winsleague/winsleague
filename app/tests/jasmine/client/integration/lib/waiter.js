@@ -1,3 +1,10 @@
+/* globals
+ waitForElement: true,
+ waitForMissingElement: true,
+ waitForSubscription: true,
+ waitForEmptySubscription: true,
+ */
+
 waitForElement = (selector, successCallback) => {
   log.debug(`waitForElement called for ${selector}`);
   const checkInterval = 50;
@@ -55,10 +62,9 @@ waitForEmptySubscription = (query, successCallback) => {
     if (Date.now() > startTime + timeoutInterval) {
       Meteor.clearInterval(intervalId);
       // Jasmine will handle the test timeout error
-    } else if (query.count() == 0) {
+    } else if (query.count() === 0) {
       Meteor.clearInterval(intervalId);
       successCallback();
     }
   }, checkInterval);
 };
-
