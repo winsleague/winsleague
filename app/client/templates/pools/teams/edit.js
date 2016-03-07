@@ -13,7 +13,7 @@ Template.poolTeamsEdit.helpers({
   },
 });
 
-Template.poolTeamsEdit.onCreated(function() {
+Template.poolTeamsEdit.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPoolTeamId = () => FlowRouter.getParam('poolTeamId');
@@ -49,8 +49,9 @@ Template.poolTeamsEdit.onCreated(function() {
 
 AutoForm.hooks({
   updatePoolTeamForm: {
-    onSuccess: (formType, result) => {
-      log.debug(`updatePoolTeamForm.onSuccess() ==> redirect to poolTeamsShow/`, FlowRouter.getParam('poolId'));
+    onSuccess: () => {
+      log.debug(`updatePoolTeamForm.onSuccess() ==> redirect to poolTeamsShow/`,
+        FlowRouter.getParam('poolId'));
       FlowRouter.go('poolTeamsShow', {
         poolId: FlowRouter.getParam('poolId'),
         poolTeamId: FlowRouter.getParam('poolTeamId'),
