@@ -22,7 +22,7 @@ Template.poolsRecordsPoolTeamPicksMostSeason.helpers({
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
-Template.poolsRecordsPoolTeamPicksMostSeason.onCreated(function() {
+Template.poolsRecordsPoolTeamPicksMostSeason.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     recordTitle: { type: String },

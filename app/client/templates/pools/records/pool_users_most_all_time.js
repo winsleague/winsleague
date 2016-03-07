@@ -6,7 +6,7 @@ Template.poolsRecordsPoolUsersMostAllTime.helpers({
   },
 });
 
-Template.poolsRecordsPoolUsersMostAllTime.onCreated(function() {
+Template.poolsRecordsPoolUsersMostAllTime.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     recordTitle: { type: String },

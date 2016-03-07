@@ -4,7 +4,7 @@ Template.seasonSwitcher.helpers({
   isMultipleSeasons: () => Seasons.find().count() > 1,
 });
 
-Template.seasonSwitcher.onCreated(function() {
+Template.seasonSwitcher.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
   }).validate(this.data);
