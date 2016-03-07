@@ -17,7 +17,7 @@ Template.poolsShow.helpers({
   },
 });
 
-Template.poolsShow.onCreated(function() {
+Template.poolsShow.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPool = () => Pools.findOne(this.getPoolId());

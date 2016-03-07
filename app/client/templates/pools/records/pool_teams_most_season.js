@@ -12,7 +12,7 @@ Template.poolsRecordsPoolTeamsMostSeason.helpers({
   },
 });
 
-Template.poolsRecordsPoolTeamsMostSeason.onCreated(function() {
+Template.poolsRecordsPoolTeamsMostSeason.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     recordTitle: { type: String },

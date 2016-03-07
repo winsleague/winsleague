@@ -4,7 +4,7 @@ Template.poolsNew.helpers({
   nflLeagueId: () => Template.instance().getNflLeagueId(),
 });
 
-Template.poolsNew.onCreated(function() {
+Template.poolsNew.onCreated(function () {
   this.getNflLeagueId = () => {
     const league = Leagues.findOne({ name: 'NFL' }, { fields: { _id: 1 } });
     if (league) return league._id;

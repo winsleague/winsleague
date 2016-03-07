@@ -64,18 +64,4 @@ if (Meteor.isServer) {
       return false;
     },
   });
-
-  Games.deny({
-    insert(userId, doc) {
-      return true;
-    },
-
-    update(userId, doc, fieldNames, modifier) {
-      return true;
-    },
-
-    remove(userId, doc) {
-      return true;
-    },
-  });
 }

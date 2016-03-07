@@ -53,9 +53,10 @@ PoolTeamPicks.schema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options() {
-          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => {
-            return { label: leagueTeam.fullName(), value: leagueTeam._id };
-          });
+          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => ({
+            label: leagueTeam.fullName(),
+            value: leagueTeam._id,
+          }));
         },
       },
     },
@@ -66,9 +67,10 @@ PoolTeamPicks.schema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options() {
-          return _.range(1, LeagueTeams.find().count() + 1).map(function (number) {
-            return { label: number, value: number };
-          });
+          return _.range(1, LeagueTeams.find().count() + 1).map(number => ({
+            label: number,
+            value: number,
+          }));
         },
       },
     },
