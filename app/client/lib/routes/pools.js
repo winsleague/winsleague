@@ -52,4 +52,3 @@ Routes.pools.route('/:poolId/records', {
     BlazeLayout.render('masterLayout', { content: 'poolsRecords' });
   },
 });
-

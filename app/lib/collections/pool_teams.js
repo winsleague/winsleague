@@ -104,16 +104,16 @@ PoolTeams.attachSchema(PoolTeams.schema);
 PoolTeams.formSchema = new SimpleSchema({
   poolId: {
     type: String,
-    regEx: SimpleSchema.RegEx.Id
+    regEx: SimpleSchema.RegEx.Id,
   },
   userTeamName: {
     label: 'Team name',
-    type: String
+    type: String,
   },
   userEmail: {
     label: 'Email',
     type: String,
-    regEx: SimpleSchema.RegEx.Email
+    regEx: SimpleSchema.RegEx.Email,
   },
 });
 

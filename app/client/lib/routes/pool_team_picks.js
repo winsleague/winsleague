@@ -19,4 +19,3 @@ Routes.poolTeamPicks.route('/:poolTeamPickId/edit', {
     BlazeLayout.render('masterLayout', { content: 'poolTeamPicksEdit' });
   },
 });
-

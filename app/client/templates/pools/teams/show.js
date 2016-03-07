@@ -37,7 +37,7 @@ Template.poolTeamsShow.helpers({
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
-Template.poolTeamsShow.onCreated(function() {
+Template.poolTeamsShow.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
   this.getPool = () => Pools.findOne(this.getPoolId());
 

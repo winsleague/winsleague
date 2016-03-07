@@ -1,4 +1,23 @@
-languages:
-  JavaScript: true
-# exclude_paths:
-# - "foo/bar.rb"
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  fixme:
+    enabled: true
+  nodesecurity:
+    enabled: true
+ratings:
+  paths:
+  - "app/**/*"
+  - "**.js"
+  - "**.jsx"
+  - "**.css"
+  - "**.scss"
+  - "**.less"
+exclude_paths: []

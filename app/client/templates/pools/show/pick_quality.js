@@ -20,7 +20,7 @@ Template.poolsShowPickQuality.helpers({
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
-Template.poolsShowPickQuality.onCreated(function() {
+Template.poolsShowPickQuality.onCreated(function () {
   new SimpleSchema({
     leagueId: { type: String },
     seasonId: { type: String },

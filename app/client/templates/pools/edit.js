@@ -13,7 +13,7 @@ Template.poolsEdit.helpers({
   },
 });
 
-Template.poolsEdit.onCreated(function() {
+Template.poolsEdit.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPoolDoc = () => Pools.findOne(this.getPoolId());

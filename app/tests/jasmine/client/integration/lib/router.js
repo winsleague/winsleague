@@ -1,3 +1,23 @@
+/* globals
+ loginWithDefaultUser: true,
+ logoutUser: true,
+ waitForRouter: true,
+ goToRoute: true,
+ deferAfterFlush: true,
+ goToHomePage: true,
+ goToPoolsNewPage: true,
+ goToPoolsShowPage: true,
+ goToPoolsRecordsPage: true,
+ goToPoolsEditPage: true,
+ goToPoolTeamsNewPage: true,
+ goToPoolTeamsShowPage: true,
+ goToPoolTeamsEditPage: true,
+ goToPoolTeamPicksNewPage: true,
+ goToPoolTeamPicksEditPage: true,
+ createMethodResultHandler,
+ waitForSubscription,
+ */
+
 loginWithDefaultUser = (done) => {
   Meteor.loginWithPassword(
     'test@test.com',
@@ -24,10 +44,10 @@ waitForRouter = done => {
 
 goToRoute = (pathDef, params, queryParams) => {
   return (done) => {
-    queryParams = queryParams || {};
-    queryParams.jasmine = true;
+    const newQueryParams = queryParams || {};
+    newQueryParams.jasmine = true;
     log.info(`Navigating to ${pathDef}/`, params);
-    FlowRouter.go(pathDef, params, queryParams);
+    FlowRouter.go(pathDef, params, newQueryParams);
     waitForRouter(done);
   };
 };

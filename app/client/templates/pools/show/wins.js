@@ -6,7 +6,7 @@ Template.poolsShowWins.helpers({
   },
 });
 
-Template.poolsShowWins.onCreated(function() {
+Template.poolsShowWins.onCreated(function () {
   new SimpleSchema({
     seasonId: { type: String },
     poolId: { type: String },

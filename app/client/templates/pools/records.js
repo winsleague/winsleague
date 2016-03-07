@@ -4,7 +4,7 @@ Template.poolsRecords.helpers({
   poolName: () => _.get(Template.instance().getPool(), 'name'),
 });
 
-Template.poolsRecords.onCreated(function() {
+Template.poolsRecords.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPool = () => Pools.findOne(this.getPoolId());

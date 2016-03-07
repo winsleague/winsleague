@@ -55,7 +55,7 @@ resetDatabase = () => {
 loadDefaultFixtures = () => {
   log.info('Loading default fixtures');
 
-  Modules.server.seeds.initializeLeagues();
+  Modules.server.seeds.utils.initializeLeagues();
   Accounts.createUser({ email: 'test@test.com' });
 
   log.info('Finished loading default fixtures');

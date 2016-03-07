@@ -7,7 +7,7 @@ Template.poolsHeader.helpers({
   },
 });
 
-Template.poolsHeader.onCreated(function() {
+Template.poolsHeader.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     seasonId: { type: String, optional: true },

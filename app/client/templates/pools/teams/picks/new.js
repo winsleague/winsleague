@@ -6,7 +6,7 @@ Template.poolTeamPicksNew.helpers({
   seasonId: () => Template.instance().getSeasonId(),
 });
 
-Template.poolTeamPicksNew.onCreated(function() {
+Template.poolTeamPicksNew.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
   this.getPool = () => Pools.findOne(this.getPoolId());
 
