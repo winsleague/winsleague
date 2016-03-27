@@ -38,6 +38,8 @@ Template.poolsShow.onCreated(function () {
         log.warn('poolsShow: Redirecting to / because Pools.count=0');
         FlowRouter.go('/');
       }
+
+      Session.setPersistent('previousPoolId', this.getPoolId());
     });
 
     this.subscribe('seasons.single', this.getSeasonId());
