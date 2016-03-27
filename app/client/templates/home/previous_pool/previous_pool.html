@@ -1,0 +1,15 @@
+<template name="previousPool">
+  {{#if hasPreviousPool }}
+    {{#if Template.subscriptionsReady}}
+      <br/>
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">Looking for your pool?</h3>
+        </div>
+        <div class="panel-body">
+          <a href="{{pathFor 'poolsShow' poolId=poolId}}">View {{poolName}} leaderboard</a>
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+</template>
