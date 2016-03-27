@@ -135,6 +135,7 @@ testing@0.1.0
 tracker@1.0.9
 tunifight:loggedin-mixin@0.0.9
 twbs:bootstrap@3.3.6
+u2622:persistent-session@0.4.4
 ui@1.0.8
 underscore@1.0.4
 url@1.0.5
