@@ -1,16 +1,14 @@
 <template name="poolsNew">
   <h2>Create Pool</h2>
 
-  {{#onlyIfLoggedIn}}
-    {{#if Template.subscriptionsReady}}
-      {{#autoForm collection="Pools" id="insertPoolForm" type="insert"}}
-        <fieldset>
-            {{> afQuickField name="leagueId" options=leagueOptions defaultValue=nflLeagueId}}
-        {{> afQuickField name="name"}}
-        </fieldset>
+  {{#if Template.subscriptionsReady}}
+    {{#autoForm collection="Pools" id="insertPoolForm" type="insert"}}
+      <fieldset>
+          {{> afQuickField name="leagueId" options=leagueOptions defaultValue=nflLeagueId}}
+      {{> afQuickField name="name"}}
+      </fieldset>
 
-        <button class="btn btn-primary" type="submit">Create</button>
-      {{/autoForm}}
-    {{/if}}
-  {{/onlyIfLoggedIn}}
+      <button class="btn btn-primary" type="submit">Create</button>
+    {{/autoForm}}
+  {{/if}}
 </template>

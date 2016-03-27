@@ -5,6 +5,7 @@ Routes.poolTeams = FlowRouter.group({
 // http://app.com/pools/:poolId/teams/new
 Routes.poolTeams.route('/new', {
   name: 'poolTeamsNew',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're creating teams for a pool: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolTeamsNew' });
@@ -23,6 +24,7 @@ Routes.poolTeams.route('/:poolTeamId', {
 // http://app.com/pools/:poolId/teams/:poolTeamId/edit
 Routes.poolTeams.route('/:poolTeamId/edit', {
   name: 'poolTeamsEdit',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're editing a pool team: ${params.poolId} and ${params.poolTeamId}`, params);
     BlazeLayout.render('masterLayout', { content: 'poolTeamsEdit' });

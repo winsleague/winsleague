@@ -36,7 +36,6 @@ velocity:html-reporter
 fortawesome:fontawesome
 alanning:roles
 aldeed:autoform
-ian:accounts-ui-bootstrap-3
 check
 arillo:flow-router-helpers
 testing
@@ -60,4 +59,6 @@ lookback:emails
 chrisbutler:node-sass
 meteorhacks:aggregate
 zimme:active-route
+useraccounts:bootstrap
+useraccounts:flow-routing
 u2622:persistent-session

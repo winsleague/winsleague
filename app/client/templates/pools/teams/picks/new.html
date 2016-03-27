@@ -1,18 +1,16 @@
 <template name="poolTeamPicksNew">
   <h2>Add Pick</h2>
 
-  {{#onlyIfLoggedIn}}
-    {{#autoForm collection="PoolTeamPicks" id="insertPoolTeamPickForm" type="insert"}}
-      <fieldset>
-        {{> afFieldInput name="poolTeamId" type="hidden" value=poolTeamId}}
-        {{#if Template.subscriptionsReady}}
-          {{> afQuickField name="leagueTeamId"}}
-          {{> afQuickField name="pickNumber"}}
-        {{/if}}
-      </fieldset>
-      <button class="btn btn-primary" type="submit">Add</button>
-      &nbsp;
-      <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Player</a>
-    {{/autoForm}}
-  {{/onlyIfLoggedIn}}
+  {{#autoForm collection="PoolTeamPicks" id="insertPoolTeamPickForm" type="insert"}}
+    <fieldset>
+      {{> afFieldInput name="poolTeamId" type="hidden" value=poolTeamId}}
+      {{#if Template.subscriptionsReady}}
+        {{> afQuickField name="leagueTeamId"}}
+        {{> afQuickField name="pickNumber"}}
+      {{/if}}
+    </fieldset>
+    <button class="btn btn-primary" type="submit">Add</button>
+    &nbsp;
+    <a class="btn btn-default" href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamId}}">Back to Player</a>
+  {{/autoForm}}
 </template>
