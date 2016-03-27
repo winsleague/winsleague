@@ -12,6 +12,7 @@ Routes.pools.route('/', {
 // http://app.com/pools/new
 Routes.pools.route('/new', {
   name: 'poolsNew',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
     BlazeLayout.render('masterLayout', { content: 'poolsNew' });
   },
@@ -29,6 +30,7 @@ Routes.pools.route('/:poolId', {
 // http://app.com/pools/:poolId/edit
 Routes.pools.route('/:poolId/edit', {
   name: 'poolsEdit',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're editing a single pool: ${params.poolId}`);
     BlazeLayout.render('masterLayout', { content: 'poolsEdit' });
