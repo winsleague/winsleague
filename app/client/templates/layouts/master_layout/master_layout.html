@@ -1,26 +1,30 @@
 <template name="masterLayout">
   <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
-      <div class="navbar-header">
-        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">League Wins Pool</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="{{isActiveRoute 'poolsNew'}}">
-            <a class="hidden-xs" href="{{pathFor 'poolsNew'}}">Create Pool</a>
-            <a class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'poolsNew'}}">New Pool</a>
-          </li>
-          {{> poolsMenu}}
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          {{> atNavButton}}
-        </ul>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">League Wins Pool</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            {{> poolsMenu}}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="{{isActiveRoute 'poolsNew'}}">
+              <a class="hidden-xs" href="{{pathFor 'poolsNew'}}"><b>Create Pool</b></a>
+              <a class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'poolsNew'}}"><b>Create Pool</b></a>
+            </li>
+            <li>
+              {{> atNavButton}}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
