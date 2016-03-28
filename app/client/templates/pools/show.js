@@ -27,7 +27,7 @@ Template.poolsShow.onCreated(function () {
   this.getSeasonId = () => {
     const seasonId = FlowRouter.getParam('seasonId');
     if (seasonId) return seasonId;
-    return this.getPool().latestSeasonId;
+    return _.get(this.getPool(), 'latestSeasonId');
   };
 
   this.autorun(() => {
