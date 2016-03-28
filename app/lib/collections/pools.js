@@ -8,12 +8,32 @@ Pools.attachSchema(new SimpleSchema({
       type: 'select-radio-inline',
     },
   },
-  name: { type: String, max: 50 },
+  name: {
+    type: String,
+    max: 50,
+  },
   commissionerUserId: {
     type: String,
     autoValue() {
       if (this.isInsert && this.isSet === false) {
         return Meteor.userId(); // so we can easily stub this in tests
+      }
+    },
+  },
+  latestSeasonId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    autoValue() {
+      if (this.isInsert && ! this.isSet) {
+        // select latest season for league
+        const leagueIdField = this.field('leagueId');
+        if (leagueIdField.isSet) {
+          const leagueId = leagueIdField.value;
+          const latestSeason = Modules.seasons.getLatestByLeagueId(leagueId);
+          if (latestSeason) return latestSeason._id;
+          throw new Error(`No season found for leagueId ${leagueId}`);
+        }
+        this.unset();
       }
     },
   },
