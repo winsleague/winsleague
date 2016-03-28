@@ -17,13 +17,17 @@ Template.poolTeamsShow.helpers({
   editAllowed: () => {
     const poolTeam = Template.instance().getPoolTeam();
     const pool = Template.instance().getPool();
-    return (Meteor.userId() === poolTeam.userId ||
+    return (Meteor.userId() === _.get(poolTeam, 'userId') ||
       Meteor.userId() === _.get(pool, 'commissionerUserId'));
   },
 
   isLatestSeason: () => Template.instance().isLatestSeason(),
 
-  leagueTeamName: (leagueTeamId) => LeagueTeams.findOne(leagueTeamId).fullName(),
+  leagueTeamName: (leagueTeamId) => {
+    const team = LeagueTeams.findOne(leagueTeamId);
+    if (team) return team.fullName();
+    return '';
+  },
 
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
@@ -39,7 +43,7 @@ Template.poolTeamsShow.onCreated(function () {
 
   this.getSeasonId = () => _.get(this.getPoolTeam(), 'seasonId');
 
-  this.isLatestSeason = () => this.getPoolTeam().seasonId === this.getPool().latestSeasonId;
+  this.isLatestSeason = () => _.get(this.getPoolTeam(), 'seasonId') === _.get(this.getPool(), 'latestSeasonId');
 
   this.autorun(() => {
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
