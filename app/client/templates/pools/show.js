@@ -44,5 +44,7 @@ Template.poolsShow.onCreated(function () {
     });
 
     this.subscribe('seasons.single', this.getSeasonId());
+
+    this.subscribe('seasons.latest.ofLeague', this.getLeagueId());
   });
 });

@@ -10,7 +10,6 @@ Meteor.publish('seasons.latest.ofLeague', function(leagueId) {
   return Modules.seasons.getLatestCursorByLeagueId(leagueId);
 });
 
-
 Meteor.publish('seasons.ofPool', function(poolId) {
   check(poolId, String);
 
