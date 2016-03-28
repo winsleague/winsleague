@@ -1,0 +1,10 @@
+<template name="dashboard">
+  {{#if Template.subscriptionsReady}}
+    {{#each pool in pools}}
+      {{> poolsShowWins
+        title=pool.name
+        poolId=pool._id
+      }}
+    {{/each}}
+  {{/if}}
+</template>
