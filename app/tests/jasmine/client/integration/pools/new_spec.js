@@ -19,7 +19,7 @@ describe('poolsNew page', () => {
     waitForElement(page.getNameSelector(), done);
   });
 
-  it('should create new pool', (done) => {
+  it('should create new pool', done => {
     const poolName = 'Dummy';
     $(page.getNameSelector()).val(poolName);
     $('form').submit();
