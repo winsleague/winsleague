@@ -27,8 +27,7 @@ Template.poolsShow.onCreated(function () {
   this.getSeasonId = () => {
     const seasonId = FlowRouter.getParam('seasonId');
     if (seasonId) return seasonId;
-    const season = Modules.seasons.getLatestByLeagueId(this.getLeagueId());
-    return _.get(season, '_id');
+    return _.get(this.getPool(), 'latestSeasonId');
   };
 
   this.autorun(() => {
@@ -39,6 +38,8 @@ Template.poolsShow.onCreated(function () {
         FlowRouter.go('/');
       }
 
+      // this is so we can suggest to users on the homepage where to find
+      // the pool they were looking at
       Session.setPersistent('previousPoolId', this.getPoolId());
     });
 

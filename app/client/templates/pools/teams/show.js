@@ -17,21 +17,16 @@ Template.poolTeamsShow.helpers({
   editAllowed: () => {
     const poolTeam = Template.instance().getPoolTeam();
     const pool = Template.instance().getPool();
-    return (Meteor.userId() === poolTeam.userId ||
+    return (Meteor.userId() === _.get(poolTeam, 'userId') ||
       Meteor.userId() === _.get(pool, 'commissionerUserId'));
   },
 
-  isLatestSeason: () => {
-    if (Template.instance().getSeasonId()) {
-      const latestSeason = Modules.seasons.getLatestByLeagueId(Template.instance().getLeagueId());
-      return _.get(latestSeason, '_id') === Template.instance().getSeasonId();
-    } else {
-      return true;
-    }
-  },
+  isLatestSeason: () => Template.instance().isLatestSeason(),
 
   leagueTeamName: (leagueTeamId) => {
-    return LeagueTeams.findOne(leagueTeamId).fullName();
+    const team = LeagueTeams.findOne(leagueTeamId);
+    if (team) return team.fullName();
+    return '';
   },
 
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
@@ -48,6 +43,8 @@ Template.poolTeamsShow.onCreated(function () {
 
   this.getSeasonId = () => _.get(this.getPoolTeam(), 'seasonId');
 
+  this.isLatestSeason = () => _.get(this.getPoolTeam(), 'seasonId') === _.get(this.getPool(), 'latestSeasonId');
+
   this.autorun(() => {
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
       log.debug(`poolTeams.single subscription ready: ${PoolTeams.find(this.getPoolTeamId()).count()}`);
@@ -56,10 +53,6 @@ Template.poolTeamsShow.onCreated(function () {
     this.subscribe('poolTeamPicks.ofPoolTeam', this.getPoolTeamId());
 
     this.subscribe('pools.single', this.getPoolId(), () => {
-      this.subscribe('seasons.single', this.getSeasonId());
-
-      this.subscribe('seasons.latest.ofLeague', this.getLeagueId());
-
       this.subscribe('leagueTeams.ofLeague', this.getLeagueId());
     });
   });

@@ -1,17 +1,35 @@
 Template.poolsShowWins.helpers({
   poolTeams: () => {
-    const seasonId = Template.currentData().seasonId;
+    const seasonId = Template.instance().getSeasonId();
     const poolId = Template.currentData().poolId;
     return PoolTeams.find({ poolId, seasonId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
+  },
+  title: () => {
+    const title = Template.currentData().title;
+    if (Template.currentData().linkTitle) {
+      const path = FlowRouter.path('poolsShow', { poolId: Template.currentData().poolId });
+      return `<a href="${path}">${title}</a>`;
+    }
+    return title;
   },
 });
 
 Template.poolsShowWins.onCreated(function () {
   new SimpleSchema({
-    seasonId: { type: String },
+    title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
+    linkTitle: { type: Boolean, optional: true, defaultValue: false },
+    seasonId: { type: String, optional: true },
     poolId: { type: String },
-    isCommissioner: { type: Boolean },
+    isCommissioner: { type: Boolean, optional: true, defaultValue: false },
   }).validate(this.data);
+
+  this.getSeasonId = () => {
+    if (this.data.seasonId) return this.data.seasonId;
+
+    return this.getPool().latestSeasonId;
+  };
+
+  this.getPool = () => Pools.findOne(this.data.poolId);
 
   this.autorun(() => {
     this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId, () => {

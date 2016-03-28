@@ -14,6 +14,8 @@ Template.poolsNew.onCreated(function () {
     this.subscribe('leagues.list', () => {
       const leagues = Leagues.find().map(league => { return league._id; });
       log.debug(`leagues.list subscription ready: ${Leagues.find().count()} leagues, %j`, leagues);
+
+      this.subscribe('seasons.latest');
     });
   });
 });
