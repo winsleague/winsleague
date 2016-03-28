@@ -4,12 +4,20 @@ Template.poolsShowWins.helpers({
     const poolId = Template.currentData().poolId;
     return PoolTeams.find({ poolId, seasonId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
   },
-  title: () => Template.currentData().title,
+  title: () => {
+    const title = Template.currentData().title;
+    if (Template.currentData().linkTitle) {
+      const path = FlowRouter.path('poolsShow', { poolId: Template.currentData().poolId });
+      return `<a href="${path}">${title}</a>`;
+    }
+    return title;
+  },
 });
 
 Template.poolsShowWins.onCreated(function () {
   new SimpleSchema({
     title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
+    linkTitle: { type: Boolean, optional: true, defaultValue: false },
     seasonId: { type: String, optional: true },
     poolId: { type: String },
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },

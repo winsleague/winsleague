@@ -1,5 +1,7 @@
 Template.dashboard.helpers({
   pools: () => Pools.find(),
+
+  poolNameLink: (pool) => `<a href="/pools/${pool._id}">${pool.name}</a>`,
 });
 
 Template.dashboard.onCreated(function () {
