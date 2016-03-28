@@ -4,6 +4,12 @@ Meteor.publish('seasons.single', function(_id) {
   return Seasons.find(_id);
 });
 
+Meteor.publish('seasons.latest', function() {
+  // very simple implementation that just returns all the seasons
+  // instead of the latest one for each league
+  return Seasons.find();
+});
+
 Meteor.publish('seasons.latest.ofLeague', function(leagueId) {
   if (! leagueId) return this.ready();
   check(leagueId, String);
