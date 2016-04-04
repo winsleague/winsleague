@@ -108,7 +108,7 @@ Modules.server.mlbGameData = {
 
     const year = today.year();
     const month = today.month() + 1; // moment months are zero-based
-    const day = today.day();
+    const day = today.date();
 
     Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
   },
