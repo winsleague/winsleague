@@ -20,7 +20,10 @@ Modules.server.poolTeamPicks = {
 
     const pickQuality = actualWins - expectedWins;
 
-    log.info(`Updating PoolTeamPick:`, poolTeamPick, actualWins, expectedWins, pickQuality);
+    log.info(`Updating PoolTeamPick:`, poolTeamPick,
+      'actualWins:', actualWins,
+      'expectedWins:', expectedWins,
+      'pickQuality:', pickQuality);
 
     PoolTeamPicks.direct.update(poolTeamPick._id, {
       $set: {
