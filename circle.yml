@@ -38,12 +38,13 @@ dependencies:
     - if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
     # -- INSTALL METEOR PACKAGES --
-    - (cd app; meteor list) # triggers the packages to download and install
+    - (cd app; meteor list --release 1.2.1) # triggers the packages to download and install
 
 test:
   override:
     # Run tests
-    - (cd app; DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor run --test)
+    - (cd app; JASMINE_SERVER_INTEGRATION=0 DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor run --release 1.2.1 --test)
+    - (cd app; JASMINE_CLIENT_INTEGRATION=0 DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor run --release 1.2.1 --test)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     # Disabled until we get tests reporting to lcov again
     # - npm install -g codeclimate-test-reporter@0.1.1
