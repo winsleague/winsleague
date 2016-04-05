@@ -24,7 +24,7 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Refresh MLB standings',
   schedule(parser) {
-    return parser.recur().every(1).hour();
+    return parser.recur().every(10).minute();
   },
   job() {
     Modules.server.mlbGameData.refreshStandings();
@@ -34,7 +34,7 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Send weekly emails',
   schedule(parser) {
-    return parser.text('at 1:00 pm'); //  on Tuesday
+    return parser.text('at 1:00 pm on Tuesday');
   },
   job() {
     Modules.server.weeklyReport.emailReports();
