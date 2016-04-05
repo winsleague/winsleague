@@ -60,4 +60,6 @@ SyncedCron.add({
   },
 });
 
-SyncedCron.start();
+if (! process.env.CI) { // https://circleci.com/docs/dont-run/
+  SyncedCron.start();
+}
