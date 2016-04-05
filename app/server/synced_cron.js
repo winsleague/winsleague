@@ -10,6 +10,7 @@ SyncedCron.config({
 });
 
 // parser is a later.parse object
+// we catch exceptions so we can report them to Rollbar
 
 SyncedCron.add({
   name: 'Refresh NBA standings',
@@ -17,7 +18,13 @@ SyncedCron.add({
     return parser.recur().on(12).hour();
   },
   job() {
-    Modules.server.nbaGameData.ingestSeasonData();
+    try {
+      Modules.server.nbaGameData.ingestSeasonData();
+    } catch (e) {
+      handleError(e, {
+        job: 'nbaGameData.ingestSeasonData()',
+      });
+    }
   },
 });
 
@@ -27,7 +34,13 @@ SyncedCron.add({
     return parser.recur().every(10).minute();
   },
   job() {
-    Modules.server.mlbGameData.refreshStandings();
+    try {
+      Modules.server.mlbGameData.refreshStandings();
+    } catch (e) {
+      handleError(e, {
+        job: 'mlbGameData.refreshStandings()',
+      });
+    }
   },
 });
 
@@ -37,7 +50,13 @@ SyncedCron.add({
     return parser.text('at 1:00 pm on Tuesday');
   },
   job() {
-    Modules.server.weeklyReport.emailReports();
+    try {
+      Modules.server.weeklyReport.emailReports();
+    } catch (e) {
+      handleError(e, {
+        job: 'weeklyReport.emailReports()',
+      });
+    }
   },
 });
 
