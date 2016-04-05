@@ -10,10 +10,10 @@ function padZeros(n, width) {
 function cleanStatus(status) {
   // 'scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   if (status === 'Preview') return 'scheduled';
+  if (status === 'In Progress') return 'in progress';
   if (status === 'Final') return 'completed';
   if (status === 'Postponed') return 'postponed';
   if (status === 'Completed Early') return 'suspended';
-  // TODO: figure out what status refers to 'in progress'
 }
 
 
@@ -67,7 +67,7 @@ Modules.server.mlbGameData = {
       return;
     }
 
-    log.info(`game: ${game.gameday_link}`);
+    log.info(`Updating with game data:`, game);
     const gameDate = moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD HH:MM A', 'EST').toDate(); // all times are in EST
     Games.upsert(
       {
