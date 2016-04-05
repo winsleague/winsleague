@@ -1,5 +1,5 @@
 Template.dashboard.helpers({
-  pools: () => Pools.find({}, { sort: { updatedAt: 1 } }),
+  pools: () => Pools.find({}, { sort: { updatedAt: -1, createdAt: -1 } }),
 
   poolNameLink: (pool) => `<a href="/pools/${pool._id}">${pool.name}</a>`,
 });
