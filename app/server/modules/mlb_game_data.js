@@ -12,8 +12,10 @@ function cleanStatus(status) {
   if (status === 'Preview') return 'scheduled';
   if (status === 'In Progress') return 'in progress';
   if (status === 'Final') return 'completed';
+  if (status === 'Game Over') return 'completed';
   if (status === 'Postponed') return 'postponed';
   if (status === 'Completed Early') return 'suspended';
+  throw new Error(`Unrecognized status: ${status}`);
 }
 
 
