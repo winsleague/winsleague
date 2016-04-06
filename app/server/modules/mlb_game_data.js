@@ -115,3 +115,7 @@ Modules.server.mlbGameData = {
     Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
   },
 };
+
+Meteor.methods({
+  'mlbGameData.ingestSeasonData': Modules.server.mlbGameData.ingestSeasonData,
+});
