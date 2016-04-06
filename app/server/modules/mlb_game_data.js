@@ -18,6 +18,13 @@ function cleanStatus(status) {
   throw new Error(`Unrecognized status: ${status}`);
 }
 
+function parseGameDate(timeDate, ampm) {
+  // time_date: 2016/04/03 1:05
+  // ampm: PM
+  // all times are in EST
+  return moment.tz(new Date(`${timeDate} ${ampm}`), 'US/Eastern').toDate();
+}
+
 
 Modules.server.mlbGameData = {
   ingestSeasonData(season) {
@@ -57,20 +64,29 @@ Modules.server.mlbGameData = {
     if (game.game_type !== 'R') {
       /*
        game_types:
-         E -- Exhibition
-         S -- Spring Training
-         R -- Regular Season
-         A -- All Star Game
-         F -- Wildcard
-         D -- Division Series (ALDS / NLDS)
-         L -- League Series (ALCS / NLCS)
-         W -- World Series
-        */
+       E -- Exhibition
+       S -- Spring Training
+       R -- Regular Season
+       A -- All Star Game
+       F -- Wildcard
+       D -- Division Series (ALDS / NLDS)
+       L -- League Series (ALCS / NLCS)
+       W -- World Series
+       */
       return;
     }
 
-    log.info(`Updating with game data:`, game);
-    const gameDate = moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD HH:MM A', 'EST').toDate(); // all times are in EST
+    const values = {
+      gameDate: parseGameDate(game.time_date, game.ampm),
+      homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
+      homeScore: _.get(game, 'home_team_runs', 0),
+      awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
+      awayScore: _.get(game, 'away_team_runs', 0),
+      period: _.get(game, 'inning', 'pregame'),
+      status: cleanStatus(game.status),
+    };
+
+    log.info(`Updating game with raw data:`, game, `to clean values:`, values);
     Games.upsert(
       {
         leagueId: league._id,
@@ -78,15 +94,7 @@ Modules.server.mlbGameData = {
         gameId: game.gameday_link,
       },
       {
-        $set: {
-          gameDate,
-          homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
-          homeScore: _.get(game, 'home_team_runs', 0),
-          awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
-          awayScore: _.get(game, 'away_team_runs', 0),
-          period: _.get(game, 'inning', 'pregame'),
-          status: cleanStatus(game.status),
-        },
+        $set: values,
       }
     );
   },
