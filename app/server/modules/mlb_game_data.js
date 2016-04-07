@@ -10,9 +10,10 @@ function padZeros(n, width) {
 function cleanStatus(status) {
   // 'scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   if (status === 'Preview') return 'scheduled';
+  if (status === 'Pre-Game') return 'scheduled'; // not sure how this is different than Preview
   if (status === 'In Progress') return 'in progress';
   if (status === 'Final') return 'completed';
-  if (status === 'Game Over') return 'completed';
+  if (status === 'Game Over') return 'completed'; // not sure how this is different than Final
   if (status === 'Postponed') return 'postponed';
   if (status === 'Completed Early') return 'suspended';
   throw new Error(`Unrecognized status: ${status}`);
