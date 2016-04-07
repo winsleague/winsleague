@@ -20,13 +20,18 @@ describe('MLB Game Data', () => {
     Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
   });
 
-  describe('Ingest Day Data', () => {
+  fdescribe('Ingest Day Data', () => {
     it('should ingest all games for on June 15, 2016', () => {
       const game = Games.findOne({ gameId: '2016_06_15_lanmlb_arimlb_1' });
       const diamondbacks = LeagueTeams.findOne({ cityName: 'Arizona', mascotName: 'Diamondbacks' });
       const dodgers = LeagueTeams.findOne({ cityName: 'Los Angeles', mascotName: 'Dodgers' });
       expect(game.homeTeamId).toBe(diamondbacks._id);
       expect(game.awayTeamId).toBe(dodgers._id);
+
+      const gameMoment = moment(game.gameDate);
+      expect(gameMoment.year()).toBe(2016);
+      expect(gameMoment.month()).toBe(5); // it's zero-based so june is 5
+      expect(gameMoment.date()).toBe(15);
     });
   });
 });
