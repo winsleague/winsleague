@@ -9,14 +9,23 @@ function padZeros(n, width) {
 
 function cleanStatus(status) {
   // 'scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
-  if (status === 'Preview') return 'scheduled';
-  if (status === 'Pre-Game') return 'scheduled'; // not sure how this is different than Preview
-  if (status === 'In Progress') return 'in progress';
-  if (status === 'Final') return 'completed';
-  if (status === 'Game Over') return 'completed'; // not sure how this is different than Final
-  if (status === 'Postponed') return 'postponed';
-  if (status === 'Completed Early') return 'suspended';
-  throw new Error(`Unrecognized status: ${status}`);
+  switch (status) {
+    case 'Preview':
+    case 'Warmup':
+    case 'Pre-Game': // not sure how any of these are different
+      return 'scheduled';
+    case 'In Progress':
+      return 'in progress';
+    case 'Final':
+    case 'Game Over':
+      return 'completed'; // not sure how any of these are different
+    case 'Postponed':
+      return 'postponed';
+    case 'Completed Early':
+      return 'suspended';
+    default:
+      throw new Error(`Unrecognized status: ${status}`);
+  }
 }
 
 function parseGameDate(timeDate, ampm) {
