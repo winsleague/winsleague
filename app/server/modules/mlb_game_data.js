@@ -114,23 +114,26 @@ Modules.server.mlbGameData = {
     if (! league) throw new Error(`League is not found!`);
     const season = Modules.seasons.getLatestByLeague(league);
 
-    const today = moment();
+    let day = moment();
+
+    // if early in the morning, download yesterday's feed to make sure we got all the late games
+    if (day.hour() < 6) day = moment().add(-1, 'days').toDate();
 
     // only run during season
-    if (today.isBefore(season.startDate)) {
-      log.info(`Not refreshing MLB standings because ${today.toDate()} is before ${season.startDate}`);
+    if (day.isBefore(season.startDate)) {
+      log.info(`Not refreshing MLB standings because ${day.toDate()} is before ${season.startDate}`);
       return;
     }
-    if (today.isAfter(season.endDate)) {
-      log.info(`Not refreshing MLB standings because ${today.toDate()} is after ${season.endDate}`);
+    if (day.isAfter(season.endDate)) {
+      log.info(`Not refreshing MLB standings because ${day.toDate()} is after ${season.endDate}`);
       return;
     }
 
-    const year = today.year();
-    const month = today.month() + 1; // moment months are zero-based
-    const day = today.date();
+    const year = day.year();
+    const month = day.month() + 1; // moment months are zero-based
+    const date = day.date();
 
-    Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
+    Modules.server.mlbGameData.ingestDayData(league, season, year, month, date);
   },
 };
 
