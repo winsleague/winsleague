@@ -2,7 +2,13 @@ Template.poolsShowWins.helpers({
   poolTeams: () => {
     const seasonId = Template.instance().getSeasonId();
     const poolId = Template.currentData().poolId;
-    return PoolTeams.find({ poolId, seasonId }, { sort: { totalWins: -1, totalPlusMinus: -1 } });
+    return PoolTeams.find({ poolId, seasonId }, {
+      sort: {
+        totalWins: -1,
+        totalGames: 1, // if two teams are tied in wins, rank the one with fewest games played higher
+        totalPlusMinus: -1,
+      },
+    });
   },
   title: () => {
     const title = Template.currentData().title;
