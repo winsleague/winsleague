@@ -21,7 +21,7 @@
             <td>{{leagueTeamName poolTeamPick.leagueTeamId}}</td>
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
             <td>
-              {{#if editAllowed}}
+              {{#if isCommissioner}}
                 <a href="{{pathFor 'poolTeamPicksEdit' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPick._id}}">Edit</a>
               {{/if}}
             </td>
