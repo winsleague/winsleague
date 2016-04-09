@@ -117,7 +117,7 @@ Modules.server.mlbGameData = {
     let day = moment();
 
     // if early in the morning, download yesterday's feed to make sure we got all the late games
-    if (day.hour() < 6) day = moment().add(-1, 'days').toDate();
+    if (day.hour() < 6) day = moment().add(-1, 'days');
 
     // only run during season
     if (day.isBefore(season.startDate)) {
