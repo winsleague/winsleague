@@ -15,6 +15,7 @@ function cleanStatus(status) {
     case 'Pre-Game': // not sure how any of these are different
       return 'scheduled';
     case 'In Progress':
+    case 'Manager Challenge':
       return 'in progress';
     case 'Final':
     case 'Game Over':
