@@ -12,6 +12,8 @@ function cleanStatus(status) {
   switch (status) {
     case 'Preview':
     case 'Warmup':
+    case 'Delayed':
+    case 'Delayed Start':
     case 'Pre-Game': // not sure how any of these are different
       return 'scheduled';
     case 'In Progress':
