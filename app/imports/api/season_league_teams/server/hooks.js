@@ -1,4 +1,4 @@
-/* Hooks */
+import { SeasonLeagueTeams } from '../season_league_teams';
 
 // performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
 SeasonLeagueTeams.hookOptions.after.update = { fetchPrevious: false };

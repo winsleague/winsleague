@@ -1,6 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import './server/hooks';
+
 export const Games = new Mongo.Collection('games');
 
 Games.schema = new SimpleSchema({

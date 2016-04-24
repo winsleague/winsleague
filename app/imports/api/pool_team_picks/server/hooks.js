@@ -1,4 +1,4 @@
-/* Hooks */
+import { PoolTeamPicks } from '../pool_team_picks'
 
 // performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
 PoolTeamPicks.hookOptions.after.update = { fetchPrevious: false };

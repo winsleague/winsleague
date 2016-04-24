@@ -1,8 +1,12 @@
-Pools = new Mongo.Collection('pools');
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-Pools.attachSchema(new SimpleSchema({
+export const Pools = new Mongo.Collection('pools');
+
+Pools.schema = new SimpleSchema({
   leagueId: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
     label: 'League',
     autoform: {
       type: 'select-radio-inline',
@@ -14,6 +18,7 @@ Pools.attachSchema(new SimpleSchema({
   },
   commissionerUserId: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
     autoValue() {
       if (this.isInsert && this.isSet === false) {
         return Meteor.userId(); // so we can easily stub this in tests
@@ -62,7 +67,9 @@ Pools.attachSchema(new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-}));
+});
+
+Pools.attachSchema(Pools.schema);
 
 if (Meteor.isServer) {
   Pools.allow({

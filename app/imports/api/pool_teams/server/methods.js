@@ -1,6 +1,6 @@
-/*****************************************************************************/
-/*  Server Methods */
-/*****************************************************************************/
+import { log } from '../../../startup/log';
+
+import { PoolTeams } from '../pool_teams';
 
 function createOrExistingUserId(email) {
   const existingUser = Accounts.findUserByEmail(email);
@@ -16,10 +16,8 @@ function createOrExistingUserId(email) {
   return newUser._id;
 }
 
-PoolTeams.methods = {};
-
-PoolTeams.methods.insert = new ValidatedMethod({
-  name: 'PoolTeams.methods.insert',
+export const insertFromForm = new ValidatedMethod({
+  name: 'PoolTeams.insert',
   mixins: [LoggedInMixin],
   checkLoggedInError: {
     error: 'notLoggedIn',

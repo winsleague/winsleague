@@ -1,5 +1,7 @@
 // https://github.com/meteor-useraccounts/core/blob/master/Guide.md
 
+import { AccountsTemplates } from 'meteor/useraccounts:core';
+
 AccountsTemplates.configure({
   // Layouts
   defaultLayout: 'masterLayout',

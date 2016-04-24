@@ -1,4 +1,12 @@
-PoolTeams = new Mongo.Collection('pool_teams');
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+import { Pools } from '../pools/pools';
+import { Seasons } from '../seasons/seasons';
+
+import './server/hooks';
+
+export const PoolTeams = new PoolTeamsCollection('pool_teams');
 
 PoolTeams.schema = new SimpleSchema({
   leagueId: {
@@ -116,6 +124,8 @@ PoolTeams.formSchema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Email,
   },
 });
+
+
 
 
 /* Access control */

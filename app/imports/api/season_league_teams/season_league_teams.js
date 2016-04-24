@@ -1,14 +1,22 @@
-SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-SeasonLeagueTeams.attachSchema(new SimpleSchema({
+import './server/hooks';
+
+export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
+
+SeasonLeagueTeams.schema = new SimpleSchema({
   leagueId: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
   },
   seasonId: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
   },
   leagueTeamId: {
     type: String,
+    regEx: SimpleSchema.RegEx.Id,
   },
   wins: {
     type: Number,
@@ -79,30 +87,18 @@ SeasonLeagueTeams.attachSchema(new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-}));
+});
 
+SeasonLeagueTeams.attachSchema(SeasonLeagueTeams.schema);
 
-/* Helpers */
 SeasonLeagueTeams.helpers({
   totalGames() {
     return this.wins + this.losses + this.ties;
   },
 });
 
-
-/* Access control */
-if (Meteor.isServer) {
-  SeasonLeagueTeams.allow({
-    insert(userId, doc) {
-      return false;
-    },
-
-    update(userId, doc, fieldNames, modifier) {
-      return false;
-    },
-
-    remove(userId, doc) {
-      return false;
-    },
-  });
-}
+SeasonLeagueTeams.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; },
+});

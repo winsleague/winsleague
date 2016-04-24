@@ -1,13 +1,22 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-LeagueTeams = new Mongo.Collection('league_teams');
+export const LeagueTeams = new Mongo.Collection('league_teams');
 
 LeagueTeams.schema = new SimpleSchema({
-  leagueId: { type: String },
-  cityName: { type: String },
-  mascotName: { type: String },
-  abbreviation: { type: String },
+  leagueId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  cityName: {
+    type: String,
+  },
+  mascotName: {
+    type: String,
+  },
+  abbreviation: {
+    type: String,
+  },
   conference: {
     type: String,
     allowedValues: ['AFC', 'NFC', 'East', 'West', 'American', 'National'],
@@ -25,7 +34,7 @@ LeagueTeams.attachSchema(LeagueTeams.schema);
 
 LeagueTeams.helpers({
   fullName() {
-    return this.cityName + ' ' + this.mascotName;
+    return `${this.cityName} ${this.mascotName}`;
   },
 });
 
