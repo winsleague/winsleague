@@ -1,15 +1,44 @@
-Games = new Mongo.Collection('games');
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-Games.attachSchema(new SimpleSchema({
-  leagueId: { type: String },
-  seasonId: { type: String },
-  gameId: { type: String },
-  gameDate: { type: Date },
-  week: { type: Number, optional: true }, // only for NFL
-  homeTeamId: { type: String },
-  homeScore: { type: Number, optional: true },
-  awayTeamId: { type: String },
-  awayScore: { type: Number, optional: true },
+export const Games = new Mongo.Collection('games');
+
+Games.schema = new SimpleSchema({
+  leagueId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  seasonId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  gameId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  gameDate: {
+    type: Date,
+  },
+  week: {
+    type: Number,
+    optional: true,
+  }, // only for NFL
+  homeTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  homeScore: {
+    type: Number,
+    optional: true,
+  },
+  awayTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  awayScore: {
+    type: Number,
+    optional: true,
+  },
   status: {
     type: String,
     allowedValues: ['scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
@@ -20,7 +49,10 @@ Games.attachSchema(new SimpleSchema({
       '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
       'overtime', 'final', 'final overtime'],
   },
-  timeRemaining: { type: String, optional: true },
+  timeRemaining: {
+    type: String,
+    optional: true,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -46,22 +78,14 @@ Games.attachSchema(new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-}));
+});
 
+Games.attachSchema(Games.schema);
 
-/* Access control */
-if (Meteor.isServer) {
-  Games.allow({
-    insert(userId, doc) {
-      return false;
-    },
+// Deny all client-side updates since we will be using methods to manage this collection
+Games.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; },
+});
 
-    update(userId, doc, fieldNames, modifier) {
-      return false;
-    },
-
-    remove(userId, doc) {
-      return false;
-    },
-  });
-}

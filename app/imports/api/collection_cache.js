@@ -1,6 +1,8 @@
+import { Mongo } from 'meteor/mongo';
+
 const collectionCache = {};
 
-Modules.collectionCache = {
+export default {
   getCollection(name) {
     let cached = collectionCache[name];
     if (!cached) {

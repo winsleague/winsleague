@@ -1,6 +1,9 @@
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
 LeagueTeams = new Mongo.Collection('league_teams');
 
-LeagueTeams.attachSchema(new SimpleSchema({
+LeagueTeams.schema = new SimpleSchema({
   leagueId: { type: String },
   cityName: { type: String },
   mascotName: { type: String },
@@ -16,7 +19,9 @@ LeagueTeams.attachSchema(new SimpleSchema({
       'Atlantic', 'Pacific', 'Northwest', 'Southeast', 'Southwest', 'Central',
     ],
   },
-}));
+});
+
+LeagueTeams.attachSchema(LeagueTeams.schema);
 
 LeagueTeams.helpers({
   fullName() {
@@ -24,18 +29,8 @@ LeagueTeams.helpers({
   },
 });
 
-if (Meteor.isServer) {
-  LeagueTeams.allow({
-    insert(userId, doc) {
-      return false;
-    },
-
-    update(userId, doc, fieldNames, modifier) {
-      return false;
-    },
-
-    remove(userId, doc) {
-      return false;
-    },
-  });
-}
+LeagueTeams.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; },
+});

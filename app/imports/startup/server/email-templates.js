@@ -1,6 +1,7 @@
-Templates = {};
+import '../../api/pools';
+import '../../api/pool_teams';
 
-Templates.weeklyEmail = {
+export default {
   path: 'weekly-email/template.html',    // Relative to the 'private' dir.
   scss: 'weekly-email/style.scss',       // Mail specific SCSS.
 

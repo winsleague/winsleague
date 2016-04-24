@@ -1,4 +1,4 @@
-/* Hooks */
+import { Games } from '../games';
 
 // performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
 Games.hookOptions.after.update = { fetchPrevious: false };
