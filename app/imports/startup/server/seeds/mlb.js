@@ -1,13 +1,21 @@
-Modules.server.seeds.mlb = {
+import Utils from './utils';
+import LeagueMethods from '../../../api/leagues/methods';
+
+import { Leagues } from '../../../api/leagues/leagues';
+import { LeagueTeams } from '../../../api/league_teams/league_teams';
+import { Seasons } from '../../../api/seasons/seasons';
+import { LeaguePickExpectedWins } from '../../../api/league_pick_expected_wins/league_pick_expected_wins';
+
+export default {
   create() {
-    Modules.server.seeds.mlb.createLeague();
-    Modules.server.seeds.mlb.createTeams();
-    Modules.server.seeds.mlb.createSeasons();
-    Modules.server.seeds.mlb.createExpectedWins();
+    this.createLeague();
+    this.createTeams();
+    this.createSeasons();
+    this.createExpectedWins();
   },
 
   createLeague() {
-    Modules.server.seeds.utils.removeLeague('MLB');
+    Utils.removeLeague('MLB');
 
     Leagues.insert({
       name: 'MLB',
@@ -16,7 +24,7 @@ Modules.server.seeds.mlb = {
   },
 
   createTeams() {
-    const leagueId = Modules.leagues.getIdByName('MLB');
+    const leagueId = LeagueMethods.getIdByName('MLB');
     const teams = [
       {
         cityName: 'Atlanta', mascotName: 'Braves', abbreviation: 'ATL',

@@ -1,4 +1,25 @@
-Modules.server.nflGameData = {
+import { log } from '../../../startup/log';
+
+import LeagueMethods from '../../leagues/methods';
+
+import { LeagueTeams } from '../../league_teams/league_teams';
+import { Games } from '../games';
+
+function cleanPeriod(old) {
+  if (old === 'P') { return 'pregame'; }
+  if (old === 'O') { return 'overtime'; }
+  if (old === 'F') { return 'final'; }
+  if (old === 'FO') { return 'final overtime'; }
+  return old;
+}
+
+function cleanStatus(old) {
+  if (old === 'P') { return 'scheduled'; }
+  if (old === 'F' || old === 'FO') { return 'completed'; }
+  return 'in progress';
+}
+
+export default {
   updateLiveScores() {
     const url = `http://www.nfl.com/liveupdate/scorestrip/scorestrip.json`;
     const response = HTTP.get(url);
@@ -9,7 +30,7 @@ Modules.server.nflGameData = {
     const json = JSON.parse(content);
     log.debug('parsed json:', json);
 
-    const league = Modules.leagues.getByName('NFL');
+    const league = LeagueMethods.getByName('NFL');
 
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
@@ -30,13 +51,13 @@ Modules.server.nflGameData = {
   ingestSeasonData(season) {
     if (! season) throw new Error(`Season is null!`);
 
-    const league = Modules.leagues.getByName('NFL');
+    const league = LeagueMethods.getByName('NFL');
     if (! league) throw new Error(`League is not found!`);
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
     for (let week = 1; week <= 17; week++) {
-      Modules.server.nflGameData.ingestWeekData(season, week);
+      this.ingestWeekData(season, week);
     }
   },
 
@@ -53,13 +74,13 @@ Modules.server.nflGameData = {
 
     log.debug('parsed json.ss.gms.g:', json.ss.gms.g);
     for (const game of json.ss.gms.g) {
-      Modules.server.nflGameData.saveGame(game, season, week);
+      this.saveGame(game, season, week);
     }
   },
 
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
-    const league = Modules.leagues.getByName('NFL');
+    const league = LeagueMethods.getByName('NFL');
     const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
     Games.insert({
       leagueId: league._id,
@@ -71,22 +92,8 @@ Modules.server.nflGameData = {
       homeScore: game.hs,
       awayTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.v })._id,
       awayScore: game.vs,
-      period: Modules.server.nflGameData.cleanPeriod(game.q),
-      status: Modules.server.nflGameData.cleanStatus(game.q),
+      period: cleanPeriod(game.q),
+      status: cleanStatus(game.q),
     });
-  },
-
-  cleanPeriod(old) {
-    if (old === 'P') { return 'pregame'; }
-    if (old === 'O') { return 'overtime'; }
-    if (old === 'F') { return 'final'; }
-    if (old === 'FO') { return 'final overtime'; }
-    return old;
-  },
-
-  cleanStatus(old) {
-    if (old === 'P') { return 'scheduled'; }
-    if (old === 'F' || old === 'FO') { return 'completed'; }
-    return 'in progress';
   },
 };

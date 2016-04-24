@@ -1,13 +1,23 @@
-Modules.server.seeds.nfl = {
+import moment from 'moment';
+
+import Utils from './utils';
+import LeagueMethods from '../../../api/leagues/methods';
+
+import { Leagues } from '../../../api/leagues/leagues';
+import { LeagueTeams } from '../../../api/league_teams/league_teams';
+import { Seasons } from '../../../api/seasons/seasons';
+import { LeaguePickExpectedWins } from '../../../api/league_pick_expected_wins/league_pick_expected_wins';
+
+export default {
   create() {
-    Modules.server.seeds.nfl.createLeague();
-    Modules.server.seeds.nfl.createTeams();
-    Modules.server.seeds.nfl.createSeasons();
-    Modules.server.seeds.nfl.createExpectedWins();
+    this.createLeague();
+    this.createTeams();
+    this.createSeasons();
+    this.createExpectedWins();
   },
 
   createLeague() {
-    Modules.server.seeds.utils.removeLeague('NFL');
+    Utils.removeLeague('NFL');
 
     Leagues.insert({
       name: 'NFL',
@@ -16,7 +26,7 @@ Modules.server.seeds.nfl = {
   },
 
   createTeams() {
-    const leagueId = Modules.leagues.getIdByName('NFL');
+    const leagueId = LeagueMethods.getIdByName('NFL');
     const teams = [
       {
         cityName: 'Baltimore', mascotName: 'Ravens', abbreviation: 'BAL',
@@ -154,7 +164,7 @@ Modules.server.seeds.nfl = {
   },
 
   createSeasons() {
-    const leagueId = Modules.leagues.getIdByName('NFL');
+    const leagueId = LeagueMethods.getIdByName('NFL');
     Seasons.insert({ leagueId, year: 2014,
       startDate: moment('2014-09-04').toDate(),
       endDate: moment('2015-12-28').toDate(),
@@ -166,7 +176,7 @@ Modules.server.seeds.nfl = {
   },
 
   createExpectedWins() {
-    const leagueId = Modules.leagues.getIdByName('NFL');
+    const leagueId = LeagueMethods.getIdByName('NFL');
     const expectedWins = [
       13.77,
       12.85,

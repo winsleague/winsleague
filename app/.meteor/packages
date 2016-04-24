@@ -51,7 +51,6 @@ yogiben:autoform-modals
 jcbernack:reactive-aggregate
 percolate:migrations
 msavin:mongol
-momentjs:moment
 mrt:moment-timezone
 lookback:emails
 chrisbutler:node-sass

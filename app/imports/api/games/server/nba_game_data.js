@@ -1,11 +1,16 @@
-Modules.server.nbaGameData = {
+import LeagueMethods from '../../leagues/methods';
+import SeasonMethods from '../../seasons/methods';
+
+import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
+
+export default {
   ingestSeasonData(season) {
-    const league = Modules.leagues.getByName('NBA');
+    const league = LeagueMethods.getByName('NBA');
     if (! league) throw new Error(`League is not found!`);
 
-    if (! season) season = Modules.seasons.getLatestByLeague(league);
+    if (! season) season = SeasonMethods.getLatestByLeague(league);
 
-    const url = `https://erikberg.com/nba/standings.json`;
+    const url = 'https://erikberg.com/nba/standings.json';
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url, {
@@ -16,15 +21,15 @@ Modules.server.nbaGameData = {
     log.debug(`cleanJSON: ${cleanJSON}`);
     const parsedJSON = JSON.parse(cleanJSON);
 
-    log.debug(`parsedJSON.standing: `, parsedJSON.standing);
+    log.debug('parsedJSON.standing: ', parsedJSON.standing);
     parsedJSON.standing.forEach(teamData => {
-      log.debug(`teamData: `, teamData);
-      Modules.server.nbaGameData.saveTeam(league, season, teamData);
+      log.debug('teamData: ', teamData);
+      this.saveTeam(league, season, teamData);
     });
   },
 
   saveTeam(league, season, teamData) {
-    const leagueTeam = Modules.leagueTeams.getByName(
+    const leagueTeam = LeagueMethods.getByName(
       league, teamData.first_name, teamData.last_name);
     if (!leagueTeam) throw new Error('Unable to find team!', teamData);
 

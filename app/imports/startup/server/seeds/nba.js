@@ -1,13 +1,23 @@
-Modules.server.seeds.nba = {
+import moment from 'moment';
+
+import Utils from './utils';
+import LeagueMethods from '../../../api/leagues/methods';
+
+import { Leagues } from '../../../api/leagues/leagues';
+import { LeagueTeams } from '../../../api/league_teams/league_teams';
+import { Seasons } from '../../../api/seasons/seasons';
+import { LeaguePickExpectedWins } from '../../../api/league_pick_expected_wins/league_pick_expected_wins';
+
+export default {
   create() {
-    Modules.server.seeds.nba.createLeague();
-    Modules.server.seeds.nba.createTeams();
-    Modules.server.seeds.nba.createSeasons();
-    Modules.server.seeds.nba.createExpectedWins();
+    this.createLeague();
+    this.createTeams();
+    this.createSeasons();
+    this.createExpectedWins();
   },
 
   createLeague() {
-    Modules.server.seeds.utils.removeLeague('NBA');
+    Utils.removeLeague('NBA');
 
     Leagues.insert({
       name: 'NBA',
@@ -16,7 +26,7 @@ Modules.server.seeds.nba = {
   },
 
   createTeams() {
-    const leagueId = Modules.leagues.getIdByName('NBA');
+    const leagueId = LeagueMethods.getIdByName('NBA');
     const teams = [
       {
         cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL',
@@ -146,7 +156,7 @@ Modules.server.seeds.nba = {
   },
 
   createSeasons() {
-    const leagueId = Modules.leagues.getIdByName('NBA');
+    const leagueId = LeagueMethods.getIdByName('NBA');
     Seasons.insert({ leagueId, year: 2015,
       startDate: moment('2015-10-27').toDate(),
       endDate: moment('2016-04-13').toDate(),
@@ -154,7 +164,7 @@ Modules.server.seeds.nba = {
   },
 
   createExpectedWins() {
-    const leagueId = Modules.leagues.getIdByName('NBA');
+    const leagueId = LeagueMethods.getIdByName('NBA');
     const expectedWins = [
       63.10,
       59.70,

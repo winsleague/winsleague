@@ -1,3 +1,11 @@
+import moment from 'moment';
+
+import LeagueMethods from '../../leagues/methods';
+import SeasonMethods from '../../seasons/methods';
+
+import { Games } from '../games';
+import { LeagueTeams } from '../../league_teams/league_teams';
+
 function getLeagueTeamIdByAbbreviation(league, abbreviation) {
   return LeagueTeams.findOne({ leagueId: league._id, abbreviation })._id;
 }
@@ -39,12 +47,12 @@ function parseGameDate(timeDate, ampm) {
 }
 
 
-Modules.server.mlbGameData = {
+export default {
   ingestSeasonData(season) {
     const league = Modules.leagues.getByName('MLB');
     if (! league) throw new Error(`League is not found!`);
 
-    if (! season) season = Modules.seasons.getLatestByLeague(league);
+    if (! season) season = SeasonMethods.getLatestByLeague(league);
 
     const startDate = moment(season.startDate);
     const endDate = moment(season.endDate);
@@ -66,10 +74,10 @@ Modules.server.mlbGameData = {
 
     if (Array.isArray(parsedJSON.data.games.game)) {
       parsedJSON.data.games.game.forEach(game => {
-        Modules.server.mlbGameData.upsertGame(league, season, game);
+        this.upsertGame(league, season, game);
       });
     } else { // this happens when there's only one game that day (http://gd2.mlb.com/components/game/mlb/year_2016/month_07/day_12/miniscoreboard.json)
-      Modules.server.mlbGameData.upsertGame(league, season, parsedJSON.data.games.game);
+      this.upsertGame(league, season, parsedJSON.data.games.game);
     }
   },
 
@@ -113,9 +121,9 @@ Modules.server.mlbGameData = {
   },
 
   refreshStandings() {
-    const league = Modules.leagues.getByName('MLB');
+    const league = LeagueMethods.getByName('MLB');
     if (! league) throw new Error(`League is not found!`);
-    const season = Modules.seasons.getLatestByLeague(league);
+    const season = SeasonMethods.getLatestByLeague(league);
 
     let day = moment();
 
@@ -136,10 +144,6 @@ Modules.server.mlbGameData = {
     const month = day.month() + 1; // moment months are zero-based
     const date = day.date();
 
-    Modules.server.mlbGameData.ingestDayData(league, season, year, month, date);
+    this.ingestDayData(league, season, year, month, date);
   },
 };
-
-Meteor.methods({
-  'mlbGameData.ingestSeasonData': Modules.server.mlbGameData.ingestSeasonData,
-});
