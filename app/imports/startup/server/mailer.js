@@ -1,3 +1,7 @@
+import { Mailer } from 'meteor/lookback:emails';
+
+import weeklyTemplate from './mailer/weekly-template';
+
 Mailer.config({
   from: 'League Wins Pool <no-reply@leaguewinspool.com>',
   routePrefix: 'emails',              // Route prefix.
@@ -12,8 +16,10 @@ Mailer.config({
 
 Meteor.startup(() => {
   Mailer.init({
-    templates: Templates,     // Global Templates namespace, see lib/templates.js.
-    helpers: TemplateHelpers, // Global template helper namespace.
+    templates: {
+      weeklyTemplate,
+    },
+    helpers: {},
     layout: {
       name: 'emailLayout',
       path: 'layout.html',   // Relative to 'private' dir.

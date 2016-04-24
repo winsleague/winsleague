@@ -1,3 +1,6 @@
+import { log } from '../log';
+import { SyncedCron } from 'meteor/percolate:synced-cron';
+
 log.info('Initializing SyncedCron');
 
 const SyncedCronLogger = opts => {

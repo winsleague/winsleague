@@ -1,3 +1,12 @@
+/* eslint-disable prefer-arrow-callback */
+
+import { Meteor } from 'meteor/meteor';
+import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
+
+import { PoolTeams } from '../../pool_teams';
+import { Seasons } from '../seasons';
+import { getLatestCursorByLeagueId } from '../methods';
+
 Meteor.publish('seasons.single', function(_id) {
   if (! _id) return this.ready();
   check(_id, String);
@@ -13,7 +22,7 @@ Meteor.publish('seasons.latest', function() {
 Meteor.publish('seasons.latest.ofLeague', function(leagueId) {
   if (! leagueId) return this.ready();
   check(leagueId, String);
-  return Modules.seasons.getLatestCursorByLeagueId(leagueId);
+  return getLatestCursorByLeagueId(leagueId);
 });
 
 Meteor.publish('seasons.ofPool', function(poolId) {

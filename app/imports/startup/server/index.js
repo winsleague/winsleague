@@ -1,3 +1,8 @@
-import './email';
-import './email-templates';
+import './accounts_email_templates';
+import './register-api';
 import './simple_schema';
+import './loggly';
+import './fixtures/'
+import './migrations';
+import './synced_cron';
+import './mailer';

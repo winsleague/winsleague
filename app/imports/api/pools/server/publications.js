@@ -1,3 +1,10 @@
+/* eslint-disable prefer-arrow-callback */
+
+import { Meteor } from 'meteor/meteor';
+
+import { Pools } from '../pools';
+import { PoolTeams } from '../pool_teams';
+
 Meteor.publish('pools.single', function(_id) {
   if (!_id) return this.ready();
   check(_id, String);

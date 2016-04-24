@@ -1,4 +1,10 @@
-Meteor.publish('poolTeams.ofPool', function (poolId, seasonId = null) {
+/* eslint-disable prefer-arrow-callback */
+
+import { Meteor } from 'meteor/meteor';
+
+import { PoolTeams } from '../pool_teams';
+
+Meteor.publish('poolTeams.ofPool', function poolTeamsOfPool(poolId, seasonId = null) {
   if (!poolId) return this.ready();
   check(poolId, String);
 
@@ -10,13 +16,13 @@ Meteor.publish('poolTeams.ofPool', function (poolId, seasonId = null) {
   }
 });
 
-Meteor.publish('poolTeams.single', function (_id) {
+Meteor.publish('poolTeams.single', function poolTeamsSingle(_id) {
   if (!_id) return this.ready();
   check(_id, String);
   return PoolTeams.find(_id);
 });
 
-Meteor.publish('poolUsersMostAllTime.ofPool', function(poolId, field, collectionName) {
+Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPool(poolId, field, collectionName) {
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {

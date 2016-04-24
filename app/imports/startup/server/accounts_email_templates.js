@@ -1,3 +1,5 @@
+import { Accounts } from 'meteor/useraccounts:core';
+
 Accounts.emailTemplates.siteName = 'League Wins Pool';
 Accounts.emailTemplates.from = 'League Wins Pool <team@leaguewinspool.com>';
 Accounts.emailTemplates.enrollAccount.subject = function (user) {
@@ -8,3 +10,4 @@ Accounts.emailTemplates.enrollAccount.text = function (user, url) {
     + ' To activate your account, simply click the link below:\n\n'
     + url;
 };
+
