@@ -1,16 +1,21 @@
-Routes.pools = FlowRouter.group({
+import { log } from '../../log';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import { AccountsTemplates } from 'meteor/useraccounts:core';
+
+const group = FlowRouter.group({
   prefix: '/pools',
 });
 
 // http://app.com/pools
-Routes.pools.route('/', {
+group.route('/', {
   action() {
     log.debug("We're viewing a list of pools.");
   },
 });
 
 // http://app.com/pools/new
-Routes.pools.route('/new', {
+group.route('/new', {
   name: 'poolsNew',
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
@@ -19,7 +24,7 @@ Routes.pools.route('/new', {
 });
 
 // http://app.com/pools/:poolId
-Routes.pools.route('/:poolId', {
+group.route('/:poolId', {
   name: 'poolsShow',
   action(params) {
     log.debug(`We're viewing a single pool: ${params.poolId}`);
@@ -28,7 +33,7 @@ Routes.pools.route('/:poolId', {
 });
 
 // http://app.com/pools/:poolId/edit
-Routes.pools.route('/:poolId/edit', {
+group.route('/:poolId/edit', {
   name: 'poolsEdit',
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
@@ -38,7 +43,7 @@ Routes.pools.route('/:poolId/edit', {
 });
 
 // http://app.com/pools/:poolId/seasons/:seasonId
-Routes.pools.route('/:poolId/seasons/:seasonId', {
+group.route('/:poolId/seasons/:seasonId', {
   name: 'poolsShowSeason',
   action(params) {
     log.debug(`We're viewing a single pool: ${params.poolId} with season ${params.seasonId}`);
@@ -47,7 +52,7 @@ Routes.pools.route('/:poolId/seasons/:seasonId', {
 });
 
 // http://app.com/pools/:poolId/records
-Routes.pools.route('/:poolId/records', {
+group.route('/:poolId/records', {
   name: 'poolsRecords',
   action(params) {
     log.debug(`We're viewing records for a single pool: ${params.poolId}`);

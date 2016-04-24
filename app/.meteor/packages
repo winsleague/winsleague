@@ -49,7 +49,6 @@ mdg:validated-method
 tunifight:loggedin-mixin
 yogiben:autoform-modals
 jcbernack:reactive-aggregate
-stevezhu:lodash
 percolate:migrations
 msavin:mongol
 momentjs:moment

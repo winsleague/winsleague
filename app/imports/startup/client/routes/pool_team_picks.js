@@ -1,9 +1,14 @@
-Routes.poolTeamPicks = FlowRouter.group({
+import { log } from '../../log';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import { AccountsTemplates } from 'meteor/useraccounts:core';
+
+const group = FlowRouter.group({
   prefix: '/pools/:poolId/teams/:poolTeamId/picks',
 });
 
 // http://app.com/pools/:poolId/teams/:poolTeamId/picks/new
-Routes.poolTeamPicks.route('/new', {
+group.route('/new', {
   name: 'poolTeamPicksNew',
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
@@ -13,7 +18,7 @@ Routes.poolTeamPicks.route('/new', {
 });
 
 // http://app.com/pools/:poolId/teams/:poolTeamId/picks/:poolTeamPickId/edit
-Routes.poolTeamPicks.route('/:poolTeamPickId/edit', {
+group.route('/:poolTeamPickId/edit', {
   name: 'poolTeamPicksEdit',
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
