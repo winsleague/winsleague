@@ -1,4 +1,9 @@
-Modules.server.seasonLeagueTeams = {
+import { log } from '../../../startup/log';
+
+import { Games } from '../../games/games';
+import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
+
+export default {
   updateTeamStats(leagueId, seasonId, leagueTeamId) {
     if (!leagueId) { throw new Error('Undefined leagueId!'); }
     if (!seasonId) { throw new Error('Undefined seasonId!'); }

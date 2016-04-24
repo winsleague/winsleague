@@ -1,12 +1,20 @@
-Modules.server.weeklyReport = {
-  emailReports() {
-    log.info(`Sending out weekly email report`);
+import { log } from '../imports/startup/log';
+import { _ } from 'lodash';
+import { Mailer } from 'meteor/lookback:emails';
 
-    const seasons = Modules.server.weeklyReport.findActiveSeasons();
+import { Seasons } from '../imports/api/seasons/seasons';
+import { Pools } from '../imports/api/pools/pools';
+import { PoolTeams } from '../imports/api/pool_teams/pool_teams';
+
+export default {
+  emailReports() {
+    log.info('Sending out weekly email report');
+
+    const seasons = this.findActiveSeasons();
     seasons.forEach(season => {
-      const poolIds = Modules.server.weeklyReport.findEligiblePoolIds(season._id);
+      const poolIds = this.findEligiblePoolIds(season._id);
       poolIds.forEach(poolId => {
-        Modules.server.weeklyReport.emailReport(poolId, season._id);
+        this.emailReport(poolId, season._id);
       });
     });
   },
@@ -19,7 +27,7 @@ Modules.server.weeklyReport = {
     const poolTeams = PoolTeams.find({ poolId, seasonId },
       { sort: { totalWins: -1, totalPlusMinus: -1 } });
 
-    const playerEmails = Modules.server.weeklyReport.getPlayerEmails(poolId, seasonId);
+    const playerEmails = this.getPlayerEmails(poolId, seasonId);
 
     Mailer.send({
       to: playerEmails,
