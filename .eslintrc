@@ -7,11 +7,12 @@
     "mocha": true,
     "node": true
   },
+  "rules": {
+    "no-underscore-dangle": 0
+  }
+  /* disabled because we now use import
   "globals": {
     "AccountsTemplates": false,
-    "AutoForm": false,
-    "BlazeLayout": false,
-    "FlowRouter": false,
     "Games": true,
     "LeaguePickExpectedWins": true,
     "LeagueTeams": true,
@@ -32,4 +33,5 @@
     "Templates": true,
     "TemplateHelpers": true
   }
+  */
 }
