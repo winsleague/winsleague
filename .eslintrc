@@ -1,5 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb/base",
+    "plugin:meteor/recommended"
+  ],
   "env": {
     "browser": true,
     "jasmine": true,
@@ -7,6 +10,9 @@
     "mocha": true,
     "node": true
   },
+  "plugins": [
+    "meteor"
+  ],
   "rules": {
     "no-underscore-dangle": 0
   }
