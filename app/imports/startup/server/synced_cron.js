@@ -29,6 +29,7 @@ SyncedCron.add({
     try {
       NbaGameData.ingestSeasonData();
     } catch (e) {
+      log.error(e);
       handleError(e, {
         job: 'nbaGameData.ingestSeasonData()',
       });
@@ -45,6 +46,7 @@ SyncedCron.add({
     try {
       MlbGameData.refreshStandings();
     } catch (e) {
+      log.error(e);
       handleError(e, {
         job: 'mlbGameData.refreshStandings()',
       });
@@ -61,6 +63,7 @@ SyncedCron.add({
     try {
       WeeklyReport.emailReports();
     } catch (e) {
+      log.error(e);
       handleError(e, {
         job: 'weeklyReport.emailReports()',
       });

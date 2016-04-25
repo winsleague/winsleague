@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { WinstonLoggly } from 'meteor/infinitedg:winston-loggly';
+import WinstonLoggly from 'winston-loggly';
 
 Meteor.startup(() => {
   if (Meteor.isProduction) init();

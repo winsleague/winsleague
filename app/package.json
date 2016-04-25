@@ -1,14 +1,22 @@
 {
-  "name": "app",
+  "name": "league-wins-pool",
   "version": "1.0.0",
-  "description": "",
+  "description": "League Wins Pool",
+  "readme": "README",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/league-wins-pool/league-wins-pool.git"
+  },
   "directories": {
     "test": "tests"
   },
   "dependencies": {
     "lodash": "^4.11.1",
     "meteor-node-stubs": "^0.2.3",
-    "moment": "^2.13.0"
+    "moment": "^2.13.0",
+    "moment-timezone": "^0.5.3",
+    "winston": "^2.2.0",
+    "winston-loggly": "^1.3.1"
   },
   "devDependencies": {
     "eslint": "^2.8.0",
