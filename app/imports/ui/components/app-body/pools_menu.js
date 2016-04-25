@@ -1,3 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import log from '/imports/startup/log';
+
+import { Pools } from '../../../api/pools/pools';
+
+import './pools_menu.html';
+
 Template.poolsMenu.helpers({
   canShow: () => !!Meteor.user(),
 

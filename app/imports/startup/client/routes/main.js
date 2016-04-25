@@ -2,14 +2,19 @@ import log from '../../log';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
+import '../../../ui/components/home/home';
+import '../../../ui/pages/app-not-found';
+
+log.info('setup main routes');
+
 FlowRouter.route('/', {
   action() {
-    BlazeLayout.render('masterLayout', { content: 'home' });
+    BlazeLayout.render('App_body', { content: 'home' });
   },
 });
 
 FlowRouter.notFound = {
   action() {
-    BlazeLayout.render('masterLayout', { content: 'App_notFound' });
+    BlazeLayout.render('App_body', { content: 'App_notFound' });
   },
 };

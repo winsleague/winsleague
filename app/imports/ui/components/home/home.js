@@ -1,24 +1,12 @@
-/*****************************************************************************/
-/* Home: Event Handlers */
-/*****************************************************************************/
-Template.home.events({
-});
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 
-/*****************************************************************************/
-/* Home: Helpers */
-/*****************************************************************************/
+import './home.html';
+
+import './dashboard';
+import './previous_pool';
+import './intro';
+
 Template.home.helpers({
   isLoggedIn: () => !!Meteor.user(),
-});
-
-/*****************************************************************************/
-/* Home: Lifecycle Hooks */
-/*****************************************************************************/
-Template.home.onCreated(function () {
-});
-
-Template.home.onRendered(function () {
-});
-
-Template.home.onDestroyed(function () {
 });

@@ -1,6 +1,5 @@
 // Pages
 import '../../ui/layouts/app-body.js';
-import '../../ui/pages/app-not-found.js';
 
 // Route definitions
 import './routes/main';

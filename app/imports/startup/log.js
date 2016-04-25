@@ -1,7 +1,13 @@
 import { Meteor } from 'meteor/meteor';
-import { Winston } from 'meteor/infinitedg:winston';
+import { Winston } from 'meteor/brentjanderson:winston-client';
 
-const winston = Winston;
+let winston;
+if (Meteor.isClient) {
+  winston = Winston;
+} else {
+  winston = require('winston');
+}
+
 if (Meteor.isProduction) {
   winston.level = 'info';
 } else {
@@ -10,3 +16,4 @@ if (Meteor.isProduction) {
 winston.info('Initialized logger');
 
 export default winston;
+

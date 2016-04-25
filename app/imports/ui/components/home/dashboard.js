@@ -1,3 +1,13 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import log from '/imports/startup/log';
+
+import { Pools } from '../../../api/pools/pools';
+
+import './dashboard.html';
+
+import '../pools/show/wins';
+
 Template.dashboard.helpers({
   pools: () => Pools.find({}, { sort: { updatedAt: -1, createdAt: -1 } }),
 

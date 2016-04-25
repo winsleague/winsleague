@@ -1,3 +1,10 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import { Pools } from '../../../api/pools/pools';
+
+import './previous_pool.html';
+
 Template.previousPool.helpers({
   hasPreviousPool: () => !!Template.instance().getPoolId(),
 
