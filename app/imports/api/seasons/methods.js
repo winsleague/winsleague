@@ -6,7 +6,7 @@ export default {
   },
 
   getLatestByLeague(league) {
-    return Seasons.findOne(league._id, { sort: { year: -1 } });
+    return Seasons.findOne({ leagueId: league._id }, { sort: { year: -1 } });
   },
 
   getLatestByLeagueId(leagueId) {
