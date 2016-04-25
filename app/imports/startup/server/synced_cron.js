@@ -1,4 +1,4 @@
-import { log } from '../log';
+import log from '../log';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 
 import NbaGameData from '../../api/games/server/nba_game_data';

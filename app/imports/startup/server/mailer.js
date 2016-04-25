@@ -1,5 +1,5 @@
 import { Mailer } from 'meteor/lookback:emails';
-import { log } from '../log';
+import log from '../log';
 
 import weeklyTemplate from './mailer/weekly-template';
 

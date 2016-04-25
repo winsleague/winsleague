@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Winston } from 'meteor/infinitedg:winston';
 
-const log = Winston;
+const winston = Winston;
 if (Meteor.isProduction) {
-  log.level = 'info';
+  winston.level = 'info';
 } else {
-  log.level = 'debug';
+  winston.level = 'debug';
 }
-log.info('Initialized logger');
+winston.info('Initialized logger');
 
-export default log;
+export default winston;

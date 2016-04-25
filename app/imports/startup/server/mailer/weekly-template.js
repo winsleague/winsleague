@@ -1,5 +1,5 @@
-import { Pools } from '../../api/pools';
-import { PoolTeams } from '../../api/pool_teams';
+import { Pools } from '../../../api/pools/pools';
+import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 
 export default {
   path: 'weekly-email/template.html',    // Relative to the 'private' dir.

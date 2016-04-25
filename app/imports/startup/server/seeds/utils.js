@@ -1,4 +1,4 @@
-import { log } from '../../log';
+import log from '../../log';
 
 import LeagueMethods from '../../../api/leagues/methods';
 import NFL from './nfl';

@@ -1,4 +1,4 @@
-import { log } from '../../log';
+import log from '../../log';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 

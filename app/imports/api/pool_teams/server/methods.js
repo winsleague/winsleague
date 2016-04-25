@@ -1,4 +1,4 @@
-import { log } from '../../../startup/log';
+import log from '../../../startup/log';
 
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { PoolTeams } from '../pool_teams';
