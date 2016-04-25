@@ -122,9 +122,9 @@ export default {
 
   refreshStandings() {
     const league = LeagueMethods.getByName('MLB');
-    if (! league) throw new Error('League is not found!');
+    if (! league) throw new Error('MLB League is not found!');
     const season = SeasonMethods.getLatestByLeague(league);
-    if (! season) throw new Error('Season is not found!');
+    if (! season) throw new Error(`Season is not found for league ${league._id}!`);
 
     let day = moment();
 
