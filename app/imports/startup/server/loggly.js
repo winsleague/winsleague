@@ -1,9 +1,16 @@
 import { Meteor } from 'meteor/meteor';
+import log from '../log';
+
 import WinstonLoggly from 'winston-loggly';
 
 Meteor.startup(() => {
   if (Meteor.isProduction) init();
 });
+
+function token() {
+  // mup.json sets this
+  return process.env.LOGGLY_TOKEN;
+}
 
 function init() {
   if (! token()) {
@@ -24,7 +31,3 @@ function init() {
   log.info('Loggly setup complete');
 }
 
-function token() {
-  // mup.json sets this
-  return process.env.LOGGLY_TOKEN;
-}
