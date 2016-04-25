@@ -1,11 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import './server/hooks';
-
 import { LeagueTeams } from '../league_teams/league_teams';
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { Pools } from '../pools/pools';
+import { Seasons } from '../seasons/seasons';
 
 export const PoolTeamPicks = new Mongo.Collection('pool_team_picks');
 

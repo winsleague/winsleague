@@ -1,8 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import './server/hooks';
-
 export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
 SeasonLeagueTeams.schema = new SimpleSchema({

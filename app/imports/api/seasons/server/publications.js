@@ -3,7 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 
-import { PoolTeams } from '../../pool_teams';
+import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Seasons } from '../seasons';
 import { getLatestCursorByLeagueId } from '../methods';
 

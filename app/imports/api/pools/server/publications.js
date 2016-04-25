@@ -1,9 +1,9 @@
-/* eslint-disable prefer-arrow-callback */
+/* eslint-disable prefer-arrow-callback func-names */
 
 import { Meteor } from 'meteor/meteor';
 
 import { Pools } from '../pools';
-import { PoolTeams } from '../pool_teams';
+import { PoolTeams } from '../../pool_teams/pool_teams';
 
 Meteor.publish('pools.single', function(_id) {
   if (!_id) return this.ready();

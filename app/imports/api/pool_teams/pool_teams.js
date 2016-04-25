@@ -6,9 +6,7 @@ import { Seasons } from '../seasons/seasons';
 
 import SeasonMethods from '../seasons/methods';
 
-import './server/hooks';
-
-export const PoolTeams = new PoolTeamsCollection('pool_teams');
+export const PoolTeams = new Mongo.Collection('pool_teams');
 
 PoolTeams.schema = new SimpleSchema({
   leagueId: {
