@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Winston_Loggly} from 'meteor/infinitedg:winston-loggly';
-
-import { isProduction } from '../environment';
+import { WinstonLoggly } from 'meteor/infinitedg:winston-loggly';
 
 Meteor.startup(() => {
-  if (isProduction()) init();
+  if (Meteor.isProduction) init();
 });
 
 function init() {
@@ -22,7 +20,7 @@ function init() {
     'handleExceptions': true,
   };
 
-  log.add(Winston_Loggly, options);
+  log.add(WinstonLoggly, options);
   log.info('Loggly setup complete');
 }
 

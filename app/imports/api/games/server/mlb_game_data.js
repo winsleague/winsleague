@@ -49,7 +49,7 @@ function parseGameDate(timeDate, ampm) {
 
 export default {
   ingestSeasonData(season) {
-    const league = Modules.leagues.getByName('MLB');
+    const league = LeagueMethods.getByName('MLB');
     if (! league) throw new Error(`League is not found!`);
 
     if (! season) season = SeasonMethods.getLatestByLeague(league);
@@ -59,7 +59,7 @@ export default {
 
     for (const date = startDate; date.isBefore(endDate); date.add(1, 'days')) {
       // month is zero-indexed so we add 1
-      Modules.server.mlbGameData.ingestDayData(league, season, date.year(), date.month() + 1, date.date());
+      this.ingestDayData(league, season, date.year(), date.month() + 1, date.date());
     }
   },
 

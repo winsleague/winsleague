@@ -1,6 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import SeasonMethods from '../seasons/methods';
+
 export const Pools = new Mongo.Collection('pools');
 
 Pools.schema = new SimpleSchema({
@@ -34,7 +36,7 @@ Pools.schema = new SimpleSchema({
         const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
           const leagueId = leagueIdField.value;
-          const latestSeason = Modules.seasons.getLatestByLeagueId(leagueId);
+          const latestSeason = SeasonMethods.getLatestByLeagueId(leagueId);
           if (latestSeason) return latestSeason._id;
           throw new Error(`No season found for leagueId ${leagueId}`);
         }

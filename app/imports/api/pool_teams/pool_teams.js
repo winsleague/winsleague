@@ -4,6 +4,8 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
 
+import SeasonMethods from '../seasons/methods';
+
 import './server/hooks';
 
 export const PoolTeams = new PoolTeamsCollection('pool_teams');
@@ -27,7 +29,7 @@ PoolTeams.schema = new SimpleSchema({
         const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
           const leagueId = leagueIdField.value;
-          const latestSeason = Modules.seasons.getLatestByLeagueId(leagueId);
+          const latestSeason = SeasonMethods.getLatestByLeagueId(leagueId);
           if (latestSeason) return latestSeason._id;
           throw new Error(`No season found for leagueId ${leagueId}`);
         }

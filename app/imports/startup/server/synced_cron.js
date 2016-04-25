@@ -1,6 +1,11 @@
 import { log } from '../log';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 
+import NbaGameData from '../../api/games/server/nba_game_data';
+import MlbGameData from '../../api/games/server/mlb_game_data';
+
+import WeeklyReport from '../../../server/weekly_report';
+
 log.info('Initializing SyncedCron');
 
 const SyncedCronLogger = opts => {
@@ -22,7 +27,7 @@ SyncedCron.add({
   },
   job() {
     try {
-      Modules.server.nbaGameData.ingestSeasonData();
+      NbaGameData.ingestSeasonData();
     } catch (e) {
       handleError(e, {
         job: 'nbaGameData.ingestSeasonData()',
@@ -38,7 +43,7 @@ SyncedCron.add({
   },
   job() {
     try {
-      Modules.server.mlbGameData.refreshStandings();
+      MlbGameData.refreshStandings();
     } catch (e) {
       handleError(e, {
         job: 'mlbGameData.refreshStandings()',
@@ -54,7 +59,7 @@ SyncedCron.add({
   },
   job() {
     try {
-      Modules.server.weeklyReport.emailReports();
+      WeeklyReport.emailReports();
     } catch (e) {
       handleError(e, {
         job: 'weeklyReport.emailReports()',

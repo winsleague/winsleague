@@ -145,12 +145,9 @@ useraccounts:bootstrap@1.14.2
 useraccounts:core@1.14.2
 useraccounts:flow-routing@1.14.2
 velocity:chokidar@1.2.0_1
-velocity:console-reporter@0.2.1
 velocity:core@0.10.10
-velocity:html-reporter@0.10.0
 velocity:meteor-internals@1.1.0_7
 velocity:meteor-stubs@1.1.1
-velocity:reports@1.0.0
 velocity:shim@0.1.0
 webapp@1.2.8
 webapp-hashing@1.0.9

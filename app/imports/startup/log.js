@@ -1,8 +1,8 @@
+import { Meteor } from 'meteor/meteor';
 import { Winston } from 'meteor/infinitedg:winston';
-import { isProduction } from './environment';
 
 const log = Winston;
-if (isProduction()) {
+if (Meteor.isProduction) {
   log.level = 'info';
 } else {
   log.level = 'debug';

@@ -154,7 +154,7 @@ export default {
   },
 
   createSeasons() {
-    const leagueId = Modules.leagues.getIdByName('MLB');
+    const leagueId = LeagueMethods.getIdByName('MLB');
     Seasons.insert({ leagueId, year: 2016,
       startDate: moment('2016-04-03').toDate(),
       endDate: moment('2016-10-02').toDate(),
@@ -162,7 +162,7 @@ export default {
   },
 
   createExpectedWins() {
-    const leagueId = Modules.leagues.getIdByName('MLB');
+    const leagueId = LeagueMethods.getIdByName('MLB');
     const expectedWins = [
       98.91,
       97.00,
