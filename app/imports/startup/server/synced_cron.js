@@ -1,5 +1,6 @@
-import log from '../log';
+import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
+import log from '../log';
 
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
@@ -71,6 +72,6 @@ SyncedCron.add({
   },
 });
 
-if (! process.env.CI) { // https://circleci.com/docs/dont-run/
+if (! Meteor.isTest) {
   SyncedCron.start();
 }
