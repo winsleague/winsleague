@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import log from '/imports/startup/log';
+import log from '../../../../startup/log';
 
 import { Pools } from '../../../../api/pools/pools';
-import { PoolTeams } from '../../../../api/pool_teams/pool_teams'
+import { PoolTeams } from '../../../../api/pool_teams/pool_teams';
 
 import './wins.html';
 
