@@ -41,7 +41,7 @@ Meteor.publish('pools.ofUser', function(userId) {
   // Stop observing the cursor when client unsubs.
   // Stopping a subscription automatically takes
   // care of sending the client any removed messages.
-  self.onStop(function () {
+  self.onStop(() => {
     commissionerHandle.stop();
     usersHandle.stop();
   });
