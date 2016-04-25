@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 import LeagueMethods from '../../leagues/methods';
 import SeasonMethods from '../../seasons/methods';
@@ -122,8 +122,9 @@ export default {
 
   refreshStandings() {
     const league = LeagueMethods.getByName('MLB');
-    if (! league) throw new Error(`League is not found!`);
+    if (! league) throw new Error('League is not found!');
     const season = SeasonMethods.getLatestByLeague(league);
+    if (! season) throw new Error('Season is not found!');
 
     let day = moment();
 
