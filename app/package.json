@@ -27,7 +27,6 @@
     "eslint-plugin-react": "^5.0.1"
   },
   "scripts": {
-    "pretest": "npm run lint --silent",
     "test": "meteor test --once --driver-package dispatch:mocha-phantomjs",
     "test-watch": "meteor test --driver-package practicalmeteor:mocha",
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha",
