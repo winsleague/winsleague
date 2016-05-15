@@ -1,4 +1,16 @@
-Template.poolsHeader.helpers({
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Session } from 'meteor/session';
+import { _ } from 'lodash';
+import log from '../../startup/log';
+
+import './pools-header.html';
+
+import { Pools } from '../../api/pools/pools';
+import { Seasons } from '../../api/seasons/seasons';
+
+Template.Pools_header.helpers({
   title: () => {
     const name = _.get(Template.instance().getPool(), 'name');
     const year = Template.instance().seasonYear();
@@ -7,7 +19,7 @@ Template.poolsHeader.helpers({
   },
 });
 
-Template.poolsHeader.onCreated(function () {
+Template.Pools_header.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     seasonId: { type: String, optional: true },
@@ -35,7 +47,7 @@ Template.poolsHeader.onCreated(function () {
     });
 
     this.subscribe('seasons.single', this.getSeasonId(), () => {
-      log.debug(`header: seasons.single ready`);
+      log.debug('header: seasons.single ready');
     });
   });
 });

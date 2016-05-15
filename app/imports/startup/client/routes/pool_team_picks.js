@@ -13,7 +13,7 @@ group.route('/new', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're creating picks for a pool team: ${params.poolTeamId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolTeamPicksNew' });
+    BlazeLayout.render('App_body', { content: 'poolTeamPicksNew' });
   },
 });
 
@@ -23,6 +23,6 @@ group.route('/:poolTeamPickId/edit', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're editing a pool team pick: ${params.poolTeamId} and ${params.poolTeamPickId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolTeamPicksEdit' });
+    BlazeLayout.render('App_body', { content: 'poolTeamPicksEdit' });
   },
 });

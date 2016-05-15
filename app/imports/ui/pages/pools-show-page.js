@@ -1,4 +1,17 @@
-Template.poolsShow.helpers({
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Session } from 'meteor/session';
+import { _ } from 'lodash';
+import log from '../../startup/log';
+
+import './pools-show-page.html';
+
+import '../components/pools-header';
+
+import { Pools } from '../../api/pools/pools';
+
+Template.Pools_show_page.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   seasonId: () => Template.instance().getSeasonId(),
@@ -17,7 +30,7 @@ Template.poolsShow.helpers({
   },
 });
 
-Template.poolsShow.onCreated(function () {
+Template.Pools_show_page.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getPool = () => Pools.findOne(this.getPoolId());

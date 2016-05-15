@@ -3,6 +3,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
+import '../../../ui/pages/pools-show-page';
+
 const group = FlowRouter.group({
   prefix: '/pools',
 });
@@ -19,16 +21,16 @@ group.route('/new', {
   name: 'poolsNew',
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('masterLayout', { content: 'poolsNew' });
+    BlazeLayout.render('App_body', { content: 'poolsNew' });
   },
 });
 
 // http://app.com/pools/:poolId
 group.route('/:poolId', {
-  name: 'poolsShow',
+  name: 'Pools.show',
   action(params) {
     log.debug(`We're viewing a single pool: ${params.poolId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolsShow' });
+    BlazeLayout.render('App_body', { content: 'Pools_show_page' });
   },
 });
 
@@ -38,7 +40,7 @@ group.route('/:poolId/edit', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're editing a single pool: ${params.poolId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolsEdit' });
+    BlazeLayout.render('App_body', { content: 'poolsEdit' });
   },
 });
 
@@ -47,7 +49,7 @@ group.route('/:poolId/seasons/:seasonId', {
   name: 'poolsShowSeason',
   action(params) {
     log.debug(`We're viewing a single pool: ${params.poolId} with season ${params.seasonId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolsShow' });
+    BlazeLayout.render('App_body', { content: 'poolsShow' });
   },
 });
 
@@ -56,6 +58,6 @@ group.route('/:poolId/records', {
   name: 'poolsRecords',
   action(params) {
     log.debug(`We're viewing records for a single pool: ${params.poolId}`);
-    BlazeLayout.render('masterLayout', { content: 'poolsRecords' });
+    BlazeLayout.render('App_body', { content: 'poolsRecords' });
   },
 });
