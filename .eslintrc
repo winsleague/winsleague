@@ -15,6 +15,12 @@
   ],
   "rules": {
     "no-underscore-dangle": 0,
+    "meteor/eventmap-params": [
+      2, { "templateInstanceParamName": "instance" }
+    ],
+    "import/no-unresolved": [
+      2, { "ignore": ["^meteor/"] }
+    ],
     "meteor/template-names": [2, "snake-case"] // this is what the Meteor Guide prefers
   }
   /* disabled because we now use import
