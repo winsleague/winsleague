@@ -1,12 +1,12 @@
-<template name="poolsEdit">
+<template name="Pools_edit_page">
   {{#if Template.subscriptionsReady}}
-    {{> poolsHeader poolId=poolId }}
+    {{> Pools_header poolId=poolId }}
 
     <h3>Edit Pool</h3>
   {{/if}}
 
   {{#if Template.subscriptionsReady}}
-    {{#autoForm collection="Pools" id="updatePoolForm" type="update" doc=poolDoc}}
+    {{#autoForm collection=pools id="updatePoolForm" type="update" doc=poolDoc}}
       <fieldset>
         {{> afQuickField name="name"}}
       </fieldset>

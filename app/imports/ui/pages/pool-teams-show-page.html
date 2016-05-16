@@ -1,8 +1,8 @@
-<template name="poolTeamsShow">
+<template name="PoolTeams_show_page">
   {{#if Template.subscriptionsReady}}
-    {{> poolsHeader poolId=poolId seasonId=seasonId }}
+    {{> Pools_header poolId=poolId seasonId=seasonId }}
 
-    <h3 class="poolTeamsShow">{{poolTeamName}}</h3>
+    <h3 class="PoolTeams.show">{{poolTeamName}}</h3>
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -22,7 +22,7 @@
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
             <td>
               {{#if isCommissioner}}
-                <a href="{{pathFor 'poolTeamPicksEdit' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPick._id}}">Edit</a>
+                <a href="{{pathFor 'PoolTeamPicks.edit' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPick._id}}">Edit</a>
               {{/if}}
             </td>
           </tr>
@@ -33,18 +33,18 @@
 
     {{#if isCommissioner}}
       {{#if isLatestSeason}}
-        <a href="{{pathFor 'poolTeamPicksNew' poolId=poolId poolTeamId=poolTeamId}}">Add Pick</a>
+        <a href="{{pathFor 'PoolTeamPicks.new' poolId=poolId poolTeamId=poolTeamId}}">Add Pick</a>
         <br/>
       {{/if}}
     {{/if}}
 
     {{#if editAllowed}}
-      <a href="{{pathFor 'poolTeamsEdit' poolId=poolId poolTeamId=poolTeamId}}">Edit Player</a>
+      <a href="{{pathFor 'PoolTeams.edit' poolId=poolId poolTeamId=poolTeamId}}">Edit Player</a>
       <br/>
     {{/if}}
 
     <br/>
-    <a class="btn btn-default" href="{{pathFor 'poolsShowSeason' poolId=poolId seasonId=seasonId}}">Back to Pool</a>
+    <a class="btn btn-default" href="{{pathFor 'Pools.show.season' poolId=poolId seasonId=seasonId}}">Back to Pool</a>
   {{else}}
     <div>Loading...</div>
   {{/if}}

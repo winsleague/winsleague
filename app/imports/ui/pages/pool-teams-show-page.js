@@ -1,4 +1,19 @@
-Template.poolTeamsShow.helpers({
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { AutoForm } from 'meteor/aldeed:autoform';
+import log from '../../startup/log';
+
+import './pool-teams-show-page.html';
+
+import '../components/pools-header';
+
+import { LeagueTeams } from '../../api/league_teams/league_teams';
+import { Pools } from '../../api/pools/pools';
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
+import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
+
+Template.PoolTeams_show_page.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   poolTeamId: () => Template.instance().getPoolTeamId(),
@@ -12,7 +27,8 @@ Template.poolTeamsShow.helpers({
     return PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
   },
 
-  isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(), 'commissionerUserId'),
+  isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(),
+    'commissionerUserId'),
 
   editAllowed: () => {
     const poolTeam = Template.instance().getPoolTeam();
@@ -32,7 +48,7 @@ Template.poolTeamsShow.helpers({
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 
-Template.poolTeamsShow.onCreated(function () {
+Template.PoolTeams_show_page.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
   this.getPool = () => Pools.findOne(this.getPoolId());
 
@@ -43,11 +59,13 @@ Template.poolTeamsShow.onCreated(function () {
 
   this.getSeasonId = () => _.get(this.getPoolTeam(), 'seasonId');
 
-  this.isLatestSeason = () => _.get(this.getPoolTeam(), 'seasonId') === _.get(this.getPool(), 'latestSeasonId');
+  this.isLatestSeason = () =>
+    _.get(this.getPoolTeam(), 'seasonId') === _.get(this.getPool(), 'latestSeasonId');
 
   this.autorun(() => {
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {
-      log.debug(`poolTeams.single subscription ready: ${PoolTeams.find(this.getPoolTeamId()).count()}`);
+      log.debug('poolTeams.single subscription ready: ',
+        PoolTeams.find(this.getPoolTeamId()).count());
     });
 
     this.subscribe('poolTeamPicks.ofPoolTeam', this.getPoolTeamId());

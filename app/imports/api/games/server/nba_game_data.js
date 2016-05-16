@@ -1,14 +1,14 @@
-import LeagueMethods from '../../leagues/methods';
-import SeasonMethods from '../../seasons/methods';
+import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
 
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 
 export default {
   ingestSeasonData(season) {
-    const league = LeagueMethods.getByName('NBA');
+    const league = LeagueFinder.getByName('NBA');
     if (! league) throw new Error(`League is not found!`);
 
-    if (! season) season = SeasonMethods.getLatestByLeague(league);
+    if (! season) season = SeasonFinder.getLatestByLeague(league);
 
     const url = 'https://erikberg.com/nba/standings.json';
 
@@ -29,7 +29,7 @@ export default {
   },
 
   saveTeam(league, season, teamData) {
-    const leagueTeam = LeagueMethods.getByName(
+    const leagueTeam = LeagueFinder.getByName(
       league, teamData.first_name, teamData.last_name);
     if (!leagueTeam) throw new Error('Unable to find team!', teamData);
 

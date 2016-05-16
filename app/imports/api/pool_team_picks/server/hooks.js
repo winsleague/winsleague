@@ -1,13 +1,13 @@
 import { PoolTeamPicks } from '../pool_team_picks'
-import PoolTeamMethods from '../../pool_teams/server/methods';
+import PoolTeamUpdater from '../../pool_teams/server/updater';
 
 // performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
 PoolTeamPicks.hookOptions.after.update = { fetchPrevious: false };
 
 function updatePoolTeam(doc) {
-  PoolTeamMethods.updateTeamSummary(doc.poolTeamId);
-  PoolTeamMethods.updatePoolTeamWins(doc.poolTeamId);
-  PoolTeamMethods.updatePoolTeamPickQuality(doc.poolTeamId);
+  PoolTeamUpdater.updateTeamSummary(doc.poolTeamId);
+  PoolTeamUpdater.updatePoolTeamWins(doc.poolTeamId);
+  PoolTeamUpdater.updatePoolTeamPickQuality(doc.poolTeamId);
 }
 
 PoolTeamPicks.after.insert((userId, doc) => {

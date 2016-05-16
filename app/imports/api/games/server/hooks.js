@@ -1,5 +1,5 @@
 import { Games } from '../games';
-import SeasonLeagueTeamMethods from '../../season_league_teams/server/methods';
+import SeasonLeagueTeamMethods from '../../season_league_teams/server/updater';
 
 // performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
 Games.hookOptions.after.update = { fetchPrevious: false };

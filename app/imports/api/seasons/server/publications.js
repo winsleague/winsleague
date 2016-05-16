@@ -5,7 +5,7 @@ import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Seasons } from '../seasons';
-import SeasonMethods from '../methods';
+import SeasonFinder from '../finder';
 
 Meteor.publish('seasons.single', function(_id) {
   if (! _id) return this.ready();
@@ -22,7 +22,7 @@ Meteor.publish('seasons.latest', function() {
 Meteor.publish('seasons.latest.ofLeague', function(leagueId) {
   if (! leagueId) return this.ready();
   check(leagueId, String);
-  return SeasonMethods.getLatestCursorByLeagueId(leagueId);
+  return SeasonFinder.getLatestCursorByLeagueId(leagueId);
 });
 
 Meteor.publish('seasons.ofPool', function(poolId) {

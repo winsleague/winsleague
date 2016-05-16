@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import Utils from './utils';
-import LeagueMethods from '../../../api/leagues/methods';
+import LeagueFinder from '../../../api/leagues/finder';
 
 import { Leagues } from '../../../api/leagues/leagues';
 import { LeagueTeams } from '../../../api/league_teams/league_teams';
@@ -26,7 +26,7 @@ export default {
   },
 
   createTeams() {
-    const leagueId = LeagueMethods.getIdByName('NFL');
+    const leagueId = LeagueFinder.getIdByName('NFL');
     const teams = [
       {
         cityName: 'Baltimore', mascotName: 'Ravens', abbreviation: 'BAL',
@@ -164,7 +164,7 @@ export default {
   },
 
   createSeasons() {
-    const leagueId = LeagueMethods.getIdByName('NFL');
+    const leagueId = LeagueFinder.getIdByName('NFL');
     Seasons.insert({ leagueId, year: 2014,
       startDate: moment('2014-09-04').toDate(),
       endDate: moment('2015-12-28').toDate(),
@@ -176,7 +176,7 @@ export default {
   },
 
   createExpectedWins() {
-    const leagueId = LeagueMethods.getIdByName('NFL');
+    const leagueId = LeagueFinder.getIdByName('NFL');
     const expectedWins = [
       13.77,
       12.85,

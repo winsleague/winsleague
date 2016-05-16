@@ -2,8 +2,8 @@ import log from '../../../startup/log';
 import moment from 'moment-timezone';
 import { _ } from 'lodash';
 
-import LeagueMethods from '../../leagues/methods';
-import SeasonMethods from '../../seasons/methods';
+import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
 
 import { Games } from '../games';
 import { LeagueTeams } from '../../league_teams/league_teams';
@@ -51,10 +51,10 @@ function parseGameDate(timeDate, ampm) {
 
 export default {
   ingestSeasonData(season) {
-    const league = LeagueMethods.getByName('MLB');
+    const league = LeagueFinder.getByName('MLB');
     if (! league) throw new Error(`League is not found!`);
 
-    if (! season) season = SeasonMethods.getLatestByLeague(league);
+    if (! season) season = SeasonFinder.getLatestByLeague(league);
 
     const startDate = moment(season.startDate);
     const endDate = moment(season.endDate);
@@ -123,9 +123,9 @@ export default {
   },
 
   refreshStandings() {
-    const league = LeagueMethods.getByName('MLB');
+    const league = LeagueFinder.getByName('MLB');
     if (! league) throw new Error('MLB League is not found!');
-    const season = SeasonMethods.getLatestByLeague(league);
+    const season = SeasonFinder.getLatestByLeague(league);
     if (! season) throw new Error(`Season is not found for league ${league._id}!`);
 
     let day = moment();

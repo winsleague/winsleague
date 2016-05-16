@@ -1,6 +1,6 @@
 import log from '../../log';
 
-import LeagueMethods from '../../../api/leagues/methods';
+import LeagueFinder from '../../../api/leagues/finder';
 import NFL from './nfl';
 import NBA from './nba';
 import MLB from './mlb';
@@ -17,13 +17,13 @@ export default {
   initializeLeagues() {
     log.info('Initializing leagues and teams');
 
-    if (!LeagueMethods.getByName('NFL')) NFL.create();
-    if (!LeagueMethods.getByName('NBA')) NBA.create();
-    if (!LeagueMethods.getByName('MLB')) MLB.create();
+    if (!LeagueFinder.getByName('NFL')) NFL.create();
+    if (!LeagueFinder.getByName('NBA')) NBA.create();
+    if (!LeagueFinder.getByName('MLB')) MLB.create();
   },
 
   removeLeague(leagueName) {
-    const league = LeagueMethods.getByName(leagueName);
+    const league = LeagueFinder.getByName(leagueName);
     if (!league) return;
     const leagueId = league._id;
     Games.remove({ leagueId });

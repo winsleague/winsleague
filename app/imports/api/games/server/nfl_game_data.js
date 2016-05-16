@@ -1,6 +1,6 @@
 import log from '../../../startup/log';
 
-import LeagueMethods from '../../leagues/methods';
+import LeagueFinder from '../../leagues/finder';
 
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { Games } from '../games';
@@ -30,7 +30,7 @@ export default {
     const json = JSON.parse(content);
     log.debug('parsed json:', json);
 
-    const league = LeagueMethods.getByName('NFL');
+    const league = LeagueFinder.getByName('NFL');
 
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
@@ -51,7 +51,7 @@ export default {
   ingestSeasonData(season) {
     if (! season) throw new Error(`Season is null!`);
 
-    const league = LeagueMethods.getByName('NFL');
+    const league = LeagueFinder.getByName('NFL');
     if (! league) throw new Error(`League is not found!`);
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
@@ -80,7 +80,7 @@ export default {
 
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
-    const league = LeagueMethods.getByName('NFL');
+    const league = LeagueFinder.getByName('NFL');
     const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
     Games.insert({
       leagueId: league._id,

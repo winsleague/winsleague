@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import Utils from './utils';
-import LeagueMethods from '../../../api/leagues/methods';
+import LeagueFinder from '../../../api/leagues/finder';
 
 import { Leagues } from '../../../api/leagues/leagues';
 import { LeagueTeams } from '../../../api/league_teams/league_teams';
@@ -26,7 +26,7 @@ export default {
   },
 
   createTeams() {
-    const leagueId = LeagueMethods.getIdByName('NBA');
+    const leagueId = LeagueFinder.getIdByName('NBA');
     const teams = [
       {
         cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL',
@@ -156,7 +156,7 @@ export default {
   },
 
   createSeasons() {
-    const leagueId = LeagueMethods.getIdByName('NBA');
+    const leagueId = LeagueFinder.getIdByName('NBA');
     Seasons.insert({ leagueId, year: 2015,
       startDate: moment('2015-10-27').toDate(),
       endDate: moment('2016-04-13').toDate(),
@@ -164,7 +164,7 @@ export default {
   },
 
   createExpectedWins() {
-    const leagueId = LeagueMethods.getIdByName('NBA');
+    const leagueId = LeagueFinder.getIdByName('NBA');
     const expectedWins = [
       63.10,
       59.70,
