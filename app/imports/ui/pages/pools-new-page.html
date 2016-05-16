@@ -2,7 +2,7 @@
   <h2>Create Pool</h2>
 
   {{#if Template.subscriptionsReady}}
-    {{#autoForm collection="Pools" id="insertPoolForm" type="insert"}}
+    {{#autoForm collection=pools id="insertPoolForm" type="insert"}}
       <fieldset>
           {{> afQuickField name="leagueId" options=leagueOptions defaultValue=nflLeagueId}}
       {{> afQuickField name="name"}}

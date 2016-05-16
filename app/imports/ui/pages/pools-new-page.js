@@ -6,8 +6,11 @@ import log from '../../startup/log';
 import './pools-new-page.html';
 
 import { Leagues } from '../../api/leagues/leagues';
+import { Pools } from '../../api/pools/pools';
 
 Template.Pools_new_page.helpers({
+  pools: () => Pools,
+
   leagueOptions: () => Leagues.find().map(league => {
     return { label: league.name, value: league._id };
   }),
