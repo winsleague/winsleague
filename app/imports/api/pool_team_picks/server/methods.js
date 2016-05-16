@@ -2,6 +2,7 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import { LeaguePickExpectedWins } from '../../league_pick_expected_wins/league_pick_expected_wins';
 import { Leagues } from '../../leagues/leagues';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
+import log from '../../../startup/log';
 
 import { _ } from 'lodash';
 
@@ -27,7 +28,7 @@ export default {
 
     const pickQuality = actualWins - expectedWins;
 
-    log.info(`Updating PoolTeamPick:`, poolTeamPick,
+    log.info('Updating PoolTeamPick:', poolTeamPick,
       'actualWins:', actualWins,
       'expectedWins:', expectedWins,
       'pickQuality:', pickQuality);
@@ -40,4 +41,4 @@ export default {
       },
     });
   },
-}
+};
