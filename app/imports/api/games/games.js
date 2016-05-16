@@ -14,7 +14,7 @@ Games.schema = new SimpleSchema({
   },
   gameId: {
     type: String,
-    regEx: SimpleSchema.RegEx.Id,
+    // this is not a UUID
   },
   gameDate: {
     type: Date,
