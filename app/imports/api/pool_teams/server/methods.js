@@ -5,7 +5,6 @@ import { PoolTeams } from '../pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 
-import { PoolTeamMethods } from '../../pool_teams/server/methods';
 import { PoolTeamPickMethods } from '../../pool_team_picks/server/methods';
 
 function createOrExistingUserId(email) {
@@ -61,8 +60,8 @@ export default {
 
     const poolTeamPicks = PoolTeamPicks.find({ leagueTeamId });
     poolTeamPicks.forEach(poolTeamPick => {
-      PoolTeamMethods.updatePoolTeamWins(poolTeamPick.poolTeamId);
-      PoolTeamMethods.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
+      this.updatePoolTeamWins(poolTeamPick.poolTeamId);
+      this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
     log.debug(`Done finding PoolTeams who picked leagueTeamId`);

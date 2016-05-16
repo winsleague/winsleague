@@ -5,7 +5,7 @@ import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Seasons } from '../seasons';
-import { SeasonMethods } from '../methods';
+import SeasonMethods from '../methods';
 
 Meteor.publish('seasons.single', function(_id) {
   if (! _id) return this.ready();
