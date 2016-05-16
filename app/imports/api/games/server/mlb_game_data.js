@@ -1,4 +1,6 @@
+import log from '../../../startup/log';
 import moment from 'moment-timezone';
+import { _ } from 'lodash';
 
 import LeagueMethods from '../../leagues/methods';
 import SeasonMethods from '../../seasons/methods';
@@ -65,10 +67,10 @@ export default {
 
   ingestDayData(league, season, year, month, day) {
     const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
-    log.debug(`url: `, url);
+    log.debug('url: ', url);
     const response = HTTP.get(url);
     const parsedJSON = JSON.parse(response.content);
-    log.debug(`json: `, parsedJSON);
+    log.debug('json: ', parsedJSON);
 
     if (! parsedJSON.data.games.game) return; // no games on that day
 
@@ -107,7 +109,7 @@ export default {
       status: cleanStatus(game.status),
     };
 
-    log.info(`Updating game with raw data:`, game, `to clean values:`, values);
+    log.info('Updating game with raw data:', game, 'to clean values:', values);
     Games.upsert(
       {
         leagueId: league._id,
