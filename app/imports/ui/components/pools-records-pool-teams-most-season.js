@@ -1,4 +1,12 @@
-Template.poolsRecordsPoolTeamsMostSeason.helpers({
+import { Template } from 'meteor/templating';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'lodash';
+
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
+
+import './pools-records-pool-teams-most-season.html';
+
+Template.Pools_records_pool_teams_most_season.helpers({
   poolTeams: () => {
     const metricField = Template.currentData().metricField;
     const sort = Template.currentData().sort;
@@ -7,12 +15,10 @@ Template.poolsRecordsPoolTeamsMostSeason.helpers({
     return PoolTeams.find({}, filter);
   },
 
-  getMetric: (poolTeam) => {
-    return _.get(poolTeam, Template.currentData().metricField);
-  },
+  getMetric: (poolTeam) => _.get(poolTeam, Template.currentData().metricField),
 });
 
-Template.poolsRecordsPoolTeamsMostSeason.onCreated(function () {
+Template.Pools_records_pool_teams_most_season.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     recordTitle: { type: String },

@@ -72,7 +72,7 @@ goToPoolsShowPage = done => {
     const pool = Pools.findOne();
     const poolId = pool._id;
 
-    return goToRoute('poolsShow', { poolId })(done);
+    return goToRoute('Pools.show', { poolId })(done);
   });
 };
 

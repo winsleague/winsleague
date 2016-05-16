@@ -1,13 +1,13 @@
-<template name="poolsRecords">
+<template name="Pools_records_page">
   {{#if Template.subscriptionsReady}}
-    {{> poolsHeader poolId=poolId }}
+    {{> Pools_header poolId=poolId }}
 
     <h3>Records</h3>
 
     <div class="row">
       <div class="col-md-5">
 
-        {{> poolsRecordsPoolUsersMostAllTime
+        {{> Pools_records_pool_users_most_all_time
           poolId=poolId
           recordTitle="Most Wins, All Time"
           metricTitle="Wins"
@@ -16,7 +16,7 @@
           sort=-1
         }}
 
-        {{> poolsRecordsPoolUsersMostAllTime
+        {{> Pools_records_pool_users_most_all_time
           poolId=poolId
           recordTitle="Most Losses, All Time"
           metricTitle="Losses"
@@ -25,7 +25,7 @@
           sort=-1
         }}
 
-        {{> poolsRecordsPoolUsersMostAllTime
+        {{> Pools_records_pool_users_most_all_time
           poolId=poolId
           recordTitle="Best Point Differential, All Time"
           metricTitle="Point +/-"
@@ -34,7 +34,7 @@
           sort=-1
         }}
 
-        {{> poolsRecordsPoolUsersMostAllTime
+        {{> Pools_records_pool_users_most_all_time
           poolId=poolId
           recordTitle="Worst Point Differential, All Time"
           metricTitle="Point +/-"
@@ -48,7 +48,7 @@
       </div>
       <div class="col-md-5">
 
-        {{> poolsRecordsPoolTeamsMostSeason
+        {{> Pools_records_pool_teams_most_season
           poolId=poolId
           recordTitle="Most Wins, Season"
           metricTitle="Wins"
@@ -57,7 +57,7 @@
           tableId="pool_teams_most_wins_season"
         }}
 
-        {{> poolsRecordsPoolTeamsMostSeason
+        {{> Pools_records_pool_teams_most_season
           poolId=poolId
           recordTitle="Most Losses, Season"
           metricTitle="Losses"
@@ -66,7 +66,7 @@
           tableId="pool_teams_most_losses_season"
         }}
 
-        {{> poolsRecordsPoolTeamsMostSeason
+        {{> Pools_records_pool_teams_most_season
           poolId=poolId
           recordTitle="Best Point Differential, Season"
           metricTitle="Point +/-"
@@ -75,7 +75,7 @@
           tableId="pool_teams_best_plus_minus_season"
         }}
 
-        {{> poolsRecordsPoolTeamsMostSeason
+        {{> Pools_records_pool_teams_most_season
           poolId=poolId
           recordTitle="Worst Point Differential, Season"
           metricTitle="Point +/-"
@@ -84,7 +84,7 @@
           tableId="pool_teams_worst_plus_minus_season"
         }}
 
-        {{> poolsRecordsPoolTeamPicksMostSeason
+        {{> Pools_records_pool_team_picks_most_season
           poolId=poolId
           recordTitle="Best Pick Quality, Season"
           metricTitle="Quality"
@@ -93,7 +93,7 @@
           tableId="pool_team_picks_best_pick_quality_season"
         }}
 
-        {{> poolsRecordsPoolTeamPicksMostSeason
+        {{> Pools_records_pool_team_picks_most_season
           poolId=poolId
           recordTitle="Worst Pick Quality, Season"
           metricTitle="Quality"
@@ -105,7 +105,7 @@
       </div>
     </div>
 
-    {{> seasonSwitcher
+    {{> Pools_season_switcher
       poolId=poolId
     }}
 

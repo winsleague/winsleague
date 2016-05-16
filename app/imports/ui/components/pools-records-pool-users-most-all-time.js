@@ -1,12 +1,19 @@
-Template.poolsRecordsPoolUsersMostAllTime.helpers({
+import { Template } from 'meteor/templating';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+import CollectionCache from '../../api/collection_cache';
+
+import './pools-records-pool-users-most-all-time.html';
+
+Template.Pools_records_pool_users_most_all_time.helpers({
   poolUsers: () => {
-    const collection = Modules.collectionCache.getCollection(Template.currentData().collectionName);
+    const collection = CollectionCache.getCollection(Template.currentData().collectionName);
     const sort = Template.currentData().sort;
     return collection.find({}, { sort: { metric: sort }, limit: 3 });
   },
 });
 
-Template.poolsRecordsPoolUsersMostAllTime.onCreated(function () {
+Template.Pools_records_pool_users_most_all_time.onCreated(function () {
   new SimpleSchema({
     poolId: { type: String },
     recordTitle: { type: String },

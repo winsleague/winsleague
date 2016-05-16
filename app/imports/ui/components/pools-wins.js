@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import log from '../../startup/log';
 
 import { Pools } from '../../api/pools/pools';
@@ -15,7 +15,8 @@ Template.Pools_wins.helpers({
     return PoolTeams.find({ poolId, seasonId }, {
       sort: {
         totalWins: -1,
-        totalGames: 1, // if two teams are tied in wins, rank the one with fewest games played higher
+        totalGames: 1,  // if two teams are tied in wins,
+                        // rank the one with fewest games played higher
         totalPlusMinus: -1,
       },
     });
@@ -23,7 +24,7 @@ Template.Pools_wins.helpers({
   title: () => {
     const title = Template.currentData().title;
     if (Template.currentData().linkTitle) {
-      const path = FlowRouter.path('poolsShow', { poolId: Template.currentData().poolId });
+      const path = FlowRouter.path('Pools.show', { poolId: Template.currentData().poolId });
       return `<a href="${path}">${title}</a>`;
     }
     return title;
