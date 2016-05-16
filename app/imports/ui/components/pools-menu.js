@@ -1,18 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import log from '/imports/startup/log';
+import log from '../../startup/log';
 
-import { Pools } from '../../../api/pools/pools';
+import { Pools } from '../../api/pools/pools';
 
-import './pools_menu.html';
+import './pools-menu.html';
 
-Template.poolsMenu.helpers({
+Template.Pools_menu.helpers({
   canShow: () => !!Meteor.user(),
 
   pools: () => Pools.find(),
 });
 
-Template.poolsMenu.onCreated(function () {
+Template.Pools_menu.onCreated(function () {
   this.autorun(() => {
     this.subscribe('pools.ofUser', Meteor.userId(), () => {
       log.debug(`pools.of_user subscription ready: ${Pools.find().count()} pools`);

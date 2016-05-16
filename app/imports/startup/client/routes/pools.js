@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
+import '../../../ui/pages/pools-new-page';
 import '../../../ui/pages/pools-show-page';
 import '../../../ui/pages/pools-records-page';
 

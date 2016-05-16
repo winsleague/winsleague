@@ -13,12 +13,12 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            {{> poolsMenu}}
+            {{> Pools_menu}}
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="{{ActiveRoute.isActiveRoute 'poolsNew'}}">
-              <a class="hidden-xs" href="{{pathFor 'poolsNew'}}"><b>Create Pool</b></a>
-              <a class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'poolsNew'}}"><b>Create Pool</b></a>
+            <li class="{{ActiveRoute.isActiveRoute 'Pools.new'}}">
+              <a class="hidden-xs" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
+              <a class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
             </li>
             <li>
               {{> atNavButton}}
