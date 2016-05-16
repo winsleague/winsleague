@@ -1,11 +1,14 @@
 import log from '../../../startup/log';
 
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { LoggedInMixin } from 'meteor/tunifight:loggedin-mixin';
+
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { PoolTeams } from '../pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 
-import { PoolTeamPickMethods } from '../../pool_team_picks/server/methods';
+import PoolTeamPickMethods from '../../pool_team_picks/server/methods';
 
 function createOrExistingUserId(email) {
   const existingUser = Accounts.findUserByEmail(email);
@@ -31,8 +34,8 @@ export default {
       },
       validate: PoolTeams.formSchema.validator(),
       run(doc) {
-        let newDoc = doc;
-        log.debug(`newDoc: `, newDoc);
+        const newDoc = doc;
+        log.debug('newDoc: ', newDoc);
 
         newDoc.userId = createOrExistingUserId(newDoc.userEmail);
         delete newDoc.userEmail;
@@ -47,7 +50,7 @@ export default {
           },
         });
 
-        log.debug(`newDoc: `, newDoc);
+        log.debug('newDoc: ', newDoc);
 
         check(newDoc, PoolTeams.schema);
         return PoolTeams.insert(newDoc);
@@ -64,11 +67,11 @@ export default {
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
-    log.debug(`Done finding PoolTeams who picked leagueTeamId`);
+    log.debug('Done finding PoolTeams who picked leagueTeamId');
   },
 
   updatePoolTeamWins(poolTeamId) {
-    log.info(`Updating PoolTeam wins`, poolTeamId);
+    log.info('Updating PoolTeam wins', poolTeamId);
 
     let totalWins = 0;
     let totalLosses = 0;
@@ -81,7 +84,7 @@ export default {
       const seasonId = poolTeamPick.seasonId;
       const leagueTeamId = poolTeamPick.leagueTeamId;
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
-      log.debug(`Found seasonLeagueTeam`, seasonLeagueTeam);
+      log.debug('Found seasonLeagueTeam', seasonLeagueTeam);
       if (seasonLeagueTeam) {
         totalWins += seasonLeagueTeam.wins;
         totalLosses += seasonLeagueTeam.losses;
@@ -94,7 +97,8 @@ export default {
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
     const numberAffected = PoolTeams.direct.update(poolTeamId,
       { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
-    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, ` +
+      `totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamPickQuality(poolTeamId) {
@@ -104,7 +108,7 @@ export default {
   },
 
   updateTeamSummary(poolTeamId) {
-    log.info(`Updating team summary for PoolTeam:`, poolTeamId);
+    log.info('Updating team summary for PoolTeam:', poolTeamId);
 
     let teamSummary = '';
     const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
@@ -124,6 +128,7 @@ export default {
           teamSummary,
         },
       });
-    log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, ` +
+      `numberAffected: ${numberAffected}`);
   },
-}
+};
