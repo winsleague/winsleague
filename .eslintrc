@@ -14,7 +14,8 @@
     "meteor"
   ],
   "rules": {
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "meteor/template-names": [2, "snake-case"] // this is what the Meteor Guide prefers
   }
   /* disabled because we now use import
   "globals": {

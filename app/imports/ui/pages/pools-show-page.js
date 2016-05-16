@@ -8,8 +8,11 @@ import log from '../../startup/log';
 import './pools-show-page.html';
 
 import '../components/pools-header';
+import '../components/pools-pick-quality';
+import '../components/pools-season-switcher';
 
 import { Pools } from '../../api/pools/pools';
+import SeasonMethods from '../../api/seasons/methods';
 
 Template.Pools_show_page.helpers({
   poolId: () => Template.instance().getPoolId(),
@@ -22,7 +25,7 @@ Template.Pools_show_page.helpers({
 
   isLatestSeason: () => {
     if (Template.instance().getSeasonId()) {
-      const latestSeason = Modules.seasons.getLatestByLeagueId(Template.instance().getLeagueId());
+      const latestSeason = SeasonMethods.getLatestByLeagueId(Template.instance().getLeagueId());
       return _.get(latestSeason, '_id') === Template.instance().getSeasonId();
     } else {
       return true;

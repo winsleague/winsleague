@@ -1,14 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import log from '../../../../startup/log';
+import log from '../../startup/log';
 
-import { Pools } from '../../../../api/pools/pools';
-import { PoolTeams } from '../../../../api/pool_teams/pool_teams';
+import { Pools } from '../../api/pools/pools';
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
 
-import './wins.html';
+import './pools-wins.html';
 
-Template.poolsShowWins.helpers({
+Template.Pools_wins.helpers({
   poolTeams: () => {
     const seasonId = Template.instance().getSeasonId();
     const poolId = Template.currentData().poolId;
@@ -30,7 +30,7 @@ Template.poolsShowWins.helpers({
   },
 });
 
-Template.poolsShowWins.onCreated(function () {
+Template.Pools_wins.onCreated(function () {
   new SimpleSchema({
     title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
     linkTitle: { type: Boolean, optional: true, defaultValue: false },

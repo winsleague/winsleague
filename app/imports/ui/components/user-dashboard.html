@@ -1,7 +1,7 @@
-<template name="dashboard">
+<template name="User_dashboard">
   {{#if Template.subscriptionsReady}}
     {{#each pool in pools}}
-      {{> poolsShowWins
+      {{> Pools_wins
         title=pool.name
         linkTitle=true
         poolId=pool._id
