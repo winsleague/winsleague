@@ -21,15 +21,15 @@ Template.Pools_show_page.helpers({
 
   leagueId: () => Template.instance().getLeagueId(),
 
-  isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(), 'commissionerUserId'),
+  isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(),
+    'commissionerUserId'),
 
   isLatestSeason: () => {
     if (Template.instance().getSeasonId()) {
       const latestSeason = SeasonMethods.getLatestByLeagueId(Template.instance().getLeagueId());
       return _.get(latestSeason, '_id') === Template.instance().getSeasonId();
-    } else {
-      return true;
     }
+    return true;
   },
 });
 
