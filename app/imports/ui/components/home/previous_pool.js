@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { _ } from 'lodash';
 
 import { Pools } from '../../../api/pools/pools';
 
@@ -10,7 +11,7 @@ Template.previousPool.helpers({
 
   poolId: () => Template.instance().getPoolId(),
 
-  poolName: () => Pools.findOne(Template.instance().getPoolId()).name,
+  poolName: () => _.get(Pools.findOne(Template.instance().getPoolId()), 'name'),
 });
 
 Template.previousPool.onCreated(function () {
