@@ -3,9 +3,9 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
 
-import { Users } from '../users/users'; // needed for factory
-import { Leagues } from '../leagues/leagues'; // needed for factory
-import { Seasons } from '../seasons/seasons'; // needed for factory
+import '../users/users'; // needed for factory
+import '../leagues/leagues'; // needed for factory
+import '../seasons/seasons'; // needed for factory
 import SeasonFinder from '../seasons/finder';
 
 export const Pools = new Mongo.Collection('pools');
