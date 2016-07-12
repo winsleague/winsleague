@@ -1,4 +1,5 @@
 import LeagueFinder from '../../leagues/finder';
+import LeagueTeamFinder from '../../league_teams/finder';
 import SeasonFinder from '../../seasons/finder';
 
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
@@ -29,7 +30,7 @@ export default {
   },
 
   saveTeam(league, season, teamData) {
-    const leagueTeam = LeagueFinder.getByName(
+    const leagueTeam = LeagueTeamFinder.getByName(
       league, teamData.first_name, teamData.last_name);
     if (!leagueTeam) throw new Error('Unable to find team!', teamData);
 

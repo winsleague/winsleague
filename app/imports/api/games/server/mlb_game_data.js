@@ -61,11 +61,11 @@ export default {
 
     for (const date = startDate; date.isBefore(endDate); date.add(1, 'days')) {
       // month is zero-indexed so we add 1
-      this.ingestDayData(league, season, date.year(), date.month() + 1, date.date());
+      this.ingestDayData(season, date.year(), date.month() + 1, date.date());
     }
   },
 
-  ingestDayData(league, season, year, month, day) {
+  ingestDayData(season, year, month, day) {
     const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
     log.debug('url: ', url);
     const response = HTTP.get(url);
@@ -76,14 +76,14 @@ export default {
 
     if (Array.isArray(parsedJSON.data.games.game)) {
       parsedJSON.data.games.game.forEach(game => {
-        this.upsertGame(league, season, game);
+        this.upsertGame(season, game);
       });
     } else { // this happens when there's only one game that day (http://gd2.mlb.com/components/game/mlb/year_2016/month_07/day_12/miniscoreboard.json)
-      this.upsertGame(league, season, parsedJSON.data.games.game);
+      this.upsertGame(season, parsedJSON.data.games.game);
     }
   },
 
-  upsertGame(league, season, game) {
+  upsertGame(season, game) {
     if (game.game_type !== 'R') {
       /*
        game_types:
@@ -112,7 +112,7 @@ export default {
     log.info('Updating game with raw data:', game, 'to clean values:', values);
     Games.upsert(
       {
-        leagueId: league._id,
+        leagueId: season.leagueId,
         seasonId: season._id,
         gameId: game.gameday_link,
       },
@@ -147,6 +147,6 @@ export default {
     const month = day.month() + 1; // moment months are zero-based
     const date = day.date();
 
-    this.ingestDayData(league, season, year, month, date);
+    this.ingestDayData(season, year, month, date);
   },
 };

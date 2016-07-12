@@ -1,5 +1,20 @@
+/* eslint-env mocha */
+/* eslint-disable func-names, prefer-arrow-callback */
+
+import { Factory } from 'meteor/dburles:factory';
+import NbaGameData from './nba_game_data';
+import NbaUtils from '../../../startup/server/seeds/nba';
+import LeagueFinder from '../../leagues/finder';
+import LeagueTeamFinder from '../../league_teams/finder';
+import SeasonFinder from '../../seasons/finder';
+import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
+
+import { chai, assert } from 'meteor/practicalmeteor:chai';
+
 describe('NBA Game Data', () => {
   beforeEach(() => {
+    NbaUtils.create();
+
     // it'd be great if this could be pulled from an external file but I couldn't figure out
     // how to get it to copy the external js file to the mirror
     spyOn(HTTP, 'get').and.callFake(() => {
@@ -972,22 +987,22 @@ streak_total: 9
       };
     });
 
-    Modules.server.nbaGameData.ingestSeasonData();
+    NbaGameData.ingestSeasonData();
   });
 
   describe('Ingest Standings Data', () => {
     it('should ingest standings', () => {
-      const league = Modules.leagues.getByName('NBA');
-      const season = Modules.seasons.getLatestByLeague(league);
-      const leagueTeam = Modules.leagueTeams.getByName(league, 'New York', 'Knicks');
+      const league = LeagueFinder.getByName('NBA');
+      const season = SeasonFinder.getLatestByLeague(league);
+      const leagueTeam = LeagueTeamFinder.getByName(league, 'New York', 'Knicks');
 
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({
         leagueId: league._id,
         seasonId: season._id,
         leagueTeamId: leagueTeam._id,
       });
-      expect(seasonLeagueTeam.wins).toBe(23, 'totalWins');
-      expect(seasonLeagueTeam.losses).toBe(26, 'totalLosses');
+      assert.equal(seasonLeagueTeam.wins, 23, 'totalWins');
+      assert.equal(seasonLeagueTeam.losses, 26, 'totalLosses');
     });
   });
 });

@@ -1,6 +1,11 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Factory } from 'meteor/dburles:factory';
+import faker from 'faker';
 
+import { Users } from '../users/users'; // needed for factory
+import { Leagues } from '../leagues/leagues'; // needed for factory
+import { Seasons } from '../seasons/seasons'; // needed for factory
 import SeasonFinder from '../seasons/finder';
 
 export const Pools = new Mongo.Collection('pools');
@@ -88,3 +93,9 @@ if (Meteor.isServer) {
     },
   });
 }
+
+Factory.define('pool', Pools, {
+  leagueId: Factory.get('league'),
+  name: () => faker.lorem.words(),
+  commissionerUserId: Factory.get('commissionerUser'),
+});

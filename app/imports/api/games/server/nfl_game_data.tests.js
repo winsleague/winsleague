@@ -1,7 +1,21 @@
+/* eslint-env mocha */
+/* eslint-disable func-names, prefer-arrow-callback */
+
+import { Factory } from 'meteor/dburles:factory';
+import NflGameData from './nfl_game_data';
+import NflUtils from '../../../startup/server/seeds/nfl';
+import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
+import { Games } from '../../games/games';
+
+import { chai, assert } from 'meteor/practicalmeteor:chai';
+
 describe('NFL Game Data', () => {
   beforeEach(() => {
-    const league = Modules.leagues.getByName('NFL');
-    const season = Modules.seasons.getByYear(league, 2015);
+    NflUtils.create();
+
+    const league = LeagueFinder.getByName('NFL');
+    const season = SeasonFinder.getByYear(league, 2015);
     const week = 17;
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
@@ -20,24 +34,24 @@ describe('NFL Game Data', () => {
       }
     });
 
-    Modules.server.nflGameData.ingestWeekData(season, week);
+    NflGameData.ingestWeekData(season, week);
   });
 
   describe('Ingest Week Data', () => {
     it('should ingest all games for week 17', () => {
       const game = Games.findOne({ gameId: '56744' });
-      expect(game.homeScore).toBe(10);
-      expect(game.awayScore).toBe(7);
+      assert.equal(game.homeScore, 10);
+      assert.equal(game.awayScore, 7);
     });
   });
 
   describe('Update Live Scores', () => {
     it('should update the games based on live scores', () => {
-      Modules.server.nflGameData.updateLiveScores();
+      NflGameData.updateLiveScores();
 
       const game = Games.findOne({ gameId: '56744' });
-      expect(game.homeScore).toBe(22);
-      expect(game.awayScore).toBe(17);
+      assert.equal(game.homeScore, 22);
+      assert.equal(game.awayScore, 17);
     });
   });
 });

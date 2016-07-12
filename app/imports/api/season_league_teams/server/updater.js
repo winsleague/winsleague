@@ -2,6 +2,7 @@ import log from '../../../startup/log';
 
 import { Games } from '../../games/games';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
+import '../../season_league_teams/server/hooks';
 
 export default {
   updateTeamStats(leagueId, seasonId, leagueTeamId) {
@@ -9,7 +10,7 @@ export default {
     if (!seasonId) { throw new Error('Undefined seasonId!'); }
     if (!leagueTeamId) { throw new Error('Undefined leagueTeamId!'); }
 
-    log.info(`Updating stats for seasonLeagueTeam: ${leagueTeamId}`);
+    log.info('Updating stats for seasonLeagueTeam: ', leagueTeamId);
 
     const games = Games.find({ leagueId, seasonId, status: 'completed',
       $or: [{ homeTeamId: leagueTeamId }, { awayTeamId: leagueTeamId }] });

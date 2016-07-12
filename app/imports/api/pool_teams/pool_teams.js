@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Factory } from 'meteor/dburles:factory';
+import faker from 'faker';
 
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
@@ -126,8 +128,6 @@ PoolTeams.formSchema = new SimpleSchema({
 });
 
 
-
-
 /* Access control */
 if (Meteor.isServer) {
   PoolTeams.allow({
@@ -152,3 +152,10 @@ if (Meteor.isServer) {
     },
   });
 }
+
+
+Factory.define('poolTeam', PoolTeams, {
+  poolId: Factory.get('pool'),
+  userId: Factory.get('user'),
+  userTeamName: () => faker.company.companyName(),
+});

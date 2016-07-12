@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Factory } from 'meteor/dburles:factory';
+import faker from 'faker';
 
 export const LeagueTeams = new Mongo.Collection('league_teams');
 
@@ -42,4 +44,22 @@ LeagueTeams.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; },
+});
+
+Factory.define('leagueTeam', LeagueTeams, {
+  leagueId: Factory.get('league'),
+  cityName: () => faker.address.city(),
+  mascotName: () => faker.company.companyName(),
+  abbreviation: () => faker.company.catchPhrase(),
+  conference: 'NFC',
+  division: 'East',
+});
+
+Factory.define('awayLeagueTeam', LeagueTeams, {
+  leagueId: Factory.get('league'),
+  cityName: () => faker.address.city(),
+  mascotName: () => faker.company.companyName(),
+  abbreviation: () => faker.company.catchPhrase(),
+  conference: 'AFC',
+  division: 'South',
 });

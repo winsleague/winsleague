@@ -1,11 +1,24 @@
+/* eslint-env mocha */
+/* eslint-disable func-names, prefer-arrow-callback */
+
+import { Factory } from 'meteor/factory';
+import MlbGameData from './mlb_game_data';
+
+import { Games } from '../../../api/games/games';
+import { LeagueTeams } from '../../../api/league_teams/league_teams';
+
+import { chai, assert } from 'meteor/practicalmeteor:chai';
+
 describe('MLB Game Data', () => {
   beforeEach(() => {
-    const league = Modules.leagues.getByName('MLB');
-    const season = Modules.seasons.getByYear(league, 2016);
+    const season = Factory.create('season');
 
     const year = season.year;
     const month = 6;
     const day = 15;
+
+    Factory.create('leagueTeams', { leagueId: season.leagueId, abbreviation: 'ARZ' });
+    Factory.create('leagueTeams', { leagueId: season.leagueId, abbreviation: 'LAD' });
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
     // how to get it to copy the external js file to the mirror
@@ -17,21 +30,21 @@ describe('MLB Game Data', () => {
       }
     });
 
-    Modules.server.mlbGameData.ingestDayData(league, season, year, month, day);
+    MlbGameData.ingestDayData(season, year, month, day);
   });
 
-  fdescribe('Ingest Day Data', () => {
+  describe('Ingest Day Data', () => {
     it('should ingest all games for on June 15, 2016', () => {
       const game = Games.findOne({ gameId: '2016_06_15_lanmlb_arimlb_1' });
       const diamondbacks = LeagueTeams.findOne({ cityName: 'Arizona', mascotName: 'Diamondbacks' });
       const dodgers = LeagueTeams.findOne({ cityName: 'Los Angeles', mascotName: 'Dodgers' });
-      expect(game.homeTeamId).toBe(diamondbacks._id);
-      expect(game.awayTeamId).toBe(dodgers._id);
+      assert.equal(game.homeTeamId, diamondbacks._id);
+      assert.equal(game.awayTeamId, dodgers._id);
 
       const gameMoment = moment(game.gameDate);
-      expect(gameMoment.year()).toBe(2016);
-      expect(gameMoment.month()).toBe(5); // it's zero-based so june is 5
-      expect(gameMoment.date()).toBe(15);
+      assert.equal(gameMoment.year()).toBe(2016);
+      assert.equal(gameMoment.month()).toBe(6); // it's zero-based so june is 5
+      assert.equal(gameMoment.date()).toBe(15);
     });
   });
 });

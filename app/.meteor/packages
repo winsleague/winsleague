@@ -55,3 +55,9 @@ useraccounts:flow-routing
 u2622:persistent-session
 standard-minifier-css
 standard-minifier-js
+xolvio:cleaner
+practicalmeteor:chai
+practicalmeteor:mocha
+dispatch:mocha-phantomjs
+dburles:factory
+practicalmeteor:sinon
