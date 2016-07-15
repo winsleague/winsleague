@@ -22,27 +22,27 @@ export default {
       rank: poolTeamPick.pickNumber,
     });
 
-    if (expectedWinsRecord) {
-      const expectedWinsFullSeason = expectedWinsRecord.wins;
+    if (! expectedWinsRecord) return;
 
-      const seasonGameCount = Leagues.findOne(poolTeamPick.leagueId).seasonGameCount;
+    const expectedWinsFullSeason = expectedWinsRecord.wins;
 
-      const expectedWins = gamesPlayed / seasonGameCount * expectedWinsFullSeason;
+    const seasonGameCount = Leagues.findOne(poolTeamPick.leagueId).seasonGameCount;
 
-      const pickQuality = actualWins - expectedWins;
+    const expectedWins = gamesPlayed / seasonGameCount * expectedWinsFullSeason;
 
-      log.info('Updating PoolTeamPick:', poolTeamPick,
-        'actualWins:', actualWins,
-        'expectedWins:', expectedWins,
-        'pickQuality:', pickQuality);
+    const pickQuality = actualWins - expectedWins;
 
-      PoolTeamPicks.direct.update(poolTeamPick._id, {
-        $set: {
-          actualWins,
-          expectedWins,
-          pickQuality,
-        },
-      });
-    }
+    log.info('Updating PoolTeamPick:', poolTeamPick,
+      'actualWins:', actualWins,
+      'expectedWins:', expectedWins,
+      'pickQuality:', pickQuality);
+
+    PoolTeamPicks.direct.update(poolTeamPick._id, {
+      $set: {
+        actualWins,
+        expectedWins,
+        pickQuality,
+      },
+    });
   },
 };
