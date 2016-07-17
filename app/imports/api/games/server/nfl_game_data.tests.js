@@ -1,14 +1,14 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import { Factory } from 'meteor/dburles:factory';
 import NflGameData from './nfl_game_data';
 import NflUtils from '../../../startup/server/seeds/nfl';
 import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
 
-import { chai, assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'meteor/practicalmeteor:chai';
+import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('NFL Game Data', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('NFL Game Data', () => {
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
     // how to get it to copy the external js file to the mirror
-    spyOn(HTTP, 'get').and.callFake(function(url) {
+    sinon.stub(HTTP, 'get', function (url) {
       if (url === `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`) {
         return {
           content: `<?xml version="1.0" encoding="UTF-8"?>
@@ -35,6 +35,10 @@ describe('NFL Game Data', () => {
     });
 
     NflGameData.ingestWeekData(season, week);
+  });
+
+  afterEach(() => {
+    HTTP.get.restore();
   });
 
   describe('Ingest Week Data', () => {
