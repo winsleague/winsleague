@@ -9,7 +9,11 @@ import { Games } from '../games';
 import { LeagueTeams } from '../../league_teams/league_teams';
 
 function getLeagueTeamIdByAbbreviation(league, abbreviation) {
-  return LeagueTeams.findOne({ leagueId: league._id, abbreviation })._id;
+  const leagueTeam = LeagueTeams.findOne({ leagueId: league._id, abbreviation });
+  if (! leagueTeam) {
+    log.error('No leagueTeam found for leagueId', league._id, 'and abbreviation', abbreviation);
+  }
+  return leagueTeam._id;
 }
 
 function padZeros(n, width) {
@@ -52,7 +56,7 @@ function parseGameDate(timeDate, ampm) {
 export default {
   ingestSeasonData(season) {
     const league = LeagueFinder.getByName('MLB');
-    if (! league) throw new Error(`League is not found!`);
+    if (! league) throw new Error('League is not found!');
 
     if (! season) season = SeasonFinder.getLatestByLeague(league);
 
@@ -61,16 +65,21 @@ export default {
 
     for (const date = startDate; date.isBefore(endDate); date.add(1, 'days')) {
       // month is zero-indexed so we add 1
-      this.ingestDayData(season, date.year(), date.month() + 1, date.date());
+      this.ingestDayData(date.year(), date.month() + 1, date.date());
     }
   },
 
-  ingestDayData(season, year, month, day) {
-    const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
+  ingestDayData(year, month, day) {
+    const league = LeagueFinder.getByName('MLB');
+    if (! league) throw new Error('League is not found!');
+    
+    const season = SeasonFinder.getByYear(league, year);
+
+    const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
     log.debug('url: ', url);
     const response = HTTP.get(url);
     const parsedJSON = JSON.parse(response.content);
-    log.debug('json: ', parsedJSON);
+    // log.debug('json: ', parsedJSON);
 
     if (! parsedJSON.data.games.game) return; // no games on that day
 
@@ -99,6 +108,8 @@ export default {
       return;
     }
 
+    const league = season.league();
+
     const values = {
       gameDate: parseGameDate(game.time_date, game.ampm),
       homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
@@ -125,8 +136,6 @@ export default {
   refreshStandings() {
     const league = LeagueFinder.getByName('MLB');
     if (! league) throw new Error('MLB League is not found!');
-    const season = SeasonFinder.getLatestByLeague(league);
-    if (! season) throw new Error(`Season is not found for league ${league._id}!`);
 
     let day = moment();
 
@@ -147,6 +156,6 @@ export default {
     const month = day.month() + 1; // moment months are zero-based
     const date = day.date();
 
-    this.ingestDayData(season, year, month, date);
+    this.ingestDayData(year, month, date);
   },
 };
