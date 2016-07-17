@@ -1,3 +1,5 @@
+import log from '../../../startup/log';
+
 import LeagueFinder from '../../leagues/finder';
 import LeagueTeamFinder from '../../league_teams/finder';
 import SeasonFinder from '../../seasons/finder';

@@ -5,8 +5,7 @@ import { Factory } from 'meteor/dburles:factory';
 import moment from 'moment';
 import MlbGameData from './mlb_game_data';
 
-import MLB from '../../../startup/server/seeds/mlb';
-import SeasonFinder from '../../seasons/finder';
+import MlbSeeds from '../../../startup/server/seeds/mlb';
 import { Games } from '../../../api/games/games';
 import { LeagueTeams } from '../../../api/league_teams/league_teams';
 
@@ -15,7 +14,7 @@ import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('MLB Game Data', () => {
   beforeEach(() => {
-    MLB.create();
+    MlbSeeds.create();
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
     // how to get it to copy the external js file to the mirror
@@ -30,6 +29,10 @@ describe('MLB Game Data', () => {
     const day = 15;
 
     MlbGameData.ingestDayData(year, month, day);
+  });
+
+  afterEach(() => {
+    HTTP.get.restore();
   });
 
   describe('Ingest Day Data', () => {

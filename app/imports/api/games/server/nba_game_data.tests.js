@@ -3,21 +3,22 @@
 
 import { Factory } from 'meteor/dburles:factory';
 import NbaGameData from './nba_game_data';
-import NbaUtils from '../../../startup/server/seeds/nba';
+import NbaSeeds from '../../../startup/server/seeds/nba';
 import LeagueFinder from '../../leagues/finder';
 import LeagueTeamFinder from '../../league_teams/finder';
 import SeasonFinder from '../../seasons/finder';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 
-import { chai, assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'meteor/practicalmeteor:chai';
+import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('NBA Game Data', () => {
   beforeEach(() => {
-    NbaUtils.create();
+    NbaSeeds.create();
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
     // how to get it to copy the external js file to the mirror
-    spyOn(HTTP, 'get').and.callFake(() => {
+    sinon.stub(HTTP, 'get', function () {
       return {
         content: `{
 standings_date: "2016-01-30T22:44:00-05:00",
@@ -988,6 +989,10 @@ streak_total: 9
     });
 
     NbaGameData.ingestSeasonData();
+  });
+  
+  afterEach(() => {
+    HTTP.get.restore();
   });
 
   describe('Ingest Standings Data', () => {
