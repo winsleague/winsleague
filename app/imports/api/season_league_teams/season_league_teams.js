@@ -3,6 +3,10 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import log from '../../startup/log';
 
+import '../league_teams/league_teams'; // needed for factory
+import '../seasons/seasons'; // needed for factory
+import '../pool_teams/pool_teams'; // needed for factory
+
 export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
 SeasonLeagueTeams.schema = new SimpleSchema({
