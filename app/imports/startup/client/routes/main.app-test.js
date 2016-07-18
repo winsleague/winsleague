@@ -33,20 +33,9 @@ if (Meteor.isClient) {
 
     describe('when logged out', () => {
       it('has all public lists at homepage', () => {
-        assert.equal(Lists.find().count(), 3);
-      });
-
-      it('renders the correct list when routed to', () => {
-        const list = Lists.findOne();
-        FlowRouter.go('Lists.show', { _id: list._id });
-
         return afterFlushPromise()
           .then(() => {
-            assert.equal($('.title-wrapper').html(), list.name);
-          })
-          .then(() => waitForSubscriptions())
-          .then(() => {
-            assert.equal(Todos.find({ listId: list._id }).count(), 3);
+            assert.equal($('a.navbar-brand').html(), 'League Wins Pool');
           });
       });
     });
