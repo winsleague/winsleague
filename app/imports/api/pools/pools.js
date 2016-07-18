@@ -98,4 +98,5 @@ Factory.define('pool', Pools, {
   leagueId: Factory.get('league'),
   name: () => faker.lorem.words(),
   commissionerUserId: Factory.get('commissionerUser'),
+  latestSeasonId: Factory.get('season'),
 });

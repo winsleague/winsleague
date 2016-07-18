@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Factory } from 'meteor/dburles:factory';
+import log from '../../startup/log';
 
 export const LeaguePickExpectedWins = new Mongo.Collection('league_pick_expected_wins');
 
@@ -25,3 +27,8 @@ LeaguePickExpectedWins.deny({
   remove() { return true; },
 });
 
+Factory.define('leaguePickExpectedWin', LeaguePickExpectedWins, {
+  leagueId: Factory.get('league'),
+}).after(leaguePickExpectedWin => {
+  log.debug('leaguePickExpectedWin factory created:', leaguePickExpectedWin);
+});

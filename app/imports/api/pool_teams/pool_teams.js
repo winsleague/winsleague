@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
+import log from '../../startup/log';
 
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
@@ -155,7 +156,10 @@ if (Meteor.isServer) {
 
 
 Factory.define('poolTeam', PoolTeams, {
+  seasonId: Factory.get('season'),
   poolId: Factory.get('pool'),
   userId: Factory.get('user'),
   userTeamName: () => faker.company.companyName(),
+}).after(poolTeam => {
+  log.debug('poolTeam factory created:', poolTeam);
 });

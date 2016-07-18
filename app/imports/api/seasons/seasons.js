@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 import { Factory } from 'meteor/dburles:factory';
+import 'meteor/dburles:collection-helpers';
 
 import { Leagues } from '../leagues/leagues'; // needed for factory
 
@@ -36,7 +37,7 @@ Seasons.deny({
 });
 
 Factory.define('season', Seasons, {
-  // you must pass in leagueId to avoid circular reference
+  leagueId: Factory.get('league'),
   year() { return _.random(2000, 2014); },
   startDate: new Date(),
   endDate: new Date(),

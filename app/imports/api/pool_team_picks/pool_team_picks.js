@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 import { Factory } from 'meteor/dburles:factory';
+import log from '../../startup/log';
 
 import { LeagueTeams } from '../league_teams/league_teams';
 import { PoolTeams } from '../pool_teams/pool_teams';
@@ -164,4 +165,6 @@ Factory.define('poolTeamPick', PoolTeamPicks, {
   poolTeamId: Factory.get('poolTeam'),
   leagueTeamId: Factory.get('leagueTeam'),
   pickNumber() { return _.random(1, 32); },
+}).after(factory => {
+  log.debug('poolTeamPick factory created:', factory);
 });

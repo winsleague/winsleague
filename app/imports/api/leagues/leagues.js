@@ -1,8 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
-
-import '../seasons/seasons'; // needed for factory
+import log from '../../startup/log';
 
 export const Leagues = new Mongo.Collection('leagues');
 
@@ -24,6 +23,5 @@ Factory.define('league', Leagues, {
   name: 'NFL',
   seasonGameCount: 16,
 }).after(league => {
-  // required to avoid circular reference
-  Factory.create('season', { leagueId: league._id });
+  log.debug('league factory created:', league);
 });
