@@ -38,7 +38,7 @@ Seasons.deny({
 
 Factory.define('season', Seasons, {
   leagueId: Factory.get('league'),
-  year() { return _.random(2000, 2014); },
+  year: () => _.random(2000, 2014),
   startDate: new Date(),
   endDate: new Date(),
   status: 'in progress',

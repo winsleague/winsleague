@@ -158,7 +158,11 @@ if (Meteor.isServer) {
 Factory.define('poolTeam', PoolTeams, {
   seasonId: Factory.get('season'),
   poolId: Factory.get('pool'),
-  userId: Factory.get('user'),
+  userId: () => {
+    const email = faker.internet.email();
+    Accounts.createUser({ email });
+    return Accounts.findUserByEmail(email)._id;
+  },
   userTeamName: () => faker.company.companyName(),
 }).after(poolTeam => {
   log.debug('poolTeam factory created:', poolTeam);

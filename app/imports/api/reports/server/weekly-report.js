@@ -1,10 +1,10 @@
-import log from '../imports/startup/log';
+import log from '../../../startup/log';
 import { _ } from 'lodash';
 import { Mailer } from 'meteor/lookback:emails';
 
-import { Seasons } from '../imports/api/seasons/seasons';
-import { Pools } from '../imports/api/pools/pools';
-import { PoolTeams } from '../imports/api/pool_teams/pool_teams';
+import { Seasons } from '../../seasons/seasons';
+import { Pools } from '../../pools/pools';
+import { PoolTeams } from '../../pool_teams/pool_teams';
 
 export default {
   emailReports() {

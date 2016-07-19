@@ -3,7 +3,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
 
-import '../users/users'; // needed for factory
 import '../leagues/leagues'; // needed for factory
 import '../seasons/seasons'; // needed for factory
 import SeasonFinder from '../seasons/finder';
@@ -97,6 +96,10 @@ if (Meteor.isServer) {
 Factory.define('pool', Pools, {
   leagueId: Factory.get('league'),
   name: () => faker.lorem.words(),
-  commissionerUserId: Factory.get('commissionerUser'),
+  commissionerUserId: () => {
+    const email = faker.internet.email();
+    Accounts.createUser({ email });
+    return Accounts.findUserByEmail(email)._id;
+  },
   latestSeasonId: Factory.get('season'),
 });

@@ -5,7 +5,7 @@ import log from '../log';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
-import WeeklyReport from '../../../server/weekly_report';
+import WeeklyReport from '../../api/reports/server/weekly-report';
 
 log.info('Initializing SyncedCron');
 
