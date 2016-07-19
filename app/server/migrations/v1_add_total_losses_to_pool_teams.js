@@ -1,4 +1,4 @@
-import Migrations from 'meteor/percolate:migrations';
+import { Migrations } from 'meteor/percolate:migrations';
 import { PoolTeams } from '../../imports/api/pool_teams/pool_teams';
 import PoolTeamsUpdater from '../../imports/api/pool_teams/server/updater';
 

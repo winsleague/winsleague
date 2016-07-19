@@ -1,4 +1,4 @@
-import Migrations from 'meteor/percolate:migrations';
+import { Migrations } from 'meteor/percolate:migrations';
 import moment from 'moment';
 import { Seasons } from '../../imports/api/seasons/seasons';
 import LeagueFinder from '../../imports/api/leagues/finder';
