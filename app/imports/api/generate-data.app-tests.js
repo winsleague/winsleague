@@ -1,7 +1,7 @@
 // This file will be auto-imported in the app-test context, ensuring the method is always available
 
 import { Meteor } from 'meteor/meteor';
-import { Factory } from 'meteor/factory';
+import { Factory } from 'meteor/dburles:factory';
 import log from '../startup/log';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { Promise } from 'meteor/promise';
