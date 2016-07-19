@@ -1,7 +1,3 @@
-machine:
-  node:
-    version: 0.10.46
-
 general:
   artifacts:
     - "app/.meteor/local/log"
