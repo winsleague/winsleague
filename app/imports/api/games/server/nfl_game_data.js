@@ -81,17 +81,17 @@ export default {
 
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
-    const league = LeagueFinder.getByName('NFL');
+    const leagueId = LeagueFinder.getIdByName('NFL');
     const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
     Games.insert({
-      leagueId: league._id,
+      leagueId,
       seasonId: season._id,
       gameId: game.gsis,
       gameDate,
       week,
-      homeTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.h })._id,
+      homeTeamId: LeagueTeams.findOne({ leagueId, abbreviation: game.h })._id,
       homeScore: game.hs,
-      awayTeamId: LeagueTeams.findOne({ leagueId: league._id, abbreviation: game.v })._id,
+      awayTeamId: LeagueTeams.findOne({ leagueId, abbreviation: game.v })._id,
       awayScore: game.vs,
       period: cleanPeriod(game.q),
       status: cleanStatus(game.q),
