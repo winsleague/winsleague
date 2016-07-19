@@ -3,7 +3,7 @@ import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 
 export default {
   path: 'weekly-email/template.html',    // Relative to the 'private' dir.
-  scss: 'weekly-email/style.scss',       // Mail specific SCSS.
+  css: 'weekly-email/style.css',       // Mail specific CSS.
 
   helpers: {
     preview() {

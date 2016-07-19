@@ -24,7 +24,7 @@ Meteor.startup(() => {
     layout: {
       name: 'emailLayout',
       path: 'layout.html',   // Relative to 'private' dir.
-      scss: 'layout.scss',
+      css: 'layout.css',
     },
   });
 });

@@ -68,7 +68,7 @@ a {
   padding: 10px 0;
 }
 
-// start Bootstrap
+/* start Bootstrap */
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -111,7 +111,7 @@ a {
   position: fixed;
 }
 
-// end Bootstrap
+/* end Bootstrap */
 
 
 /* -------------------------------------
