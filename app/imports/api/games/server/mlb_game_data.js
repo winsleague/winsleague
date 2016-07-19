@@ -17,7 +17,7 @@ function getLeagueTeamIdByAbbreviation(league, abbreviation) {
 }
 
 function padZeros(n, width) {
-  const nAsString = n + '';
+  const nAsString = `${n}`;
   return nAsString.length >= width ? nAsString : new Array(width - nAsString.length + 1).join('0') + nAsString;
 }
 
@@ -58,10 +58,10 @@ export default {
     const league = LeagueFinder.getByName('MLB');
     if (! league) throw new Error('League is not found!');
 
-    if (! season) season = SeasonFinder.getLatestByLeague(league);
+    const thisSeason = season || SeasonFinder.getLatestByLeague(league);
 
-    const startDate = moment(season.startDate);
-    const endDate = moment(season.endDate);
+    const startDate = moment(thisSeason.startDate);
+    const endDate = moment(thisSeason.endDate);
 
     for (const date = startDate; date.isBefore(endDate); date.add(1, 'days')) {
       // month is zero-indexed so we add 1
@@ -72,7 +72,7 @@ export default {
   ingestDayData(year, month, day) {
     const league = LeagueFinder.getByName('MLB');
     if (! league) throw new Error('League is not found!');
-    
+
     const season = SeasonFinder.getByYear(league, year);
 
     const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
@@ -143,6 +143,9 @@ export default {
     if (day.hour() < 6) day = moment().add(-1, 'days');
 
     // only run during season
+    const season = SeasonFinder.getLatestByLeague(league);
+    if (! season) throw new Error(`Season is not found for league ${league._id}!`);
+
     if (day.isBefore(season.startDate)) {
       log.info(`Not refreshing MLB standings because ${day.toDate()} is before ${season.startDate}`);
       return;
