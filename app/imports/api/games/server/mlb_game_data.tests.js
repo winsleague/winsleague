@@ -11,9 +11,9 @@ import { LeagueTeams } from '../../../api/league_teams/league_teams';
 import { assert } from 'meteor/practicalmeteor:chai';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
-describe('MLB Game Data', () => {
+describe('MLB Game Data', function () {
   this.timeout(10000);
-  
+
   beforeEach(() => {
     MlbSeeds.create();
 
