@@ -44,8 +44,8 @@ dependencies:
 test:
   override:
     # Run tests
-    - (cd app; meteor test --once --driver-package dispatch:mocha-phantomjs)
-    - (cd app; meteor test --full-app --once --driver-package dispatch:mocha-phantomjs)
+    - (cd app; meteor npm test)
+    - (cd app; meteor npm run test-app)
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     # Disabled until we get tests reporting to lcov again
     # - npm install -g codeclimate-test-reporter@0.1.1
