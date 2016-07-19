@@ -1,8 +1,13 @@
+import Migrations from 'meteor/percolate:migrations';
+import moment from 'moment';
+import { Seasons } from '../../imports/api/seasons/seasons';
+import LeagueFinder from '../../imports/api/leagues/finder';
+
 Migrations.add({
   version: 2,
   name: 'Adds startDate and endDate to Seasons',
   up: () => {
-    const nflLeague = Modules.leagues.getByName('NFL');
+    const nflLeague = LeagueFinder.getByName('NFL');
     if (! nflLeague) throw new Error('NFL league not found!');
     Seasons.update({ leagueId: nflLeague._id, year: 2015 },
       { $set: {
@@ -17,7 +22,7 @@ Migrations.add({
       } }
     );
 
-    const nbaLeague = Modules.leagues.getByName('NBA');
+    const nbaLeague = LeagueFinder.getByName('NBA');
     if (! nbaLeague) throw new Error('NBA league not found!');
     Seasons.update({ leagueId: nbaLeague._id, year: 2015 },
       { $set: {
