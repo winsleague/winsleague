@@ -9,7 +9,7 @@ import PoolTeamPickUpdater from '../../pool_team_picks/server/updater';
 
 export default {
   updateWhoPickedLeagueTeam(leagueTeamId) {
-    log.info(`Finding PoolTeams who picked leagueTeamId: ${leagueTeamId}`);
+    log.info('Finding PoolTeams who picked leagueTeamId:', leagueTeamId);
 
     const poolTeamPicks = PoolTeamPicks.find({ leagueTeamId });
     poolTeamPicks.forEach(poolTeamPick => {
@@ -17,7 +17,7 @@ export default {
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
-    log.debug('Done finding PoolTeams who picked leagueTeamId');
+    log.debug('Done finding PoolTeams who picked leagueTeamId:', leagueTeamId);
   },
 
   updatePoolTeamWins(poolTeamId) {

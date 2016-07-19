@@ -15,8 +15,6 @@ import { assert } from 'meteor/practicalmeteor:chai';
 describe('Pool Team Picks Updater', () => {
   describe('updatePickQuality', () => {
     it('should update the pick quality ', () => {
-      log.info('starting test!');
-
       const poolTeam = Factory.create('poolTeam');
       const leagueTeam = Factory.create('leagueTeam', { leagueId: poolTeam.leagueId });
 
