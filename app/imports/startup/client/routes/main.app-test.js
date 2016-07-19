@@ -32,7 +32,7 @@ if (Meteor.isClient) {
     beforeEach(() => generateData().then(() => FlowRouter.go('/')));
 
     describe('when logged out', () => {
-      it('has all public lists at homepage', () => {
+      it('has title on homepage', () => {
         return afterFlushPromise()
           .then(() => {
             assert.equal($('a.navbar-brand').html(), 'League Wins Pool');
