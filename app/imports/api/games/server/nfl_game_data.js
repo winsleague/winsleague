@@ -1,3 +1,4 @@
+import { xml2js } from 'meteor/peerlibrary:xml2js';
 import log from '../../../startup/log';
 
 import LeagueFinder from '../../leagues/finder';
