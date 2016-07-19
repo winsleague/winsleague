@@ -12,6 +12,8 @@ import { assert } from 'meteor/practicalmeteor:chai';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('MLB Game Data', () => {
+  this.timeout(10000);
+  
   beforeEach(() => {
     MlbSeeds.create();
 
