@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import { Factory } from 'meteor/dburles:factory';
 import moment from 'moment';
 import MlbGameData from './mlb_game_data';
 
