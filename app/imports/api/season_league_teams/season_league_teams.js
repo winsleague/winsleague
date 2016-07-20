@@ -4,8 +4,8 @@ import { Factory } from 'meteor/dburles:factory';
 import log from '../../utils/log';
 
 import '../leagues/leagues'; // needed for factory
-import '../seasons/seasons'; // needed for factory
-import '../league_teams/league_teams'; // needed for factory
+import { Seasons } from '../seasons/seasons'; // needed for factory
+import { LeagueTeams } from '../league_teams/league_teams'; // needed for factory
 
 export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
@@ -113,5 +113,10 @@ Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
   seasonId: Factory.get('season'),
   leagueTeamId: Factory.get('leagueTeam'),
 }).after(factory => {
+  const season = Seasons.findOne(factory.seasonId);
+  season.leagueId = factory.leagueId;
+  const leagueTeam = LeagueTeams.findOne(factory.leagueTeamId);
+  leagueTeam.leagueId = factory.leagueId;
+  
   log.debug('seasonLeagueTeam factory created:', factory);
 });
