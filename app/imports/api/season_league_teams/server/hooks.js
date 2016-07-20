@@ -11,5 +11,3 @@ SeasonLeagueTeams.after.insert(function (userId, doc) {
 SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
   PoolTeamUpdater.updateWhoPickedLeagueTeam(doc.leagueTeamId);
 });
-
-
