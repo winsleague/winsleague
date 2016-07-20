@@ -3,9 +3,9 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import log from '../../utils/log';
 
-import '../league_teams/league_teams'; // needed for factory
+import '../leagues/leagues'; // needed for factory
 import '../seasons/seasons'; // needed for factory
-import '../pool_teams/pool_teams'; // needed for factory
+import '../league_teams/league_teams'; // needed for factory
 
 export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
@@ -109,7 +109,7 @@ SeasonLeagueTeams.deny({
 
 
 Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
-  leagueId: Factory.get('poolTeam'),
+  leagueId: Factory.get('league'),
   seasonId: Factory.get('season'),
   leagueTeamId: Factory.get('leagueTeam'),
 }).after(factory => {

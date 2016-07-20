@@ -4,6 +4,7 @@ import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
 import log from '../../utils/log';
 
+import '../leagues/leagues'; // needed for factory
 export const LeagueTeams = new Mongo.Collection('league_teams');
 
 LeagueTeams.schema = new SimpleSchema({
