@@ -8,6 +8,7 @@ import '../../../ui/pages/app-not-found';
 log.info('setup main routes');
 
 FlowRouter.route('/', {
+  name: 'App.home',
   action() {
     BlazeLayout.render('App_body', { content: 'Home_page' });
   },
