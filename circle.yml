@@ -1,3 +1,7 @@
+machine:
+  node:
+    version: 5.2.0
+
 general:
   artifacts:
     - "app/.meteor/local/log"
@@ -5,15 +9,15 @@ general:
 
 dependencies:
   cache_directories:
+    - "~/.npm"
     - "~/.meteor"
-    - "~/_opt"
-    # from https://github.com/xolvio/automated-testing-best-practices/blob/master/circle.yml
+    - "app/node_modules"
     - "app/.meteor/local/build"
     - "app/.meteor/local/bundler-cache"
-    - "app/.meteor/local/db"
     - "app/.meteor/local/isopacks"
-    - "app/.meteor/local/mirrors"
     - "app/.meteor/local/plugin-cache"
+    - "/home/ubuntu/nvm/versions/node/v5.2.0/bin"
+    - "/home/ubuntu/nvm/versions/node/v5.2.0/lib/node_modules"
 
   override:
     # -- CACHE METEOR --
@@ -25,6 +29,10 @@ dependencies:
     # -- INSTALL METEOR PACKAGES --
     - (cd app; meteor list) # triggers the packages to download and install
     - (cd app; meteor npm install --production)
+
+checkout:
+  post:
+    - git submodule update --init
 
 test:
   override:
