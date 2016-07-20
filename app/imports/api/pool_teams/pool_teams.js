@@ -6,7 +6,6 @@ import log from '../../utils/log';
 
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
-
 import SeasonFinder from '../seasons/finder';
 
 export const PoolTeams = new Mongo.Collection('pool_teams');

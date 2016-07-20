@@ -1,4 +1,4 @@
-import { PoolTeamPicks } from '../pool_team_picks'
+import { PoolTeamPicks } from '../pool_team_picks';
 import PoolTeamUpdater from '../../pool_teams/server/updater';
 
 // performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
