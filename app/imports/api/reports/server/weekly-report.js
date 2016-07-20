@@ -1,4 +1,4 @@
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 import { _ } from 'lodash';
 import { Mailer } from 'meteor/lookback:emails';
 

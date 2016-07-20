@@ -1,4 +1,4 @@
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 
 import LeagueFinder from '../../leagues/finder';
 import LeagueTeamFinder from '../../league_teams/finder';

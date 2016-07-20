@@ -2,7 +2,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
 import { Factory } from 'meteor/dburles:factory';
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 import '../../seasons/seasons'; // needed for factory
 import '../../league_teams/league_teams'; // needed for factory
 

@@ -1,5 +1,5 @@
 import { Migrations } from 'meteor/percolate:migrations';
-import log from '../../imports/startup/log';
+import log from '../../imports/utils/log';
 import { Pools } from '../../imports/api/pools/pools';
 import SeasonFinder from '../../imports/api/seasons/finder';
 

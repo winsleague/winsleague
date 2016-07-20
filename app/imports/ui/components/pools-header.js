@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'lodash';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 import './pools-header.html';
 

@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 import { Factory } from 'meteor/dburles:factory';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import '../../league_teams/league_teams'; // needed for factory

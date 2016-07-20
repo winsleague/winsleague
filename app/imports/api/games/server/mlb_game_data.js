@@ -1,4 +1,4 @@
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 import moment from 'moment-timezone';
 import { _ } from 'lodash';
 

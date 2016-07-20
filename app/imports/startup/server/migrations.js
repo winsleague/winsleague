@@ -1,4 +1,4 @@
-import log from '../log';
+import log from '../../utils/log';
 import { Migrations } from 'meteor/percolate:migrations';
 
 Meteor.startup(() => {

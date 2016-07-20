@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import log from '../log';
+import log from '../../utils/log';
 
 import WinstonLoggly from 'winston-loggly';
 

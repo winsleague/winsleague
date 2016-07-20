@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 import { Factory } from 'meteor/dburles:factory';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 import { LeagueTeams } from '../league_teams/league_teams';
 import { PoolTeams } from '../pool_teams/pool_teams';

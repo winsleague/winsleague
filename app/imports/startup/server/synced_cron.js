@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
-import log from '../log';
+import log from '../../utils/log';
 
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';

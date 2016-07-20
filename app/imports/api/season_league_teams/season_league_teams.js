@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 import '../league_teams/league_teams'; // needed for factory
 import '../seasons/seasons'; // needed for factory

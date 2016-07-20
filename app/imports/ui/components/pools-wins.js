@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 import { Pools } from '../../api/pools/pools';
 import { PoolTeams } from '../../api/pool_teams/pool_teams';

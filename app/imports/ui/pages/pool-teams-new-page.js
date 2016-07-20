@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { AutoForm } from 'meteor/aldeed:autoform';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 import './pool-teams-new-page.html';
 

@@ -2,7 +2,7 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import { LeaguePickExpectedWins } from '../../league_pick_expected_wins/league_pick_expected_wins';
 import { Leagues } from '../../leagues/leagues';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 
 import { _ } from 'lodash';
 

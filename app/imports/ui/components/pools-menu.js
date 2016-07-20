@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 import { Pools } from '../../api/pools/pools';
 

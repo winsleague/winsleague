@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
-import log from '../../startup/log';
+import log from '../../utils/log';
 
 export const LeagueTeams = new Mongo.Collection('league_teams');
 

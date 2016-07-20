@@ -1,4 +1,4 @@
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { LoggedInMixin } from 'meteor/tunifight:loggedin-mixin';

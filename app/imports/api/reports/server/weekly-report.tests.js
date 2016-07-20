@@ -3,7 +3,7 @@
 
 import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
-import log from '../../../startup/log';
+import log from '../../../utils/log';
 
 import WeeklyReport from './weekly-report';
 
