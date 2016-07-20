@@ -8,7 +8,7 @@ import { denodeify } from '../utils/denodeify';
 
 Meteor.methods({
   generateFixtures() {
-    resetDatabase();
+    resetDatabase({ excludedCollections: ['__kdtimeevents', '__kdtraces'] });
 
     log.info('Loading default fixtures');
 
