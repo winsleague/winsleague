@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
+import log from '../../utils/log';
 
 import '../leagues/leagues'; // needed for factory
 import '../seasons/seasons'; // needed for factory
