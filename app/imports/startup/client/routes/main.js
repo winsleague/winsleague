@@ -5,7 +5,7 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import '../../../ui/pages/home_page';
 import '../../../ui/pages/app-not-found';
 
-log.info('setup main routes');
+log.info('Setting up main routes');
 
 FlowRouter.route('/', {
   name: 'App.home',

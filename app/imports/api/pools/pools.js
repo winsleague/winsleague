@@ -102,4 +102,6 @@ Factory.define('pool', Pools, {
     return Accounts.findUserByEmail(email)._id;
   },
   latestSeasonId: Factory.get('season'),
+}).after(factory => {
+  log.debug('pool factory created:', factory);
 });
