@@ -4,16 +4,14 @@
 import { Factory } from 'meteor/dburles:factory';
 import log from '../../../utils/log';
 
-import { PoolTeams } from '../../pool_teams/pool_teams';
-import '../../pool_teams/server/hooks';
+import { PoolTeams } from '../pool_teams';
+import './hooks';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 
 import { assert } from 'meteor/practicalmeteor:chai';
 
-describe('Pool Teams Hooks', () => {
-  const spec = it('should remove its PoolTeamPicks when PoolTeam is removed', () => {
-    log.info('spec:', spec.description);
-
+describe('Pool Teams Hooks', function () {
+  it('should remove its PoolTeamPicks when PoolTeam is removed', function () {
     const poolTeamPick = Factory.create('poolTeamPick');
     const poolTeamId = poolTeamPick.poolTeamId;
 
