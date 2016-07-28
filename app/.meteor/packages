@@ -59,3 +59,5 @@ practicalmeteor:mocha
 dispatch:mocha-phantomjs
 dburles:factory
 practicalmeteor:sinon
+lmieulet:meteor-coverage
+practicalmeteor:mocha-console-runner

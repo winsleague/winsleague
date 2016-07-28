@@ -36,20 +36,17 @@ $ (cd app; meteor npm shrinkwrap --dev; shrinkpack)
 ### Running tests
 
 ```
-$ (cd app; meteor run --test)
+$ (cd app; meteor test)
 ```
 
-### Running Meteor without tests running automatically
+### Running tests with code coverage
 
 ```
-$ (cd app; VELOCITY=0 meteor run)
+$ (cd app; COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor test --driver-package practicalmeteor:mocha)
+$ http://localhost:3000
 ```
 
-### Running tests in debug mode
-
-```
-$ (cd app; DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor)
-```
+In browser console, run `Meteor.sendCoverage(function(stats,err) { console.log(stats,err);});` to capture client coverage.
 
 ### Viewing test logs
 
@@ -71,14 +68,6 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 ### Other tips:
 
 1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
-2. To disable specific testing modes, use these environment variables:
-
-    ```bash
-    JASMINE_SERVER_UNIT=0
-    JASMINE_SERVER_INTEGRATION=0
-    JASMINE_CLIENT_UNIT=0
-    JASMINE_CLIENT_INTEGRATION=0
-    ```
 
 
 ## Debugging
