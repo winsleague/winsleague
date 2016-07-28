@@ -116,7 +116,6 @@ reload@1.1.10
 retry@1.0.8
 routepolicy@1.0.11
 sacha:juice@0.1.4
-sanjo:jasmine@1.0.1
 saucecode:rollbar@0.5.8
 service-configuration@1.0.10
 session@1.1.6
@@ -142,7 +141,6 @@ url@1.0.10
 useraccounts:bootstrap@1.14.2
 useraccounts:core@1.14.2
 useraccounts:flow-routing@1.14.2
-velocity:reports@1.0.0
 webapp@1.2.11
 webapp-hashing@1.0.9
 xolvio:cleaner@0.3.1
