@@ -1,11 +1,11 @@
-<template name="poolTeamPicksEdit">
+<template name="PoolTeamPicks_edit_page">
   <h2>Edit Pick</h2>
 
   {{#if Template.subscriptionsReady}}
-    {{#autoForm collection="PoolTeamPicks" id="updatePoolTeamPickForm" type="update" doc=poolTeamPickDoc}}
+    {{#autoForm collection=poolTeamPicks id="updatePoolTeamPickForm" type="update" doc=poolTeamPickDoc}}
       <fieldset>
-          {{> afQuickField name="leagueTeamId"}}
-          {{> afQuickField name="pickNumber"}}
+        {{> afQuickField name="leagueTeamId"}}
+        {{> afQuickField name="pickNumber"}}
       </fieldset>
       <button class="btn btn-primary" type="submit">Save</button>
     {{/autoForm}}

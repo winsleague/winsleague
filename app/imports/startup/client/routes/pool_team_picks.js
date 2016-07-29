@@ -4,6 +4,7 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 import '../../../ui/pages/pool-team-picks-new-page';
+import '../../../ui/pages/pool-team-picks-edit-page';
 
 const group = FlowRouter.group({
   prefix: '/pools/:poolId/teams/:poolTeamId/picks',
