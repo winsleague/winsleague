@@ -52,7 +52,7 @@ group.route('/:poolId/seasons/:seasonId', {
   name: 'Pools.show.season',
   action(params) {
     log.debug(`We're viewing a single pool: ${params.poolId} with season ${params.seasonId}`);
-    BlazeLayout.render('App_body', { content: 'Pools_show_season_page' });
+    BlazeLayout.render('App_body', { content: 'Pools_show_page' });
   },
 });
 

@@ -5,6 +5,7 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 import '../../../ui/pages/pool-teams-new-page';
 import '../../../ui/pages/pool-teams-show-page';
+import '../../../ui/pages/pool-teams-edit-page';
 
 const group = FlowRouter.group({
   prefix: '/pools/:poolId/teams',
