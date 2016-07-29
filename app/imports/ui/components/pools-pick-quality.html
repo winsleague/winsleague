@@ -17,7 +17,7 @@
         {{#each poolTeamPick in poolTeamPicks}}
           <tr id="{{poolTeamPick._id}}">
             <td>
-              <a href="{{pathFor 'poolTeamsShow' poolId=poolId poolTeamId=poolTeamPick.poolTeamId}}">{{playerName poolTeamPick}}</a>
+              <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamPick.poolTeamId}}">{{playerName poolTeamPick}}</a>
             </td>
             <td>{{leagueTeamName poolTeamPick.leagueTeamId}} #{{poolTeamPick.pickNumber}}</td>
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
