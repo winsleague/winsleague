@@ -26,7 +26,8 @@
     "eslint-plugin-import": "^1.10.0",
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-meteor": "^3.6.0",
-    "eslint-plugin-react": "^5.2.2"
+    "eslint-plugin-react": "^5.2.2",
+    "spacejam": "https://github.com/serut/spacejam/tarball/rc4-without-local-url"
   },
   "scripts": {
     "start": "meteor",
@@ -37,6 +38,8 @@
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha --port 3100",
     "test-watch-terminal": "TEST_WATCH=1 meteor test --driver-package dispatch:mocha-phantomjs --port 3100",
     "test-app-watch-terminal": "TEST_WATCH=1 meteor test --full-app --driver-package dispatch:mocha-phantomjs --port 3100",
+    "test-coverage-app-unit": "node_modules/spacejam/bin/spacejam test            --driver-package practicalmeteor:mocha-console-runner --loglevel debug --coverage out_coverage",
+    "test-coverage-app-full": "node_modules/spacejam/bin/spacejam test --full-app --driver-package practicalmeteor:mocha-console-runner --loglevel debug --coverage 'in_coverage|out_lcovonly'",
     "lint": "eslint .",
     "chimp-watch": "chimp --ddp=http://localhost:3000 --watch --mocha --path=tests"
   },

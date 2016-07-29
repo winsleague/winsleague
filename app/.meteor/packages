@@ -25,7 +25,6 @@ aldeed:collection2
 accounts-password
 dburles:collection-helpers
 matb33:collection-hooks
-kadira:flow-router
 kadira:blaze-layout
 meteorhacks:fast-render
 fortawesome:fontawesome
@@ -61,3 +60,4 @@ dburles:factory
 practicalmeteor:sinon
 lmieulet:meteor-coverage
 practicalmeteor:mocha-console-runner
+kadira:flow-router
