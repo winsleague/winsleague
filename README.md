@@ -33,10 +33,17 @@ $ (cd app; meteor npm shrinkwrap --dev; shrinkpack)
 
 ## Testing
 
-### Running tests
+### Running tests once
 
 ```
 $ (cd app; meteor test)
+```
+
+### Running tests during development
+
+```
+$ (cd app; meteor npm run test-watch)
+$ (cd app; meteor npm run test-app-watch)
 ```
 
 ### Running tests with code coverage
@@ -47,15 +54,6 @@ $ http://localhost:3000
 ```
 
 In browser console, run `Meteor.sendCoverage(function(stats,err) { console.log(stats,err);});` to capture client coverage.
-
-### Viewing test logs
-
-These are best run in a separate Terminal window while Meteor is running.
-
-```
-$ (cd app; tail -f .meteor/local/log/jasmine-server-integration.log)
-$ (cd app; tail -f .meteor/local/log/jasmine-client-integration.log)
-```
 
 ### Running [Flow check](http://flowtype.org)
 
