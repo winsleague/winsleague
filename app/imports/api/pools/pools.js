@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
@@ -6,6 +7,7 @@ import log from '../../utils/log';
 
 import '../leagues/leagues'; // needed for factory
 import '../seasons/seasons'; // needed for factory
+import '../users/users'; // needed for factory
 import SeasonFinder from '../seasons/finder';
 
 export const Pools = new Mongo.Collection('pools');
@@ -97,11 +99,7 @@ if (Meteor.isServer) {
 Factory.define('pool', Pools, {
   leagueId: Factory.get('league'),
   name: () => faker.lorem.words(),
-  commissionerUserId: () => {
-    const email = faker.internet.email();
-    Accounts.createUser({ email });
-    return Accounts.findUserByEmail(email)._id;
-  },
+  commissionerUserId: Factory.get('user'),
   latestSeasonId: Factory.get('season'),
 }).after(factory => {
   log.debug('pool factory created:', factory);

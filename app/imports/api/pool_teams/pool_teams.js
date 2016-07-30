@@ -4,6 +4,7 @@ import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
 import log from '../../utils/log';
 
+import '../users/users'; // needed for factory
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
 import SeasonFinder from '../seasons/finder';
@@ -157,11 +158,7 @@ if (Meteor.isServer) {
 Factory.define('poolTeam', PoolTeams, {
   seasonId: Factory.get('season'),
   poolId: Factory.get('pool'),
-  userId: () => {
-    const email = faker.internet.email();
-    Accounts.createUser({ email });
-    return Accounts.findUserByEmail(email)._id;
-  },
+  userId: Factory.get('user'),
   userTeamName: () => faker.company.companyName(),
 }).after(poolTeam => {
   log.debug('poolTeam factory created:', poolTeam);
