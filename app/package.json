@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "meteor",
+    "start-coverage": "COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor",
     "pretest": "echo 'npm run lint --silent'",
     "test": "meteor test --once --driver-package dispatch:mocha-phantomjs --port 3100",
     "test-app": "meteor test --full-app --once --driver-package dispatch:mocha-phantomjs --port 3100",
