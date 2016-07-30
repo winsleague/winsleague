@@ -61,6 +61,10 @@
         "/practicalmeteor_mocha-console-runner.js",
         "/practicalmeteor_mocha-core.js"
       ]
-    }
+    },
+    "others": [
+      ".*/tests/.*.js",
+      ".*/imports/ui/components/template.*.js"
+    ]
   }
 }
