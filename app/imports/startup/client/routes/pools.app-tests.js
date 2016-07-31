@@ -2,6 +2,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
+import { Factory } from 'meteor/dburles:factory';
 import { Tracker } from 'meteor/tracker';
 import { DDP } from 'meteor/ddp-client';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -52,37 +53,27 @@ if (Meteor.isClient) {
       return afterFlushPromise()
         .then(() => {
           const poolTeam = PoolTeams.findOne();
-          log.info('poolTeam:', poolTeam);
           assert.isTrue($(page.getPoolTeamRowSelector(poolTeam._id)).length > 0);
         });
     });
-  });
-}
 
-/*
-describe('poolsShow page', () => {
-  beforeEach(loginWithDefaultUser); // needed so we have a subscription to the Pools collection
-  beforeEach(createDefaultPool);
-  beforeEach(createDefaultPoolTeam);
-  beforeEach(goToPoolsShowPage);
+    describe('when a pool spans multiple seasons', () => {
+      let seasonId;
 
-  it('should display the list of pool teams', done => {
-    waitForSubscription(PoolTeams.find(), function() {
-      const poolTeam = PoolTeams.findOne();
-      waitForElement(page.getPoolTeamRowSelector(poolTeam._id), done);
-    });
-  });
+      beforeEach(() => {
+        const pool = Pools.findOne();
+        const poolId = pool._id;
+        const leagueId = pool.leagueId;
+        seasonId = Factory.create('season', { leagueId })._id;
+        Factory.create('poolTeam', { seasonId, poolId, userId: Meteor.userId() });
+      });
 
-  describe('when a pool spans multiple seasons', () => {
-    beforeEach(createOldSeason);
-    beforeEach(createOldPoolTeam);
-
-    it('should allow user to switch seasons', done => {
-      waitForSubscription(Seasons.find({ year: 2014 }), function() {
-        const season = Seasons.findOne({ year: 2014 });
-        waitForElement(page.getSeasonSwitcherSelector(season._id), done);
+      it('should allow user to switch seasons', () => {
+        return afterFlushPromise()
+          .then(() => {
+            assert.isTrue($(page.getSeasonSwitcherSelector(seasonId)).length > 0);
+          });
       });
     });
   });
-});
-*/
+}
