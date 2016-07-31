@@ -6,21 +6,50 @@ import log from '../utils/log';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { denodeify } from '../utils/denodeify';
 
+import { Leagues } from '../api/leagues/leagues';
+import LeagueFinder from '../api/leagues/finder';
+import SeasonFinder from '../api/seasons/finder';
+import { LeagueTeams } from '../api/league_teams/league_teams';
+
 Meteor.methods({
   generateFixtures() {
+    // runs on server so it's a lot easier to create fixtures here
+
     log.info('Resetting database');
-    resetDatabase({ excludedCollections: ['__kdtimeevents', '__kdtraces'] });
+    resetDatabase({ excludedCollections: [
+      'leagues', 'seasons', 'league_teams', 'season_league_teams', 'league_pick_expected_wins',
+      '__kdtimeevents', '__kdtraces',
+    ] });
 
     log.info('Loading default fixtures');
 
     // It'd be great if we could just have a single Factory.create('poolTeam') and have the
     // factories create all the scaffolding. Unfortunately it creates a bunch of duplicate
     // records so I decided to use this little workaround.
-    const leagueId = Factory.create('league')._id;
-    const seasonId = Factory.create('season', { leagueId })._id;
+    const leagueId = LeagueFinder.getIdByName('NFL');
+    const leagueTeamId = LeagueTeams.findOne({ leagueId })._id;
+    const seasonId = SeasonFinder.getLatestByLeagueId(leagueId)._id;
     const userId = Accounts.createUser({ email: 'test@test.com', password: 'test' });
     const poolId = Factory.create('pool', { leagueId, latestSeasonId: seasonId, commissionerUserId: userId })._id;
-    Factory.create('poolTeam', { seasonId, poolId, userId });
+    const poolTeamId = Factory.create('poolTeam', { seasonId, poolId, userId })._id;
+    Factory.create('poolTeamPick', { poolTeamId, leagueTeamId, seasonId });
+
+    Factory.create('seasonLeagueTeam', {
+      leagueId,
+      seasonId,
+      leagueTeamId,
+      wins: 10,
+      losses: 6,
+      ties: 0,
+      homeWins: 6,
+      homeLosses: 3,
+      homeTies: 0,
+      awayWins: 4,
+      awayLosses: 3,
+      awayTies: 0,
+      pointsFor: 17,
+      pointsAgainst: 14,
+    });
   },
 });
 

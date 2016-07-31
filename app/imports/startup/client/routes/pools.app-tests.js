@@ -13,9 +13,9 @@ import log from '../../../utils/log';
 
 import { denodeify } from '../../../utils/denodeify';
 import { generateData } from '../../../api/generate-data.app-tests.js';
+
 import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
-
 
 // Utility -- returns a promise which resolves when all subscriptions are done
 const waitForSubscriptions = () => new Promise(resolve => {
@@ -84,27 +84,27 @@ if (Meteor.isClient) {
     describe('Full-app test of Pools.records', () => {
       const page = {
         getMostWinsAllTimeCellSelector: () =>
-          `table#pool_users_most_wins_all_time tbody tr td.metric`,
+          'table#pool_users_most_wins_all_time tbody tr td.metric',
         getMostLossesAllTimeCellSelector: () =>
-          `table#pool_users_most_losses_all_time tbody tr td.metric`,
+          'table#pool_users_most_losses_all_time tbody tr td.metric',
         getBestPlusMinusAllTimeCellSelector: () =>
-          `table#pool_users_best_plus_minus_all_time tbody tr td.metric`,
+          'table#pool_users_best_plus_minus_all_time tbody tr td.metric',
         getWorstPlusMinusAllTimeCellSelector: () =>
-          `table#pool_users_worst_plus_minus_all_time tbody tr td.metric`,
+          'table#pool_users_worst_plus_minus_all_time tbody tr td.metric',
 
         getMostWinsSeasonCellSelector: () =>
-          `table#pool_teams_most_wins_season tbody tr td.metric`,
+          'table#pool_teams_most_wins_season tbody tr td.metric',
         getMostLossesSeasonCellSelector: () =>
-          `table#pool_teams_most_losses_season tbody tr td.metric`,
+          'table#pool_teams_most_losses_season tbody tr td.metric',
         getBestPlusMinusSeasonCellSelector: () =>
-          `table#pool_teams_best_plus_minus_season tbody tr td.metric`,
+          'table#pool_teams_best_plus_minus_season tbody tr td.metric',
         getWorstPlusMinusSeasonCellSelector: () =>
-          `table#pool_teams_worst_plus_minus_season tbody tr td.metric`,
+          'table#pool_teams_worst_plus_minus_season tbody tr td.metric',
 
         getBestPickQualitySeasonCellSelector: () =>
-          `table#pool_team_picks_best_pick_quality_season tbody tr td.metric`,
+          'table#pool_team_picks_best_pick_quality_season tbody tr td.metric',
         getWorstPickQualitySeasonCellSelector: () =>
-          `table#pool_team_picks_worst_pick_quality_season tbody tr td.metric`,
+          'table#pool_team_picks_worst_pick_quality_season tbody tr td.metric',
       };
 
       beforeEach(() =>
