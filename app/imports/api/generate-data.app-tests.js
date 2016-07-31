@@ -8,13 +8,19 @@ import { denodeify } from '../utils/denodeify';
 
 Meteor.methods({
   generateFixtures() {
+    log.info('Resetting database');
     resetDatabase({ excludedCollections: ['__kdtimeevents', '__kdtraces'] });
 
     log.info('Loading default fixtures');
 
-    Factory.create('poolTeam');
-
-    Accounts.createUser({ email: 'test@test.com' });
+    // It'd be great if we could just have a single Factory.create('poolTeam') and have the
+    // factories create all the scaffolding. Unfortunately it creates a bunch of duplicate
+    // records so I decided to use this little workaround.
+    const leagueId = Factory.create('league')._id;
+    const seasonId = Factory.create('season', { leagueId })._id;
+    const userId = Accounts.createUser({ email: 'test@test.com', password: 'test' });
+    const poolId = Factory.create('pool', { leagueId, latestSeasonId: seasonId, commissionerUserId: userId })._id;
+    Factory.create('poolTeam', { seasonId, poolId, userId });
   },
 });
 

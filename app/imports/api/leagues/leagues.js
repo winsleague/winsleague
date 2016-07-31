@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
+import faker from 'faker';
 import log from '../../utils/log';
 
 export const Leagues = new Mongo.Collection('leagues');
@@ -20,7 +21,7 @@ Leagues.deny({
 });
 
 Factory.define('league', Leagues, {
-  name: 'NFL',
+  name: faker.lorem.word(),
   seasonGameCount: 16,
 }).after(league => {
   log.debug('league factory created:', league);

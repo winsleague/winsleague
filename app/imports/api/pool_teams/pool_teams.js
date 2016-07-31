@@ -160,6 +160,10 @@ Factory.define('poolTeam', PoolTeams, {
   poolId: Factory.get('pool'),
   userId: Factory.get('user'),
   userTeamName: () => faker.company.companyName(),
-}).after(poolTeam => {
-  log.debug('poolTeam factory created:', poolTeam);
+}).after(factory => {
+  const pool = Pools.findOne(factory.poolId);
+  const season = Seasons.findOne(factory.seasonId);
+  season.leagueId = pool.leagueId;
+
+  log.debug('poolTeam factory created:', factory);
 });

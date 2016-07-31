@@ -32,7 +32,6 @@ alanning:roles
 aldeed:autoform
 check
 arillo:flow-router-helpers
-testing
 percolate:synced-cron
 brentjanderson:winston-client
 saucecode:rollbar
@@ -61,3 +60,4 @@ practicalmeteor:sinon
 lmieulet:meteor-coverage
 practicalmeteor:mocha-console-runner
 kadira:flow-router
+hwillson:stub-collections

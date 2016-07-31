@@ -3,6 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 import { Factory } from 'meteor/dburles:factory';
 import 'meteor/dburles:collection-helpers';
+import log from '../../utils/log';
 
 import { Leagues } from '../leagues/leagues'; // needed for factory
 
@@ -42,6 +43,8 @@ Factory.define('season', Seasons, {
   startDate: new Date(),
   endDate: new Date(),
   status: 'in progress',
+}).after(factory => {
+  log.debug('season factory created:', factory);
 });
 
 Seasons.helpers({
