@@ -57,7 +57,7 @@ if (Meteor.isClient) {
         return afterFlushPromise()
           .then(() => {
             const poolTeam = PoolTeams.findOne();
-            assert.isTrue($(page.getPoolTeamRowSelector(poolTeam._id)).length > 0);
+            assert.isTrue($(page.getPoolTeamRowSelector(poolTeam._id)));
           });
       });
 
@@ -75,9 +75,47 @@ if (Meteor.isClient) {
         it('should allow user to switch seasons', () => {
           return afterFlushPromise()
             .then(() => {
-              assert.isTrue($(page.getSeasonSwitcherSelector(seasonId)).length > 0);
+              assert.isTrue($(page.getSeasonSwitcherSelector(seasonId)));
             });
         });
+      });
+    });
+
+    describe('Full-app test of Pools.new', () => {
+      const page = {
+        getFirstLeagueSelector: () => 'input[name="leagueId"]:first',
+        getNameSelector: () => 'input[name="name"]',
+      };
+
+      beforeEach(() =>
+        afterFlushPromise()
+          .then(() => FlowRouter.go('Pools.new'))
+          .then(waitForSubscriptions)
+      );
+
+      it('should display the league field', () => {
+        return () => {
+          assert.isTrue($(page.getFirstLeagueSelector()));
+        };
+      });
+
+      it('should display the name field', () => {
+        return () => {
+          assert.isTrue($(page.getNameSelector()));
+        };
+      });
+
+      it('should create new pool', () => {
+        const poolName = 'Dummy';
+        $(page.getNameSelector()).val(poolName);
+        $('form').submit();
+
+        return afterFlushPromise()
+          .then(() => {
+            const pool = Pools.findOne({ name: poolName });
+            assert.isNotNull(pool, 'pool');
+            assert.isNotNull(pool.leagueId, 'leagueId');
+          });
       });
     });
 
