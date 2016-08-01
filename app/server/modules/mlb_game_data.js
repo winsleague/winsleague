@@ -56,6 +56,7 @@ Modules.server.mlbGameData = {
   },
 
   ingestDayData(league, season, year, month, day) {
+    log.info(`Ingesting MLB data from ${year}-${month}-${day}`);
     const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
     log.debug(`url: `, url);
     const response = HTTP.get(url);
