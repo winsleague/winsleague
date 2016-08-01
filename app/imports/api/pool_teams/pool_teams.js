@@ -132,9 +132,7 @@ PoolTeams.formSchema = new SimpleSchema({
 /* Access control */
 if (Meteor.isServer) {
   PoolTeams.allow({
-    insert(userId, doc) {
-      return false;
-    },
+    insert(userId, doc) { return Meteor.isAppTest; },
 
     update(userId, doc, fieldNames, modifier) {
       // verify userId either owns PoolTeam or is commissioner of pool

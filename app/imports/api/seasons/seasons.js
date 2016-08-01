@@ -31,10 +31,10 @@ Seasons.schema = new SimpleSchema({
 
 Seasons.attachSchema(Seasons.schema);
 
-Seasons.deny({
-  insert() { return true; },
-  update() { return true; },
-  remove() { return true; },
+Seasons.allow({
+  insert() { return Meteor.isAppTest; },
+  update() { return false; },
+  remove() { return false; },
 });
 
 Factory.define('season', Seasons, {
