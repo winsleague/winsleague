@@ -114,10 +114,63 @@ if (Meteor.isClient) {
       );
 
       it('should display the teams with the most wins of all time', () => {
-        return afterFlushPromise()
-          .then(() => {
-            assert.equal($(page.getMostWinsAllTimeCellSelector()).text(), 10);
-          });
+        return () => {
+          assert.equal($(page.getMostWinsAllTimeCellSelector()).text(), 10);
+        };
+      });
+
+      it('should display the teams with the most losses of all time', () => {
+        return () => {
+          assert.equal($(page.getMostLossesAllTimeCellSelector()).text(), 6);
+        };
+      });
+
+      it('should display the teams with the best point differential of all time', () => {
+        return () => {
+          assert.equal($(page.getBestPlusMinusAllTimeCellSelector()).text(), 3);
+        };
+      });
+
+      it('should display the teams with the worst point differential of all time', () => {
+        return () => {
+          assert.equal($(page.getWorstPlusMinusAllTimeCellSelector()).text(), 3);
+        };
+      });
+
+      it('should display the teams with the most wins in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostWinsSeasonCellSelector()).text(), 10);
+        };
+      });
+
+      it('should display the teams with the most losses in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostLossesSeasonCellSelector()).text(), 6);
+        };
+      });
+
+      it('should display the teams with the best point differential in a single season', () => {
+        return () => {
+          assert.equal($(page.getBestPlusMinusSeasonCellSelector()).text(), 3);
+        };
+      });
+
+      it('should display the teams with the worst point differential in a single season', () => {
+        return () => {
+          assert.equal($(page.getWorstPlusMinusSeasonCellSelector()).text(), 3);
+        };
+      });
+
+      it('should display the teams with the best pick quality in a single season', () => {
+        return () => {
+          assert.equal($(page.getBestPickQualitySeasonCellSelector()).text(), -3.8);
+        };
+      });
+
+      it('should display the teams with the worst pick quality in a single season', () => {
+        return () => {
+          assert.equal($(page.getWorstPickQualitySeasonCellSelector()).text(), -3.8);
+        };
       });
     });
 
