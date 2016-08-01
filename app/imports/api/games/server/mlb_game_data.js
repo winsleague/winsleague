@@ -45,11 +45,20 @@ function cleanStatus(status) {
   }
 }
 
-function parseGameDate(timeDate, ampm) {
-  // time_date: 2016/04/03 1:05
-  // ampm: PM
-  // all times are in EST
-  return moment.tz(new Date(`${timeDate} ${ampm}`), 'US/Eastern').toDate();
+function parseGameDate(game) {
+  if (game.time_date) {
+    // time_date: 2016/04/03 1:05
+    // ampm: PM
+    // all times are in EST
+    return moment.tz(new Date(`${game.time_date} ${game.ampm}`), 'US/Eastern').toDate();
+  } else if (game.original_date) {
+    // original_date: 2016/04/03
+    // home_time: 1:05
+    // ampm: PM
+    // all times are in EST
+    return moment.tz(new Date(`${game.original_date} ${game.home_time} ${game.ampm}`), 'US/Eastern').toDate();
+  }
+  throw new Error('Error parsing date out of ', game);
 }
 
 
@@ -111,7 +120,7 @@ export default {
     const league = season.league();
 
     const values = {
-      gameDate: parseGameDate(game.time_date, game.ampm),
+      gameDate: parseGameDate(game),
       homeTeamId: getLeagueTeamIdByAbbreviation(league, game.home_name_abbrev),
       homeScore: _.get(game, 'home_team_runs', 0),
       awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
