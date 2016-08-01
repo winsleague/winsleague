@@ -75,7 +75,7 @@ export default {
 
     const season = SeasonFinder.getByYear(league, year);
 
-    const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
+    const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
     log.debug('url: ', url);
     const response = HTTP.get(url);
     const parsedJSON = JSON.parse(response.content);
