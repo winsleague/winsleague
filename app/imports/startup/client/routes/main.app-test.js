@@ -27,7 +27,7 @@ const waitForSubscriptions = () => new Promise(resolve => {
 const afterFlushPromise = denodeify(Tracker.afterFlush);
 
 if (Meteor.isClient) {
-  describe('data available when routed', () => {
+  describe('Full-app test of Homepage', () => {
     // First, ensure the data that we expect is loaded on the server
     //   Then, route the app to the homepage
     beforeEach(() =>
