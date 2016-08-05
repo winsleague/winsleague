@@ -30,6 +30,8 @@
     "eslint-plugin-meteor": "^3.6.0",
     "eslint-plugin-react": "^5.2.2",
     "shell-source": "^1.1.0",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
     "spacejam": "https://github.com/serut/spacejam/tarball/rc4-without-local-url"
   },
   "scripts": {

@@ -7,19 +7,20 @@ import log from '../../../utils/log';
 import PoolTeamUpdater from '../../pool_teams/server/updater';
 import './hooks';
 
-import { expect } from 'chai';
-import { spies } from 'meteor/practicalmeteor:sinon';
+import chai from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+
+chai.use(sinonChai);
 
 describe('Season League Teams Hooks', function () {
   describe('When Season League Teams are inserted or updated', function () {
     it('should update Pool Teams who picked the League Team', function () {
-      spies.create('updateWhoPickedLeagueTeam', PoolTeamUpdater, 'updateWhoPickedLeagueTeam');
+      const spy = sinon.spy(PoolTeamUpdater, 'updateWhoPickedLeagueTeam');
 
       const seasonLeagueTeam = Factory.create('seasonLeagueTeam');
 
-      expect(spies.updateWhoPickedLeagueTeam).to.have.been.calledWith(seasonLeagueTeam.leagueTeamId);
-
-      spies.restoreAll();
+      chai.expect(spy).to.have.been.calledWith(seasonLeagueTeam.leagueTeamId);
     });
   });
 });
