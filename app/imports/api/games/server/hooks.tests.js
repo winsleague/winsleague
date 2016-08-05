@@ -9,7 +9,7 @@ import '../../pool_team_picks/pool_team_picks'; // needed for factory
 import './hooks'; // needed because it's not auto included during test
 import { Games } from '../../games/games';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Game hooks', function() {
   describe('When inserting or updating games', function() {
