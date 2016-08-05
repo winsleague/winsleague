@@ -2,15 +2,16 @@
 // These are Chimp globals */
 /* globals browser server assert */
 
-import { Meteor } from 'meteor/meteor';
-
 describe('Pools.edit page ui', () => {
   beforeEach(() => {
+    // we must navigate to client first so Meteor methods are available
+    browser.url('http://localhost:3100');
+
     server.call('logout');
 
-    browser
-      .timeoutsAsyncScript(5000)
-      .executeAsync(function (done) {
+    browser.timeouts('implicit', 5000);
+
+    browser.executeAsync(function (done) {
         Meteor.logout(done);
       });
 
