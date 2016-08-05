@@ -11,7 +11,7 @@ import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Games } from '../../games/games';
 import PoolTeamsUpdater from '../../pool_teams/server/updater';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Pool Teams Updater', () => {
   describe('Update Pool Team Wins', () => {

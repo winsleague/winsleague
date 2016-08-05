@@ -9,7 +9,7 @@ import LeagueTeamFinder from '../../league_teams/finder';
 import SeasonFinder from '../../seasons/finder';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('NBA Game Data', () => {
@@ -990,7 +990,7 @@ streak_total: 9
 
     NbaGameData.ingestSeasonData();
   });
-  
+
   afterEach(() => {
     HTTP.get.restore();
   });

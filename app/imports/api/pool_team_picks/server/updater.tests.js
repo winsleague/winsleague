@@ -10,7 +10,7 @@ import '../../season_league_teams/season_league_teams'; // needed for factory
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import PoolTeamPicksUpdater from '../../pool_team_picks/server/updater';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Pool Team Picks Updater', () => {
   describe('updatePickQuality', () => {

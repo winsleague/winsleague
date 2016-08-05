@@ -7,7 +7,7 @@ import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('NFL Game Data', () => {

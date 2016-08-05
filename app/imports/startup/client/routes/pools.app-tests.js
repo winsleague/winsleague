@@ -6,7 +6,8 @@ import { Factory } from 'meteor/dburles:factory';
 import { Tracker } from 'meteor/tracker';
 import { DDP } from 'meteor/ddp-client';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert, expect } from 'chai';
+import 'chai-jquery';
 import { Promise } from 'meteor/promise';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';
@@ -57,7 +58,7 @@ if (Meteor.isClient) {
         return afterFlushPromise()
           .then(() => {
             const poolTeam = PoolTeams.findOne();
-            assert.isTrue($(page.getPoolTeamRowSelector(poolTeam._id)));
+            expect($(page.getPoolTeamRowSelector(poolTeam._id))).to.exist;
           });
       });
 
@@ -75,7 +76,7 @@ if (Meteor.isClient) {
         it('should allow user to switch seasons', () => {
           return afterFlushPromise()
             .then(() => {
-              assert.isTrue($(page.getSeasonSwitcherSelector(seasonId)));
+              expect($(page.getSeasonSwitcherSelector(seasonId))).to.exist;
             });
         });
       });
@@ -95,13 +96,13 @@ if (Meteor.isClient) {
 
       it('should display the league field', () => {
         return () => {
-          assert.isTrue($(page.getFirstLeagueSelector()));
+          expect($(page.getFirstLeagueSelector())).to.exist;
         };
       });
 
       it('should display the name field', () => {
         return () => {
-          assert.isTrue($(page.getNameSelector()));
+          expect($(page.getNameSelector())).to.exist;
         };
       });
 

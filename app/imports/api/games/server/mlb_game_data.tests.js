@@ -8,7 +8,7 @@ import MlbSeeds from '../../../startup/server/seeds/mlb';
 import { Games } from '../../../api/games/games';
 import { LeagueTeams } from '../../../api/league_teams/league_teams';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
 describe('MLB Game Data', function () {

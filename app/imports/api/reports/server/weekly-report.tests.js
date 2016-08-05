@@ -9,7 +9,7 @@ import WeeklyReport from './weekly-report';
 
 import '../../pool_teams/pool_teams'; // needed for factory
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Weekly Report', () => {
   it('puts together player emails', () => {

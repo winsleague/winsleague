@@ -10,7 +10,7 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import { Games } from '../../games/games';
 import SeasonLeagueTeamsUpdater from '../../season_league_teams/server/updater';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Season League Teams Updater', () => {
   describe('Update Team Stats', () => {

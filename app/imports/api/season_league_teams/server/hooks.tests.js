@@ -7,7 +7,7 @@ import log from '../../../utils/log';
 import PoolTeamUpdater from '../../pool_teams/server/updater';
 import './hooks';
 
-import { expect } from 'meteor/practicalmeteor:chai';
+import { expect } from 'chai';
 import { spies } from 'meteor/practicalmeteor:sinon';
 
 describe('Season League Teams Hooks', function () {

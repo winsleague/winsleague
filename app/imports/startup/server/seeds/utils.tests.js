@@ -5,14 +5,14 @@ import Utils from './utils';
 import { Leagues } from '../../../api/leagues/leagues';
 import { LeagueTeams } from '../../../api/league_teams/league_teams';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Utils', function () {
   describe('initializeLeagues', function () {
     beforeEach(() => {
       Utils.initializeLeagues();
     });
-    
+
     it('should seed the Leagues', function () {
       assert.isAbove(Leagues.find().count(), 0);
     });

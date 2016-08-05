@@ -8,7 +8,7 @@ import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Pools } from '../pools';
 import './hooks';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Pools Hooks', function () {
   it('should remove its PoolTeams when Pool is removed', function () {

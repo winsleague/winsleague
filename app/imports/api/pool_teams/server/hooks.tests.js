@@ -8,7 +8,7 @@ import { PoolTeams } from '../pool_teams';
 import './hooks';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 
 describe('Pool Teams Hooks', function () {
   it('should remove its PoolTeamPicks when PoolTeam is removed', function () {
