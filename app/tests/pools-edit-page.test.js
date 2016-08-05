@@ -2,6 +2,8 @@
 // These are Chimp globals */
 /* globals browser server assert */
 
+import { Meteor } from 'meteor/meteor';
+
 describe('Pools.edit page ui', () => {
   beforeEach(() => {
     server.call('logout');
