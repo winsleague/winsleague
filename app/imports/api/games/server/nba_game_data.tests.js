@@ -10,7 +10,7 @@ import SeasonFinder from '../../seasons/finder';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 
 import { assert } from 'chai';
-import { sinon } from 'meteor/practicalmeteor:sinon';
+import sinon from 'sinon';
 
 describe('NBA Game Data', () => {
   beforeEach(() => {
