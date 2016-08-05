@@ -36,3 +36,6 @@ secrets.env
 
 # Temporary data, for things like preprocessors
 .tmp
+
+# Shrinkpack
+node_cache
