@@ -28,15 +28,15 @@
       poolId=poolId
     }}
 
-    <a href="{{pathFor 'Pools.records' poolId=poolId}}" id="records">Records</a><br/>
+    <a href="{{pathFor 'Pools.records' poolId=poolId}}" id="Pools_records">Records</a><br/>
     <br/>
 
     {{#if isCommissioner}}
       {{#if isLatestSeason}}
-        <a href="{{pathFor 'PoolTeams.new' poolId=poolId}}">Add Player</a>
+        <a href="{{pathFor 'PoolTeams.new' poolId=poolId}}" id="PoolTeams_new">Add Player</a>
         <br/>
       {{/if}}
-      <a href="{{pathFor 'Pools.edit' poolId=poolId}}">Edit Pool</a>
+      <a href="{{pathFor 'Pools.edit' poolId=poolId}}" id="Pools_edit">Edit Pool</a>
     {{/if}}
   {{else}}
     <div>Loading...</div>
