@@ -47,5 +47,5 @@
     "lint": "eslint ."
   },
   "author": "",
-  "license": "GPL"
+  "license": "GPL-2.0"
 }
