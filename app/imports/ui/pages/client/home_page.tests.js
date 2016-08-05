@@ -2,7 +2,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
-import { chai } from 'chai';
+import { assert } from 'chai';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import { $ } from 'meteor/jquery';
@@ -29,7 +29,7 @@ describe('Home_page', function () {
   it('renders correctly with simple data', function () {
     withRenderedTemplate('Home_page', {}, el => {
       const renderedText = $(el).find('h2').text();
-      chai.assert.equal(renderedText, 'Simple Fantasy Sports');
+      assert.equal(renderedText, 'Simple Fantasy Sports');
     });
   });
 });
