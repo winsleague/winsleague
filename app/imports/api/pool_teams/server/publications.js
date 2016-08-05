@@ -2,6 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
+import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 
 import { PoolTeams } from '../pool_teams';
 
@@ -19,12 +20,18 @@ Meteor.publish('poolTeams.ofPool', function poolTeamsOfPool(poolId, seasonId = n
 });
 
 Meteor.publish('poolTeams.single', function poolTeamsSingle(_id) {
+  check(_id, Match.Maybe(String));
   if (!_id) return this.ready();
-  check(_id, String);
   return PoolTeams.find(_id);
 });
 
-Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPool(poolId, field, collectionName) {
+Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPool(
+  poolId, field, collectionName) {
+
+  check(poolId, String);
+  check(field, String);
+  check(collectionName, String);
+
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
