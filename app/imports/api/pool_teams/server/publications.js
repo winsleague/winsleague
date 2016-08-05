@@ -1,12 +1,14 @@
 /* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
+import { check, Match } from 'meteor/check';
 
 import { PoolTeams } from '../pool_teams';
 
 Meteor.publish('poolTeams.ofPool', function poolTeamsOfPool(poolId, seasonId = null) {
-  if (!poolId) return this.ready();
   check(poolId, String);
+  check(seasonId, Match.Maybe(String));
+  if (!poolId) return this.ready();
 
   if (seasonId) {
     check(seasonId, String);

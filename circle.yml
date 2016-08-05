@@ -1,3 +1,7 @@
+machine:
+  node:
+    version: 5.2.0
+
 general:
   artifacts:
     - "app/.meteor/local/log"
@@ -14,17 +18,15 @@ dependencies:
     - "app/.meteor/local/bundler-cache"
     - "app/.meteor/local/isopacks"
     - "app/.meteor/local/plugin-cache"
+    - "/home/ubuntu/nvm/versions/node/v5.2.0/bin"
+    - "/home/ubuntu/nvm/versions/node/v5.2.0/lib/node_modules"
 
   override:
-    # -- CACHE METEOR --
-    # Restore the meteor symlink
-    - if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
-    # Install Meteor if the cache didn't restore it
-    - if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
-
-    # -- INSTALL METEOR PACKAGES --
-    - (cd app; meteor list) # triggers the packages to download and install
-    - (cd app; meteor npm install)
+    - ./.testing/upgrade_chrome_version.sh
+    - ./.testing/cache_meteor.sh
+    - ./.testing/cache_npm_dependencies.sh
+    - ./.testing/cache_build_and_dependencies.sh
+    - chimp --path=features # Cache chimp deps by running it without any tests
 
 checkout:
   post:
@@ -35,6 +37,7 @@ test:
     # Run tests
     - (cd app; meteor npm run test-coverage-app-unit)
     - (cd app; meteor npm run test-coverage-app-full)
+    - (cd app; ./tests/acceptance_run)
 
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
     - npm install -g codeclimate-test-reporter@0.3.3

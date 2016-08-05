@@ -55,6 +55,20 @@ $ http://localhost:3000
 
 In browser console, run `Meteor.sendCoverage(function(stats,err) { console.log(stats,err);});` to capture client coverage.
 
+### Running acceptance tests
+
+In one terminal:
+```
+$ (cd app; meteor test --full-app --driver-package tmeasday:acceptance-test-driver)
+```
+
+In another terminal:
+```
+$ (cd app; ./tests/acceptance_run)
+```
+
+We run these in two separate terminals so the acceptance tests don't wipe out the dev database.
+
 ### Running [Flow check](http://flowtype.org)
 
 ```

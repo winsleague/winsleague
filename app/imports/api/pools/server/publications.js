@@ -1,20 +1,21 @@
 /* eslint-disable prefer-arrow-callback func-names */
 
 import { Meteor } from 'meteor/meteor';
+import { check, Match } from 'meteor/check';
 
 import { Pools } from '../pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 
-Meteor.publish('pools.single', function(_id) {
+Meteor.publish('pools.single', function (_id) {
+  check(_id, Match.Maybe(String)); // not sure why we need .Maybe
   if (!_id) return this.ready();
-  check(_id, String);
   return Pools.find(_id);
 });
 
-Meteor.publish('pools.ofUser', function(userId) {
+Meteor.publish('pools.ofUser', function (userId) {
+  check(userId, Match.Maybe(String)); // not sure why we need .Maybe
   const self = this;
   if (!userId) return this.ready();
-  check(userId, String);
 
   // add Pools whose commissioner is userId
   const commissionerHandle = Pools.find({ commissionerUserId: userId }).observeChanges({

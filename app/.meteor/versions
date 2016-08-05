@@ -10,6 +10,7 @@ aldeed:simple-schema@1.5.3
 allow-deny@1.0.5
 amplify@1.0.0
 arillo:flow-router-helpers@0.5.2
+audit-argument-checks@1.0.7
 autoupdate@1.2.11
 babel-compiler@6.8.5
 babel-runtime@0.1.9_1
@@ -131,6 +132,7 @@ standard-minifier-css@1.0.8
 standard-minifier-js@1.0.8
 templating@1.1.14
 templating-tools@1.0.4
+tmeasday:acceptance-test-driver@0.1.0
 tmeasday:test-reporter-helpers@0.2.1
 tracker@1.0.15
 tunifight:loggedin-mixin@0.1.0
