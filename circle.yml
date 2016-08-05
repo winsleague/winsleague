@@ -22,11 +22,11 @@ dependencies:
     - "/home/ubuntu/nvm/versions/node/v5.2.0/lib/node_modules"
 
   override:
-    - ./.testing/upgrade_chrome_version.sh
-    - ./.testing/cache_meteor.sh
-    - ./.testing/cache_npm_dependencies.sh
-    - ./.testing/cache_build_and_dependencies.sh
-    - chimp --path=features # Cache chimp deps by running it without any tests
+    - ./app/.testing/upgrade_chrome_version.sh
+    - ./app/.testing/cache_meteor.sh
+    - ./app/.testing/cache_npm_dependencies.sh
+    - ./app/.testing/cache_build_and_dependencies.sh
+    - ./app/chimp --path=features # Cache chimp deps by running it without any tests
 
 checkout:
   post:
