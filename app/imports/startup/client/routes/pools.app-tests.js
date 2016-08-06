@@ -148,6 +148,7 @@ if (Meteor.isClient) {
 
       beforeEach(() =>
         afterFlushPromise()
+          .then(waitForSubscriptions)
           .then(() => FlowRouter.go('Pools.records', { poolId: Pools.findOne()._id }))
           .then(waitForSubscriptions)
       );
