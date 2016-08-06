@@ -23,8 +23,8 @@ describe('Pools.edit page ui', () => {
 
     browser.url('http://localhost:3100');
 
+    // go to the Pools.show page
     browser.waitForVisible('h3.Pools_show');
-
     browser.click('h3.Pools_show>a');
   });
 
@@ -49,5 +49,21 @@ describe('Pools.edit page ui', () => {
     browser.waitForExist('h3.Pools_show');
 
     assert.equal(browser.getText('#Pools_title'), newTitle);
+  });
+
+  it('can delete a pool', () => {
+    browser.waitForVisible('a#Pools_edit');
+    browser.click('a#Pools_edit');
+
+    browser.waitForVisible('a.btn-danger');
+    browser.click('a.btn-danger');
+
+    // on the modal
+    browser.waitForVisible('button.btn-danger');
+    browser.click('button.btn-danger');
+
+    browser.waitForVisible('h2#User_dashboard_title');
+
+    assert.equal(browser.getUrl(), 'http://localhost:3100/');
   });
 });
