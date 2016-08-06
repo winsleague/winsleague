@@ -12,8 +12,8 @@ describe('Pools.edit page ui', () => {
     server.call('logout');
 
     browser.executeAsync(function (done) {
-        Meteor.logout(done);
-      });
+      Meteor.logout(done);
+    });
 
     server.call('generateFixtures');
 
@@ -29,6 +29,7 @@ describe('Pools.edit page ui', () => {
   });
 
   it('can edit a pool', () => {
+    browser.waitForVisible('#Pools_title');
     const oldTitle = browser.getText('#Pools_title');
 
     browser.waitForVisible('a#Pools_edit');
