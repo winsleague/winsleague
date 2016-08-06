@@ -39,3 +39,9 @@ secrets.env
 
 # Shrinkpack
 node_cache
+
+# Backups
+backups
+
+# Vagrant
+.vagrant
