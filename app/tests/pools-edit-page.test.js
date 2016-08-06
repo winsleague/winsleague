@@ -26,21 +26,27 @@ describe('Pools.edit page ui', () => {
     browser.waitForVisible('h3.Pools_show');
 
     browser.click('h3.Pools_show>a');
+  });
+
+  it('can edit a pool', () => {
+    const oldTitle = browser.getText('#Pools_title');
 
     browser.waitForVisible('a#Pools_edit');
     browser.click('a#Pools_edit');
 
-    browser.waitForVisible('input[name="name"]');
-  });
+    browser.waitForValue('input[name="name"]');
 
-  it('can edit a pool @watch', () => {
-    const name = 'Dumber';
+    // needed because we prepend the seasonYear to name
+    const oldName = browser.getValue('input[name="name"]');
+    const append = ' blah';
+    const newName = `${oldName}${append}`;
+    const newTitle = `${oldTitle}${append}`;
 
-    browser.setValue('input[name="name"]', name);
+    browser.setValue('input[name="name"]', newName);
     browser.submitForm('form');
 
-    browser.waitForVisible('h3.Pools_show');
+    browser.waitForExist('h3.Pools_show');
 
-    assert.equal(browser.getText('#Pools_title'), name);
+    assert.equal(browser.getText('#Pools_title'), newTitle);
   });
 });
