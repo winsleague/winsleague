@@ -39,7 +39,6 @@ kadira:debug
 meteorhacks:kadira
 mdg:validated-method
 tunifight:loggedin-mixin
-yogiben:autoform-modals
 jcbernack:reactive-aggregate
 percolate:migrations
 msavin:mongol
@@ -61,3 +60,4 @@ kadira:flow-router
 hwillson:stub-collections
 audit-argument-checks
 tmeasday:acceptance-test-driver
+yogiben:autoform-modals

@@ -14,7 +14,6 @@ Template.Pools_edit_page.helpers({
 
   poolDoc: () => Template.instance().getPoolDoc(),
 
-  // TODO: removing doesn't work since 1.3 (https://github.com/yogiben/meteor-autoform-modals/issues/82)
   onRemoveSuccess: () => {
     return () => {
       log.debug('onRemoveSuccess called');

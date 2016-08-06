@@ -1,3 +1,7 @@
 [submodule "app/packages/flow-router"]
 	path = app/packages/flow-router
 	url = https://github.com/serut/flow-router
+[submodule "app/packages/meteor-autoform-modals"]
+	path = app/packages/meteor-autoform-modals
+	url = https://github.com/noahsw/meteor-autoform-modals.git
+	branch = fix-contains-reference
