@@ -4,8 +4,8 @@
   {{#autoForm schema=schema id="insertPoolTeamForm" type="method" meteormethod="PoolTeams.methods.insert"}}
     <fieldset>
       {{> afFieldInput name="poolId" type="hidden" value=poolId}}
-      {{> afQuickField name="userEmail"}}
-      {{> afQuickField name="userTeamName"}}
+      {{> afQuickField name="userEmail" id="userEmail" }}
+      {{> afQuickField name="userTeamName" id="userTeamName" }}
     </fieldset>
     <button class="btn btn-primary" type="submit">Create</button>
     &nbsp;
