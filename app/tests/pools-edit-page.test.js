@@ -7,9 +7,9 @@ describe('Pools.edit page ui', () => {
     // we must navigate to client first so Meteor methods are available
     browser.url('http://localhost:3100');
 
-    server.call('logout');
+    browser.timeouts('script', 5000);
 
-    browser.timeouts('implicit', 5000);
+    server.call('logout');
 
     browser.executeAsync(function (done) {
         Meteor.logout(done);
