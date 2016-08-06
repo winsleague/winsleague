@@ -37,6 +37,7 @@ test:
     # Run tests
     - (cd app; meteor npm run test-coverage-app-unit)
     - (cd app; meteor npm run test-coverage-app-full)
+    - (cd app; meteor npm run test-app) # see if this passes when coverage fails
     - (cd app; ./tests/acceptance_run)
 
     # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
