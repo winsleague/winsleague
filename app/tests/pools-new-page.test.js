@@ -27,7 +27,6 @@ describe('Pools.new page ui', () => {
   beforeEach(() => {
     setup();
 
-    // go to the Pools.show page
     browser.waitForVisible('a#Pools_new_link');
     browser.click('a#Pools_new_link');
   });
