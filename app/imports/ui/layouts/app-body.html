@@ -17,8 +17,8 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="{{ActiveRoute.isActiveRoute 'Pools.new'}}">
-              <a class="hidden-xs" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
-              <a class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
+              <a id="Pools_new_link" class="hidden-xs" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
+              <a id="Pools_new_link" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
             </li>
             <li>
               {{> atNavButton}}

@@ -4,8 +4,8 @@
   {{#if Template.subscriptionsReady}}
     {{#autoForm collection=pools id="insertPoolForm" type="insert"}}
       <fieldset>
-          {{> afQuickField name="leagueId" options=leagueOptions defaultValue=nflLeagueId}}
-      {{> afQuickField name="name"}}
+        {{> afQuickField name="leagueId" options=leagueOptions defaultValue=nflLeagueId }}
+        {{> afQuickField name="name" id="name" }}
       </fieldset>
 
       <button class="btn btn-primary" type="submit">Create</button>
