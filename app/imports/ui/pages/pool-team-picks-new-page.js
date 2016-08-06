@@ -51,10 +51,9 @@ Template.PoolTeamPicks_new_page.onCreated(function () {
 AutoForm.hooks({
   insertPoolTeamPickForm: {
     onSuccess: (formType, poolTeamPickId) => {
-      FlowRouter.go('PoolTeamPicks.show', {
+      FlowRouter.go('PoolTeams.show', {
         poolId: FlowRouter.getParam('poolId'),
         poolTeamId: FlowRouter.getParam('poolTeamId'),
-        poolTeamPickId: FlowRouter.getParam('poolTeamPickId'),
       });
     },
   },
