@@ -2,6 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
+import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
 
 import { Pools } from '../pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
@@ -12,38 +13,34 @@ Meteor.publish('pools.single', function (_id) {
   return Pools.find(_id);
 });
 
-Meteor.publish('pools.ofUser', function (userId) {
+Meteor.publish('pools.ofUserAsCommissioner', function (userId) {
   check(userId, Match.Maybe(String)); // not sure why we need .Maybe
-  const self = this;
   if (!userId) return this.ready();
 
   // add Pools whose commissioner is userId
-  const commissionerHandle = Pools.find({ commissionerUserId: userId }).observeChanges({
-    added(id, fields) {
-      self.added('pools', id, fields);
-    },
-    removed(id) {
-      self.removed('pools', id);
-    },
-    // don't care about changed
-  });
+  return Pools.find({ commissionerUserId: userId });
+});
 
+Meteor.publish('pools.ofUserPoolTeams', function (userId) {
   // add PoolTeams who are owned by userId
-  const usersHandle = PoolTeams.find({ userId }).observeChanges({
-    added(id, fields) {
-      const pool = Pools.findOne(fields.poolId);
-      self.added('pools', pool._id, pool);
-    },
-    // don't care about changed or removed since it's rare
-  });
+  check(userId, Match.Maybe(String)); // not sure why we need .Maybe
+  if (!userId) return this.ready();
 
-  self.ready();
-
-  // Stop observing the cursor when client unsubs.
-  // Stopping a subscription automatically takes
-  // care of sending the client any removed messages.
-  self.onStop(() => {
-    commissionerHandle.stop();
-    usersHandle.stop();
-  });
+  ReactiveAggregate(this, PoolTeams, [
+      {
+        $match: {
+          userId: userId,
+        },
+      },
+      {
+        $group: {
+          _id: '$poolId',
+        },
+      },
+    ],
+    {
+      observeSelector: { userId }, // only observe PoolTeams for this user (perf reasons)
+      clientCollection: 'pools',
+    }
+  );
 });

@@ -14,8 +14,12 @@ Template.Pools_menu.helpers({
 
 Template.Pools_menu.onCreated(function () {
   this.autorun(() => {
-    this.subscribe('pools.ofUser', Meteor.userId(), () => {
-      log.debug(`pools.of_user subscription ready: ${Pools.find().count()} pools`);
+    this.subscribe('pools.ofUserAsCommissioner', Meteor.userId(), () => {
+      log.debug(`pools.ofUserAsCommissioner subscription ready: ${Pools.find().count()} pools`);
+    });
+
+    this.subscribe('pools.ofUserPoolTeams', Meteor.userId(), () => {
+      log.debug(`pools.ofUserPoolTeams subscription ready: ${Pools.find().count()} pools`);
     });
   });
 });
