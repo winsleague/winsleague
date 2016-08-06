@@ -43,7 +43,7 @@ Template.Pools_wins.onCreated(function () {
   this.getSeasonId = () => {
     if (this.data.seasonId) return this.data.seasonId;
 
-    return this.getPool().latestSeasonId;
+    return _.get(this.getPool(), 'latestSeasonId');
   };
 
   this.getPool = () => Pools.findOne(this.data.poolId);
