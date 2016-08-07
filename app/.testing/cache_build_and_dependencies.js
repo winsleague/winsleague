@@ -29,6 +29,8 @@ const cacheMeteor = function() {
       childProcess.kill();
       console.error('There were issues whilst trying to cache build & dependencies');
       throw new Error(line);
+    } else {
+      console.log(line); // keep outputting so CI doesn't kill our process from inactivity
     }
   };
   childProcess.stdout.on('data', exitAfterBuild);
