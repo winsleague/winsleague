@@ -5,8 +5,8 @@
     <fieldset>
       {{> afFieldInput name="poolTeamId" type="hidden" value=poolTeamId}}
       {{#if Template.subscriptionsReady}}
-        {{> afQuickField name="leagueTeamId"}}
-        {{> afQuickField name="pickNumber"}}
+        {{> afQuickField name="leagueTeamId" id="leagueTeamId" }}
+        {{> afQuickField name="pickNumber" id="pickNumber" }}
       {{/if}}
     </fieldset>
     <button class="btn btn-primary" type="submit">Add</button>
