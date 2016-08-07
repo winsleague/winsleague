@@ -35,6 +35,7 @@ describe('PoolTeams.edit page ui', () => {
     browser.waitForVisible('a.PoolTeams_show:nth-Child(1)');
     browser.click('a.PoolTeams_show:nth-Child(1)');
 
+    // go to PoolTeams.edit page
     browser.waitForVisible('a#PoolTeams_edit');
     browser.click('a#PoolTeams_edit');
   });
