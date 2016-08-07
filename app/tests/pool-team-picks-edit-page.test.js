@@ -54,4 +54,19 @@ describe('PoolTeamPicks.edit page ui', () => {
 
     assert.equal(browser.getText('td.PoolTeamPick:nth-Child(1)'), pickNumber);
   });
+
+  it('can delete a pool team pick', () => {
+    browser.waitForVisible('a.btn-danger');
+    browser.click('a.btn-danger');
+
+    // on the modal
+    browser.waitForVisible('button.btn-danger');
+    browser.click('button.btn-danger');
+
+    browser.waitForVisible('h3#PoolTeams_show_title');
+
+    const rowCount = browser.elements("//table[@id='PoolTeamPicks']/tbody/tr").value.length;
+
+    assert.equal(rowCount, 0);
+  });
 });
