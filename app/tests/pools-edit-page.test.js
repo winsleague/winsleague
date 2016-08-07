@@ -39,6 +39,7 @@ describe('Pools.edit page ui', () => {
     browser.waitForVisible('a#Pools_edit');
     browser.click('a#Pools_edit');
 
+    browser.waitForExist('input[name="name"]');
     browser.waitForValue('input[name="name"]');
 
     // needed because we prepend the seasonYear to name
