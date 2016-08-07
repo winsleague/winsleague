@@ -110,4 +110,4 @@ Migrations are done with [percolate:migrations](https://github.com/percolatestud
 
 CircleCI automatically does this when tests pass.
 
-If a change to `config/production/mup.json` is needed, make sure to run `gpg -c mup.json` and commit the updated `mup.json.gpg`.
+If a change to `.deploy/production/mup.js` is needed, make sure to run `gpg -c mup.js` and commit the updated `mup.js.gpg`.
