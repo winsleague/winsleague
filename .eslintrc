@@ -1,5 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:meteor/recommended"
+  ],
   "env": {
     "browser": true,
     "jasmine": true,
@@ -7,29 +10,23 @@
     "mocha": true,
     "node": true
   },
-  "globals": {
-    "AccountsTemplates": false,
-    "AutoForm": false,
-    "BlazeLayout": false,
-    "FlowRouter": false,
-    "Games": true,
-    "LeaguePickExpectedWins": true,
-    "LeagueTeams": true,
-    "Leagues": true,
-    "log": false,
-    "Mailer": false,
-    "Migrations": false,
-    "Modules": false,
-    "moment": false,
-    "PoolTeamPicks": true,
-    "PoolTeams": true,
-    "Pools": true,
-    "Routes": true,
-    "SeasonLeagueTeams": true,
-    "Seasons": true,
-    "SimpleSchema": false,
-    "SyncedCron": false,
-    "Templates": true,
-    "TemplateHelpers": true
+  "plugins": [
+    "meteor"
+  ],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "meteor/eventmap-params": [
+      "error",
+      {
+        "eventParamName": "event",
+        "templateInstanceParamName": "instance"
+      }
+    ],
+    "meteor/template-names": [
+      "off"
+    ]
+  },
+  "settings": {
+    "import/resolver": "meteor"
   }
 }

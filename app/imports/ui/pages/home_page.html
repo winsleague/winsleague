@@ -1,0 +1,9 @@
+<template name="Home_page">
+  {{#if isLoggedIn}}
+    {{> User_dashboard}}
+  {{else}}
+    {{> previousPool}}
+
+    {{> intro}}
+  {{/if}}
+</template>

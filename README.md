@@ -22,35 +22,52 @@
 
 3. Meteor automatically watches for changes and hot reloads the app.
 
+### Adding NPM packages
+
+After installing NPM packages, make sure to run ``shrinkwrap`` and ``shrinkpack`` to freeze versions.
+
+```
+$ (cd app; meteor npm shrinkwrap --dev; shrinkpack)
+```
+
 
 ## Testing
 
-### Running tests
+### Running tests once
 
 ```
-$ (cd app; meteor run --test)
+$ (cd app; meteor test)
 ```
 
-### Running Meteor without tests running automatically
+### Running tests during development
 
 ```
-$ (cd app; VELOCITY=0 meteor run)
+$ (cd app; meteor npm run test-watch)
+$ (cd app; meteor npm run test-app-watch)
 ```
 
-### Running tests in debug mode
+### Running tests with code coverage
 
 ```
-$ (cd app; DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor)
+$ (cd app; COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor test --driver-package practicalmeteor:mocha)
+$ http://localhost:3000
 ```
 
-### Viewing test logs
+In browser console, run `Meteor.sendCoverage(function(stats,err) { console.log(stats,err);});` to capture client coverage.
 
-These are best run in a separate Terminal window while Meteor is running.
+### Running acceptance tests
 
+In one terminal:
 ```
-$ (cd app; tail -f .meteor/local/log/jasmine-server-integration.log)
-$ (cd app; tail -f .meteor/local/log/jasmine-client-integration.log)
+$ (cd app; meteor test --full-app --driver-package tmeasday:acceptance-test-driver)
 ```
+
+In another terminal:
+```
+$ (cd app; ./tests/acceptance_run)
+```
+
+We run these in two separate terminals so the acceptance tests don't wipe out the dev database.
 
 ### Running [Flow check](http://flowtype.org)
 
@@ -63,14 +80,6 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 ### Other tips:
 
 1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
-2. To disable specific testing modes, use these environment variables:
-
-    ```bash
-    JASMINE_SERVER_UNIT=0
-    JASMINE_SERVER_INTEGRATION=0
-    JASMINE_CLIENT_UNIT=0
-    JASMINE_CLIENT_INTEGRATION=0
-    ```
 
 
 ## Debugging
@@ -101,4 +110,4 @@ Migrations are done with [percolate:migrations](https://github.com/percolatestud
 
 CircleCI automatically does this when tests pass.
 
-If a change to `config/production/mup.json` is needed, make sure to run `gpg -c mup.json` and commit the updated `mup.json.gpg`.
+If a change to `.deploy/production/mup.js` is needed, make sure to run `gpg -c mup.js` and commit the updated `mup.js.gpg`.

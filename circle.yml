@@ -1,65 +1,58 @@
+machine:
+  node:
+    version: 5.2.0
+
 general:
   artifacts:
     - "app/.meteor/local/log"
     - "log"
+    - "app/report.json" # from meteor_coverage's out_coverage
+    - "app/lcov.info"
 
 dependencies:
   cache_directories:
+    - "~/.npm"
     - "~/.meteor"
-    - "~/_opt"
-    # from https://github.com/xolvio/automated-testing-best-practices/blob/master/circle.yml
+    - "app/node_modules"
     - "app/.meteor/local/build"
     - "app/.meteor/local/bundler-cache"
-    - "app/.meteor/local/db"
     - "app/.meteor/local/isopacks"
-    - "app/.meteor/local/mirrors"
     - "app/.meteor/local/plugin-cache"
+    - "/home/ubuntu/nvm/versions/node/v5.2.0/bin"
+    - "/home/ubuntu/nvm/versions/node/v5.2.0/lib/node_modules"
 
   override:
-    # -- CACHE CHROME (from https://github.com/xolvio/Letterpress/blob/master/circle.yml) --
-    # ...remove default ChromeDriver for safety
-    - sudo rm -rf /usr/local/bin/chromedriver*
-    # ...update to the latest chrome if the version is v38x (TODO need a better grep)
-    - sudo rm /tmp/update-chrome || true
-    - /opt/google/chrome/chrome --version | grep '38' &> /dev/null; if [ $? == 0 ]; then echo UPDATE_CHROME > /tmp/update-chrome; fi
-    # ...check if we already have a tarred version and untar that
-    - if [ -e /tmp/update-chrome ] && [ -e ~/_opt/google-chrome.tar ]; then sudo tar -xvf ~/_opt/google-chrome.tar -C /; fi
-    # ...otherwise download chrome and tar it
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get update; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then sudo apt-get install google-chrome-stable; fi
-    - if [ -e /tmp/update-chrome ] && [ ! -e ~/_opt/google-chrome.tar ]; then mkdir ~/_opt; tar -cvf ~/_opt/google-chrome.tar /opt/google/chrome/; fi
+    - (cd app; ./.testing/upgrade_chrome_version.sh)
+    - (cd app; ./.testing/cache_meteor.sh)
+    - (cd app; ./.testing/cache_npm_dependencies.sh)
+    - (cd app; ./.testing/cache_build_and_dependencies.sh):
+        timeout: 1200
+    - (cd app; chimp --path=features) # Cache chimp deps by running it without any tests
 
-    # -- CACHE METEOR --
-    # Restore the meteor symlink
-    - if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
-    # Install Meteor if the cache didn't restore it
-    - if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
-
-    # -- INSTALL METEOR PACKAGES --
-    - (cd app; meteor list --release 1.2.1) # triggers the packages to download and install
+checkout:
+  post:
+    - git submodule update --init
 
 test:
   override:
-    # Run tests
-    - (cd app; JASMINE_SERVER_INTEGRATION=0 DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor run --release 1.2.1 --test)
-    - (cd app; JASMINE_CLIENT_INTEGRATION=0 DEBUG=1 JASMINE_DEBUG=1 VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 meteor run --release 1.2.1 --test)
-    # Publish code coverage data to CodeClimate. $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
-    # Disabled until we get tests reporting to lcov again
-    # - npm install -g codeclimate-test-reporter@0.1.1
-    # - (cd src/webapp; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < log/coverage/report-lcov/lcov.info)
+    - case $CIRCLE_NODE_INDEX in 0) (cd app; mkdir .coverage; meteor npm run test-coverage-app-unit; meteor npm run test-coverage-app-full) ;; 1) (cd app; ./tests/acceptance_run) ;; esac:
+        parallel: true
 
 deployment:
   production:
     branch: master
     commands:
+      # Publish code coverage data to CodeClimate (only works on master branch).
+      # $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
+      - npm install -g codeclimate-test-reporter@0.3.3
+      - (cd app; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < lcov.info)
+
       # Decrypt Meteor Up config
-      - (cd config/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.json -d mup.json.gpg)
+      - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
 
       # Deploy
-      - npm install -g mup # install meteor-up for deployment
-      - (cd config/production; mup deploy)
+      - npm install -g mup@1.0.1 # install meteor-up for deployment
+      - (cd .deploy/production; DEBUG=* mup deploy)
 
       # Notify Rollbar about deploy
       - curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME

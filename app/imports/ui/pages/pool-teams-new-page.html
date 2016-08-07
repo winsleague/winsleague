@@ -1,0 +1,14 @@
+<template name="PoolTeams_new_page">
+  <h2>Add Player</h2>
+
+  {{#autoForm schema=schema id="insertPoolTeamForm" type="method" meteormethod="PoolTeams.methods.insert"}}
+    <fieldset>
+      {{> afFieldInput name="poolId" type="hidden" value=poolId}}
+      {{> afQuickField name="userEmail" id="userEmail" }}
+      {{> afQuickField name="userTeamName" id="userTeamName" }}
+    </fieldset>
+    <button class="btn btn-primary" type="submit">Create</button>
+    &nbsp;
+    <a class="btn btn-default" href="{{pathFor 'Pools.show' poolId=poolId}}">Back to Pool</a>
+  {{/autoForm}}
+</template>

@@ -1,0 +1,25 @@
+<template name="Pools_records_pool_users_most_all_time">
+  <h4>{{recordTitle}}</h4>
+  {{#if Template.subscriptionsReady}}
+    <div class="table-responsive">
+      <table id="{{collectionName}}" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th class="col-xs-7 player">Player</th>
+            <th class="col-xs-5 metricTitle">{{metricTitle}}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each poolUser in poolUsers}}
+          <tr>
+            <td class="userTeamName">{{poolUser.userTeamName}}</td>
+            <td class="metric">{{poolUser.metric}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+  <br/>
+</template>

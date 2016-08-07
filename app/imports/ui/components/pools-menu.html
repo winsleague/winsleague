@@ -1,0 +1,12 @@
+<template name="Pools_menu">
+  {{#if canShow}}
+    {{#if Template.subscriptionsReady}}
+      {{#each pool in pools}}
+        <li class="{{isActivePath regex=pool._id}}">
+          <a class="hidden-xs" href="{{pathFor 'Pools.show' poolId=pool._id}}">{{pool.name}}</a>
+          <a class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'Pools.show' poolId=pool._id}}">{{pool.name}}</a>
+        </li>
+      {{/each}}
+    {{/if}}
+  {{/if}}
+</template>

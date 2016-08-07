@@ -1,0 +1,10 @@
+<template name="Pools_season_switcher">
+  {{#if Template.subscriptionsReady}}
+    {{#if isMultipleSeasons}}
+      {{#each season in seasons}}
+        <a href="{{pathFor 'Pools.show.season' poolId=poolId seasonId=season._id}}" id="{{season._id}}">{{season.year}}</a>
+        <br/>
+      {{/each}}
+    {{/if}}
+  {{/if}}
+</template>

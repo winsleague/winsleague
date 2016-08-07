@@ -1,0 +1,44 @@
+<template name="Pools_show_page">
+  {{#if Template.subscriptionsReady}}
+    {{> Pools_header poolId=poolId seasonId=seasonId }}
+
+    {{> Pools_wins
+      poolId=poolId
+      seasonId=seasonId
+      isCommissioner=isCommissioner
+    }}
+
+    {{> Pools_pick_quality
+      leagueId=leagueId
+      seasonId=seasonId
+      poolId=poolId
+      tableTitle="Best Pick Quality"
+      sort=-1
+    }}
+
+    {{> Pools_pick_quality
+      leagueId=leagueId
+      seasonId=seasonId
+      poolId=poolId
+      tableTitle="Worst Pick Quality"
+      sort=1
+    }}
+
+    {{> Pools_season_switcher
+      poolId=poolId
+    }}
+
+    <a href="{{pathFor 'Pools.records' poolId=poolId}}" id="Pools_records">Records</a><br/>
+    <br/>
+
+    {{#if isCommissioner}}
+      {{#if isLatestSeason}}
+        <a href="{{pathFor 'PoolTeams.new' poolId=poolId}}" id="PoolTeams_new">Add Player</a>
+        <br/>
+      {{/if}}
+      <a href="{{pathFor 'Pools.edit' poolId=poolId}}" id="Pools_edit">Edit Pool</a>
+    {{/if}}
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>

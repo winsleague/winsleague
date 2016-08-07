@@ -12,6 +12,8 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+app/lcov.info
+app/report.json
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -31,6 +33,17 @@ node_modules
 
 # Secrets
 secrets.env
+.deploy/staging/mup.js
+.deploy/production/mup.js
 
 # Temporary data, for things like preprocessors
 .tmp
+
+# Shrinkpack
+node_cache
+
+# Backups
+backups
+
+# Vagrant
+.vagrant

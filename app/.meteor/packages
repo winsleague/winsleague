@@ -11,12 +11,9 @@ session                 # Client-side reactive dictionary for your app
 jquery                  # Helpful client-side library
 tracker                 # Meteor's client-side reactive programming library
 
-standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-sanjo:jasmine
-velocity:console-reporter
 twbs:bootstrap
 promise
 
@@ -25,40 +22,42 @@ http
 peerlibrary:xml2js
 blaze-html-templates
 aldeed:collection2
-velocity:core
 accounts-password
 dburles:collection-helpers
 matb33:collection-hooks
-kadira:flow-router
 kadira:blaze-layout
 meteorhacks:fast-render
-velocity:html-reporter
 fortawesome:fontawesome
 alanning:roles
 aldeed:autoform
 check
 arillo:flow-router-helpers
-testing
 percolate:synced-cron
-infinitedg:winston
-infinitedg:winston-loggly
 brentjanderson:winston-client
 saucecode:rollbar
 kadira:debug
 meteorhacks:kadira
 mdg:validated-method
 tunifight:loggedin-mixin
-yogiben:autoform-modals
 jcbernack:reactive-aggregate
-stevezhu:lodash
 percolate:migrations
 msavin:mongol
-momentjs:moment
-mrt:moment-timezone
 lookback:emails
-chrisbutler:node-sass
 meteorhacks:aggregate
 zimme:active-route
 useraccounts:bootstrap
 useraccounts:flow-routing
 u2622:persistent-session
+standard-minifier-css
+standard-minifier-js
+xolvio:cleaner
+practicalmeteor:mocha
+dispatch:mocha-phantomjs
+dburles:factory
+lmieulet:meteor-coverage
+practicalmeteor:mocha-console-runner
+kadira:flow-router
+hwillson:stub-collections
+audit-argument-checks
+tmeasday:acceptance-test-driver
+yogiben:autoform-modals
