@@ -23,12 +23,18 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const clickElement = (selector) => {
+  browser.waitForVisible(selector);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.click(selector);
+};
+
 describe('Pools.new page ui', () => {
   beforeEach(() => {
     setup();
 
-    browser.waitForVisible('a#Pools_new_link');
-    browser.click('a#Pools_new_link');
+    clickElement('a#Pools_new_link');
   });
 
   it('can create a pool', () => {

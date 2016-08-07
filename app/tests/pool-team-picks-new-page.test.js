@@ -23,23 +23,25 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const clickElement = (selector) => {
+  browser.waitForVisible(selector);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.click(selector);
+};
+
 describe('PoolTeamPicks.new page ui', () => {
   beforeEach(() => {
     setup();
 
     // go to the Pools.show page
-    browser.waitForVisible('h3.Pools_show');
-    browser.click('h3.Pools_show>a');
+    clickElement('h3.Pools_show>a');
 
     // go to PoolTeams.show page
-    browser.waitForVisible('a.PoolTeams_show:nth-Child(1)');
-    browser.click('a.PoolTeams_show:nth-Child(1)');
+    clickElement('a.PoolTeams_show:nth-Child(1)');
 
     // go to PoolTeamPicks.new page
-    browser.waitForVisible('a#PoolTeamPicks_new');
-    // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
-    browser.scroll('a#PoolTeamPicks_new');
-    browser.click('a#PoolTeamPicks_new');
+    clickElement('a#PoolTeamPicks_new');
   });
 
   it('can create a pool team pick', () => {

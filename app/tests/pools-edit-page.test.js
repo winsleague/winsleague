@@ -23,21 +23,26 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const clickElement = (selector) => {
+  browser.waitForVisible(selector);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.click(selector);
+};
+
 describe('Pools.edit page ui', () => {
   beforeEach(() => {
     setup();
 
     // go to the Pools.show page
-    browser.waitForVisible('h3.Pools_show');
-    browser.click('h3.Pools_show>a');
+    clickElement('h3.Pools_show>a');
   });
 
   it('can edit a pool', () => {
     browser.waitForVisible('#Pools_title');
     const oldTitle = browser.getText('#Pools_title');
 
-    browser.waitForVisible('a#Pools_edit');
-    browser.click('a#Pools_edit');
+    clickElement('a#Pools_edit');
 
     browser.waitForExist('input[name="name"]');
     browser.waitForValue('input[name="name"]');
@@ -57,15 +62,12 @@ describe('Pools.edit page ui', () => {
   });
 
   it('can delete a pool', () => {
-    browser.waitForVisible('a#Pools_edit');
-    browser.click('a#Pools_edit');
+    clickElement('a#Pools_edit');
 
-    browser.waitForVisible('a.btn-danger');
-    browser.click('a.btn-danger');
+    clickElement('a.btn-danger');
 
     // on the modal
-    browser.waitForVisible('button.btn-danger');
-    browser.click('button.btn-danger');
+    clickElement('button.btn-danger');
 
     browser.waitForVisible('h2#User_dashboard_title');
 

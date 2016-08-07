@@ -23,18 +23,21 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const clickElement = (selector) => {
+  browser.waitForVisible(selector);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.click(selector);
+};
+
 describe('PoolTeams.new page ui', () => {
   beforeEach(() => {
     setup();
 
     // go to the Pools.show page
-    browser.waitForVisible('h3.Pools_show');
-    browser.click('h3.Pools_show>a');
+    clickElement('h3.Pools_show>a');
 
-    browser.waitForVisible('a#PoolTeams_new');
-    // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
-    browser.scroll('a#PoolTeams_new');
-    browser.click('a#PoolTeams_new');
+    clickElement('a#PoolTeams_new');
   });
 
   it('can create a pool team', () => {
