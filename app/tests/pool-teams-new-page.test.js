@@ -32,6 +32,9 @@ describe('PoolTeams.new page ui', () => {
     browser.click('h3.Pools_show>a');
 
     browser.waitForVisible('a#PoolTeams_new');
+
+    // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+    browser.scroll('a#PoolTeams_new');
     browser.click('a#PoolTeams_new');
   });
 
