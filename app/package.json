@@ -21,7 +21,7 @@
     "winston-loggly-bulk": "1.3.3"
   },
   "devDependencies": {
-    "spacejam": "https://github.com/serut/spacejam/tarball/rc4-without-local-url"
+    "spacejam": "https://github.com/serut/spacejam/tarball/windows-suppport-rc4",
     "chai": "3.5.0",
     "chai-jquery": "2.0.0",
     "eslint": "2.13.1",
