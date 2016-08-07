@@ -3,7 +3,14 @@ import LeagueFinder from '../leagues/finder';
 
 export default {
   getByYear(league, year = (new Date()).getFullYear()) {
-    return Seasons.findOne({ leagueId: league._id, year });
+    let leagueId;
+    if (typeof league === 'string') {
+      leagueId = LeagueFinder.getIdByName(league);
+    } else {
+      leagueId = league._id;
+    }
+
+    return Seasons.findOne({ leagueId, year });
   },
 
   getLatestByLeague(league) {

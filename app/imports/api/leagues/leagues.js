@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
+import { Random } from 'meteor/random';
 import faker from 'faker';
 import log from '../../utils/log';
 
@@ -21,7 +22,7 @@ Leagues.deny({
 });
 
 Factory.define('league', Leagues, {
-  name: faker.lorem.word(),
+  name: () => `${faker.lorem.word()}-${Random.id()}`, // faker is not guaranteed to be random
   seasonGameCount: 16,
 }).after(league => {
   log.debug('league factory created:', league);
