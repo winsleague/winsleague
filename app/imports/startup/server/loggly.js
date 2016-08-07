@@ -1,18 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import log from '../../utils/log';
 
-import WinstonLoggly from 'winston-loggly';
+import 'winston-loggly-bulk';
 
-Meteor.startup(() => {
-  if (Meteor.isProduction) init();
-});
-
-function token() {
-  // mup.json sets this
+const token = () => {
+  // mup.js sets this
   return process.env.LOGGLY_TOKEN;
-}
+};
 
-function init() {
+const init = () => {
   if (! token()) {
     log.warn('LOGGLY_TOKEN not found!');
     return;
@@ -27,7 +23,10 @@ function init() {
     'handleExceptions': true,
   };
 
-  log.add(WinstonLoggly, options);
+  log.add(log.transports.Loggly, options);
   log.info('Loggly setup complete');
-}
+};
 
+Meteor.startup(() => {
+  if (Meteor.isProduction) init();
+});
