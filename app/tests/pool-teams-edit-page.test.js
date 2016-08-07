@@ -52,4 +52,19 @@ describe('PoolTeams.edit page ui', () => {
 
     assert.equal(browser.getText('h3#PoolTeams_show_title'), newTeamName);
   });
+
+  it('can delete a pool team', () => {
+    browser.waitForVisible('a.btn-danger');
+    browser.click('a.btn-danger');
+
+    // on the modal
+    browser.waitForVisible('button.btn-danger');
+    browser.click('button.btn-danger');
+
+    browser.waitForVisible('h2#Pools_title');
+
+    const rowCount = browser.elements("//table[@id='Pools_wins']/tbody/tr").value.length;
+
+    assert.equal(rowCount, 0);
+  });
 });
