@@ -115,8 +115,21 @@ Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
 }).after(factory => {
   const season = Seasons.findOne(factory.seasonId);
   season.leagueId = factory.leagueId;
+  Seasons.update(season._id,
+    {
+      $set: {
+        leagueId: factory.leagueId,
+      },
+    });
+
   const leagueTeam = LeagueTeams.findOne(factory.leagueTeamId);
   leagueTeam.leagueId = factory.leagueId;
-  
+  LeagueTeams.update(leagueTeam._id,
+    {
+      $set: {
+        leagueId: factory.leagueId,
+      },
+    });
+
   log.debug('seasonLeagueTeam factory created:', factory);
 });
