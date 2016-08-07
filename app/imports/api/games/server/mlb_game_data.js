@@ -24,6 +24,7 @@ function padZeros(n, width) {
 function cleanStatus(status) {
   // 'scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   switch (status) {
+    case '':
     case 'Preview':
     case 'Warmup':
     case 'Delayed':
@@ -31,6 +32,7 @@ function cleanStatus(status) {
     case 'Pre-Game': // not sure how any of these are different
       return 'scheduled';
     case 'In Progress':
+    case 'Review':
     case 'Manager Challenge':
       return 'in progress';
     case 'Final':
@@ -38,6 +40,7 @@ function cleanStatus(status) {
       return 'completed'; // not sure how any of these are different
     case 'Postponed':
       return 'postponed';
+    case 'Suspended':
     case 'Completed Early':
       return 'suspended';
     default:
