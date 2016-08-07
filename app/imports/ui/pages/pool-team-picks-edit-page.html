@@ -4,8 +4,8 @@
   {{#if Template.subscriptionsReady}}
     {{#autoForm collection=poolTeamPicks id="updatePoolTeamPickForm" type="update" doc=poolTeamPickDoc}}
       <fieldset>
-        {{> afQuickField name="leagueTeamId"}}
-        {{> afQuickField name="pickNumber"}}
+        {{> afQuickField name="leagueTeamId" id="leagueTeamId" }}
+        {{> afQuickField name="pickNumber" id="pickNumber" }}
       </fieldset>
       <button class="btn btn-primary" type="submit">Save</button>
     {{/autoForm}}
