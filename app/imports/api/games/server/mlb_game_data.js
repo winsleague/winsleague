@@ -64,10 +64,7 @@ function parseGameDate(game) {
 
 export default {
   ingestSeasonData(season) {
-    const league = LeagueFinder.getByName('MLB');
-    if (! league) throw new Error('League is not found!');
-
-    const thisSeason = season || SeasonFinder.getLatestByLeague(league);
+    const thisSeason = season || SeasonFinder.getLatestByLeagueName('MLB');
 
     const startDate = moment(thisSeason.startDate);
     const endDate = moment(thisSeason.endDate);

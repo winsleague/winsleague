@@ -1,4 +1,5 @@
 import { Seasons } from './seasons';
+import LeagueFinder from '../leagues/finder';
 
 export default {
   getByYear(league, year = (new Date()).getFullYear()) {
@@ -6,11 +7,16 @@ export default {
   },
 
   getLatestByLeague(league) {
-    return Seasons.findOne({ leagueId: league._id }, { sort: { year: -1 } });
+    return this.getLatestByLeagueId(league._id);
   },
 
   getLatestByLeagueId(leagueId) {
     return Seasons.findOne({ leagueId }, { sort: { year: -1 } });
+  },
+
+  getLatestByLeagueName(leagueName) {
+    const leagueId = LeagueFinder.getIdByName(leagueName);
+    return this.getLatestByLeagueId(leagueId);
   },
 
   getLatestCursorByLeagueId(leagueId) {
