@@ -16,7 +16,7 @@ const init = () => {
 
   const options = {
     'level': 'info',
-    'subdomain': 'leaguewinspool',
+    'subdomain': 'winsleague',
     'inputToken': token(),
     'json': true,
     'tags': ['meteor'],

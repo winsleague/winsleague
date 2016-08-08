@@ -1,11 +1,11 @@
 {
-  "name": "league-wins-pool",
-  "version": "1.0.0",
-  "description": "League Wins Pool",
+  "name": "winsleague",
+  "version": "2.0.0",
+  "description": "Wins League",
   "readme": "README",
   "repository": {
     "type": "git",
-    "url": "https://github.com/league-wins-pool/league-wins-pool.git"
+    "url": "https://github.com/winsleague/winsleague.git"
   },
   "directories": {
     "test": "tests"
