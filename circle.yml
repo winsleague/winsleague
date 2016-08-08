@@ -27,7 +27,6 @@ dependencies:
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
         timeout: 1200
-    - (cd app; chimp --path=features) # Cache chimp deps by running it without any tests
 
 checkout:
   post:
