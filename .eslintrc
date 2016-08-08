@@ -14,7 +14,6 @@
     "meteor"
   ],
   "rules": {
-    "no-underscore-dangle": "off",
     "meteor/eventmap-params": [
       "error",
       {

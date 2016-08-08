@@ -1,4 +1,4 @@
-# League Wins Pool
+# Wins League
 
 ## Getting Started
 

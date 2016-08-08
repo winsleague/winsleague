@@ -1,13 +1,13 @@
 import { Accounts } from 'meteor/accounts-base';
 
-Accounts.emailTemplates.siteName = 'League Wins Pool';
-Accounts.emailTemplates.from = 'League Wins Pool <team@leaguewinspool.com>';
+Accounts.emailTemplates.siteName = 'Wins League';
+Accounts.emailTemplates.from = 'Wins League <team@winsleague.com>';
 
 Accounts.emailTemplates.enrollAccount.subject = (user) =>
-  `Welcome to League Wins Pool, ${user.profile.name}`;
+  `Welcome to Wins League, ${user.profile.name}`;
 
 Accounts.emailTemplates.enrollAccount.text = (user, url) =>
-  `You have registered for League Wins Pool!
+  `You have registered for Wins League!
 To activate your account, simply click the link below:
  
 ${url}`;
