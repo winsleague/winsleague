@@ -41,7 +41,7 @@ Template.PoolTeams_show_page.helpers({
 
   leagueTeamName: (leagueTeamId) => {
     const team = LeagueTeams.findOne(leagueTeamId);
-    if (team) return team.fullName();
+    if (team) return team.abbreviation;
     return '';
   },
 
