@@ -51,7 +51,7 @@ deployment:
 
       # Deploy
       - npm install -g mup@1.0.1 # install meteor-up for deployment
-      - (cd .deploy/production; DEBUG=* mup deploy)
+      - (cd .deploy/production; mup deploy)
 
       # Notify Rollbar about deploy
       - curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
