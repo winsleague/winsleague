@@ -58,7 +58,8 @@ describe('PoolTeamPicks.edit page ui', () => {
 
     browser.waitForExist('h3#PoolTeams_show_title');
 
-    assert.equal(browser.getText('td.PoolTeamPick:nth-Child(1)'), pickNumber);
+    // Buffalo is team 4
+    assert.equal(browser.getText('td.PoolTeamPick:nth-Child(1)'), `#${pickNumber} BUF`);
   });
 
   it('can delete a pool team pick', () => {

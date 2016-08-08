@@ -8,7 +8,6 @@
       <table class="table table-striped table-bordered" id="PoolTeamPicks">
         <thead>
         <tr>
-          <th>Pick</th>
           <th>Team</th>
           <th>Record</th>
           <th>Pick Quality</th>
@@ -18,8 +17,7 @@
         <tbody>
         {{#each poolTeamPick in poolTeamPicks}}
           <tr id="{{poolTeamPick._id}}">
-            <td class="PoolTeamPick">{{poolTeamPick.pickNumber}}</td>
-            <td>{{leagueTeamName poolTeamPick.leagueTeamId}}</td>
+            <td class="PoolTeamPick">#{{poolTeamPick.pickNumber}} {{leagueTeamName poolTeamPick.leagueTeamId}}</td>
             <td>{{poolTeamPick.record}}</td>
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
             <td>
