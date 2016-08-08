@@ -10,6 +10,7 @@
         <tr>
           <th>Pick</th>
           <th>Team</th>
+          <th>Record</th>
           <th>Pick Quality</th>
           <th>&nbsp;</th>
         </tr>
@@ -19,6 +20,7 @@
           <tr id="{{poolTeamPick._id}}">
             <td class="PoolTeamPick">{{poolTeamPick.pickNumber}}</td>
             <td>{{leagueTeamName poolTeamPick.leagueTeamId}}</td>
+            <td>{{poolTeamPick.record}}</td>
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
             <td>
               {{#if isCommissioner}}

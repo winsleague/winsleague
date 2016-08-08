@@ -38,7 +38,7 @@ describe('Pool Teams Updater', () => {
         period: 'final',
       });
 
-      PoolTeamsUpdater.updatePoolTeamWins(poolTeam._id);
+      PoolTeamsUpdater.updatePoolTeamRecord(poolTeam._id);
 
       poolTeam = PoolTeams.findOne(poolTeam._id);
       log.debug('poolTeam:', poolTeam);
