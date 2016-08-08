@@ -5,6 +5,7 @@ import { Factory } from 'meteor/dburles:factory';
 import log from '../../utils/log';
 
 import { LeagueTeams } from '../league_teams/league_teams';
+import { SeasonLeagueTeams } from '../season_league_teams/season_league_teams';
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
@@ -100,6 +101,14 @@ PoolTeamPicks.schema = new SimpleSchema({
     decimal: true,
     defaultValue: 0,
   },
+  actualLosses: {
+    type: Number,
+    defaultValue: 0,
+  },
+  actualTies: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -129,6 +138,14 @@ PoolTeamPicks.schema = new SimpleSchema({
 
 PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
 
+PoolTeamPicks.helpers({
+  record() {
+    if (this.actualTies > 0) {
+      return `${this.actualWins}-${this.actualLosses}-${this.actualTies}`;
+    }
+    return `${this.actualWins}-${this.actualLosses}`;
+  },
+});
 
 /* Access control */
 function isPoolTeamOwner(userId, poolTeamId) {
