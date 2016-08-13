@@ -87,25 +87,25 @@ export default {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
     const leagueId = LeagueFinder.getIdByName('NFL');
     const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
-    
-    const homeTeam = LeagueTeams.findOne({
+
+    const homeLeagueTeam = LeagueTeams.findOne({
       leagueId,
       mascotName: {
         $regex: new RegExp(game.hnn, 'i'),
       },
     });
-    if (! homeTeam) {
+    if (! homeLeagueTeam) {
       throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.hnn}`);
     }
 
-    const awayTeam = LeagueTeams.findOne({
+    const awayLeagueTeam = LeagueTeams.findOne({
       leagueId,
       mascotName: {
         $regex: `^${game.vnn}$`,
         $options: 'i',
       },
     });
-    if (! awayTeam) {
+    if (! awayLeagueTeam) {
       throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.vnn}`);
     }
 
@@ -115,9 +115,9 @@ export default {
       gameId: game.gsis,
       gameDate,
       week,
-      homeTeamId: homeTeam._id,
+      homeTeamId: homeLeagueTeam._id,
       homeScore: game.hs,
-      awayTeamId: awayTeam._id,
+      awayTeamId: awayLeagueTeam._id,
       awayScore: game.vs,
       period: cleanPeriod(game.q),
       status: cleanStatus(game.q),
