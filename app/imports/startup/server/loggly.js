@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import log from '../../utils/log';
-
 import 'winston-loggly-bulk';
+
+import log from '../../utils/log';
 
 const token = () => {
   // mup.js sets this
@@ -9,7 +9,7 @@ const token = () => {
 };
 
 const init = () => {
-  if (! token()) {
+  if (!token()) {
     log.warn('LOGGLY_TOKEN not found!');
     return;
   }
@@ -28,5 +28,7 @@ const init = () => {
 };
 
 Meteor.startup(() => {
-  if (Meteor.isProduction) init();
+  if (Meteor.isProduction) {
+    init();
+  }
 });
