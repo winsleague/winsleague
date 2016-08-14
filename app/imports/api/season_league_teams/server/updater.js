@@ -6,11 +6,17 @@ import '../../season_league_teams/server/hooks';
 
 export default {
   updateTeamStats(leagueId, seasonId, leagueTeamId) {
-    if (!leagueId) { throw new Error('Undefined leagueId!'); }
-    if (!seasonId) { throw new Error('Undefined seasonId!'); }
-    if (!leagueTeamId) { throw new Error('Undefined leagueTeamId!'); }
+    if (!leagueId) {
+      throw new Error('Undefined leagueId!');
+    }
+    if (!seasonId) {
+      throw new Error('Undefined seasonId!');
+    }
+    if (!leagueTeamId) {
+      throw new Error('Undefined leagueTeamId!');
+    }
 
-    log.info('Updating stats for seasonLeagueTeam: ', leagueTeamId);
+    log.info(`Updating stats for seasonId ${seasonId} and leagueTeam ${leagueTeamId}`);
 
     const games = Games.find({ leagueId, seasonId, status: 'completed',
       $or: [{ homeTeamId: leagueTeamId }, { awayTeamId: leagueTeamId }] });
@@ -55,6 +61,6 @@ export default {
         awayWins, awayLosses, awayTies,
         pointsFor, pointsAgainst,
       } });
-    log.debug(`seasonLeagueTeams.upsert numberAffected: ${result.numberAffected}`);
+    log.debug(`SeasonLeagueTeams.upsert: ${result.numberAffected} rows affected`);
   },
 };
