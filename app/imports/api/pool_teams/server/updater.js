@@ -8,16 +8,16 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import PoolTeamPickUpdater from '../../pool_team_picks/server/updater';
 
 export default {
-  updateWhoPickedLeagueTeam(leagueTeamId) {
-    log.info('Finding PoolTeams who picked leagueTeamId:', leagueTeamId);
+  updateWhoPickedLeagueTeam(seasonId, leagueTeamId) {
+    log.info(`Finding PoolTeams who picked leagueTeamId ${leagueTeamId} for seasonId ${seasonId}`);
 
-    const poolTeamPicks = PoolTeamPicks.find({ leagueTeamId });
+    const poolTeamPicks = PoolTeamPicks.find({ seasonId, leagueTeamId });
     poolTeamPicks.forEach(poolTeamPick => {
       this.updatePoolTeamRecord(poolTeamPick.poolTeamId);
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
-    log.debug('Done finding PoolTeams who picked leagueTeamId:', leagueTeamId);
+    log.debug(`Done finding PoolTeams who picked leagueTeamId ${leagueTeamId} for seasonId ${seasonId}`);
   },
 
   updatePoolTeamRecord(poolTeamId) {
