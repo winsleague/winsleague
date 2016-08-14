@@ -7,5 +7,10 @@
     "**/*.tests.js",
     "**/*.app-tests.js"
   ],
+  "dependencies": {
+    "unused-ignores": [
+      "loggly"
+    ]
+  },
   "packageJsonLocation": "app/package.json"
 }
