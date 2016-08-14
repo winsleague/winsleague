@@ -7,7 +7,7 @@ import MlbGameData from '../../api/games/server/mlb_game_data';
 
 import WeeklyReport from '../../api/reports/server/weekly-report';
 
-if (! Meteor.isTest && ! Meteor.isAppTest) {
+if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
 
   const SyncedCronLogger = opts => {

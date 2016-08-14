@@ -1,0 +1,11 @@
+{
+  "ignore": [
+    "**/app/packages/**"
+  ],
+  "test": [
+    "**/tests/**",
+    "**/*.tests.js",
+    "**/*.app-tests.js"
+  ],
+  "packageJsonLocation": "app/package.json"
+}
