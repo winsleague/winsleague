@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mailer } from 'meteor/lookback:emails';
 import log from '../../utils/log';
 
-import weeklyTemplate from './mailer/weekly-template';
+import weeklyLeaderboardTemplate from './mailer/weekly-leaderboard-template';
 
 Mailer.config({
   from: 'Wins League <no-reply@winsleague.com>',
@@ -19,7 +19,7 @@ Mailer.config({
 Meteor.startup(() => {
   Mailer.init({
     templates: {
-      weeklyTemplate,
+      weeklyLeaderboardTemplate,
     },
     helpers: {},
     layout: {
