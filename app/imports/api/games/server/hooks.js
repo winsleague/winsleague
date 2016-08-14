@@ -15,3 +15,8 @@ Games.after.update((userId, doc, fieldNames, modifier, options) => {
   SeasonLeagueTeamUpdater.updateTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
   SeasonLeagueTeamUpdater.updateTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 });
+
+Games.after.remove((userId, doc) => {
+  SeasonLeagueTeamUpdater.updateTeamStats(doc.leagueId, doc.seasonId, doc.homeTeamId);
+  SeasonLeagueTeamUpdater.updateTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
+});

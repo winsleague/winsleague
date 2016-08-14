@@ -14,6 +14,7 @@
     "meteor"
   ],
   "rules": {
+    "no-underscore-dangle": "off",
     "meteor/eventmap-params": [
       "error",
       {
@@ -26,6 +27,13 @@
     ]
   },
   "settings": {
-    "import/resolver": "meteor"
+    "import/resolver": {
+      "meteor": {
+        "moduleDirectory": [
+          "node_modules",
+          "app",
+        ]
+      }
+    }
   }
 }
