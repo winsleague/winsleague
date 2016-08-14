@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "faker": "3.1.0",
-    "lodash": "4.11.1",
+    "lodash": "4.15.0",
     "loggly": "1.1.0",
     "meteor-node-stubs": "0.2.3",
-    "moment": "2.13.0",
-    "moment-timezone": "0.5.3",
+    "moment": "2.14.1",
+    "moment-timezone": "0.5.5",
     "winston": "2.2.0",
     "winston-loggly-bulk": "1.3.3"
   },
