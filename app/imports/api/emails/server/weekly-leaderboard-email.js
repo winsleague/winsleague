@@ -7,19 +7,19 @@ import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 
 export default {
-  emailReports() {
+  sendAll() {
     log.info('Sending out weekly email report');
 
     const seasons = this.findActiveSeasons();
     seasons.forEach(season => {
       const poolIds = this.findEligiblePoolIds(season._id);
       poolIds.forEach(poolId => {
-        this.emailReport(poolId, season._id);
+        this.sendIndividual(poolId, season._id);
       });
     });
   },
 
-  emailReport(poolId, seasonId) {
+  sendIndividual(poolId, seasonId) {
     log.info(`Emailing weekly report to pool ${poolId} for season ${seasonId}`);
 
     const pool = Pools.findOne(poolId);

@@ -5,7 +5,7 @@ import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
 import log from '../../../utils/log';
 
-import WeeklyReport from './weekly-report';
+import WeeklyLeaderboardEmail from './weekly-leaderboard-email';
 
 import '../../pool_teams/pool_teams'; // needed for factory
 
@@ -31,7 +31,7 @@ describe('Weekly Report', () => {
       userId: secondUser._id,
     });
 
-    const playerEmails = WeeklyReport.getPlayerEmails(poolId, seasonId);
+    const playerEmails = WeeklyLeaderboardEmail.getPlayerEmails(poolId, seasonId);
 
     assert.equal(playerEmails, `first user <${firstUser.emails[0].address}>, second user <${secondUser.emails[0].address}>`);
   });

@@ -12,7 +12,7 @@ export default {
   },
 
   route: {
-    path: '/weekly/pools/:poolId/seasons/:seasonId',
+    path: '/weekly-leaderboard-email/pools/:poolId/seasons/:seasonId',
     data(params) {
       const poolId = params.poolId;
       const seasonId = params.seasonId;

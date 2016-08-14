@@ -5,7 +5,7 @@ import log from '../../utils/log';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
-import WeeklyReport from '../../api/reports/server/weekly-report';
+import WeeklyLeaderboardEmail from '../../api/emails/server/weekly-leaderboard-email';
 
 if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
@@ -33,7 +33,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'nbaGameData.ingestSeasonData()',
+          job: 'NbaGameData.ingestSeasonData()',
         });
       }
     },
@@ -50,7 +50,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'mlbGameData.refreshStandings()',
+          job: 'MlbGameData.refreshStandings()',
         });
       }
     },
@@ -63,11 +63,11 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
     },
     job() {
       try {
-        WeeklyReport.emailReports();
+        WeeklyLeaderboardEmail.sendAll();
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'weeklyReport.emailReports()',
+          job: 'WeeklyLeaderboardEmail.sendAll()',
         });
       }
     },
