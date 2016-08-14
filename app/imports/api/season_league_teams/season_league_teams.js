@@ -99,6 +99,13 @@ SeasonLeagueTeams.helpers({
   totalGames() {
     return this.wins + this.losses + this.ties;
   },
+
+  record() {
+    if (this.ties > 0) {
+      return `${this.wins}-${this.losses}-${this.ties}`;
+    }
+    return `${this.wins}-${this.losses}`;
+  }
 });
 
 SeasonLeagueTeams.deny({

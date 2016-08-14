@@ -5,9 +5,9 @@ import PoolTeamUpdater from '../../pool_teams/server/updater';
 SeasonLeagueTeams.hookOptions.after.update = { fetchPrevious: false };
 
 SeasonLeagueTeams.after.insert(function (userId, doc) {
-  PoolTeamUpdater.updateWhoPickedLeagueTeam(doc.leagueTeamId);
+  PoolTeamUpdater.updateWhoPickedLeagueTeam(doc.seasonId, doc.leagueTeamId);
 });
 
 SeasonLeagueTeams.after.update(function (userId, doc, fieldNames, modifier, options) {
-  PoolTeamUpdater.updateWhoPickedLeagueTeam(doc.leagueTeamId);
+  PoolTeamUpdater.updateWhoPickedLeagueTeam(doc.seasonId, doc.leagueTeamId);
 });

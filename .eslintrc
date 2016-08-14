@@ -27,6 +27,13 @@
     ]
   },
   "settings": {
-    "import/resolver": "meteor"
+    "import/resolver": {
+      "meteor": {
+        "moduleDirectory": [
+          "node_modules",
+          "app",
+        ]
+      }
+    }
   }
 }

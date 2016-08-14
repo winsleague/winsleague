@@ -17,7 +17,7 @@ export default {
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url, {
-      headers: { 'user-agent': 'Meteor/1.2 (https://github.com/league-wins-pool/league-wins-pool)' },
+      headers: { 'user-agent': 'Meteor/1.2 (https://github.com/winsleague/winsleague)' },
     });
     // clean the JSON because the keys don't have quotes
     const cleanJSON = response.content.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?: /g, '"$2": ');

@@ -6,7 +6,7 @@ PoolTeamPicks.hookOptions.after.update = { fetchPrevious: false };
 
 function updatePoolTeam(doc) {
   PoolTeamUpdater.updateTeamSummary(doc.poolTeamId);
-  PoolTeamUpdater.updatePoolTeamWins(doc.poolTeamId);
+  PoolTeamUpdater.updatePoolTeamRecord(doc.poolTeamId);
   PoolTeamUpdater.updatePoolTeamPickQuality(doc.poolTeamId);
 }
 

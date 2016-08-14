@@ -8,20 +8,20 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import PoolTeamPickUpdater from '../../pool_team_picks/server/updater';
 
 export default {
-  updateWhoPickedLeagueTeam(leagueTeamId) {
-    log.info('Finding PoolTeams who picked leagueTeamId:', leagueTeamId);
+  updateWhoPickedLeagueTeam(seasonId, leagueTeamId) {
+    log.info(`Finding PoolTeams who picked leagueTeamId ${leagueTeamId} for seasonId ${seasonId}`);
 
-    const poolTeamPicks = PoolTeamPicks.find({ leagueTeamId });
+    const poolTeamPicks = PoolTeamPicks.find({ seasonId, leagueTeamId });
     poolTeamPicks.forEach(poolTeamPick => {
-      this.updatePoolTeamWins(poolTeamPick.poolTeamId);
+      this.updatePoolTeamRecord(poolTeamPick.poolTeamId);
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
     });
 
-    log.debug('Done finding PoolTeams who picked leagueTeamId:', leagueTeamId);
+    log.debug(`Done finding PoolTeams who picked leagueTeamId ${leagueTeamId} for seasonId ${seasonId}`);
   },
 
-  updatePoolTeamWins(poolTeamId) {
-    log.info('Updating PoolTeam wins', poolTeamId);
+  updatePoolTeamRecord(poolTeamId) {
+    log.info('Updating PoolTeam record', poolTeamId);
 
     let totalWins = 0;
     let totalLosses = 0;
@@ -34,8 +34,15 @@ export default {
       const seasonId = poolTeamPick.seasonId;
       const leagueTeamId = poolTeamPick.leagueTeamId;
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
-      log.debug('Found seasonLeagueTeam', seasonLeagueTeam);
       if (seasonLeagueTeam) {
+        PoolTeamPicks.direct.update(poolTeamPick._id, {
+          $set: {
+            actualWins: seasonLeagueTeam.wins,
+            actualLosses: seasonLeagueTeam.losses,
+            actualTies: seasonLeagueTeam.ties,
+          },
+        });
+
         totalWins += seasonLeagueTeam.wins;
         totalLosses += seasonLeagueTeam.losses;
         totalGames += seasonLeagueTeam.totalGames();

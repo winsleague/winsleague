@@ -50,10 +50,14 @@ export default {
   },
 
   ingestSeasonData(season) {
-    if (! season) throw new Error(`Season is null!`);
+    if (! season) {
+      throw new Error('Season is null!');
+    }
 
     const league = LeagueFinder.getByName('NFL');
-    if (! league) throw new Error(`League is not found!`);
+    if (! league) {
+      throw new Error('League is not found!');
+    }
 
     Games.remove({ leagueId: league._id, seasonId: season._id });
 
@@ -83,15 +87,37 @@ export default {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
     const leagueId = LeagueFinder.getIdByName('NFL');
     const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
+
+    const homeLeagueTeam = LeagueTeams.findOne({
+      leagueId,
+      mascotName: {
+        $regex: new RegExp(game.hnn, 'i'),
+      },
+    });
+    if (! homeLeagueTeam) {
+      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.hnn}`);
+    }
+
+    const awayLeagueTeam = LeagueTeams.findOne({
+      leagueId,
+      mascotName: {
+        $regex: `^${game.vnn}$`,
+        $options: 'i',
+      },
+    });
+    if (! awayLeagueTeam) {
+      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.vnn}`);
+    }
+
     Games.insert({
       leagueId,
       seasonId: season._id,
       gameId: game.gsis,
       gameDate,
       week,
-      homeTeamId: LeagueTeams.findOne({ leagueId, abbreviation: game.h })._id,
+      homeTeamId: homeLeagueTeam._id,
       homeScore: game.hs,
-      awayTeamId: LeagueTeams.findOne({ leagueId, abbreviation: game.v })._id,
+      awayTeamId: awayLeagueTeam._id,
       awayScore: game.vs,
       period: cleanPeriod(game.q),
       status: cleanStatus(game.q),

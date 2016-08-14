@@ -34,7 +34,7 @@ checkout:
 
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; mkdir .coverage; meteor npm run test; meteor npm run test-app) ;; 1) (cd app; ./tests/acceptance_run) ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) (cd app; ./.testing/unit_and_full_app_run.sh) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
         parallel: true
 
 deployment:
@@ -51,7 +51,7 @@ deployment:
 
       # Deploy
       - npm install -g mup@1.0.1 # install meteor-up for deployment
-      - (cd .deploy/production; DEBUG=* mup deploy)
+      - (cd .deploy/production; mup deploy)
 
       # Notify Rollbar about deploy
       - curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
