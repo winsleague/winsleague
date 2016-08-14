@@ -9,7 +9,8 @@
   ],
   "dependencies": {
     "unused-ignores": [
-      "loggly"
+      "loggly",
+      "meteor-node-stubs"
     ]
   },
   "packageJsonLocation": "app/package.json"
