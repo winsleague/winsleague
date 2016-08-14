@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'lodash';
 
 import { LeagueTeams } from '../../api/league_teams/league_teams';
 import { PoolTeams } from '../../api/pool_teams/pool_teams';

@@ -146,11 +146,6 @@
       "from": "babel-core@>=6.8.0 <7.0.0",
       "resolved": "./node_shrinkwrap/babel-core-6.13.2.tgz",
       "dependencies": {
-        "babel-register": {
-          "version": "6.11.6",
-          "from": "babel-register@>=6.9.0 <7.0.0",
-          "resolved": "./node_shrinkwrap/babel-register-6.11.6.tgz"
-        },
         "babel-runtime": {
           "version": "6.11.6",
           "from": "babel-runtime@>=6.9.1 <7.0.0",
@@ -1307,9 +1302,9 @@
       "resolved": "./node_shrinkwrap/levn-0.3.0.tgz"
     },
     "lodash": {
-      "version": "4.11.1",
-      "from": "lodash@4.11.1",
-      "resolved": "./node_shrinkwrap/lodash-4.11.1.tgz"
+      "version": "4.15.0",
+      "from": "lodash@4.15.0",
+      "resolved": "./node_shrinkwrap/lodash-4.15.0.tgz"
     },
     "lodash._basetostring": {
       "version": "3.0.1",
@@ -1349,38 +1344,17 @@
     "lodash.pad": {
       "version": "3.1.1",
       "from": "lodash.pad@^3.0.0",
-      "resolved": "./node_shrinkwrap/lodash.pad-3.1.1.tgz",
-      "dependencies": {
-        "lodash._basetostring": {
-          "version": "3.0.1",
-          "from": "lodash._basetostring@^3.0.0",
-          "resolved": "./node_shrinkwrap/lodash._basetostring-3.0.1.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/lodash.pad-3.1.1.tgz"
     },
     "lodash.padleft": {
       "version": "3.1.1",
       "from": "lodash.padleft@^3.0.0",
-      "resolved": "./node_shrinkwrap/lodash.padleft-3.1.1.tgz",
-      "dependencies": {
-        "lodash._basetostring": {
-          "version": "3.0.1",
-          "from": "lodash._basetostring@^3.0.0",
-          "resolved": "./node_shrinkwrap/lodash._basetostring-3.0.1.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/lodash.padleft-3.1.1.tgz"
     },
     "lodash.padright": {
       "version": "3.1.1",
       "from": "lodash.padright@^3.0.0",
-      "resolved": "./node_shrinkwrap/lodash.padright-3.1.1.tgz",
-      "dependencies": {
-        "lodash._basetostring": {
-          "version": "3.0.1",
-          "from": "lodash._basetostring@^3.0.0",
-          "resolved": "./node_shrinkwrap/lodash._basetostring-3.0.1.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/lodash.padright-3.1.1.tgz"
     },
     "lodash.repeat": {
       "version": "3.0.1",
@@ -1460,14 +1434,14 @@
       "resolved": "./node_shrinkwrap/mkdirp-0.5.1.tgz"
     },
     "moment": {
-      "version": "2.13.0",
-      "from": "moment@2.13.0",
-      "resolved": "./node_shrinkwrap/moment-2.13.0.tgz"
+      "version": "2.14.1",
+      "from": "moment@2.14.1",
+      "resolved": "./node_shrinkwrap/moment-2.14.1.tgz"
     },
     "moment-timezone": {
-      "version": "0.5.3",
-      "from": "moment-timezone@0.5.3",
-      "resolved": "./node_shrinkwrap/moment-timezone-0.5.3.tgz"
+      "version": "0.5.5",
+      "from": "moment-timezone@0.5.5",
+      "resolved": "./node_shrinkwrap/moment-timezone-0.5.5.tgz"
     },
     "ms": {
       "version": "0.7.1",
