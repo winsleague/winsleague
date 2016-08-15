@@ -8,7 +8,7 @@ import { PoolTeams } from '../../pool_teams/pool_teams';
 
 export default {
   sendAll() {
-    log.info('Sending out weekly email report');
+    log.info('Sending out weekly leaderboard email');
 
     const seasons = this.findActiveSeasons();
     seasons.forEach(season => {
