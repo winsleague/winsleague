@@ -50,9 +50,7 @@ export default {
     // last picks => 100
     // so let's flip it
 
-    const rating = Math.abs(inverseIndex - 100);
-
-    return rating;
+    return Math.abs(inverseIndex - 100);
   },
 };
 
