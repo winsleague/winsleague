@@ -5,6 +5,8 @@ import { Random } from 'meteor/random';
 import faker from 'faker';
 import log from '../../utils/log';
 
+import { Games } from '../games/games';
+
 export const PoolGameInterestRatings = new Mongo.Collection('pool_game_interest_ratings');
 
 PoolGameInterestRatings.schema = new SimpleSchema({
@@ -59,6 +61,13 @@ PoolGameInterestRatings.schema = new SimpleSchema({
 });
 
 PoolGameInterestRatings.attachSchema(PoolGameInterestRatings.schema);
+
+PoolGameInterestRatings.helpers({
+  gameTime() {
+    const game = Games.findOne(this.gameId);
+    return game.gameDate;
+  },
+});
 
 // Deny all client-side updates since we will be using methods to manage this collection
 PoolGameInterestRatings.deny({
