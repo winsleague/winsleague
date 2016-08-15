@@ -67,7 +67,7 @@ export default {
         return true;
       }
 
-      // log.info(`Excluding game ${game._id} for pool ${pool._id} because both teams were not picked`);
+      log.debug(`Excluding game ${game._id} for pool ${pool._id} because both teams were not picked`);
       return false;
     });
   },
