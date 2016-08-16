@@ -49,15 +49,17 @@ export default {
         break;
     }
 
-    // +10 bonus if both teams are at the top/bottom 20% of standings
+    // add bonus if both teams are at the top/bottom 20% of standings
     const topTwentieth = (0.8 * (mostWins - leastWins)) + leastWins;
     const bottomTwentieth = (0.2 * (mostWins - leastWins)) + leastWins;
 
     const isTopPercentile = homeWins >= topTwentieth && awayWins >= topTwentieth;
     const isBottomPercentile = homeWins <= bottomTwentieth && awayWins <= bottomTwentieth;
 
-    if (isTopPercentile || isBottomPercentile) {
+    if (isTopPercentile) {
       rating += 10;
+    } else if (isBottomPercentile) {
+      rating += 5;
     }
 
     return rating;
