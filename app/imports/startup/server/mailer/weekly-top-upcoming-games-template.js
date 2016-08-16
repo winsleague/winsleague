@@ -17,8 +17,20 @@ export default {
       const poolId = params.poolId;
       const pool = Pools.findOne(poolId);
       const poolName = pool.name;
-      const poolGameInterestRatings = PoolGameInterestRatings.find({ poolId },
-        { sort: { rating: -1 } });
+      const poolGameInterestRatings = PoolGameInterestRatings.find(
+        {
+          poolId,
+          rating: {
+            $gte: 50,
+          },
+        },
+        {
+          sort: {
+            rating: -1,
+          },
+          limit: 5,
+        });
+
       return {
         poolId,
         poolName,

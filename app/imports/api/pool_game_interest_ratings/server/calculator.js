@@ -7,6 +7,7 @@ import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { LeagueTeams } from '../../league_teams/league_teams';
 
 import TopPicks from './calculators/top-picks';
+import OwnersCloseInStandings from './calculators/owners-close-in-standings';
 
 export default {
   calculate(pool, game) {
@@ -15,12 +16,36 @@ export default {
       gameId: game._id,
     });
 
+    const homePoolTeamPick = PoolTeamPicks.findOne({
+      seasonId: pool.latestSeasonId,
+      poolId: pool._id,
+      leagueTeamId: game.homeTeamId,
+    });
+
+    const awayPoolTeamPick = PoolTeamPicks.findOne({
+      seasonId: pool.latestSeasonId,
+      poolId: pool._id,
+      leagueTeamId: game.awayTeamId,
+    });
+
+    if (!homePoolTeamPick || !awayPoolTeamPick) {
+      // both teams need to be picked by owners (at least for now!)
+      return;
+    }
+
+    if (homePoolTeamPick.poolTeamId === awayPoolTeamPick.poolTeamId) {
+      // if same player picked both teams, we don't care
+      return;
+    }
+
     const gameTitle = this.gameTitle(pool, game);
 
     log.info('Calculating interest ratings for', gameTitle);
 
     this.calculators().forEach(calculator => {
-      const rating = Math.round(calculator.rating(pool, game));
+      const rating = Math.round(calculator.rating(pool, game, homePoolTeamPick, awayPoolTeamPick));
+
+      log.info(`Rating for ${gameTitle} is ${rating} because of ${calculator.justification()}`);
 
       PoolGameInterestRatings.insert({
         poolId: pool._id,
@@ -35,6 +60,7 @@ export default {
   calculators() {
     return [
       TopPicks,
+      OwnersCloseInStandings,
     ];
   },
 

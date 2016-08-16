@@ -3,34 +3,11 @@ import log from '../../../../utils/log';
 import { PoolTeamPicks } from '../../../pool_team_picks/pool_team_picks';
 
 export default {
-  name: () => 'Top Picks',
-
   justification: () => 'top picks playing each other',
 
-  rating(pool, game) {
+  rating(pool, game, homePoolTeamPick, awayPoolTeamPick) {
     // totalPickNumber = 1+2 = 3 ==> 100
     // totalPickNumber = 31+32 = 63 ==> 0
-
-    const homePoolTeamPick = PoolTeamPicks.findOne({
-      seasonId: pool.latestSeasonId,
-      poolId: pool._id,
-      leagueTeamId: game.homeTeamId,
-    });
-
-    const awayPoolTeamPick = PoolTeamPicks.findOne({
-      seasonId: pool.latestSeasonId,
-      poolId: pool._id,
-      leagueTeamId: game.awayTeamId,
-    });
-
-    if (!homePoolTeamPick || !awayPoolTeamPick) {
-      return 0;
-    }
-
-    if (homePoolTeamPick.poolTeamId === awayPoolTeamPick.poolTeamId) {
-      // if same player picked both teams, we don't care
-      return 0;
-    }
 
     const rating = this._rating(homePoolTeamPick.pickNumber, awayPoolTeamPick.pickNumber);
 
