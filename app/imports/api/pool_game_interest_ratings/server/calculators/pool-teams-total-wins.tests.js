@@ -7,7 +7,7 @@ import log from '../../../../utils/log';
 
 import PoolTeamsTotalWins from './pool-teams-total-wins';
 
-describe('Interest Rating Calculators > Owners Top in Standings', function () {
+describe('Interest Rating Calculators > Pool Teams Total Wins', function () {
   it('should be 90 if owners have same wins, but in middle of the pack', function () {
     assert.equal(PoolTeamsTotalWins._rating(10, 10, 20, 0), 90);
   });
@@ -17,7 +17,7 @@ describe('Interest Rating Calculators > Owners Top in Standings', function () {
   });
 
   it('should be 100 if owners have same wins, but in bottom of the pack', function () {
-    assert.equal(PoolTeamsTotalWins._rating(2, 2, 10, 2), 100);
+    assert.equal(PoolTeamsTotalWins._rating(2, 2, 10, 2), 95);
   });
 
   it('should be 80 if owners have 1 win difference, but in middle of the pack', function () {
