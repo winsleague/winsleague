@@ -60,7 +60,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Send weekly leaderboard emails',
     schedule(parser) {
-      return parser.text('at 1:00 pm on Tuesday');
+      return parser.text('at 6:00 am on Tuesday');
     },
     job() {
       try {
