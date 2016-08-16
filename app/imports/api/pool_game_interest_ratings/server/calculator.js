@@ -8,6 +8,7 @@ import { LeagueTeams } from '../../league_teams/league_teams';
 
 import TopPicks from './calculators/top-picks';
 import OwnersCloseInStandings from './calculators/owners-close-in-standings';
+import LeagueTeamsRecentWins from './calculators/league-teams-recent-wins';
 
 export default {
   calculate(pool, game) {
@@ -61,6 +62,7 @@ export default {
     return [
       TopPicks,
       OwnersCloseInStandings,
+      LeagueTeamsRecentWins,
     ];
   },
 
