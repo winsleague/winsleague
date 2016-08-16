@@ -21,7 +21,7 @@ export default {
   },
 
   _rating(homeWins, awayWins, mostWins, leastWins) {
-    if (mostWins <= 2) {
+    if (mostWins === 0) {
       // this calculator doesn't make much sense unless there are some games played
       return 0;
     }
@@ -37,10 +37,13 @@ export default {
         rating = 80;
         break;
       case 2:
-        rating = 50;
+        rating = 70;
         break;
       case 3:
-        rating = 40;
+        rating = 60;
+        break;
+      case 4:
+        rating = 50;
         break;
       default:
         rating = 0;
