@@ -1,6 +1,5 @@
 import log from '../../../../utils/log';
 
-import { PoolTeamPicks } from '../../../pool_team_picks/pool_team_picks';
 import { PoolTeams } from '../../../pool_teams/pool_teams';
 
 export default {

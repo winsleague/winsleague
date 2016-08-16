@@ -7,7 +7,7 @@ import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { LeagueTeams } from '../../league_teams/league_teams';
 
 import TopPicks from './calculators/top-picks';
-import OwnersCloseInStandings from './calculators/owners-close-in-standings';
+import PoolTeamsTotalWins from './calculators/pool-teams-total-wins';
 import LeagueTeamsRecentWins from './calculators/league-teams-recent-wins';
 
 export default {
@@ -61,7 +61,7 @@ export default {
   calculators() {
     return [
       TopPicks,
-      OwnersCloseInStandings,
+      PoolTeamsTotalWins,
       LeagueTeamsRecentWins,
     ];
   },
