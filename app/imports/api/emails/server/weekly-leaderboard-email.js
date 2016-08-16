@@ -1,7 +1,9 @@
-import log from '../../../utils/log';
 import { _ } from 'lodash';
 import { Mailer } from 'meteor/lookback:emails';
 
+import log from '../../../utils/log';
+
+import Common from './common';
 import { Seasons } from '../../seasons/seasons';
 import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
@@ -14,20 +16,27 @@ export default {
     seasons.forEach(season => {
       const poolIds = this.findEligiblePoolIds(season._id);
       poolIds.forEach(poolId => {
-        this.sendIndividual(poolId, season._id);
+        this.sendIndividual(poolId, seasonId);
       });
     });
   },
 
   sendIndividual(poolId, seasonId) {
-    log.info(`Emailing weekly report to pool ${poolId} for season ${seasonId}`);
+    log.info(`Emailing weekly leaderboard report to pool ${poolId}`);
 
     const pool = Pools.findOne(poolId);
     const poolName = pool.name;
-    const poolTeams = PoolTeams.find({ poolId, seasonId },
-      { sort: { totalWins: -1, totalPlusMinus: -1 } });
+    const poolTeams = PoolTeams.find({
+      poolId,
+      seasonId,
+    }, {
+      sort: {
+        totalWins: -1,
+        totalPlusMinus: -1,
+      },
+    });
 
-    const playerEmails = this.getPlayerEmails(poolId, seasonId);
+    const playerEmails = Common.getPlayerEmails(poolId, seasonId);
 
     Mailer.send({
       to: playerEmails,
@@ -69,27 +78,5 @@ export default {
       },
     ]);
     return poolAggregation.map(result => result._id);
-  },
-
-  getPlayerEmails(poolId, seasonId) {
-    // each userId can have multiple emails
-    // each email has an address property and a verified property
-    // return in the format 'name <email@domain.com>, name <email@domain.com>'
-
-    const players = PoolTeams.find({ poolId, seasonId })
-      .map(poolTeam => {
-        return {
-          _id: poolTeam.userId,
-          teamName: poolTeam.userTeamName,
-        };
-      });
-
-    const emailArray = _.flatten(players.map(player => {
-      return _.flatten(Meteor.users.find(player._id)
-        .map(user => user.emails))
-        .map(email => `${player.teamName} <${email.address}>`);
-    }));
-
-    return emailArray.join(', ');
   },
 };

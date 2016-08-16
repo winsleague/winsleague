@@ -4,10 +4,11 @@ import moment from 'moment';
 import log from '../../../utils/log';
 
 import RatingCalculator from '../../pool_game_interest_ratings/server/calculator';
+import Common from './common';
 import LeagueFinder from '../../leagues/finder';
 import { Games } from '../../games/games';
 import { Pools } from '../../pools/pools';
-import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
+import { PoolGameInterestRatings } from '../../pool_game_interest_ratings/pool_game_interest_ratings';
 
 export default {
   sendAll() {
@@ -36,7 +37,7 @@ export default {
     const leagueId = LeagueFinder.getIdByName('NFL');
 
     const startDate = moment().toDate();
-    const endDate = moment().add(29, 'days').toDate();
+    const endDate = moment().add(7, 'days').toDate();
 
     log.info(`Upcoming games from ${startDate} to ${endDate}`);
 
@@ -56,6 +57,35 @@ export default {
   },
 
   sendPoolEmail(pool) {
-    // look for top interest ratings
-  }
+    log.info(`Emailing top upcoming games email to pool ${pool._id} for season ${pool.latestSeasonId}`);
+
+    const poolId = pool._id;
+    const poolName = pool.name;
+    const poolGameInterestRatings = PoolGameInterestRatings.find(
+      {
+        poolId: pool._id,
+        rating: {
+          $gte: 50,
+        },
+      },
+      {
+        sort: {
+          rating: -1,
+        },
+        limit: 5,
+      });
+
+    const playerEmails = this.getPlayerEmails(poolId, pool.latestSeasonId);
+
+    Mailer.send({
+      to: playerEmails,
+      subject: `Top Upcoming Games for ${poolName}`,
+      template: 'weeklyEmail', // TODO: what should this be?
+      data: {
+        poolId,
+        poolName,
+        poolGameInterestRatings,
+      },
+    });
+  },
 };
