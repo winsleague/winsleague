@@ -21,7 +21,12 @@ export default {
   },
 
   _rating(homeWins, awayWins, mostWins, leastWins) {
-    let rating = 0;
+    if (mostWins <= 2) {
+      // this calculator doesn't make much sense unless there are some games played
+      return 0;
+    }
+
+    let rating;
 
     const winDifference = Math.abs(homeWins - awayWins);
     switch (winDifference) {
@@ -47,7 +52,7 @@ export default {
     const bottomTwentieth = (0.2 * (mostWins - leastWins)) + leastWins;
 
     const isTopPercentile = homeWins >= topTwentieth && awayWins >= topTwentieth;
-    const isBottomPercentile = homeWins <= bottomTwentieth && awayWins <= bottomTwentieth
+    const isBottomPercentile = homeWins <= bottomTwentieth && awayWins <= bottomTwentieth;
 
     if (isTopPercentile || isBottomPercentile) {
       rating += 10;
