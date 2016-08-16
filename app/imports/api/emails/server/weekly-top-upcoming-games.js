@@ -80,7 +80,7 @@ export default {
     Mailer.send({
       to: playerEmails,
       subject: `Top Upcoming Games for ${poolName}`,
-      template: 'weeklyEmail', // TODO: what should this be?
+      template: 'weeklyTopUpcomingGamesTemplate',
       data: {
         poolId,
         poolName,

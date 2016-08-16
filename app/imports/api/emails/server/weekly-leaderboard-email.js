@@ -16,7 +16,7 @@ export default {
     seasons.forEach(season => {
       const poolIds = this.findEligiblePoolIds(season._id);
       poolIds.forEach(poolId => {
-        this.sendIndividual(poolId, seasonId);
+        this.sendIndividual(poolId, season._id);
       });
     });
   },
@@ -41,7 +41,7 @@ export default {
     Mailer.send({
       to: playerEmails,
       subject: `Wins Leaderboard for ${poolName}`,
-      template: 'weeklyEmail',
+      template: 'weeklyLeaderboardTemplate',
       data: {
         poolId,
         seasonId,
