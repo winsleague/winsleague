@@ -80,8 +80,6 @@ export default {
       }
     });
 
-    log.info(homeWins);
-
     const awayGames = Games.find({
       awayTeamId: leagueTeamId,
       status: 'completed',
