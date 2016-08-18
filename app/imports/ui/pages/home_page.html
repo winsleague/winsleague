@@ -1,9 +1,13 @@
 <template name="Home_page">
-  {{#if isLoggedIn}}
-    {{> User_dashboard}}
+  {{#if loggingIn}}
+    Logging in...
   {{else}}
-    {{> previousPool}}
+    {{#if currentUser}}
+      {{> User_dashboard}}
+    {{else}}
+      {{> previousPool}}
 
-    {{> intro}}
+      {{> intro}}
+    {{/if}}
   {{/if}}
 </template>

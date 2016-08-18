@@ -6,7 +6,3 @@ import './home_page.html';
 import './../components/user-dashboard';
 import './../components/home/previous_pool';
 import './../components/home/intro';
-
-Template.Home_page.helpers({
-  isLoggedIn: () => !!Meteor.user(),
-});
