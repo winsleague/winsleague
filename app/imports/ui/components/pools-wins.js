@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { _ } from 'lodash';
 import log from '../../utils/log';
 
 import { Pools } from '../../api/pools/pools';
@@ -21,6 +22,7 @@ Template.Pools_wins.helpers({
       },
     });
   },
+
   title: () => {
     const title = Template.currentData().title;
     if (Template.currentData().linkTitle) {
@@ -29,6 +31,9 @@ Template.Pools_wins.helpers({
     }
     return title;
   },
+
+  isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(),
+    'commissionerUserId'),
 });
 
 Template.Pools_wins.onCreated(function () {
