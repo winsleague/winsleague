@@ -17,17 +17,19 @@ export default {
   },
 
   _rating(homePickNumber, awayPickNumber) {
-    const totalPickNumber = homePickNumber + awayPickNumber;
-    const minTotalPickNumber = 1 + 2;
-    const maxTotalPickNumber = 31 + 32;
+    let rating = 0;
 
-    const inverseIndex = ((totalPickNumber - minTotalPickNumber) * 100.0) /
-      (maxTotalPickNumber - minTotalPickNumber);
-    // top picks => 0
-    // last picks => 100
-    // so let's flip it
+    const pickDifference = Math.abs(homePickNumber - awayPickNumber);
 
-    return Math.abs(inverseIndex - 100);
+    if (homePickNumber < 6 && awayPickNumber < 6) {
+      rating = 100;
+    } else if (homePickNumber > 27 && awayPickNumber > 27) {
+      rating = 90;
+    } else if (pickDifference < 5) {
+      rating = 80;
+    }
+
+    return rating;
   },
 };
 
