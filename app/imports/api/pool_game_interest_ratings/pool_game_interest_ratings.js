@@ -3,6 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Factory } from 'meteor/dburles:factory';
 import { Random } from 'meteor/random';
 import faker from 'faker';
+import moment from 'moment-timezone';
 import log from '../../utils/log';
 
 import { Games } from '../games/games';
@@ -65,7 +66,10 @@ PoolGameInterestRatings.attachSchema(PoolGameInterestRatings.schema);
 PoolGameInterestRatings.helpers({
   gameTime() {
     const game = Games.findOne(this.gameId);
-    return game.gameDate;
+    const date = moment(game.gameDate).format('ddd,');
+    const est = moment(game.gameDate).tz('US/Eastern').format('ha zz');
+    const pst = moment(game.gameDate).tz('US/Pacific').format('ha zz');
+    return `${date} ${est}/${pst}`;
   },
 });
 
