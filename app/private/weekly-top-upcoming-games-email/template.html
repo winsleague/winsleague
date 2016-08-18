@@ -1,0 +1,12 @@
+<h2>Top Upcoming Games for {{poolName}}</h2>
+
+{{#each poolGameInterestRating in poolGameInterestRatings}}
+  <b>{{poolGameInterestRating.gameTitle}}</b><br/>
+  {{poolGameInterestRating.justification}}<br/>
+  {{poolGameInterestRating.gameTime}}<br/>
+  <br/>
+{{/each}}
+
+<br/>
+
+<a href="http://www.winsleague.com/pools/{{poolTeam.poolId}}">View your pool on Wins League</a>

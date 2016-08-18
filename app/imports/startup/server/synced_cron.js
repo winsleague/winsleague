@@ -5,7 +5,8 @@ import log from '../../utils/log';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
-import WeeklyReport from '../../api/reports/server/weekly-report';
+import WeeklyLeaderboardEmail from '../../api/emails/server/weekly-leaderboard-email';
+import WeeklyTopUpcomingGamesEmail from '../../api/emails/server/weekly-top-upcoming-games';
 
 if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
@@ -33,7 +34,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'nbaGameData.ingestSeasonData()',
+          job: 'NbaGameData.ingestSeasonData()',
         });
       }
     },
@@ -50,24 +51,41 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'mlbGameData.refreshStandings()',
+          job: 'MlbGameData.refreshStandings()',
         });
       }
     },
   });
 
   SyncedCron.add({
-    name: 'Send weekly emails',
+    name: 'Send weekly leaderboard emails',
     schedule(parser) {
-      return parser.text('at 1:00 pm on Tuesday');
+      return parser.text('at 6:00 am on Tuesday');
     },
     job() {
       try {
-        WeeklyReport.emailReports();
+        WeeklyLeaderboardEmail.sendAll();
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'weeklyReport.emailReports()',
+          job: 'WeeklyLeaderboardEmail.sendAll()',
+        });
+      }
+    },
+  });
+
+  SyncedCron.add({
+    name: 'Send weekly top upcoming games emails',
+    schedule(parser) {
+      return parser.text('at 5:00 pm on Wednesday');
+    },
+    job() {
+      try {
+        WeeklyTopUpcomingGamesEmail.sendAll();
+      } catch (e) {
+        log.error(e);
+        handleError(e, {
+          job: 'WeeklyTopUpcomingGamesEmail.sendAll()',
         });
       }
     },
