@@ -11,6 +11,17 @@ FULL_APP_RESULT=$?
 if [[ "$UNIT_RESULT" -eq 0 && "$FULL_APP_RESULT" -eq 0 ]]
 then
   echo "Both tests pass!"
-else
-  echo "One of the tests failed!" >&2
+  exit 0
+elif [[ "$UNIT_RESULT" -ne 0 && "$FULL_APP_RESULT" -ne 0 ]]
+then
+  echo "Both tests failed!"
+  exit ${UNIT_RESULT}
+elif [[ "$UNIT_RESULT" -ne 0 ]]
+then
+  echo "Unit tests failed!"
+  exit ${UNIT_RESULT}
+elif [[ "$FULL_APP_RESULT" -ne 0 ]]
+then
+  echo "Full-app tests failed!"
+  exit ${FULL_APP_RESULT}
 fi
