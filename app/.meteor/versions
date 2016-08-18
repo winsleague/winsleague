@@ -98,6 +98,7 @@ msavin:mongol@1.6.2
 npm-bcrypt@0.8.6_3
 npm-mongo@1.4.45
 observe-sequence@1.0.12
+okgrow:analytics@2.0.0
 ordered-dict@1.0.8
 peerlibrary:blocking@0.5.2
 peerlibrary:xml2js@0.4.8_1
