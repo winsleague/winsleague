@@ -7,7 +7,7 @@ const srcDir = baseDir;
 
 const cacheMeteor = function() {
   console.log('Caching build & dependencies (can take a while the first time)');
-  const childProcess = spawn('meteor', ['--raw-logs'], {
+  const childProcess = spawn('meteor', ['test', '--full-app', '--driver-package', 'tmeasday:acceptance-test-driver', '--raw-logs'], {
     cwd: srcDir,
     env: process.env
   });
