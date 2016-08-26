@@ -77,7 +77,7 @@ export default {
 
     const playerEmails = Common.getPlayerEmails(poolId, pool.latestSeasonId);
 
-    Mailer.send({
+    const success = Mailer.send({
       to: playerEmails,
       subject: `Top Upcoming Games for ${poolName}`,
       template: 'weeklyTopUpcomingGamesTemplate',
@@ -87,5 +87,9 @@ export default {
         poolGameInterestRatings,
       },
     });
+
+    if (!success) {
+      throwError(`Error sending Top Upcoming Games mail to ${poolName}`);
+    }
   },
 };
