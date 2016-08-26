@@ -34,11 +34,11 @@ export default {
       throw new Error(`Season is not found for league ${league._id}!`);
     }
 
-    if (day.isBefore(season.startDate)) {
+    if (day.isSameOrBefore(season.startDate)) {
       log.info(`Not refreshing NFL standings because ${day.toDate()} is before ${season.startDate}`);
       return;
     }
-    if (day.isAfter(season.endDate)) {
+    if (day.isSameOrAfter(season.endDate)) {
       log.info(`Not refreshing NFL standings because ${day.toDate()} is after ${season.endDate}`);
       return;
     }
