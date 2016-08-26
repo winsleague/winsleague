@@ -1,4 +1,5 @@
 import { Mailer } from 'meteor/lookback:emails';
+import { Rollbar } from 'meteor/saucecode:rollbar';
 import moment from 'moment';
 
 import log from '../../../utils/log';
@@ -77,7 +78,7 @@ export default {
 
     const playerEmails = Common.getPlayerEmails(poolId, pool.latestSeasonId);
 
-    Mailer.send({
+    const success = Mailer.send({
       to: playerEmails,
       subject: `Top Upcoming Games for ${poolName}`,
       template: 'weeklyTopUpcomingGamesTemplate',
@@ -87,5 +88,9 @@ export default {
         poolGameInterestRatings,
       },
     });
+
+    if (!success) {
+      Rollbar.handleError(`Error sending Top Upcoming Games mail to ${poolName}`);
+    }
   },
 };

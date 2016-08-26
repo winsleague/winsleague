@@ -1,5 +1,6 @@
 import { _ } from 'lodash';
 import { Mailer } from 'meteor/lookback:emails';
+import { Rollbar } from 'meteor/saucecode:rollbar';
 
 import log from '../../../utils/log';
 
@@ -38,7 +39,7 @@ export default {
 
     const playerEmails = Common.getPlayerEmails(poolId, seasonId);
 
-    Mailer.send({
+    const success = Mailer.send({
       to: playerEmails,
       subject: `Wins Leaderboard for ${poolName}`,
       template: 'weeklyLeaderboardTemplate',
@@ -49,6 +50,10 @@ export default {
         poolTeams,
       },
     });
+
+    if (!success) {
+      Rollbar.handleError(`Error sending Wins Leaderboard mail to ${poolName}`);
+    }
   },
 
   findActiveSeasons() {
