@@ -75,7 +75,7 @@ export default {
         limit: 5,
       });
 
-    const playerEmails = this.getPlayerEmails(poolId, pool.latestSeasonId);
+    const playerEmails = Common.getPlayerEmails(poolId, pool.latestSeasonId);
 
     Mailer.send({
       to: playerEmails,
