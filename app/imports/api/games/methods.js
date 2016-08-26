@@ -11,7 +11,7 @@ export const ingestMlbSeasonData = new ValidatedMethod({
   checkLoggedInError: {
     error: 'notLoggedIn',
   },
-  validate: new SimpleSchema({ }).validator(),
+  validate() {},
   run() {
     const season = SeasonFinder.getLatestByLeagueName('MLB');
     mlbGameData.ingestSeasonData(season);
