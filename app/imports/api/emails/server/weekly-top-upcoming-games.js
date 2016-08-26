@@ -1,5 +1,4 @@
 import { Mailer } from 'meteor/lookback:emails';
-import { Rollbar } from 'meteor/saucecode:rollbar';
 import moment from 'moment';
 
 import log from '../../../utils/log';
@@ -90,7 +89,7 @@ export default {
     });
 
     if (!success) {
-      Rollbar.handleError(`Error sending Top Upcoming Games mail to ${poolName}`);
+      throwError(`Error sending Top Upcoming Games mail to ${poolName}`);
     }
   },
 };

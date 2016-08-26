@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
-import { Rollbar } from 'meteor/saucecode:rollbar';
 import log from '../../utils/log';
 
 import NbaGameData from '../../api/games/server/nba_game_data';
@@ -34,7 +33,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
         NbaGameData.ingestSeasonData();
       } catch (e) {
         log.error(e);
-        Rollbar.handleError(e, {
+        handleError(e, {
           job: 'NbaGameData.ingestSeasonData()',
         });
       }
@@ -51,7 +50,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
         MlbGameData.refreshStandings();
       } catch (e) {
         log.error(e);
-        Rollbar.handleError(e, {
+        handleError(e, {
           job: 'MlbGameData.refreshStandings()',
         });
       }
@@ -68,7 +67,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
         WeeklyLeaderboardEmail.sendAll();
       } catch (e) {
         log.error(e);
-        Rollbar.handleError(e, {
+        handleError(e, {
           job: 'WeeklyLeaderboardEmail.sendAll()',
         });
       }
@@ -85,7 +84,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
         WeeklyTopUpcomingGamesEmail.sendAll();
       } catch (e) {
         log.error(e);
-        Rollbar.handleError(e, {
+        handleError(e, {
           job: 'WeeklyTopUpcomingGamesEmail.sendAll()',
         });
       }

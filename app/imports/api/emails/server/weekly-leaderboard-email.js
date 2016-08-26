@@ -1,6 +1,5 @@
 import { _ } from 'lodash';
 import { Mailer } from 'meteor/lookback:emails';
-import { Rollbar } from 'meteor/saucecode:rollbar';
 
 import log from '../../../utils/log';
 
@@ -52,7 +51,7 @@ export default {
     });
 
     if (!success) {
-      Rollbar.handleError(`Error sending Wins Leaderboard mail to ${poolName}`);
+      throwError(`Error sending Wins Leaderboard mail to ${poolName}`);
     }
   },
 
