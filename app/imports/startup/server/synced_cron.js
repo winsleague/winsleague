@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import log from '../../utils/log';
 
+import NflGameData from '../../api/games/server/nfl_game_data';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
@@ -22,6 +23,23 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
 
   // parser is a later.parse object
   // we catch exceptions so we can report them to Rollbar
+
+  SyncedCron.add({
+    name: 'Refresh NFL standings',
+    schedule(parser) {
+      return parser.recur().every(10).minute();
+    },
+    job() {
+      try {
+        NflGameData.updateLiveScores();
+      } catch (e) {
+        log.error(e);
+        handleError(e, {
+          job: 'NflGameData.updateLiveScores()',
+        });
+      }
+    },
+  });
 
   SyncedCron.add({
     name: 'Refresh NBA standings',

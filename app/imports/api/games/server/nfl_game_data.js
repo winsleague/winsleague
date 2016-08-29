@@ -1,7 +1,9 @@
 import { xml2js } from 'meteor/peerlibrary:xml2js';
+import moment from 'moment';
 import log from '../../../utils/log';
 
 import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
 
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { Games } from '../games';
@@ -21,7 +23,26 @@ function cleanStatus(old) {
 }
 
 export default {
-  updateLiveScores() {
+  updateLiveScores(force) {
+    const league = LeagueFinder.getByName('NFL');
+
+    const today = moment();
+
+    // only run during season
+    const season = SeasonFinder.getLatestByLeague(league);
+    if (!season) {
+      throw new Error(`Season is not found for league ${league._id}!`);
+    }
+
+    if (today.isSameOrBefore(season.startDate) && !force) {
+      log.info(`Not refreshing NFL standings because ${today.toDate()} is before ${season.startDate}`);
+      return;
+    }
+    if (today.isSameOrAfter(season.endDate) && !force) {
+      log.info(`Not refreshing NFL standings because ${today.toDate()} is after ${season.endDate}`);
+      return;
+    }
+
     const url = `http://www.nfl.com/liveupdate/scorestrip/scorestrip.json`;
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
@@ -31,8 +52,6 @@ export default {
     const json = JSON.parse(content);
     log.debug('parsed json:', json);
 
-    const league = LeagueFinder.getByName('NFL');
-
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = gameData[10];
@@ -41,8 +60,18 @@ export default {
       const homeScore = gameData[7];
       const awayScore = gameData[5];
 
-      const affected = Games.update({ leagueId: league._id, gameId },
-        { $set: { period, timeRemaining, homeScore, awayScore } }
+      const affected = Games.update(
+        {
+          leagueId: league._id,
+          gameId,
+        }, {
+          $set: {
+            period,
+            timeRemaining,
+            homeScore,
+            awayScore,
+          },
+        }
       );
 
       log.info(`Updated game with leagueId: ${league._id} and gameId: ${gameId} (affected: ${affected})`);

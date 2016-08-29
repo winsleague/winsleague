@@ -80,7 +80,6 @@ export default {
 
   ingestDayData(year, month, day) {
     const league = LeagueFinder.getByName('MLB');
-    if (! league) throw new Error('League is not found!');
 
     const season = SeasonFinder.getByYear(league, year);
 
@@ -146,16 +145,19 @@ export default {
 
   refreshStandings() {
     const league = LeagueFinder.getByName('MLB');
-    if (! league) throw new Error('MLB League is not found!');
 
     let day = moment();
 
     // if early in the morning, download yesterday's feed to make sure we got all the late games
-    if (day.hour() < 6) day = moment().add(-1, 'days');
+    if (day.hour() < 6) {
+      day = moment().add(-1, 'days');
+    }
 
     // only run during season
     const season = SeasonFinder.getLatestByLeague(league);
-    if (! season) throw new Error(`Season is not found for league ${league._id}!`);
+    if (!season) {
+      throw new Error(`Season is not found for league ${league._id}!`);
+    }
 
     if (day.isBefore(season.startDate)) {
       log.info(`Not refreshing MLB standings because ${day.toDate()} is before ${season.startDate}`);
