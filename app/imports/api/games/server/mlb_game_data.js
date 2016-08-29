@@ -37,11 +37,11 @@ function cleanStatus(status) {
       return 'in progress';
     case 'Final':
     case 'Game Over':
+    case 'Completed Early':
       return 'completed'; // not sure how any of these are different
     case 'Postponed':
       return 'postponed';
     case 'Suspended':
-    case 'Completed Early':
       return 'suspended';
     default:
       throw new Error(`Unrecognized status: ${status}`);
