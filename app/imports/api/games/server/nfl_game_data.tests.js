@@ -1,14 +1,16 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
+import { assert } from 'chai';
+import sinon from 'sinon';
+
+import log from '../../../utils/log';
+
 import NflGameData from './nfl_game_data';
 import NflUtils from '../../../startup/server/seeds/nfl';
 import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
-
-import { assert } from 'chai';
-import sinon from 'sinon';
 
 describe('NFL Game Data', () => {
   beforeEach(() => {
@@ -48,11 +50,12 @@ describe('NFL Game Data', () => {
         };
       });
 
-      NflGameData.updateLiveScores();
+      NflGameData.updateLiveScores(true);
 
       HTTP.get.restore();
 
       const game = Games.findOne({ gameId: '56744' });
+
       assert.equal(game.homeScore, 22);
       assert.equal(game.awayScore, 17);
     });

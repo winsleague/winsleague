@@ -23,10 +23,10 @@ function cleanStatus(old) {
 }
 
 export default {
-  updateLiveScores() {
+  updateLiveScores(force) {
     const league = LeagueFinder.getByName('NFL');
 
-    const day = moment();
+    const today = moment();
 
     // only run during season
     const season = SeasonFinder.getLatestByLeague(league);
@@ -34,12 +34,12 @@ export default {
       throw new Error(`Season is not found for league ${league._id}!`);
     }
 
-    if (day.isSameOrBefore(season.startDate)) {
-      log.info(`Not refreshing NFL standings because ${day.toDate()} is before ${season.startDate}`);
+    if (today.isSameOrBefore(season.startDate) && !force) {
+      log.info(`Not refreshing NFL standings because ${today.toDate()} is before ${season.startDate}`);
       return;
     }
-    if (day.isSameOrAfter(season.endDate)) {
-      log.info(`Not refreshing NFL standings because ${day.toDate()} is after ${season.endDate}`);
+    if (today.isSameOrAfter(season.endDate) && !force) {
+      log.info(`Not refreshing NFL standings because ${today.toDate()} is after ${season.endDate}`);
       return;
     }
 
@@ -71,7 +71,7 @@ export default {
             homeScore,
             awayScore,
           },
-        },
+        }
       );
 
       log.info(`Updated game with leagueId: ${league._id} and gameId: ${gameId} (affected: ${affected})`);
