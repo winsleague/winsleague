@@ -13,6 +13,10 @@
   "plugins": [
     "meteor"
   ],
+  "globals": {
+    "throwError": false,
+    "handleError": false
+  },
   "rules": {
     "no-underscore-dangle": "off",
     "meteor/eventmap-params": [
