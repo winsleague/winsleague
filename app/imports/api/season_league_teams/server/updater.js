@@ -18,8 +18,15 @@ export default {
 
     log.info(`Updating stats for seasonId ${seasonId} and leagueTeam ${leagueTeamId}`);
 
-    const games = Games.find({ leagueId, seasonId, status: 'completed',
-      $or: [{ homeTeamId: leagueTeamId }, { awayTeamId: leagueTeamId }] });
+    const games = Games.find({
+      leagueId,
+      seasonId,
+      status: 'completed',
+      $or: [
+        { homeTeamId: leagueTeamId },
+        { awayTeamId: leagueTeamId },
+      ],
+    });
     let wins = 0, losses = 0, ties = 0,
       homeWins = 0, homeLosses = 0, homeTies = 0,
       awayWins = 0, awayLosses = 0, awayTies = 0,
