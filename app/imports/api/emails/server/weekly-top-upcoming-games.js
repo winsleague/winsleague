@@ -1,71 +1,20 @@
 import { Mailer } from 'meteor/lookback:emails';
-import moment from 'moment';
 
 import log from '../../../utils/log';
 
 import RatingCalculator from '../../pool_game_interest_ratings/server/calculator';
 import Common from './common';
-import LeagueFinder from '../../leagues/finder';
-import SeasonFinder from '../../seasons/finder';
-import { Games } from '../../games/games';
-import { Pools } from '../../pools/pools';
 import { PoolGameInterestRatings } from '../../pool_game_interest_ratings/pool_game_interest_ratings';
 
 export default {
   sendAll() {
     log.info('Sending out weekly top upcoming games email');
 
-    this.calculateAllInterestRatings();
+    RatingCalculator.calculateAllInterestRatings();
 
     this.nflPools().forEach(pool => {
       this.sendPoolEmail(pool);
     });
-  },
-
-  calculateAllInterestRatings() {
-    this.nflPools().forEach(pool => {
-      this.calculatePoolInterestRatings(pool);
-    });
-  },
-
-  calculatePoolInterestRatings(pool) {
-    this.upcomingGames().forEach(game => {
-      RatingCalculator.calculate(pool, game);
-    });
-  },
-
-  upcomingGames() {
-    const leagueId = LeagueFinder.getIdByName('NFL');
-    const season = SeasonFinder.getLatestByLeagueName('NFL');
-
-    const nextGame = Games.findOne({
-      leagueId,
-      seasonId: season._id,
-      status: { $in: ['scheduled', 'in progress'] },
-    }, {
-      sort: {
-        gameDate: 1,
-      },
-    });
-
-    if (!nextGame) {
-      return [];
-    }
-
-    const week = nextGame.week;
-
-    log.info(`Upcoming games are in week ${week}`);
-
-    return Games.find({
-      leagueId,
-      week,
-    });
-  },
-
-  nflPools() {
-    const leagueId = LeagueFinder.getIdByName('NFL');
-
-    return Pools.find({ leagueId });
   },
 
   sendPoolEmail(pool) {

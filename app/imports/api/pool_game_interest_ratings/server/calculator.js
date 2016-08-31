@@ -1,7 +1,13 @@
 import { _ } from 'lodash';
+import moment from 'moment';
 import log from '../../../utils/log';
+
 import { PoolGameInterestRatings } from '../pool_game_interest_ratings';
 
+import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
+import { Games } from '../../games/games';
+import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { LeagueTeams } from '../../league_teams/league_teams';
@@ -11,7 +17,54 @@ import PoolTeamsTotalWins from './calculators/pool-teams-total-wins';
 import LeagueTeamsRecentWins from './calculators/league-teams-recent-wins';
 
 export default {
-  calculate(pool, game) {
+  calculateAllInterestRatings() {
+    this.nflPools().forEach(pool => {
+      this.calculatePoolInterestRatings(pool);
+    });
+  },
+
+  calculatePoolInterestRatings(pool) {
+    this.upcomingGames().forEach(game => {
+      this.calculatePoolGame(pool, game);
+    });
+  },
+
+  upcomingGames() {
+    const leagueId = LeagueFinder.getIdByName('NFL');
+    const season = SeasonFinder.getLatestByLeagueName('NFL');
+
+    const nextGame = Games.findOne({
+      leagueId,
+      seasonId: season._id,
+      status: { $in: ['scheduled', 'in progress'] },
+    }, {
+      sort: {
+        gameDate: 1,
+      },
+    });
+
+    if (!nextGame) {
+      return [];
+    }
+
+    const week = nextGame.week;
+
+    log.info(`Upcoming games are in week ${week}`);
+
+    return Games.find({
+      leagueId,
+      week,
+    });
+  },
+
+  nflPools() {
+    const leagueId = LeagueFinder.getIdByName('NFL');
+
+    return Pools.find({ leagueId });
+  },
+
+
+  calculatePoolGame(pool, game) {
     PoolGameInterestRatings.remove({
       poolId: pool._id,
       gameId: game._id,
