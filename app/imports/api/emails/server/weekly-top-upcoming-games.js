@@ -6,6 +6,7 @@ import log from '../../../utils/log';
 import RatingCalculator from '../../pool_game_interest_ratings/server/calculator';
 import Common from './common';
 import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
 import { Pools } from '../../pools/pools';
 import { PoolGameInterestRatings } from '../../pool_game_interest_ratings/pool_game_interest_ratings';
@@ -35,18 +36,29 @@ export default {
 
   upcomingGames() {
     const leagueId = LeagueFinder.getIdByName('NFL');
+    const season = SeasonFinder.getLatestByLeagueName('NFL');
 
-    const startDate = moment().toDate();
-    const endDate = moment().add(7, 'days').toDate();
+    const nextGame = Games.findOne({
+      leagueId,
+      seasonId: season._id,
+      status: { $in: ['scheduled', 'in progress'] },
+    }, {
+      sort: {
+        gameDate: 1,
+      },
+    });
 
-    log.info(`Upcoming games from ${startDate} to ${endDate}`);
+    if (!nextGame) {
+      return [];
+    }
+
+    const week = nextGame.week;
+
+    log.info(`Upcoming games are in week ${week}`);
 
     return Games.find({
       leagueId,
-      gameDate: {
-        $gte: startDate,
-        $lte: endDate,
-      },
+      week,
     });
   },
 
