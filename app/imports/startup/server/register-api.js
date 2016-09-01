@@ -6,6 +6,8 @@ import '../../api/league_teams/server/publications';
 
 import '../../api/leagues/server/publications';
 
+import '../../api/pool_game_interest_ratings/server/publications';
+
 import '../../api/pool_team_picks/server/hooks';
 import '../../api/pool_team_picks/server/publications';
 
