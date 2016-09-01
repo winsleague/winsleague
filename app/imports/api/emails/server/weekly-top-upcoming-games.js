@@ -36,6 +36,11 @@ export default {
         limit: 5,
       });
 
+    if (poolGameInterestRatings.count() === 0) {
+      log.info(`Not sending Games to Watch email to pool ${poolId} because there are no interest ratings.`);
+      return;
+    }
+
     const playerEmails = Common.getPlayerEmails(poolId, pool.latestSeasonId);
 
     const success = Mailer.send({
