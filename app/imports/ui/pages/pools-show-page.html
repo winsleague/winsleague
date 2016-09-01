@@ -9,6 +9,12 @@
         isCommissioner=isCommissioner
       }}
 
+      {{#if isLatestSeason}}
+        {{> Pools_games_to_watch
+          poolId=poolId
+        }}
+      {{/if}}
+
       {{> Pools_pick_quality
         leagueId=leagueId
         seasonId=seasonId

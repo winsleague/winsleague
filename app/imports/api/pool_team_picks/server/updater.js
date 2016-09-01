@@ -32,7 +32,7 @@ export default {
 
     const pickQuality = actualWins - expectedWins;
 
-    log.info('Updating PoolTeamPick:', poolTeamPick,
+    log.info('Updating PoolTeamPick quality:', poolTeamPick,
       'actualWins:', actualWins,
       'expectedWins:', expectedWins,
       'pickQuality:', pickQuality);
