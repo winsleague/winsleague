@@ -1,0 +1,10 @@
+<template name="Pools_games_to_watch">
+  <h4>Games to watch this week</h4>
+
+  {{#each poolGameInterestRating in poolGameInterestRatings}}
+    <b>{{poolGameInterestRating.gameTitle}}</b><br/>
+    {{poolGameInterestRating.justification}}<br/>
+    {{poolGameInterestRating.gameTime}}<br/>
+    <br/>
+  {{/each}}
+</template>
