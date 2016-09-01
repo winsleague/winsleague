@@ -3,7 +3,7 @@ import log from '../../../../utils/log';
 import { PoolTeamPicks } from '../../../pool_team_picks/pool_team_picks';
 
 export default {
-  justification: () => 'top picks playing each other',
+  justification: () => 'top/close/bottom picks playing each other',
 
   rating(pool, game, homePoolTeamPick, awayPoolTeamPick) {
     // totalPickNumber = 1+2 = 3 ==> 100
