@@ -12,7 +12,7 @@ export default {
 
     RatingCalculator.calculateAllInterestRatings();
 
-    this.nflPools().forEach(pool => {
+    RatingCalculator.nflPools().forEach(pool => {
       this.sendPoolEmail(pool);
     });
   },
