@@ -24,13 +24,19 @@ export default {
   },
 
   calculatePoolInterestRatings(pool) {
-    this.upcomingGames().forEach(game => {
+    this.upcomingGames(pool).forEach(game => {
       this.calculatePoolGame(pool, game);
     });
   },
 
-  upcomingGames() {
+  upcomingGames(pool) {
     const leagueId = LeagueFinder.getIdByName('NFL');
+
+    // we only support NFL
+    if (pool.leagueId !== leagueId) {
+      return [];
+    }
+
     const season = SeasonFinder.getLatestByLeagueName('NFL');
 
     const nextGame = Games.findOne({
