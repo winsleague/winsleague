@@ -19,6 +19,7 @@
   },
   "rules": {
     "no-underscore-dangle": "off",
+    "max-len": ["error", 110],
     "meteor/eventmap-params": [
       "error",
       {
