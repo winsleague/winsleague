@@ -55,7 +55,7 @@ export default {
 
     const week = nextGame.week;
 
-    log.info(`Upcoming games are in week ${week}`);
+    log.info(`Upcoming games are in week ${week} for season ${season.year} ${season._id}`);
 
     return Games.find({
       leagueId,
@@ -106,7 +106,7 @@ export default {
     this.calculators().forEach(calculator => {
       const rating = Math.round(calculator.rating(pool, game, homePoolTeamPick, awayPoolTeamPick));
 
-      log.info(`Rating for ${gameTitle} is ${rating} because of ${calculator.justification()}`);
+      log.info(`Rating for ${gameTitle} (${game._id}) is ${rating} because of ${calculator.justification()}`);
 
       PoolGameInterestRatings.insert({
         poolId: pool._id,
