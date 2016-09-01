@@ -24,6 +24,10 @@ export default {
   },
 
   calculatePoolInterestRatings(pool) {
+    PoolGameInterestRatings.remove({
+      poolId: pool._id,
+    });
+
     this.upcomingGames(pool).forEach(game => {
       this.calculatePoolGame(pool, game);
     });
@@ -72,11 +76,6 @@ export default {
 
 
   calculatePoolGame(pool, game) {
-    PoolGameInterestRatings.remove({
-      poolId: pool._id,
-      gameId: game._id,
-    });
-
     const homePoolTeamPick = PoolTeamPicks.findOne({
       seasonId: pool.latestSeasonId,
       poolId: pool._id,
@@ -101,7 +100,7 @@ export default {
 
     const gameTitle = this.gameTitle(pool, game);
 
-    log.info('Calculating interest ratings for', gameTitle);
+    log.info(`Calculating interest ratings for ${gameTitle} (game: ${game._id}, pool: ${pool._id})`);
 
     this.calculators().forEach(calculator => {
       const rating = Math.round(calculator.rating(pool, game, homePoolTeamPick, awayPoolTeamPick));
