@@ -59,6 +59,7 @@ export default {
 
     return Games.find({
       leagueId,
+      seasonId: season._id,
       week,
     });
   },
