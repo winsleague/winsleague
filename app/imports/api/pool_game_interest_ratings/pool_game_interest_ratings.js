@@ -29,6 +29,21 @@ PoolGameInterestRatings.schema = new SimpleSchema({
     type: String,
   },
 
+  gameTime: {
+    type: String,
+    autoValue() {
+      const gameId = this.field('gameId').value;
+      const game = Games.findOne(gameId);
+      if (!game) {
+        return 'N/A';
+      }
+      const date = moment(game.gameDate).format('ddd M/D,');
+      const est = moment(game.gameDate).tz('US/Eastern').format('ha zz');
+      const pst = moment(game.gameDate).tz('US/Pacific').format('ha zz');
+      return `${date} ${est}/${pst}`;
+    },
+  },
+
   justification: {
     type: String,
   },
@@ -62,16 +77,6 @@ PoolGameInterestRatings.schema = new SimpleSchema({
 });
 
 PoolGameInterestRatings.attachSchema(PoolGameInterestRatings.schema);
-
-PoolGameInterestRatings.helpers({
-  gameTime() {
-    const game = Games.findOne(this.gameId);
-    const date = moment(game.gameDate).format('ddd,');
-    const est = moment(game.gameDate).tz('US/Eastern').format('ha zz');
-    const pst = moment(game.gameDate).tz('US/Pacific').format('ha zz');
-    return `${date} ${est}/${pst}`;
-  },
-});
 
 // Deny all client-side updates since we will be using methods to manage this collection
 PoolGameInterestRatings.deny({
