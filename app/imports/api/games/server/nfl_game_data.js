@@ -1,5 +1,5 @@
 import { xml2js } from 'meteor/peerlibrary:xml2js';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
 import LeagueFinder from '../../leagues/finder';
@@ -115,7 +115,7 @@ export default {
   saveGame(game, season, week) {
     log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
     const leagueId = LeagueFinder.getIdByName('NFL');
-    const gameDate = new Date(`${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`); // 20151224
+    const gameDate = this.parseGameDate(game);
 
     const homeLeagueTeam = LeagueTeams.findOne({
       leagueId,
@@ -151,5 +151,12 @@ export default {
       period: cleanPeriod(game.q),
       status: cleanStatus(game.q),
     });
+  },
+
+  parseGameDate(game) {
+    // eid: 2016091101
+    // t: 1:00
+    const ymd = `${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`;
+    return moment.tz(`${ymd} ${game.t} PM`, 'YYYY-MM-DD h:mm A', 'US/Eastern').toDate();
   },
 };
