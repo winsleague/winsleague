@@ -119,6 +119,7 @@ reactive-dict@1.1.8
 reactive-var@1.0.10
 reload@1.1.10
 retry@1.0.8
+reywood:publish-composite@1.4.2
 routepolicy@1.0.11
 sacha:juice@0.1.4
 saucecode:rollbar@0.5.8
