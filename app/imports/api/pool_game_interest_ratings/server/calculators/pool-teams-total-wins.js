@@ -29,23 +29,29 @@ export default {
     }
 
     let rating;
+    let justification = '';
 
     const winDifference = Math.abs(homeWins - awayWins);
     switch (winDifference) {
       case 0:
         rating = 90;
+        justification = `Both owners have ${homeWins} wins`;
         break;
       case 1:
         rating = 80;
+        justification = 'Owners are only separated by one win';
         break;
       case 2:
         rating = 70;
+        justification = `Owners are only separated by ${homeWins} wins`;
         break;
       case 3:
         rating = 60;
+        justification = `Owners are only separated by ${homeWins} wins`;
         break;
       case 4:
         rating = 50;
+        justification = `Owners are only separated by ${homeWins} wins`;
         break;
       default:
         rating = 0;
@@ -67,7 +73,7 @@ export default {
 
     return {
       rating,
-      justification: 'owners are close in standings',
+      justification,
     };
   },
 
