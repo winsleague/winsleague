@@ -18,20 +18,24 @@ export default {
 
   _calculate(homePickNumber, awayPickNumber) {
     let rating = 0;
+    let justification = '';
 
     const pickDifference = Math.abs(homePickNumber - awayPickNumber);
 
     if (homePickNumber < 6 && awayPickNumber < 6) {
       rating = 100;
+      justification = 'Both teams are top 5 picks';
     } else if (homePickNumber > 27 && awayPickNumber > 27) {
       rating = 90;
+      justification = 'Both teams are bottom 5 picks';
     } else if (pickDifference < 5) {
       rating = 80;
+      justification = 'Both teams were picked close to one another';
     }
 
     return {
       rating,
-      justification: 'top/close/bottom picks playing each other',
+      justification,
     };
   },
 };
