@@ -53,13 +53,13 @@ function parseGameDate(game) {
     // time_date: 2016/04/03 1:05
     // ampm: PM
     // all times are in EST
-    return moment.tz(new Date(`${game.time_date} ${game.ampm}`), 'US/Eastern').toDate();
+    return moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
   } else if (game.original_date) {
     // original_date: 2016/04/03
     // home_time: 1:05
     // ampm: PM
     // all times are in EST
-    return moment.tz(new Date(`${game.original_date} ${game.home_time} ${game.ampm}`), 'US/Eastern').toDate();
+    return moment.tz(`${game.original_date} ${game.home_time} ${game.ampm}`, 'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
   }
   throw new Error('Error parsing date out of ', game);
 }
