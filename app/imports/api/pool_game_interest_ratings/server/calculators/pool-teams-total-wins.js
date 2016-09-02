@@ -3,26 +3,29 @@ import log from '../../../../utils/log';
 import { PoolTeams } from '../../../pool_teams/pool_teams';
 
 export default {
-  justification: () => 'owners are close in standings',
+  name: () => 'PoolTeamsTotalWins',
 
-  rating(pool, game, homePoolTeamPick, awayPoolTeamPick) {
+  calculate(pool, game, homePoolTeamPick, awayPoolTeamPick) {
     const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
     const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
 
     const mostWins = this.poolMostWins(pool);
     const leastWins = this.poolLeastWins(pool);
 
-    const rating = this._rating(homePoolTeam.totalWins, awayPoolTeam.totalWins, mostWins, leastWins);
+    const result = this._calculate(homePoolTeam.totalWins, awayPoolTeam.totalWins, mostWins, leastWins);
 
-    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${rating} (homePoolTeamWins: ${homePoolTeam.totalWins}, awayPoolTeamWins: ${awayPoolTeam.totalWins})`);
+    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} (homePoolTeamWins: ${homePoolTeam.totalWins}, awayPoolTeamWins: ${awayPoolTeam.totalWins})`);
 
-    return rating;
+    return result;
   },
 
-  _rating(homeWins, awayWins, mostWins, leastWins) {
+  _calculate(homeWins, awayWins, mostWins, leastWins) {
     if (mostWins === 0) {
       // this calculator doesn't make much sense unless there are some games played
-      return 0;
+      return {
+        rating: 0,
+        justification: '',
+      };
     }
 
     let rating;
@@ -62,7 +65,10 @@ export default {
       rating += 5;
     }
 
-    return rating;
+    return {
+      rating,
+      justification: 'owners are close in standings',
+    };
   },
 
   poolMostWins(pool) {

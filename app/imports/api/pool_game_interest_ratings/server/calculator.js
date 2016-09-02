@@ -103,16 +103,17 @@ export default {
     log.info(`Calculating interest ratings for ${gameTitle} (game: ${game._id}, pool: ${pool._id})`);
 
     this.calculators().forEach(calculator => {
-      const rating = Math.round(calculator.rating(pool, game, homePoolTeamPick, awayPoolTeamPick));
+      const result = calculator.calculate(pool, game, homePoolTeamPick, awayPoolTeamPick);
+      const rating = Math.round(result.rating);
 
-      log.info(`Rating for ${gameTitle} (${game._id}) is ${rating} because of ${calculator.justification()}`);
+      log.info(`${calculator.name()} rating for ${gameTitle} (${game._id}) is ${rating} because of ${result.justification}`);
 
       PoolGameInterestRatings.insert({
         poolId: pool._id,
         gameId: game._id,
         rating,
         gameTitle,
-        justification: calculator.justification(),
+        justification: result.justification,
       });
     });
   },
