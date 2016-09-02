@@ -61,10 +61,15 @@ export default {
   },
 
   recentWinCount(leagueTeamId) {
-    // TODO: this should look for last 8 games in which the leagueTeam was *either* the hometeam or awayteam
-
-    const homeGames = Games.find({
-      homeTeamId: leagueTeamId,
+    const games = Games.find({
+      $or: [
+        {
+          homeTeamId: leagueTeamId,
+        },
+        {
+          awayTeamId: leagueTeamId
+        },
+      ],
       status: 'completed',
     }, {
       sort: {
@@ -74,33 +79,18 @@ export default {
     }).fetch();
 
     // TODO: use _.sum instead
-    let homeWins = 0;
-    homeGames.forEach(game => {
-    // const homeWins = _.countBy(homeGames, game => {
-      if (game.homeScore > game.awayScore) {
-        homeWins += 1;
+    let wins = 0;
+    games.forEach(game => {
+      if (game.homeTeamId === leagueTeamId && game.homeScore > game.awayScore) {
+        wins += 1;
+      }
+
+      if (game.awayTeamId === leagueTeamId && game.awayScore > game.homeScore) {
+        wins += 1;
       }
     });
 
-    const awayGames = Games.find({
-      awayTeamId: leagueTeamId,
-      status: 'completed',
-    }, {
-      sort: {
-        gameDate: -1,
-      },
-      limit: this.recentGameCount(),
-    }).fetch();
-
-    let awayWins = 0;
-    awayGames.forEach(game => {
-    // const awayWins = _.sum(awayGames, game => {
-      if (game.awayScore > game.homeScore) {
-        awayWins += 1
-      }
-    });
-
-    return homeWins + awayWins;
+    return wins;
   },
 };
 
