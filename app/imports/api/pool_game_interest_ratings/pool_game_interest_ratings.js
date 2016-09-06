@@ -46,6 +46,7 @@ PoolGameInterestRatings.schema = new SimpleSchema({
 
   justification: {
     type: String,
+    optional: true, // if rating is 0, no need to put a justification
   },
 
   createdAt: {

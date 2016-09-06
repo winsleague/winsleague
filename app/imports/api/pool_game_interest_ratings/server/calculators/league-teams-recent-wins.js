@@ -4,37 +4,38 @@ import log from '../../../../utils/log';
 import { Games } from '../../../games/games';
 
 export default {
-  justification: () => 'teams have similar records over last few games',
+  name: () => 'LeagueTeamsRecentWins',
 
   recentGameCount: () => 8,
 
-  rating(pool, game) {
+  calculate(pool, game) {
     const homeWinCount = this.recentWinCount(game.homeTeamId);
     const awayWinCount = this.recentWinCount(game.awayTeamId);
 
-    const rating = this._rating(homeWinCount, awayWinCount);
+    const result = this._calculate(homeWinCount, awayWinCount);
 
-    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${rating} (homeRecentWinCount: ${homeWinCount}, awayRecentWinCount: ${awayWinCount})`);
+    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} (homeRecentWinCount: ${homeWinCount}, awayRecentWinCount: ${awayWinCount})`);
 
-    return rating;
+    return result;
   },
 
-  _rating(homeWins, awayWins) {
+  _calculate(homeWins, awayWins) {
     let rating;
+    let justification = '';
 
     const winDifference = Math.abs(homeWins - awayWins);
     switch (winDifference) {
       case 0:
         rating = 90;
+        justification = `Both teams have ${homeWins} wins in their last ${this.recentGameCount()} games`;
         break;
       case 1:
         rating = 80;
+        justification = `Each team has only a one win difference in their last ${this.recentGameCount()} games`;
         break;
       case 2:
         rating = 50;
-        break;
-      case 3:
-        rating = 40;
+        justification = `Each team has only a two win difference in their last ${this.recentGameCount()} games`;
         break;
       default:
         rating = 0;
@@ -57,14 +58,22 @@ export default {
       rating += 5;
     }
 
-    return rating;
+    return {
+      rating,
+      justification,
+    };
   },
 
   recentWinCount(leagueTeamId) {
-    // TODO: this should look for last 8 games in which the leagueTeam was *either* the hometeam or awayteam
-
-    const homeGames = Games.find({
-      homeTeamId: leagueTeamId,
+    const games = Games.find({
+      $or: [
+        {
+          homeTeamId: leagueTeamId,
+        },
+        {
+          awayTeamId: leagueTeamId,
+        },
+      ],
       status: 'completed',
     }, {
       sort: {
@@ -73,34 +82,18 @@ export default {
       limit: this.recentGameCount(),
     }).fetch();
 
-    // TODO: use _.sum instead
-    let homeWins = 0;
-    homeGames.forEach(game => {
-    // const homeWins = _.countBy(homeGames, game => {
-      if (game.homeScore > game.awayScore) {
-        homeWins += 1;
+    let wins = 0;
+    games.forEach(game => {
+      if (game.homeTeamId === leagueTeamId && game.homeScore > game.awayScore) {
+        wins += 1;
+      }
+
+      if (game.awayTeamId === leagueTeamId && game.awayScore > game.homeScore) {
+        wins += 1;
       }
     });
 
-    const awayGames = Games.find({
-      awayTeamId: leagueTeamId,
-      status: 'completed',
-    }, {
-      sort: {
-        gameDate: -1,
-      },
-      limit: this.recentGameCount(),
-    }).fetch();
-
-    let awayWins = 0;
-    awayGames.forEach(game => {
-    // const awayWins = _.sum(awayGames, game => {
-      if (game.awayScore > game.homeScore) {
-        awayWins += 1
-      }
-    });
-
-    return homeWins + awayWins;
+    return wins;
   },
 };
 
