@@ -71,7 +71,7 @@ export default {
           homeTeamId: leagueTeamId,
         },
         {
-          awayTeamId: leagueTeamId
+          awayTeamId: leagueTeamId,
         },
       ],
       status: 'completed',
@@ -82,7 +82,6 @@ export default {
       limit: this.recentGameCount(),
     }).fetch();
 
-    // TODO: use _.sum instead
     let wins = 0;
     games.forEach(game => {
       if (game.homeTeamId === leagueTeamId && game.homeScore > game.awayScore) {
