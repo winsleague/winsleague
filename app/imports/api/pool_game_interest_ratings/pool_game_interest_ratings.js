@@ -37,10 +37,10 @@ PoolGameInterestRatings.schema = new SimpleSchema({
       if (!game) {
         return 'N/A';
       }
-      const date = moment(game.gameDate).format('ddd M/D,');
-      const est = moment(game.gameDate).tz('US/Eastern').format('ha zz');
-      const pst = moment(game.gameDate).tz('US/Pacific').format('ha zz');
-      return `${date} ${est}/${pst}`;
+      const date = moment(game.gameDate).tz('US/Eastern').format('ddd M/D,');
+      const est = moment(game.gameDate).tz('US/Eastern').format('ha');
+      const pst = moment(game.gameDate).tz('US/Pacific').format('ha');
+      return `${date} ${est} ET/${pst} PT`;
     },
   },
 
