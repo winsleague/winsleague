@@ -12,7 +12,7 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import { assert } from 'chai';
 import sinon from 'sinon';
 
-describe('NBA Game Data', function() {
+describe('NBA Game Data', function () {
   this.timeout(10000);
 
   beforeEach(() => {
