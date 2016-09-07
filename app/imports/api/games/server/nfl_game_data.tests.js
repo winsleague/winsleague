@@ -12,7 +12,7 @@ import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
 
-describe('NFL Game Data', function() {
+describe('NFL Game Data', function () {
   this.timeout(10000);
 
   beforeEach(() => {
