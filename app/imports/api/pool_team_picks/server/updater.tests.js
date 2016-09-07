@@ -12,7 +12,9 @@ import PoolTeamPicksUpdater from '../../pool_team_picks/server/updater';
 
 import { assert } from 'chai';
 
-describe('Pool Team Picks Updater', () => {
+describe('Pool Team Picks Updater', function() {
+  this.timeout(5000);
+
   describe('updatePickQuality', () => {
     it('should update the pick quality ', () => {
       const poolTeam = Factory.create('poolTeam');
