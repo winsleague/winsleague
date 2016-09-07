@@ -2,16 +2,15 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
 import { Factory } from 'meteor/dburles:factory';
-import faker from 'faker';
 import log from '../../../utils/log';
 
-import WeeklyReport from './weekly-report';
+import Common from './common';
 
 import '../../pool_teams/pool_teams'; // needed for factory
 
 import { assert } from 'chai';
 
-describe('Weekly Report', () => {
+describe('Email > Common', () => {
   it('puts together player emails', () => {
     const firstUser = Factory.create('user');
 
@@ -31,7 +30,7 @@ describe('Weekly Report', () => {
       userId: secondUser._id,
     });
 
-    const playerEmails = WeeklyReport.getPlayerEmails(poolId, seasonId);
+    const playerEmails = Common.getPlayerEmails(poolId, seasonId);
 
     assert.equal(playerEmails, `first user <${firstUser.emails[0].address}>, second user <${secondUser.emails[0].address}>`);
   });

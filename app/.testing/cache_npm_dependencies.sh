@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Cache npm deps
 echo "Pruning …"
 meteor npm prune

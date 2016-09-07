@@ -37,11 +37,11 @@ function cleanStatus(status) {
       return 'in progress';
     case 'Final':
     case 'Game Over':
+    case 'Completed Early':
       return 'completed'; // not sure how any of these are different
     case 'Postponed':
       return 'postponed';
     case 'Suspended':
-    case 'Completed Early':
       return 'suspended';
     default:
       throw new Error(`Unrecognized status: ${status}`);
@@ -53,13 +53,13 @@ function parseGameDate(game) {
     // time_date: 2016/04/03 1:05
     // ampm: PM
     // all times are in EST
-    return moment.tz(new Date(`${game.time_date} ${game.ampm}`), 'US/Eastern').toDate();
+    return moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
   } else if (game.original_date) {
     // original_date: 2016/04/03
     // home_time: 1:05
     // ampm: PM
     // all times are in EST
-    return moment.tz(new Date(`${game.original_date} ${game.home_time} ${game.ampm}`), 'US/Eastern').toDate();
+    return moment.tz(`${game.original_date} ${game.home_time} ${game.ampm}`, 'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
   }
   throw new Error('Error parsing date out of ', game);
 }
@@ -80,7 +80,6 @@ export default {
 
   ingestDayData(year, month, day) {
     const league = LeagueFinder.getByName('MLB');
-    if (! league) throw new Error('League is not found!');
 
     const season = SeasonFinder.getByYear(league, year);
 
@@ -146,16 +145,19 @@ export default {
 
   refreshStandings() {
     const league = LeagueFinder.getByName('MLB');
-    if (! league) throw new Error('MLB League is not found!');
 
     let day = moment();
 
     // if early in the morning, download yesterday's feed to make sure we got all the late games
-    if (day.hour() < 6) day = moment().add(-1, 'days');
+    if (day.hour() < 6) {
+      day = moment().add(-1, 'days');
+    }
 
     // only run during season
     const season = SeasonFinder.getLatestByLeague(league);
-    if (! season) throw new Error(`Season is not found for league ${league._id}!`);
+    if (!season) {
+      throw new Error(`Season is not found for league ${league._id}!`);
+    }
 
     if (day.isBefore(season.startDate)) {
       log.info(`Not refreshing MLB standings because ${day.toDate()} is before ${season.startDate}`);

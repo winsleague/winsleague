@@ -13,8 +13,13 @@
   "plugins": [
     "meteor"
   ],
+  "globals": {
+    "throwError": false,
+    "handleError": false
+  },
   "rules": {
     "no-underscore-dangle": "off",
+    "max-len": ["error", 120],
     "meteor/eventmap-params": [
       "error",
       {

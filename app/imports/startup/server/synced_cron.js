@@ -2,10 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import log from '../../utils/log';
 
+import NflGameData from '../../api/games/server/nfl_game_data';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
-import WeeklyReport from '../../api/reports/server/weekly-report';
+import WeeklyLeaderboardEmail from '../../api/emails/server/weekly-leaderboard-email';
+import WeeklyTopUpcomingGamesEmail from '../../api/emails/server/weekly-top-upcoming-games';
 
 if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
@@ -23,6 +25,23 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   // we catch exceptions so we can report them to Rollbar
 
   SyncedCron.add({
+    name: 'Refresh NFL standings',
+    schedule(parser) {
+      return parser.recur().every(10).minute();
+    },
+    job() {
+      try {
+        NflGameData.updateLiveScores();
+      } catch (e) {
+        log.error(e);
+        handleError(e, {
+          job: 'NflGameData.updateLiveScores()',
+        });
+      }
+    },
+  });
+
+  SyncedCron.add({
     name: 'Refresh NBA standings',
     schedule(parser) {
       return parser.recur().on(12).hour();
@@ -33,7 +52,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'nbaGameData.ingestSeasonData()',
+          job: 'NbaGameData.ingestSeasonData()',
         });
       }
     },
@@ -50,24 +69,41 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'mlbGameData.refreshStandings()',
+          job: 'MlbGameData.refreshStandings()',
         });
       }
     },
   });
 
   SyncedCron.add({
-    name: 'Send weekly emails',
+    name: 'Send weekly leaderboard emails',
     schedule(parser) {
-      return parser.text('at 1:00 pm on Tuesday');
+      return parser.text('at 6:00 am on Tuesday');
     },
     job() {
       try {
-        WeeklyReport.emailReports();
+        WeeklyLeaderboardEmail.sendAll();
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'weeklyReport.emailReports()',
+          job: 'WeeklyLeaderboardEmail.sendAll()',
+        });
+      }
+    },
+  });
+
+  SyncedCron.add({
+    name: 'Send weekly top upcoming games emails',
+    schedule(parser) {
+      return parser.text('at 5:00 pm on Wednesday');
+    },
+    job() {
+      try {
+        WeeklyTopUpcomingGamesEmail.sendAll();
+      } catch (e) {
+        log.error(e);
+        handleError(e, {
+          job: 'WeeklyTopUpcomingGamesEmail.sendAll()',
         });
       }
     },

@@ -28,8 +28,8 @@ describe('Home_page', function () {
 
   it('renders correctly with simple data', function () {
     withRenderedTemplate('Home_page', {}, el => {
-      const renderedText = $(el).find('h2').text();
-      assert.equal(renderedText, 'Simple Fantasy Sports');
+      const renderedText = $(el).find('h3.home').text();
+      assert.equal(renderedText, 'Simple fantasy sports');
     });
   });
 });

@@ -10,8 +10,10 @@ import './pools-show-page.html';
 import '../components/pools-header';
 import '../components/pools-pick-quality';
 import '../components/pools-season-switcher';
+import '../components/pools-games-to-watch';
 
 import { Pools } from '../../api/pools/pools';
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
 import SeasonFinder from '../../api/seasons/finder';
 
 Template.Pools_show_page.helpers({
@@ -31,6 +33,8 @@ Template.Pools_show_page.helpers({
     }
     return true;
   },
+
+  poolTeamCount: () => PoolTeams.find(),
 });
 
 Template.Pools_show_page.onCreated(function () {
@@ -58,6 +62,8 @@ Template.Pools_show_page.onCreated(function () {
       // the pool they were looking at
       Session.setPersistent('previousPoolId', this.getPoolId());
     });
+
+    this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId());
 
     this.subscribe('seasons.single', this.getSeasonId());
 

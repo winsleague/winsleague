@@ -15,7 +15,7 @@ function createOrExistingUserId(email) {
   Accounts.createUser({ email });
   const newUser = Accounts.findUserByEmail(email);
   log.debug(`Created new user: ${newUser._id}`);
-  // TODO: Accounts.sendEnrollmentMail() so user can login
+  Accounts.sendEnrollmentEmail(newUser._id);
   return newUser._id;
 }
 

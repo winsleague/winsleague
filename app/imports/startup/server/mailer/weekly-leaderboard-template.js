@@ -2,8 +2,8 @@ import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 
 export default {
-  path: 'weekly-email/template.html',    // Relative to the 'private' dir.
-  css: 'weekly-email/style.css',       // Mail specific CSS.
+  path: 'weekly-leaderboard-email/template.html',    // Relative to the 'private' dir.
+  css: 'weekly-leaderboard-email/style.css',       // Mail specific CSS.
 
   helpers: {
     preview() {
@@ -12,7 +12,7 @@ export default {
   },
 
   route: {
-    path: '/weekly/pools/:poolId/seasons/:seasonId',
+    path: '/weekly-leaderboard-email/pools/:poolId/seasons/:seasonId',
     data(params) {
       const poolId = params.poolId;
       const seasonId = params.seasonId;

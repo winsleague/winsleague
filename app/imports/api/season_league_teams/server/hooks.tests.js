@@ -20,7 +20,9 @@ describe('Season League Teams Hooks', function () {
 
       const seasonLeagueTeam = Factory.create('seasonLeagueTeam');
 
-      chai.expect(spy).to.have.been.calledWith(seasonLeagueTeam.leagueTeamId);
+      chai.expect(spy).to.have.been.calledWith(seasonLeagueTeam.seasonId, seasonLeagueTeam.leagueTeamId);
+
+      PoolTeamUpdater.updateWhoPickedLeagueTeam.restore();
     });
   });
 });
