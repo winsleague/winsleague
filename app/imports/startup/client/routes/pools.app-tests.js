@@ -33,7 +33,9 @@ const waitForSubscriptions = () => new Promise(resolve => {
 const afterFlushPromise = denodeify(Tracker.afterFlush);
 
 if (Meteor.isClient) {
-  describe('Full-app test of Pools', () => {
+  describe('Full-app test of Pools', function() {
+    this.timeout(5000);
+
     beforeEach(() =>
       generateData()
         .then(() => Meteor.loginWithPassword('test@test.com', 'test'))
