@@ -13,7 +13,9 @@ import PoolTeamsUpdater from '../../pool_teams/server/updater';
 
 import { assert } from 'chai';
 
-describe('Pool Teams Updater', () => {
+describe('Pool Teams Updater', function() {
+  this.timeout(5000);
+
   describe('Update Pool Team Wins', () => {
     it('should add up the wins and losses for all completed games', () => {
       let poolTeam = Factory.create('poolTeam');
