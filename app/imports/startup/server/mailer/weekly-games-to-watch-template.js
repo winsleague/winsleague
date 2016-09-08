@@ -2,17 +2,17 @@ import { Pools } from '../../../api/pools/pools';
 import { PoolGameInterestRatings } from '../../../api/pool_game_interest_ratings/pool_game_interest_ratings';
 
 export default {
-  path: 'weekly-top-upcoming-games-email/template.html',    // Relative to the 'private' dir.
-  css: 'weekly-top-upcoming-games-email/style.css',       // Mail specific CSS.
+  path: 'weekly-games-to-watch-email/template.html',    // Relative to the 'private' dir.
+  css: 'weekly-games-to-watch-email/style.css',       // Mail specific CSS.
 
   helpers: {
     preview() {
-      return `Top Upcoming Games for ${this.poolName}`;
+      return `Games to watch for ${this.poolName}`;
     },
   },
 
   route: {
-    path: '/weekly-top-upcoming-games-email/pools/:poolId',
+    path: '/weekly-games-to-watch-email/pools/:poolId',
     data(params) {
       const poolId = params.poolId;
       const pool = Pools.findOne(poolId);
