@@ -7,7 +7,7 @@ import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
 import WeeklyLeaderboardEmail from '../../api/emails/server/weekly-leaderboard-email';
-import WeeklyTopUpcomingGamesEmail from '../../api/emails/server/weekly-top-upcoming-games';
+import WeeklyGamesToWatchEmail from '../../api/emails/server/weekly-games-to-watch';
 
 if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
@@ -93,17 +93,17 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   });
 
   SyncedCron.add({
-    name: 'Send weekly top upcoming games emails',
+    name: 'Send weekly games to watch emails',
     schedule(parser) {
       return parser.text('at 5:00 pm on Wednesday');
     },
     job() {
       try {
-        WeeklyTopUpcomingGamesEmail.sendAll();
+        WeeklyGamesToWatchEmail.sendAll();
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'WeeklyTopUpcomingGamesEmail.sendAll()',
+          job: 'WeeklyGamesToWatchEmail.sendAll()',
         });
       }
     },

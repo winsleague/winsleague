@@ -26,11 +26,11 @@ export default {
     const winDifference = Math.abs(homeWins - awayWins);
     switch (winDifference) {
       case 0:
-        rating = 90;
+        rating = 75;
         justification = `Both teams have ${homeWins} wins in their last ${this.recentGameCount()} games`;
         break;
       case 1:
-        rating = 80;
+        rating = 65;
         justification = `Each team has only a one win difference in their last ${this.recentGameCount()} games`;
         break;
       case 2:
