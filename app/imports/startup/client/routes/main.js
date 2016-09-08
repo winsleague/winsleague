@@ -1,6 +1,6 @@
-import log from '../../../utils/log';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import log from '../../../utils/log';
 
 import '../../../ui/pages/home_page';
 import '../../../ui/pages/user-dashboard';
@@ -11,7 +11,7 @@ log.info('Setting up main routes');
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    Tracker.autorun(function() {
+    Tracker.autorun(() => {
       if (!Meteor.userId()) {
         BlazeLayout.render('App_body', { content: 'Home_page' });
       } else {
