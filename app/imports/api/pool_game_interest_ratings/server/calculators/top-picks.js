@@ -26,7 +26,7 @@ export default {
       rating = 100;
       justification = 'Both teams are top 5 picks';
     } else if (homePickNumber > 27 && awayPickNumber > 27) {
-      rating = 90;
+      rating = 70;
       justification = 'Both teams are bottom 5 picks';
     } else if (pickDifference < 5) {
       rating = 80;

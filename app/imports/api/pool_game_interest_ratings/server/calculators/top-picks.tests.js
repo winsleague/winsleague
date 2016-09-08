@@ -12,8 +12,8 @@ describe('Interest Rating Calculators > Top Picks', function () {
     assert.equal(TopPicks._calculate(1, 4).rating, 100);
   });
 
-  it('should be 90 if bottom picks are playing each other', function () {
-    assert.equal(TopPicks._calculate(28, 32).rating, 90);
+  it('should be 70 if bottom picks are playing each other', function () {
+    assert.equal(TopPicks._calculate(28, 32).rating, 70);
   });
 
   it('should be 80 if close picks are playing each other', function () {
