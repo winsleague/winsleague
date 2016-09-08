@@ -17,6 +17,9 @@ Meteor.publish('poolGameInterestRatings.ofPool', function poolGameInterestRating
       },
     },
     {
+      sort: {
+        rating: -1,
+      },
       limit: 5,
     });
 });
