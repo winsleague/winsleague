@@ -17,8 +17,8 @@ function cleanPeriod(old) {
 }
 
 function cleanStatus(old) {
-  if (old === 'P') { return 'scheduled'; }
-  if (old === 'F' || old === 'FO') { return 'completed'; }
+  if (old === 'P' || old === 'Pregame') { return 'scheduled'; }
+  if (old === 'F' || old === 'Final' || old === 'FO') { return 'completed'; }
   return 'in progress';
 }
 
@@ -33,6 +33,7 @@ export default {
     if (!season) {
       throw new Error(`Season is not found for league ${league._id}!`);
     }
+    const seasonId = season._id;
 
     if (today.isSameOrBefore(season.startDate) && !force) {
       log.info(`Not refreshing NFL standings because ${today.toDate()} is before ${season.startDate}`);
@@ -55,6 +56,7 @@ export default {
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = gameData[10];
+      const status = cleanStatus(gameData[2]);
       const period = gameData[2].toLowerCase();
       const timeRemaining = gameData[3];
       const homeScore = gameData[7];
@@ -63,10 +65,12 @@ export default {
       const affected = Games.update(
         {
           leagueId: league._id,
+          seasonId,
           gameId,
         }, {
           $set: {
             period,
+            status,
             timeRemaining,
             homeScore,
             awayScore,
@@ -74,7 +78,7 @@ export default {
         }
       );
 
-      log.info(`Updated game with leagueId: ${league._id} and gameId: ${gameId} (affected: ${affected})`);
+      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, period: ${period}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
     }
   },
 

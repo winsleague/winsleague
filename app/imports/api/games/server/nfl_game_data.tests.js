@@ -39,6 +39,7 @@ describe('NFL Game Data', function () {
   describe('Ingest Week Data', () => {
     it('should ingest all games for week 17', () => {
       const game = Games.findOne({ gameId: '56744' });
+      assert.equal(game.status, 'in progress');
       assert.equal(game.homeScore, 10);
       assert.equal(game.awayScore, 7);
     });
@@ -57,7 +58,7 @@ describe('NFL Game Data', function () {
       HTTP.get.restore();
 
       const game = Games.findOne({ gameId: '56744' });
-
+      assert.equal(game.status, 'completed');
       assert.equal(game.homeScore, 22);
       assert.equal(game.awayScore, 17);
     });
