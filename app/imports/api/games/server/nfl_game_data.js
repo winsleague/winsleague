@@ -18,7 +18,7 @@ function cleanPeriod(old) {
 
 function cleanStatus(old) {
   if (old === 'P' || old === 'Pregame') { return 'scheduled'; }
-  if (old === 'F' || old === 'Final' || old === 'FO') { return 'completed'; }
+  if (old === 'F' || old === 'Final' || old === 'FO' || old === 'final overtime') { return 'completed'; }
   return 'in progress';
 }
 
