@@ -37,6 +37,8 @@ describe('Pool Team Picks Updater', function () {
         leagueTeamId: leagueTeam._id,
         wins: currentWins, // intentionally not 16 games
         losses: currentLosses,
+        pointsFor: 10,
+        pointsAgainst: 4,
       });
 
       let poolTeamPick = Factory.create('poolTeamPick', {
@@ -53,6 +55,7 @@ describe('Pool Team Picks Updater', function () {
       assert.equal(poolTeamPick.actualWins, currentWins, 'actualWins');
       assert.equal(poolTeamPick.expectedWins.toFixed(1), '3.3', 'expectedWins'); // toFixed returns string
       assert.equal(poolTeamPick.pickQuality.toFixed(1), '6.8', 'pickQuality'); // toFixed returns string
+      assert.equal(poolTeamPick.plusMinus, 6, 'plusMinus');
     });
   });
 });
