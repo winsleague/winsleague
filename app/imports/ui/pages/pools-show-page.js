@@ -10,6 +10,7 @@ import './pools-show-page.html';
 import '../components/pools-header';
 import '../components/pools-pick-quality';
 import '../components/pools-season-switcher';
+import '../components/pools-my-games';
 import '../components/pools-games-to-watch';
 
 import { Pools } from '../../api/pools/pools';
@@ -35,6 +36,8 @@ Template.Pools_show_page.helpers({
   },
 
   poolTeamCount: () => PoolTeams.find(),
+
+  myPoolTeamId: () => Template.instance().getMyPoolTeamId(),
 });
 
 Template.Pools_show_page.onCreated(function () {
@@ -46,8 +49,18 @@ Template.Pools_show_page.onCreated(function () {
 
   this.getSeasonId = () => {
     const seasonId = FlowRouter.getParam('seasonId');
-    if (seasonId) return seasonId;
+    if (seasonId) {
+      return seasonId;
+    }
     return _.get(this.getPool(), 'latestSeasonId');
+  };
+
+  this.getMyPoolTeamId = () => {
+    const poolTeam = PoolTeams.findOne({
+      seasonId: this.getSeasonId(),
+      userId: Meteor.userId,
+    });
+    return _.get(poolTeam, '_id');
   };
 
   this.autorun(() => {

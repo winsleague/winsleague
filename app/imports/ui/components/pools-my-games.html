@@ -1,0 +1,11 @@
+<template name="Pools_my_games">
+  {{#if Template.subscriptionsReady}}
+    <h4>My games</h4>
+
+    {{#if currentUser }}
+
+    {{else}}
+      Login to see your team's games.
+    {{/if}}
+  {{/if}}
+</template>
