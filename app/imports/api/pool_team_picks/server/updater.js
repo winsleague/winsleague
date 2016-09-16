@@ -34,7 +34,7 @@ export default {
 
     const pickQuality = actualWins - expectedWins;
 
-    const plusMinus = seasonLeagueTeam.pointsFor - seasonLeagueTeam.pointsAgainst;
+    const plusMinus = _.get(seasonLeagueTeam, 'pointsFor', 0) - _.get(seasonLeagueTeam, 'pointsAgainst', 0);
 
     log.info('Updating PoolTeamPick quality:', poolTeamPick,
       'actualWins:', actualWins,
