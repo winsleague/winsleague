@@ -9,6 +9,7 @@ import { Games } from '../games';
 import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
+import { Seasons } from '../../seasons/seasons';
 import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 
@@ -19,30 +20,41 @@ function myLeagueTeams(poolTeamId) {
   return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
 }
 
+function relevantNflWeek(seasonId) {
+  // if Wednesday or later, look forward
+  // if Tuesday, look backward
+
+  const season = Seasons.findOne(seasonId);
+  const startMoment = moment(season.startDate);
+
+  const daysSinceStart = moment().diff(startMoment, 'days');
+
+  // we subtract 2 from daysSinceStart so that Wednesday is the start of the week
+  return Math.round((daysSinceStart - 2) / 7) + 1;
+}
+
 function relevantNflGames(seasonId, poolTeamId) {
-  const season = SeasonFinder.getLatestByLeagueName('NFL');
+  const week = relevantNflWeek(seasonId);
 
-  const nextGame = Games.findOne({
-    leagueId: season.leagueId,
-    seasonId: season._id,
-  }, {
-    sort: {
-      gameDate: 1,
-    },
-  });
-
-  if (!nextGame) {
-    return [];
+  if (!week) {
+    return this.ready();
   }
 
-  const week = nextGame.week;
+  log.info(`Upcoming games are in week ${week} for season ${seasonId}`);
 
-  log.info(`Upcoming games are in week ${week} for season ${season.year} ${season._id}`);
+  const myTeams = myLeagueTeams(poolTeamId);
 
   return Games.find({
-    leagueId: season.leagueId,
-    seasonId: season._id,
+    seasonId,
     week,
+    $or: [
+      {
+        homeTeamId: { $in: myTeams },
+      },
+      {
+        awayTeamId: { $in: myTeams },
+      },
+    ],
   });
 }
 

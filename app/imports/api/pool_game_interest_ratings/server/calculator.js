@@ -41,21 +41,12 @@ export default {
 
     const season = SeasonFinder.getLatestByLeagueName('NFL');
 
-    const nextGame = Games.findOne({
-      leagueId,
-      seasonId: season._id,
-      status: { $in: ['scheduled', 'in progress'] },
-    }, {
-      sort: {
-        gameDate: 1,
-      },
-    });
+    const startMoment = moment(season.startDate);
 
-    if (!nextGame) {
-      return [];
-    }
+    const daysSinceStart = moment().diff(startMoment, 'days');
 
-    const week = nextGame.week;
+    // we subtract 2 from daysSinceStart so that Wednesday is the start of the week
+    const week = Math.round((daysSinceStart - 2) / 7) + 1;
 
     log.info(`Upcoming games are in week ${week} for season ${season.year} ${season._id}`);
 
