@@ -8,7 +8,7 @@ import SeasonFinder from '../../seasons/finder';
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { Games } from '../games';
 
-function cleanPeriod(old) {
+function friendlyQuarter(old) {
   if (old === 'P') { return 'pregame'; }
   if (old === 'O') { return 'overtime'; }
   if (old === 'F') { return 'final'; }
@@ -57,7 +57,7 @@ export default {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = gameData[10];
       const status = cleanStatus(gameData[2]);
-      const period = gameData[2].toLowerCase();
+      const quarter = gameData[2].toLowerCase();
       const timeRemaining = gameData[3];
       const homeScore = gameData[7];
       const awayScore = gameData[5];
@@ -69,7 +69,7 @@ export default {
           gameId,
         }, {
           $set: {
-            period,
+            quarter,
             status,
             timeRemaining,
             homeScore,
@@ -78,7 +78,7 @@ export default {
         }
       );
 
-      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, period: ${period}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
+      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
     }
   },
 
@@ -152,7 +152,7 @@ export default {
       homeScore: game.hs,
       awayTeamId: awayLeagueTeam._id,
       awayScore: game.vs,
-      period: cleanPeriod(game.q),
+      quarter: friendlyQuarter(game.q),
       status: cleanStatus(game.q),
     });
   },

@@ -5,6 +5,7 @@ import moment from 'moment-timezone';
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { LeagueTeams } from '../league_teams/league_teams';
 import { PoolTeamPicks } from '../pool_team_picks/pool_team_picks';
+import { PoolGameInterestRatings } from '../pool_game_interest_ratings/pool_game_interest_ratings';
 
 export const Games = new Mongo.Collection('games');
 
@@ -48,11 +49,18 @@ Games.schema = new SimpleSchema({
     type: String,
     allowedValues: ['scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   },
-  period: { // quarter if NFL or NBA, inning if MLB, period if NHL
+  quarter: {
     type: String,
     allowedValues: ['pregame', '1', '2', 'halftime', '3', '4',
-      '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
       'overtime', 'final', 'final overtime'],
+    optional: true,
+  },
+  inning: {
+    type: String,
+    allowedValues: ['pregame', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+      '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+      'final'],
+    optional: true,
   },
   timeRemaining: {
     type: String,
@@ -140,13 +148,24 @@ Games.helpers({
   timeStatus() {
     if (this.status === 'scheduled') {
       return this.friendlyDate();
-    } else {
-      return this.period;
+    } else if (this.quarter) {
+      return `${this.quarter} ${this.timeRemaining}`;
+    } else if (this.inning) {
+      return this.inning;
     }
+    return '';
   },
 
   showScore() {
     return this.status !== 'scheduled';
+  },
+
+  interestRatingJustification() {
+    const rating = PoolGameInterestRatings.findOne({ gameId: this._id });
+    if (rating) {
+      return rating.justification;
+    }
+    return '';
   },
 });
 
