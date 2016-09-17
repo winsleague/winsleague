@@ -57,8 +57,7 @@ Template.Pools_show_page.onCreated(function () {
 
   this.getMyPoolTeamId = () => {
     const poolTeam = PoolTeams.findOne({
-      seasonId: this.getSeasonId(),
-      userId: Meteor.userId,
+      userId: Meteor.userId(),
     });
     return _.get(poolTeam, '_id');
   };

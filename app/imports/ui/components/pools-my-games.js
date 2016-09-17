@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import log from '../../utils/log';
 
 import { Games } from '../../api/games/games';
 
@@ -8,7 +9,6 @@ import './pools-my-games.html';
 
 Template.Pools_my_games.helpers({
   myGames: () => {
-    const poolId = Template.currentData().poolId;
     return Games.find({}, {
       sort: {
         gameDate: 1,
@@ -19,12 +19,12 @@ Template.Pools_my_games.helpers({
 
 Template.Pools_my_games.onCreated(function () {
   new SimpleSchema({
-    poolId: { type: String },
+    poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
   this.autorun(() => {
-    this.subscribe('poolGameInterestRatings.ofPool', this.data.poolId, () => {
-      log.debug(`poolGameInterestRatings.of_pool subscription ready: ${Games.find().count()}`);
+    this.subscribe('relevantGames.ofPoolTeamId', this.data.poolTeamId, () => {
+      log.info(`relevantGames.ofPoolTeamId subscription ready: ${Games.find().count()}`);
     });
   });
 });

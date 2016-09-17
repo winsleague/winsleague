@@ -2,48 +2,24 @@
 
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
-
+import moment from 'moment';
 import log from '../../../utils/log';
 
 import { Games } from '../games';
 import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
-import { LeagueFinder } from '../../leagues/finder';
-import { SeasonFinder } from '../../seasons/finder';
+import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
 
-Meteor.publish('relevantGames.ofPoolUser', function poolGameInterestRatingsOfPool(poolId, userId) {
-  check(poolId, String);
-  check(userId, String);
-  if (!poolId || !userId) {
-    return this.ready();
-  }
-
-  const nflLeagueId = LeagueFinder.getIdByName('NFL');
-
-  const pool = Pools.findOne(poolId);
-  if (pool.leagueId === nflLeagueId) {
-    return relevantNflGames();
-  } else {
-    return todaysGames();
-  }
-});
-
-function myPoolTeamId(poolId, userId) {
-  PoolTeams.findOne({
-    poolId,
-    userId,
-  })
+function myLeagueTeams(poolTeamId) {
+  const poolTeamPicks = PoolTeamPicks.find({
+    poolTeamId,
+  });
+  return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
 }
 
-function myLeagueTeams(poolId, userId) {
-  PoolTeamPicks.find({
-    poolId,
-
-  })
-}
-
-function relevantNflGames(poolId, userId) {
+function relevantNflGames(seasonId, poolTeamId) {
   const season = SeasonFinder.getLatestByLeagueName('NFL');
 
   const nextGame = Games.findOne({
@@ -70,6 +46,58 @@ function relevantNflGames(poolId, userId) {
   });
 }
 
-function todaysGames(poolId, userId) {
+function todaysGames(seasonId, poolTeamId) {
+  const myTeams = myLeagueTeams(poolTeamId);
 
+  log.info('myTeams', myTeams);
+
+  const today = moment().toDate();
+  const tomorrow = moment().add(1, 'days').toDate();
+
+  return Games.find({
+    seasonId,
+    $and: [
+      {
+        gameDate: {
+          $gte: today,
+        }
+      },
+      {
+        gameDate: {
+          $lt: tomorrow,
+        }
+      },
+    ],
+    $or: [
+      {
+        homeTeamId: { $in: myTeams },
+      },
+      {
+        awayTeamId: { $in: myTeams },
+      },
+    ],
+  });
 }
+
+Meteor.publish('relevantGames.ofPoolTeamId', function relevantGamesOfPoolTeamId(poolTeamId) {
+  log.info('checking!', poolTeamId);
+
+  check(poolTeamId, Match.Maybe(String));
+  if (!poolTeamId) {
+    return this.ready();
+  }
+
+  const nflLeagueId = LeagueFinder.getIdByName('NFL');
+
+  const poolTeam = PoolTeams.findOne(poolTeamId);
+  const seasonId = poolTeam.seasonId;
+  const poolId = poolTeam.poolId;
+
+  const pool = Pools.findOne(poolId);
+  if (pool.leagueId === nflLeagueId) {
+    return relevantNflGames(seasonId, poolTeamId);
+  } else {
+    return todaysGames(seasonId, poolTeamId);
+  }
+});
+
