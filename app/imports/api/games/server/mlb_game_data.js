@@ -127,6 +127,7 @@ export default {
       awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
       awayScore: _.get(game, 'away_team_runs', 0),
       inning: _.get(game, 'inning', 'pregame'),
+      topInning: _.get(game, 'top_inning'),
       status: cleanStatus(game.status),
     };
 

@@ -62,6 +62,11 @@ Games.schema = new SimpleSchema({
       'final'],
     optional: true,
   },
+  topInning: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+    optional: true,
+  },
   timeRemaining: {
     type: String,
     optional: true,
@@ -94,6 +99,21 @@ Games.schema = new SimpleSchema({
 });
 
 Games.attachSchema(Games.schema);
+
+function ordinalSuffixOf(i) {
+  const j = i % 10,
+    k = i % 100;
+  if (j === 1 && k !== 11) {
+    return i + "st";
+  }
+  if (j === 2 && k !== 12) {
+    return i + "nd";
+  }
+  if (j === 3 && k !== 13) {
+    return i + "rd";
+  }
+  return i + "th";
+}
 
 Games.helpers({
   title(poolId, seasonId) {
@@ -139,21 +159,29 @@ Games.helpers({
   },
 
   friendlyDate() {
-    const date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D,');
+    let date = '';
+    if (moment(this.gameDate).diff(moment(), 'days') === 0) {
+      date = 'Today,';
+    } else {
+      date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D,');
+    }
     const est = moment(this.gameDate).tz('US/Eastern').format('ha');
     const pst = moment(this.gameDate).tz('US/Pacific').format('ha');
-    return `${date} ${est} ET/${pst} PT`;
+    return `${date} ${est} ET / ${pst} PT`;
   },
 
   timeStatus() {
     if (this.status === 'scheduled') {
       return this.friendlyDate();
-    } else if (this.quarter) {
-      return `${this.quarter} ${this.timeRemaining}`;
-    } else if (this.inning) {
-      return this.inning;
+    } else if (this.status === 'in progress') {
+      if (this.quarter) {
+        return `${this.quarter} ${this.timeRemaining}`;
+      } else if (this.inning) {
+        const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
+        return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
+      }
     }
-    return '';
+    return 'Final';
   },
 
   showScore() {
@@ -166,6 +194,14 @@ Games.helpers({
       return rating.justification;
     }
     return '';
+  },
+
+  isHomeWinner() {
+    return (this.status === 'completed' && this.homeScore > this.awayScore);
+  },
+
+  isAwayWinner() {
+    return (this.status === 'completed' && this.awayScore > this.homeScore);
   },
 });
 
