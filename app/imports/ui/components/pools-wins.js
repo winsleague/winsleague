@@ -34,6 +34,13 @@ Template.Pools_wins.helpers({
 
   isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(),
     'commissionerUserId'),
+
+  myTeamClass: (poolTeamId) => {
+    if (poolTeamId === Template.currentData().poolTeamId) {
+      return 'info';
+    }
+    return '';
+  },
 });
 
 Template.Pools_wins.onCreated(function () {
@@ -43,10 +50,13 @@ Template.Pools_wins.onCreated(function () {
     seasonId: { type: String, optional: true },
     poolId: { type: String },
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
+    poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
   this.getSeasonId = () => {
-    if (this.data.seasonId) return this.data.seasonId;
+    if (this.data.seasonId) {
+      return this.data.seasonId;
+    }
 
     return _.get(this.getPool(), 'latestSeasonId');
   };
