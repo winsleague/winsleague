@@ -160,14 +160,20 @@ Games.helpers({
 
   friendlyDate() {
     let date = '';
-    if (moment(this.gameDate).diff(moment(), 'days') === 0) {
-      date = 'Today,';
-    } else {
-      date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D,');
+    if (moment(this.gameDate).diff(moment(), 'days') > 0) {
+      date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D, ');
     }
-    const est = moment(this.gameDate).tz('US/Eastern').format('ha');
-    const pst = moment(this.gameDate).tz('US/Pacific').format('ha');
-    return `${date} ${est} ET / ${pst} PT`;
+
+    const timezoneGuess = moment.tz.guess();
+    let time = '';
+    if (timezoneGuess) {
+      time = moment(this.gameDate).tz(timezoneGuess).format('ha z');
+    } else {
+      const est = moment(this.gameDate).tz('US/Eastern').format('ha');
+      const pst = moment(this.gameDate).tz('US/Pacific').format('ha');
+      time = `${est} ET / ${pst} PT`;
+    }
+    return `${date}${time}`;
   },
 
   timeStatus() {
