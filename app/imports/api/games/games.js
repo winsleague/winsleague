@@ -137,12 +137,16 @@ Games.helpers({
     return `${date} ${est} ET/${pst} PT`;
   },
 
-  boxScore() {
+  timeStatus() {
     if (this.status === 'scheduled') {
       return this.friendlyDate();
     } else {
       return this.period;
     }
+  },
+
+  showScore() {
+    return this.status !== 'scheduled';
   },
 });
 
