@@ -51,8 +51,8 @@ function todaysGames(seasonId, poolTeamId) {
 
   log.info('myTeams', myTeams);
 
-  const today = moment().toDate();
-  const tomorrow = moment().add(1, 'days').toDate();
+  const today = moment().startOf('day').toDate();
+  const tomorrow = moment().startOf('day').add(1, 'days').toDate();
 
   return Games.find({
     seasonId,
@@ -60,12 +60,12 @@ function todaysGames(seasonId, poolTeamId) {
       {
         gameDate: {
           $gte: today,
-        }
+        },
       },
       {
         gameDate: {
           $lt: tomorrow,
-        }
+        },
       },
     ],
     $or: [
