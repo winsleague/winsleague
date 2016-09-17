@@ -13,48 +13,53 @@
     <div class="row">
       {{#each game in games}}
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-          <table class="table borderless">
+          <table class="table">
             <tbody>
-            <tr>
-              <td class="col-xs-6 {{myTeamClass game.homeTeamId}}">
-                {{#strongWinner isWinner=game.isHomeWinner}}
-                  {{game.homeTeamName poolId seasonId}}
-                {{/strongWinner}}
-              </td>
-              <td class="col-xs-1 {{myTeamClass game.homeTeamId}} text-right">
-                {{#if game.showScore}}
+              <tr>
+                <td class="col-xs-6 {{myTeamClass game.homeTeamId}}">
                   {{#strongWinner isWinner=game.isHomeWinner}}
-                    {{game.homeScore}}
+                    {{game.homeTeamName poolId seasonId}}
                   {{/strongWinner}}
-                {{/if}}
-              </td>
-              <td class="col-xs-1" rowspan="2">&nbsp;</td>
-              <td class="col-xs-4" rowspan="2" style="vertical-align: middle !important;">
-                {{game.timeStatus}}
-              </td>
-            </tr>
-            <tr>
-              <td class="{{myTeamClass game.awayTeamId}}">
-                {{#strongWinner isWinner=game.isAwayWinner}}
-                  {{game.awayTeamName poolId seasonId}}
-                {{/strongWinner}}
-              </td>
-              <td class="{{myTeamClass game.awayTeamId}} text-right">
-                {{#if game.showScore}}
+                </td>
+                <td class="col-xs-1 {{myTeamClass game.homeTeamId}} text-right">
+                  {{#if game.showScore}}
+                    {{#strongWinner isWinner=game.isHomeWinner}}
+                      {{game.homeScore}}
+                    {{/strongWinner}}
+                  {{/if}}
+                </td>
+                <td class="col-xs-1" rowspan="2">&nbsp;</td>
+                <td class="col-xs-4 text-muted" rowspan="2" style="vertical-align: middle !important;">
+                  {{game.timeStatus}}
+                </td>
+              </tr>
+              <tr>
+                <td class="{{myTeamClass game.awayTeamId}}">
                   {{#strongWinner isWinner=game.isAwayWinner}}
-                    {{game.awayScore}}
+                    {{game.awayTeamName poolId seasonId}}
                   {{/strongWinner}}
-                {{/if}}
-              </td>
-            </tr>
+                </td>
+                <td class="{{myTeamClass game.awayTeamId}} text-right">
+                  {{#if game.showScore}}
+                    {{#strongWinner isWinner=game.isAwayWinner}}
+                      {{game.awayScore}}
+                    {{/strongWinner}}
+                  {{/if}}
+                </td>
+              </tr>
 
             {{#if game.interestRatingJustification}}
               <tr>
-                <td colspan="4">
-                  <i>{{game.interestRatingJustification}}</i>
+                <td colspan="4" class="text-muted">
+                  {{game.interestRatingJustification}}
                 </td>
               </tr>
             {{/if}}
+
+            <!-- stupid hack to make sure we get bottom border on table -->
+            <tr style="line-height: 0px; min-height: 0px; height: 0px; !important">
+              <td colspan="4" style="line-height: 0px; min-height: 0px; height: 0px; !important">&nbsp;</td>
+            </tr>
 
             </tbody>
           </table>

@@ -160,7 +160,14 @@ Games.helpers({
 
   friendlyDate() {
     let date = '';
-    if (moment(this.gameDate).diff(moment(), 'days') > 0) {
+
+    const gameDate = moment(this.gameDate);
+    const today = moment();
+    const isGameToday = gameDate.date() === today.date() &&
+      gameDate.month() === today.month() &&
+      gameDate.year() === today.year();
+
+    if (!isGameToday) {
       date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D, ');
     }
 
