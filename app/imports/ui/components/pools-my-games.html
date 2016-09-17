@@ -8,7 +8,26 @@
         {{#each game in myGames}}
           <tr>
             <td>
-              {{game.title poolId seasonId}}
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{game.homeTeamName poolId seasonId}}
+                    </td>
+                    <td>
+                      {{game.homeScore}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      {{game.awayTeamName poolId seasonId}}
+                    </td>
+                    <td>
+                      {{game.awayScore}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </td>
           </tr>
         {{/each}}

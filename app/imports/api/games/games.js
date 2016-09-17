@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import moment from 'moment-timezone';
 
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { LeagueTeams } from '../league_teams/league_teams';
@@ -127,6 +128,21 @@ Games.helpers({
     const awayLeagueTeam = LeagueTeams.findOne(this.awayTeamId);
 
     return `${awayPick}${awayLeagueTeam.abbreviation}`;
+  },
+
+  friendlyDate() {
+    const date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D,');
+    const est = moment(this.gameDate).tz('US/Eastern').format('ha');
+    const pst = moment(this.gameDate).tz('US/Pacific').format('ha');
+    return `${date} ${est} ET/${pst} PT`;
+  },
+
+  boxScore() {
+    if (this.status === 'scheduled') {
+      return this.friendlyDate();
+    } else {
+      return this.period;
+    }
   },
 });
 
