@@ -1,6 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import { PoolTeams } from '../pool_teams/pool_teams';
+import { LeagueTeams } from '../league_teams/league_teams';
+import { PoolTeamPicks } from '../pool_team_picks/pool_team_picks';
+
 export const Games = new Mongo.Collection('games');
 
 Games.schema = new SimpleSchema({
@@ -81,6 +85,44 @@ Games.schema = new SimpleSchema({
 });
 
 Games.attachSchema(Games.schema);
+
+Games.helpers({
+  title(poolId, seasonId) {
+    // "Noah's #6 NYG at Charlie's #8 GB"
+
+    // see who picked these teams
+    const homePoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.homeTeamId,
+    });
+    const awayPoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.awayTeamId,
+    });
+
+    let homePick = '';
+    if (homePoolTeamPick) {
+      const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
+      homePick = `${homePoolTeam.userTeamName}'s #${homePoolTeamPick.pickNumber} `;
+    }
+
+    let awayPick = '';
+    if (awayPoolTeamPick) {
+      const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
+      awayPick = `${awayPoolTeam.userTeamName}'s #${awayPoolTeamPick.pickNumber} `;
+    }
+
+    const homeLeagueTeam = LeagueTeams.findOne(this.homeTeamId);
+    const awayLeagueTeam = LeagueTeams.findOne(this.awayTeamId);
+
+    const awaySummary = `${awayPick}${awayLeagueTeam.abbreviation}`;
+    const homeSummary = `${homePick}${homeLeagueTeam.abbreviation}`;
+
+    return `${awaySummary} at ${homeSummary}`;
+  },
+});
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Games.deny({

@@ -8,9 +8,7 @@ import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
 import { Pools } from '../../pools/pools';
-import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
-import { LeagueTeams } from '../../league_teams/league_teams';
 
 import TopPicks from './calculators/top-picks';
 import PoolTeamsTotalWins from './calculators/pool-teams-total-wins';
@@ -76,15 +74,18 @@ export default {
 
 
   calculatePoolGame(pool, game) {
+    const poolId = pool._id;
+    const seasonId = pool.latestSeasonId;
+
     const homePoolTeamPick = PoolTeamPicks.findOne({
-      seasonId: pool.latestSeasonId,
-      poolId: pool._id,
+      seasonId,
+      poolId,
       leagueTeamId: game.homeTeamId,
     });
 
     const awayPoolTeamPick = PoolTeamPicks.findOne({
-      seasonId: pool.latestSeasonId,
-      poolId: pool._id,
+      seasonId,
+      poolId,
       leagueTeamId: game.awayTeamId,
     });
 
@@ -98,9 +99,9 @@ export default {
       return;
     }
 
-    const gameTitle = this.gameTitle(pool, game);
+    const gameTitle = game.title(poolId, seasonId);
 
-    log.info(`Calculating interest ratings for ${gameTitle} (game: ${game._id}, pool: ${pool._id})`);
+    log.info(`Calculating interest ratings for ${gameTitle} (game: ${game._id}, pool: ${poolId})`);
 
     this.calculators().forEach(calculator => {
       const result = calculator.calculate(pool, game, homePoolTeamPick, awayPoolTeamPick);
@@ -109,7 +110,7 @@ export default {
       log.info(`${calculator.name()} rating for ${gameTitle} (${game._id}) is ${rating} because of ${result.justification}`);
 
       PoolGameInterestRatings.insert({
-        poolId: pool._id,
+        poolId,
         gameId: game._id,
         rating,
         gameTitle,
@@ -124,36 +125,5 @@ export default {
       PoolTeamsTotalWins,
       LeagueTeamsRecentWins,
     ];
-  },
-
-  gameTitle(pool, game) {
-    // "Noah's #6 NYG at Charlie's #8 GB"
-
-    // see who picked these teams
-    const homePoolTeamPick = PoolTeamPicks.findOne({
-      seasonId: pool.latestSeasonId,
-      poolId: pool._id,
-      leagueTeamId: game.homeTeamId,
-    });
-    const awayPoolTeamPick = PoolTeamPicks.findOne({
-      seasonId: pool.latestSeasonId,
-      poolId: pool._id,
-      leagueTeamId: game.awayTeamId,
-    });
-
-    if (!homePoolTeamPick || !awayPoolTeamPick) {
-      throw new Error(`Both teams weren't picked for poolId ${pool._id} and gameId ${game._id}`);
-    }
-
-    const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
-    const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
-
-    const homeLeagueTeam = LeagueTeams.findOne(game.homeTeamId);
-    const awayLeagueTeam = LeagueTeams.findOne(game.awayTeamId);
-
-    const homeSummary = `${awayPoolTeam.userTeamName}'s #${awayPoolTeamPick.pickNumber} ${awayLeagueTeam.abbreviation}`;
-    const awaySummary = `${homePoolTeam.userTeamName}'s #${homePoolTeamPick.pickNumber} ${homeLeagueTeam.abbreviation}`;
-
-    return `${homeSummary} at ${awaySummary}`;
   },
 };
