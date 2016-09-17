@@ -49,8 +49,6 @@ function relevantNflGames(seasonId, poolTeamId) {
 function todaysGames(seasonId, poolTeamId) {
   const myTeams = myLeagueTeams(poolTeamId);
 
-  log.info('myTeams', myTeams);
-
   const today = moment().startOf('day').toDate();
   const tomorrow = moment().startOf('day').add(1, 'days').toDate();
 
@@ -80,8 +78,6 @@ function todaysGames(seasonId, poolTeamId) {
 }
 
 Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeamId) {
-  log.info('checking!', poolTeamId);
-
   check(poolTeamId, Match.Maybe(String));
   if (!poolTeamId) {
     return this.ready();
