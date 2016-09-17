@@ -90,16 +90,14 @@ Games.helpers({
   title(poolId, seasonId) {
     // "Noah's #6 NYG at Charlie's #8 GB"
 
-    // see who picked these teams
+    return `${this.awayTeamName(poolId, seasonId)} at ${this.homeTeamName(poolId, seasonId)}`;
+  },
+
+  homeTeamName(poolId, seasonId) {
     const homePoolTeamPick = PoolTeamPicks.findOne({
       seasonId,
       poolId,
       leagueTeamId: this.homeTeamId,
-    });
-    const awayPoolTeamPick = PoolTeamPicks.findOne({
-      seasonId,
-      poolId,
-      leagueTeamId: this.awayTeamId,
     });
 
     let homePick = '';
@@ -108,19 +106,27 @@ Games.helpers({
       homePick = `${homePoolTeam.userTeamName}'s #${homePoolTeamPick.pickNumber} `;
     }
 
+    const homeLeagueTeam = LeagueTeams.findOne(this.homeTeamId);
+
+    return `${homePick}${homeLeagueTeam.abbreviation}`;
+  },
+
+  awayTeamName(poolId, seasonId) {
+    const awayPoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.awayTeamId,
+    });
+
     let awayPick = '';
     if (awayPoolTeamPick) {
       const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
       awayPick = `${awayPoolTeam.userTeamName}'s #${awayPoolTeamPick.pickNumber} `;
     }
 
-    const homeLeagueTeam = LeagueTeams.findOne(this.homeTeamId);
     const awayLeagueTeam = LeagueTeams.findOne(this.awayTeamId);
 
-    const awaySummary = `${awayPick}${awayLeagueTeam.abbreviation}`;
-    const homeSummary = `${homePick}${homeLeagueTeam.abbreviation}`;
-
-    return `${awaySummary} at ${homeSummary}`;
+    return `${awayPick}${awayLeagueTeam.abbreviation}`;
   },
 });
 
