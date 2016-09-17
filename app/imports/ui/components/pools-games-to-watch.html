@@ -1,5 +1,5 @@
 <template name="Pools_games_to_watch">
-  <h4>Games to watch this week</h4>
+  <h4>Games to watch</h4>
 
   <div class="container">
     <div class="row">
@@ -31,26 +31,21 @@
                 {{/if}}
               </td>
             </tr>
+
+            {{#if game.interestRatingJustification}}
+              <tr>
+                <td colspan="4">
+                  <i>{{game.interestRatingJustification}}</i>
+                </td>
+              </tr>
+            {{/if}}
+
             </tbody>
           </table>
         </div>
       {{/each}}
     </div>
   </div>
-
-  <table class="table table-striped table-bordered">
-    <tbody>
-    {{#each poolGameInterestRating in poolGameInterestRatings}}
-      <tr>
-        <td>
-          <b>{{poolGameInterestRating.gameTitle}}</b><br/>
-          {{poolGameInterestRating.justification}}<br/>
-          {{poolGameInterestRating.gameTime}}<br/>
-        </td>
-      </tr>
-    {{/each}}
-    </tbody>
-  </table>
 
   {{#unless currentUser}}
     Login to see your current teams!

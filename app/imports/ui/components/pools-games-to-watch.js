@@ -30,7 +30,7 @@ Template.Pools_games_to_watch.helpers({
 
   myTeamClass: (leagueTeamId) => {
     if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
-      return 'active';
+      return 'info';
     }
     return '';
   },
@@ -67,7 +67,7 @@ Template.Pools_games_to_watch.onCreated(function () {
       });
 
       this.subscribe('poolTeamPicks.ofPoolTeam', this.data.poolTeamId, () => {
-        log.debug(`poolTeamPicks.ofPoolTeam subscription ready: ${Games.find().count()}`);
+        log.debug(`poolTeamPicks.ofPoolTeam subscription ready: ${PoolTeamPicks.find().count()}`);
       });
 
       this.subscribe('poolGameInterestRatings.ofPool', this.data.poolId, () => {
