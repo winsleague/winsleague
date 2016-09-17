@@ -10,7 +10,6 @@ import './pools-show-page.html';
 import '../components/pools-header';
 import '../components/pools-pick-quality';
 import '../components/pools-season-switcher';
-import '../components/pools-my-games';
 import '../components/pools-games-to-watch';
 
 import { Pools } from '../../api/pools/pools';

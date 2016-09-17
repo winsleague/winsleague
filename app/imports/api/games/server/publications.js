@@ -79,7 +79,7 @@ function todaysGames(seasonId, poolTeamId) {
   });
 }
 
-Meteor.publish('relevantGames.ofPoolTeamId', function relevantGamesOfPoolTeamId(poolTeamId) {
+Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeamId) {
   log.info('checking!', poolTeamId);
 
   check(poolTeamId, Match.Maybe(String));

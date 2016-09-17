@@ -10,15 +10,11 @@
       }}
 
       {{#if isLatestSeason}}
-        {{> Pools_my_games
+        {{> Pools_games_to_watch
           leagueId=leagueId
           seasonId=seasonId
           poolId=poolId
           poolTeamId=myPoolTeamId
-        }}
-
-        {{> Pools_games_to_watch
-          poolId=poolId
         }}
       {{/if}}
 
