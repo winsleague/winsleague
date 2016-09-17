@@ -11,6 +11,7 @@
           <th>Team</th>
           <th>Record</th>
           <th>Pick Quality</th>
+          <th>+/-</th>
           <th>&nbsp;</th>
         </tr>
         </thead>
@@ -20,6 +21,7 @@
             <td class="PoolTeamPick">#{{poolTeamPick.pickNumber}} {{leagueTeamName poolTeamPick.leagueTeamId}}</td>
             <td>{{poolTeamPick.record}}</td>
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
+            <td>{{poolTeamPick.plusMinus}}</td>
             <td>
               {{#if isCommissioner}}
                 <a href="{{pathFor 'PoolTeamPicks.edit' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPick._id}}" class="PoolTeamPicks_edit">Edit</a>

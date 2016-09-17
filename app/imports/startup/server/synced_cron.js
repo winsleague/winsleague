@@ -6,6 +6,7 @@ import NflGameData from '../../api/games/server/nfl_game_data';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
+import RatingCalculator from '../../api/pool_game_interest_ratings/server/calculator';
 import WeeklyLeaderboardEmail from '../../api/emails/server/weekly-leaderboard-email';
 import WeeklyGamesToWatchEmail from '../../api/emails/server/weekly-games-to-watch';
 
@@ -78,7 +79,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Send weekly leaderboard emails',
     schedule(parser) {
-      return parser.text('at 6:00 am on Tuesday');
+      return parser.text('at 10:00 am on Tuesday'); // 2am-ish PST
     },
     job() {
       try {
@@ -87,6 +88,23 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
         log.error(e);
         handleError(e, {
           job: 'WeeklyLeaderboardEmail.sendAll()',
+        });
+      }
+    },
+  });
+
+  SyncedCron.add({
+    name: 'Refresh weekly games to watch',
+    schedule(parser) {
+      return parser.text('at 11:00 am on Tuesday'); // 3am-ish PST
+    },
+    job() {
+      try {
+        RatingCalculator.calculateAllInterestRatings();
+      } catch (e) {
+        log.error(e);
+        handleError(e, {
+          job: 'RatingCalculator.calculateAllInterestRatings();',
         });
       }
     },

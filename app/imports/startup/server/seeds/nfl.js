@@ -153,7 +153,7 @@ export default {
         conference: 'NFC', division: 'West',
       },
       {
-        cityName: 'St. Louis', mascotName: 'Rams', abbreviation: 'STL',
+        cityName: 'Los Angeles', mascotName: 'Rams', abbreviation: 'LA',
         conference: 'NFC', division: 'West',
       },
     ];

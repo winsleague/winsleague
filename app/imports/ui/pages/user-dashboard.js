@@ -6,7 +6,7 @@ import { Pools } from '../../api/pools/pools';
 
 import './user-dashboard.html';
 
-import './pools-wins';
+import '../components/pools-wins';
 
 Template.User_dashboard.helpers({
   pools: () => Pools.find({}, { sort: { updatedAt: -1, createdAt: -1 } }),
