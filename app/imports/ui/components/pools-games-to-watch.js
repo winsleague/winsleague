@@ -17,7 +17,10 @@ function myLeagueTeams(poolTeamId) {
 }
 
 Template.Pools_games_to_watch.helpers({
-  games: () => Games.find({},
+  games: () => Games.find(
+    {
+      seasonId: Template.currentData().seasonId,
+    },
     {
       sort: {
         gameDate: 1,
@@ -48,9 +51,9 @@ Template.Pools_games_to_watch.helpers({
 
 Template.Pools_games_to_watch.onCreated(function () {
   new SimpleSchema({
-    leagueId: { type: String, optional: true },
-    seasonId: { type: String, optional: true },
-    poolId: { type: String, optional: true },
+    leagueId: { type: String },
+    seasonId: { type: String },
+    poolId: { type: String },
     poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
