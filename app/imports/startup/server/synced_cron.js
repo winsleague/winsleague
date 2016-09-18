@@ -28,7 +28,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh NFL standings',
     schedule(parser) {
-      return parser.recur().every(10).minute();
+      return parser.recur().every(5).minute();
     },
     job() {
       try {
@@ -62,7 +62,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh MLB standings',
     schedule(parser) {
-      return parser.recur().every(10).minute();
+      return parser.recur().every(5).minute();
     },
     job() {
       try {

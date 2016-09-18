@@ -2,35 +2,39 @@
   {{#if Template.subscriptionsReady}}
     {{> Pools_header poolId=poolId seasonId=seasonId }}
 
-    {{#if poolTeamCount}}
-      {{> Pools_wins
-        poolId=poolId
-        seasonId=seasonId
-        isCommissioner=isCommissioner
-      }}
+    {{> Pools_wins
+      poolId=poolId
+      seasonId=seasonId
+      isCommissioner=isCommissioner
+      poolTeamId=myPoolTeamId
+    }}
 
-      {{#if isLatestSeason}}
-        {{> Pools_games_to_watch
-          poolId=poolId
-        }}
-      {{/if}}
-
-      {{> Pools_pick_quality
+    {{#if isLatestSeason}}
+      {{> Pools_games_to_watch
         leagueId=leagueId
         seasonId=seasonId
         poolId=poolId
-        tableTitle="Best Pick Quality"
-        sort=-1
-      }}
-
-      {{> Pools_pick_quality
-        leagueId=leagueId
-        seasonId=seasonId
-        poolId=poolId
-        tableTitle="Worst Pick Quality"
-        sort=1
+        poolTeamId=myPoolTeamId
       }}
     {{/if}}
+
+    {{> Pools_pick_quality
+      leagueId=leagueId
+      seasonId=seasonId
+      poolId=poolId
+      tableTitle="Best Pick Quality"
+      sort=-1
+      poolTeamId=myPoolTeamId
+    }}
+
+    {{> Pools_pick_quality
+      leagueId=leagueId
+      seasonId=seasonId
+      poolId=poolId
+      tableTitle="Worst Pick Quality"
+      sort=1
+      poolTeamId=myPoolTeamId
+    }}
 
     {{> Pools_season_switcher
       poolId=poolId

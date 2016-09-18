@@ -27,6 +27,16 @@ Template.Pools_pick_quality.helpers({
   leagueTeamName: (leagueTeamId) => LeagueTeams.findOne(leagueTeamId).abbreviation,
 
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
+
+  myTeamClass: (poolTeamId) => {
+    if (poolTeamId === Template.currentData().poolTeamId) {
+      if (Template.currentData().sort === -1) {
+        return 'success';
+      }
+      return 'danger';
+    }
+    return '';
+  },
 });
 
 Template.Pools_pick_quality.onCreated(function () {
@@ -36,6 +46,7 @@ Template.Pools_pick_quality.onCreated(function () {
     poolId: { type: String },
     tableTitle: { type: String },
     sort: { type: Number },
+    poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
   this.getPoolTeam = (poolTeamId) => PoolTeams.findOne(poolTeamId);
