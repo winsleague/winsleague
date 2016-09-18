@@ -19,6 +19,7 @@ Template.Pools_wins.helpers({
         totalGames: 1,  // if two teams are tied in wins,
                         // rank the one with fewest games played higher
         totalPlusMinus: -1,
+        userTeamName: 1, // just in case everyone is tied, let's sort predictably
       },
     });
   },

@@ -21,6 +21,7 @@ Template.Pools_games_to_watch.helpers({
     {
       sort: {
         gameDate: 1,
+        gameId: 1,
       },
     }),
 
