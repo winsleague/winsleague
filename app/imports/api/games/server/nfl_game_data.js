@@ -58,7 +58,7 @@ export default {
       const gameId = gameData[10];
       const status = cleanStatus(gameData[2]);
       const quarter = gameData[2].toLowerCase();
-      const timeRemaining = moment(gameData[3], 'hh:mm').format('h:mm'); // '09:32'
+      const timeRemaining = moment(gameData[3], 'mm:ss').format('m:ss'); // '09:32'
       const homeScore = gameData[7];
       const awayScore = gameData[5];
 
