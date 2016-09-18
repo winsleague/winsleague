@@ -16,15 +16,15 @@
           <table class="table">
             <tbody>
               <tr>
-                <td class="col-xs-6 {{myTeamClass game.homeTeamId}}">
-                  {{#strongWinner isWinner=game.isHomeWinner}}
-                    {{game.homeTeamName poolId seasonId}}
+                <td class="col-xs-6 {{myTeamClass game.awayTeamId}}">
+                  {{#strongWinner isWinner=game.isAwayWinner}}
+                    {{game.awayTeamName poolId seasonId}}
                   {{/strongWinner}}
                 </td>
-                <td class="col-xs-1 {{myTeamClass game.homeTeamId}} text-right">
+                <td class="col-xs-1 {{myTeamClass game.awayTeamId}} text-right">
                   {{#if game.showScore}}
-                    {{#strongWinner isWinner=game.isHomeWinner}}
-                      {{game.homeScore}}
+                    {{#strongWinner isWinner=game.isAwayWinner}}
+                      {{game.awayScore}}
                     {{/strongWinner}}
                   {{/if}}
                 </td>
@@ -34,15 +34,15 @@
                 </td>
               </tr>
               <tr>
-                <td class="{{myTeamClass game.awayTeamId}}">
-                  {{#strongWinner isWinner=game.isAwayWinner}}
-                    {{game.awayTeamName poolId seasonId}}
+                <td class="{{myTeamClass game.homeTeamId}}">
+                  {{#strongWinner isWinner=game.isHomeWinner}}
+                    {{game.homeTeamName poolId seasonId}}
                   {{/strongWinner}}
                 </td>
-                <td class="{{myTeamClass game.awayTeamId}} text-right">
+                <td class="{{myTeamClass game.homeTeamId}} text-right">
                   {{#if game.showScore}}
-                    {{#strongWinner isWinner=game.isAwayWinner}}
-                      {{game.awayScore}}
+                    {{#strongWinner isWinner=game.isHomeWinner}}
+                      {{game.homeScore}}
                     {{/strongWinner}}
                   {{/if}}
                 </td>
@@ -69,7 +69,8 @@
   </div>
 
   {{#unless currentUser}}
-    Login to see your current teams!
+    <a href="/sign-in">Login to see your current teams!</a>
+    <br/>
   {{/unless}}
 
   <br/>
