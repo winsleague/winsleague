@@ -188,7 +188,10 @@ Games.helpers({
       return this.friendlyDate();
     } else if (this.status === 'in progress') {
       if (this.quarter) {
-        return `${this.quarter} ${this.timeRemaining}`;
+        if (isNaN(this.quarter)) {
+          return `${this.quarter} ${this.timeRemaining}`; // overtime
+        }
+        return `Q${this.quarter} ${this.timeRemaining}`;
       } else if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
