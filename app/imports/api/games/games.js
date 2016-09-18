@@ -137,7 +137,10 @@ Games.helpers({
 
     const homeLeagueTeam = LeagueTeams.findOne(this.homeTeamId);
 
-    return `${homePick}${homeLeagueTeam.abbreviation}`;
+    if (homeLeagueTeam) {
+      return `${homePick}${homeLeagueTeam.abbreviation}`;
+    }
+    return '';
   },
 
   awayTeamName(poolId, seasonId) {
@@ -154,8 +157,10 @@ Games.helpers({
     }
 
     const awayLeagueTeam = LeagueTeams.findOne(this.awayTeamId);
-
-    return `${awayPick}${awayLeagueTeam.abbreviation}`;
+    if (awayLeagueTeam) {
+      return `${awayPick}${awayLeagueTeam.abbreviation}`;
+    }
+    return '';
   },
 
   friendlyDate() {
