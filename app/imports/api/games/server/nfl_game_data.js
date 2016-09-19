@@ -92,8 +92,6 @@ export default {
       throw new Error('League is not found!');
     }
 
-    Games.remove({ leagueId: league._id, seasonId: season._id });
-
     for (let week = 1; week <= 17; week++) {
       this.ingestWeekData(season, week);
     }
@@ -127,7 +125,7 @@ export default {
         $regex: new RegExp(game.hnn, 'i'),
       },
     });
-    if (! homeLeagueTeam) {
+    if (!homeLeagueTeam) {
       throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.hnn}`);
     }
 
@@ -138,23 +136,28 @@ export default {
         $options: 'i',
       },
     });
-    if (! awayLeagueTeam) {
+    if (!awayLeagueTeam) {
       throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.vnn}`);
     }
 
-    Games.insert({
-      leagueId,
-      seasonId: season._id,
-      gameId: game.gsis,
-      gameDate,
-      week,
-      homeTeamId: homeLeagueTeam._id,
-      homeScore: game.hs,
-      awayTeamId: awayLeagueTeam._id,
-      awayScore: game.vs,
-      quarter: friendlyQuarter(game.q),
-      status: cleanStatus(game.q),
-    });
+    const result = Games.upsert(
+      {
+        leagueId,
+        seasonId: season._id,
+        gameId: game.gsis,
+      }, {
+        $set: {
+          gameDate,
+          week,
+          homeTeamId: homeLeagueTeam._id,
+          homeScore: game.hs,
+          awayTeamId: awayLeagueTeam._id,
+          awayScore: game.vs,
+          quarter: friendlyQuarter(game.q),
+          status: cleanStatus(game.q),
+        },
+      });
+    log.debug(`Games.upsert for leagueId ${leagueId}, seasonId ${season._id}, gameId: ${game.gsis}: gameDate ${gameDate}, week ${week}, homeTeamId ${homeLeagueTeam._id}, ${result.numberAffected} affected`);
   },
 
   parseGameDate(game) {
