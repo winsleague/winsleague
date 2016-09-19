@@ -1,0 +1,64 @@
+version: v1.5.2
+ignore: {}
+patch:
+  'npm:minimatch:20160620':
+    - node-pre-gyp > tar-pack > fstream-ignore > minimatch:
+        patched: '2016-09-19T02:14:33.726Z'
+    - fstream-ignore > minimatch:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > tar-pack > fstream-ignore > minimatch:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > rimraf > glob > minimatch:
+        patched: '2016-09-19T02:14:33.726Z'
+    - node-pre-gyp > rimraf > glob > minimatch:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > glob > minimatch:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:node-uuid:20160328':
+    - node-pre-gyp > request > node-uuid:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > request > node-uuid:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:request:20160119':
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > request:
+        patched: '2016-09-19T02:14:33.726Z'
+    - node-pre-gyp > request:
+        patched: '2016-09-19T02:14:33.726Z'
+    - loggly > request:
+        patched: '2016-09-19T02:14:33.726Z'
+    - winston-loggly-bulk > node-loggly-bulk > request:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:semver:20150403':
+    - semver:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > semver:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:tar:20151103':
+    - node-pre-gyp > tar-pack > tar:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > tar-pack > tar:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:tough-cookie:20160722':
+    - loggly > request > tough-cookie:
+        patched: '2016-09-19T02:14:33.726Z'
+    - winston-loggly-bulk > node-loggly-bulk > request > tough-cookie:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > request > tough-cookie:
+        patched: '2016-09-19T02:14:33.726Z'
+    - node-pre-gyp > request > tough-cookie:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:bl:20160119':
+    - node-pre-gyp > request > bl:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > request > bl:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:hawk:20160119':
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > request > hawk:
+        patched: '2016-09-19T02:14:33.726Z'
+    - node-pre-gyp > request > hawk:
+        patched: '2016-09-19T02:14:33.726Z'
+  'npm:is-my-json-valid:20160118':
+    - node-pre-gyp > request > har-validator > is-my-json-valid:
+        patched: '2016-09-19T02:14:33.726Z'
+    - spacejam > try-thread-sleep > thread-sleep > node-pre-gyp > request > har-validator > is-my-json-valid:
+        patched: '2016-09-19T02:14:33.726Z'
