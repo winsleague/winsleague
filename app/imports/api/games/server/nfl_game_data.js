@@ -57,7 +57,7 @@ export default {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = gameData[10];
       const status = cleanStatus(gameData[2]);
-      const quarter = gameData[2];
+      const quarter = gameData[2].toLowerCase();
       const timeRemaining = gameData[3].length ? moment(gameData[3], 'mm:ss').format('m:ss') : ''; // '09:32'
       const homeScore = gameData[7];
       const awayScore = gameData[5];
