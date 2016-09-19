@@ -92,8 +92,6 @@ export default {
       throw new Error('League is not found!');
     }
 
-    Games.remove({ leagueId: league._id, seasonId: season._id });
-
     for (let week = 1; week <= 17; week++) {
       this.ingestWeekData(season, week);
     }
