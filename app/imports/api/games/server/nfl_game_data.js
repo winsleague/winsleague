@@ -58,7 +58,7 @@ export default {
       const gameId = gameData[10];
       const status = cleanStatus(gameData[2]);
       const quarter = gameData[2].toLowerCase();
-      const timeRemaining = moment(gameData[3], 'mm:ss').format('m:ss'); // '09:32'
+      const timeRemaining = gameData[3].length ? moment(gameData[3], 'mm:ss').format('m:ss') : ''; // '09:32'
       const homeScore = gameData[7];
       const awayScore = gameData[5];
 
@@ -83,12 +83,12 @@ export default {
   },
 
   ingestSeasonData(season) {
-    if (! season) {
+    if (!season) {
       throw new Error('Season is null!');
     }
 
     const league = LeagueFinder.getByName('NFL');
-    if (! league) {
+    if (!league) {
       throw new Error('League is not found!');
     }
 

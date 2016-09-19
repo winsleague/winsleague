@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import moment from 'moment-timezone';
+import { _ } from 'lodash';
 
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { LeagueTeams } from '../league_teams/league_teams';
@@ -194,7 +195,7 @@ Games.helpers({
     } else if (this.status === 'in progress') {
       if (this.quarter) {
         const q = (!isNaN(this.quarter) ? 'Q' : '');
-        return `${q}${this.quarter} ${this.timeRemaining}`;
+        return `${q}${_.capitalize(this.quarter)} ${this.timeRemaining}`;
       } else if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
