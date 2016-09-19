@@ -68,6 +68,6 @@ export default {
         awayWins, awayLosses, awayTies,
         pointsFor, pointsAgainst,
       } });
-    log.debug(`SeasonLeagueTeams.upsert: ${result.numberAffected} rows affected`);
+    log.debug(`SeasonLeagueTeams.upsert for leagueId ${leagueId}, seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
   },
 };
