@@ -37,7 +37,7 @@ Template.Pools_wins.helpers({
     'commissionerUserId'),
 
   myTeamClass: (poolTeamId) => {
-    if (poolTeamId === Template.currentData().poolTeamId) {
+    if (poolTeamId === Template.instance().getMyPoolTeamId()) {
       return 'info';
     }
     return '';
@@ -63,6 +63,18 @@ Template.Pools_wins.onCreated(function () {
   };
 
   this.getPool = () => Pools.findOne(this.data.poolId);
+
+  this.getMyPoolTeamId = () => {
+    if (this.data.poolTeamId) {
+      return this.data.poolTeamId;
+    }
+
+    const poolTeam = PoolTeams.findOne({
+      seasonId: this.getSeasonId(),
+      userId: Meteor.userId(),
+    });
+    return _.get(poolTeam, '_id');
+  };
 
   this.autorun(() => {
     this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId, () => {
