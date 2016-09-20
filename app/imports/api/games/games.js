@@ -1,5 +1,12 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import moment from 'moment-timezone';
+import { _ } from 'lodash';
+
+import { PoolTeams } from '../pool_teams/pool_teams';
+import { LeagueTeams } from '../league_teams/league_teams';
+import { PoolTeamPicks } from '../pool_team_picks/pool_team_picks';
+import { PoolGameInterestRatings } from '../pool_game_interest_ratings/pool_game_interest_ratings';
 
 export const Games = new Mongo.Collection('games');
 
@@ -43,11 +50,23 @@ Games.schema = new SimpleSchema({
     type: String,
     allowedValues: ['scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   },
-  period: { // quarter if NFL or NBA, inning if MLB, period if NHL
+  quarter: {
     type: String,
     allowedValues: ['pregame', '1', '2', 'halftime', '3', '4',
-      '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
       'overtime', 'final', 'final overtime'],
+    optional: true,
+  },
+  inning: {
+    type: String,
+    allowedValues: ['pregame', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+      '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+      'final'],
+    optional: true,
+  },
+  topInning: {
+    type: String,
+    allowedValues: ['Y', 'N'],
+    optional: true,
   },
   timeRemaining: {
     type: String,
@@ -81,6 +100,130 @@ Games.schema = new SimpleSchema({
 });
 
 Games.attachSchema(Games.schema);
+
+function ordinalSuffixOf(i) {
+  const j = i % 10;
+  const k = i % 100;
+  if (j === 1 && k !== 11) {
+    return `${i}st`;
+  }
+  if (j === 2 && k !== 12) {
+    return `${i}nd`;
+  }
+  if (j === 3 && k !== 13) {
+    return `${i}rd`;
+  }
+  return `${i}th`;
+}
+
+Games.helpers({
+  title(poolId, seasonId) {
+    // "Noah's #6 NYG at Charlie's #8 GB"
+
+    return `${this.awayTeamName(poolId, seasonId)} at ${this.homeTeamName(poolId, seasonId)}`;
+  },
+
+  homeTeamName(poolId, seasonId) {
+    const homePoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.homeTeamId,
+    });
+
+    let homePick = '';
+    if (homePoolTeamPick) {
+      const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
+      homePick = `${homePoolTeam.userTeamName}'s #${homePoolTeamPick.pickNumber} `;
+    }
+
+    const homeLeagueTeam = LeagueTeams.findOne(this.homeTeamId);
+
+    if (homeLeagueTeam) {
+      return `${homePick}${homeLeagueTeam.abbreviation}`;
+    }
+    return '';
+  },
+
+  awayTeamName(poolId, seasonId) {
+    const awayPoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.awayTeamId,
+    });
+
+    let awayPick = '';
+    if (awayPoolTeamPick) {
+      const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
+      awayPick = `${awayPoolTeam.userTeamName}'s #${awayPoolTeamPick.pickNumber} `;
+    }
+
+    const awayLeagueTeam = LeagueTeams.findOne(this.awayTeamId);
+    if (awayLeagueTeam) {
+      return `${awayPick}${awayLeagueTeam.abbreviation}`;
+    }
+    return '';
+  },
+
+  friendlyDate() {
+    let date = '';
+
+    const gameDate = moment(this.gameDate);
+    const today = moment();
+    const isGameToday = gameDate.date() === today.date() &&
+      gameDate.month() === today.month() &&
+      gameDate.year() === today.year();
+
+    if (!isGameToday) {
+      date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D, ');
+    }
+
+    const timezoneGuess = moment.tz.guess();
+    let time = '';
+    if (timezoneGuess) {
+      time = moment(this.gameDate).tz(timezoneGuess).format('ha z');
+    } else {
+      const est = moment(this.gameDate).tz('US/Eastern').format('ha');
+      const pst = moment(this.gameDate).tz('US/Pacific').format('ha');
+      time = `${est} ET / ${pst} PT`;
+    }
+    return `${date}${time}`;
+  },
+
+  timeStatus() {
+    if (this.status === 'scheduled') {
+      return this.friendlyDate();
+    } else if (this.status === 'in progress') {
+      if (this.quarter) {
+        const q = (!isNaN(this.quarter) ? 'Q' : '');
+        return `${q}${_.capitalize(this.quarter)} ${this.timeRemaining}`;
+      } else if (this.inning) {
+        const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
+        return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
+      }
+    }
+    return 'Final';
+  },
+
+  showScore() {
+    return this.status !== 'scheduled';
+  },
+
+  interestRatingJustification() {
+    const rating = PoolGameInterestRatings.findOne({ gameId: this._id });
+    if (rating) {
+      return rating.justification;
+    }
+    return '';
+  },
+
+  isHomeWinner() {
+    return (this.status === 'completed' && this.homeScore > this.awayScore);
+  },
+
+  isAwayWinner() {
+    return (this.status === 'completed' && this.awayScore > this.homeScore);
+  },
+});
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Games.deny({

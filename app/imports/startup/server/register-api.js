@@ -1,4 +1,5 @@
 import '../../api/games/server/hooks';
+import '../../api/games/server/publications';
 import '../../api/games/methods';
 
 import '../../api/league_teams/finder';

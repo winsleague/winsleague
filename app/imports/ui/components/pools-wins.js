@@ -19,6 +19,7 @@ Template.Pools_wins.helpers({
         totalGames: 1,  // if two teams are tied in wins,
                         // rank the one with fewest games played higher
         totalPlusMinus: -1,
+        userTeamName: 1, // just in case everyone is tied, let's sort predictably
       },
     });
   },
@@ -34,6 +35,13 @@ Template.Pools_wins.helpers({
 
   isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(),
     'commissionerUserId'),
+
+  myTeamClass: (poolTeamId) => {
+    if (poolTeamId === Template.currentData().poolTeamId) {
+      return 'info';
+    }
+    return '';
+  },
 });
 
 Template.Pools_wins.onCreated(function () {
@@ -43,10 +51,13 @@ Template.Pools_wins.onCreated(function () {
     seasonId: { type: String, optional: true },
     poolId: { type: String },
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
+    poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
   this.getSeasonId = () => {
-    if (this.data.seasonId) return this.data.seasonId;
+    if (this.data.seasonId) {
+      return this.data.seasonId;
+    }
 
     return _.get(this.getPool(), 'latestSeasonId');
   };
