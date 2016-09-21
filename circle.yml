@@ -18,8 +18,8 @@ dependencies:
     - "app/.meteor/local/bundler-cache"
     - "app/.meteor/local/isopacks"
     - "app/.meteor/local/plugin-cache"
-    - "/home/ubuntu/nvm/versions/node/v5.2.0/bin"
-    - "/home/ubuntu/nvm/versions/node/v5.2.0/lib/node_modules"
+    - "/opt/circleci/nodejs/v5.2.0/bin"
+    - "/opt/circleci/nodejs/v5.2.0/lib/node_modules"
 
   override:
     - (cd app; ./.testing/upgrade_chrome_version.sh)
