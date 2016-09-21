@@ -11,7 +11,7 @@ import './pools-wins.html';
 
 Template.Pools_wins.helpers({
   poolTeams: () => {
-    const seasonId = Template.instance().getSeasonId();
+    const seasonId = Template.currentData().seasonId;
     const poolId = Template.currentData().poolId;
     return PoolTeams.find({ poolId, seasonId }, {
       sort: {
@@ -37,7 +37,7 @@ Template.Pools_wins.helpers({
     'commissionerUserId'),
 
   myTeamClass: (poolTeamId) => {
-    if (poolTeamId === Template.currentData().poolTeamId) {
+    if (poolTeamId === Template.instance().getMyPoolTeamId()) {
       return 'info';
     }
     return '';
@@ -48,21 +48,25 @@ Template.Pools_wins.onCreated(function () {
   new SimpleSchema({
     title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
     linkTitle: { type: Boolean, optional: true, defaultValue: false },
-    seasonId: { type: String, optional: true },
+    seasonId: { type: String },
     poolId: { type: String },
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
     poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
-  this.getSeasonId = () => {
-    if (this.data.seasonId) {
-      return this.data.seasonId;
+  this.getPool = () => Pools.findOne(this.data.poolId);
+
+  this.getMyPoolTeamId = () => {
+    if (this.data.poolTeamId) {
+      return this.data.poolTeamId;
     }
 
-    return _.get(this.getPool(), 'latestSeasonId');
+    const poolTeam = PoolTeams.findOne({
+      seasonId: this.data.seasonId,
+      userId: Meteor.userId(),
+    });
+    return _.get(poolTeam, '_id');
   };
-
-  this.getPool = () => Pools.findOne(this.data.poolId);
 
   this.autorun(() => {
     this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId, () => {
