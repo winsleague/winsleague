@@ -11,7 +11,7 @@ import './pools-wins.html';
 
 Template.Pools_wins.helpers({
   poolTeams: () => {
-    const seasonId = Template.instance().getSeasonId();
+    const seasonId = Template.currentData().seasonId;
     const poolId = Template.currentData().poolId;
     return PoolTeams.find({ poolId, seasonId }, {
       sort: {
