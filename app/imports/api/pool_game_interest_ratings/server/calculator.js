@@ -41,9 +41,9 @@ export default {
 
     const season = SeasonFinder.getLatestByLeagueName('NFL');
 
-    const startMoment = moment(season.startDate);
+    const startMoment = moment(season.startDate).startOf('day');
 
-    const daysSinceStart = moment().diff(startMoment, 'days');
+    const daysSinceStart = moment().startOf('day').diff(startMoment, 'days');
 
     // we subtract 2 from daysSinceStart so that Wednesday is the start of the week
     const week = Math.round((daysSinceStart - 2) / 7) + 1;
