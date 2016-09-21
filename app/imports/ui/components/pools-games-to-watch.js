@@ -50,12 +50,15 @@ Template.Pools_games_to_watch.helpers({
 });
 
 Template.Pools_games_to_watch.onCreated(function () {
-  new SimpleSchema({
+  const schema = new SimpleSchema({
     leagueId: { type: String },
     seasonId: { type: String },
     poolId: { type: String },
     poolTeamId: { type: String, optional: true },
-  }).validate(this.data);
+    includeInterestRatings: { type: Boolean, defaultValue: true },
+  });
+  schema.clean(this.data);
+  schema.validate(this.data);
 
   this.getMyLeagueTeams = () => {
     const poolTeamPicks = PoolTeamPicks.find({
@@ -74,9 +77,11 @@ Template.Pools_games_to_watch.onCreated(function () {
         log.debug(`poolTeamPicks.ofPoolTeam subscription ready: ${PoolTeamPicks.find().count()}`);
       });
 
-      this.subscribe('poolGameInterestRatings.ofPool', this.data.poolId, () => {
-        log.debug(`poolGameInterestRatings.of_pool subscription ready: ${PoolGameInterestRatings.find().count()}`);
-      });
+      if (this.data.includeInterestRatings) {
+        this.subscribe('poolGameInterestRatings.ofPool', this.data.poolId, () => {
+          log.debug(`poolGameInterestRatings.of_pool subscription ready: ${PoolGameInterestRatings.find().count()}`);
+        });
+      }
     });
   });
 });

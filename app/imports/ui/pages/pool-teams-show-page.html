@@ -32,6 +32,15 @@
         </tbody>
       </table>
     </div>
+    <br/>
+
+    {{> Pools_games_to_watch
+      leagueId=leagueId
+      seasonId=seasonId
+      poolId=poolId
+      poolTeamId=poolTeamId
+      includeInterestRatings=false
+    }}
 
     {{#if isCommissioner}}
       {{#if isLatestSeason}}
