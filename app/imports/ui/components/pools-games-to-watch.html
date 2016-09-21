@@ -69,7 +69,9 @@
   </div>
 
   {{#unless currentUser}}
-    <a href="/sign-in">Login to see your current teams!</a>
+    <div class="alert alert-info" role="alert">
+      <a href="/sign-in">Login to see your teams' games!</a>
+    </div>
     <br/>
   {{/unless}}
 
