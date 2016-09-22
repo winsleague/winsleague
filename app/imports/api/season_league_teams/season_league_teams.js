@@ -122,6 +122,7 @@ Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
   leagueId: Factory.get('league'),
   seasonId: Factory.get('season'),
   leagueTeamId: Factory.get('leagueTeam'),
+  abbreviation: 'NYG',
 }).after(factory => {
   const season = Seasons.findOne(factory.seasonId);
   season.leagueId = factory.leagueId;

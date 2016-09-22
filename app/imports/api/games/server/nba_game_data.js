@@ -32,17 +32,25 @@ export default {
   },
 
   saveTeam(league, season, teamData) {
-    const leagueTeam = LeagueTeamFinder.getByName(
-      league, teamData.first_name, teamData.last_name);
-    if (!leagueTeam) throw new Error('Unable to find team!', teamData);
+    const leagueTeam = LeagueTeamFinder.getByName(league, teamData.first_name, teamData.last_name);
+    if (!leagueTeam) {
+      throw new Error('Unable to find team!', teamData);
+    }
 
     SeasonLeagueTeams.upsert(
-      { leagueId: league._id, seasonId: season._id, leagueTeamId: leagueTeam._id },
-      { $set: {
-        wins: teamData.won, losses: teamData.lost, ties: 0,
-        homeWins: teamData.home_won, homeLosses: teamData.home_lost, homeTies: 0,
-        awayWins: teamData.away_won, awayLosses: teamData.away_lost, awayTies: 0,
-        pointsFor: teamData.points_for, pointsAgainst: teamData.points_against,
-      } });
+      {
+        leagueId: league._id,
+        seasonId: season._id,
+        leagueTeamId: leagueTeam._id,
+        abbreviation: leagueTeam.abbrevation,
+      },
+      {
+        $set: {
+          wins: teamData.won, losses: teamData.lost, ties: 0,
+          homeWins: teamData.home_won, homeLosses: teamData.home_lost, homeTies: 0,
+          awayWins: teamData.away_won, awayLosses: teamData.away_lost, awayTies: 0,
+          pointsFor: teamData.points_for, pointsAgainst: teamData.points_against,
+        }
+      });
   },
 };
