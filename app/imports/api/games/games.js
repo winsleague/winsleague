@@ -118,9 +118,9 @@ function ordinalSuffixOf(i) {
 
 Games.helpers({
   title(poolId, seasonId) {
-    // "Noah's #6 NYG at Charlie's #8 GB"
+    // "Noah's #6 NYG (2-1) at Charlie's #8 GB (1-2)"
 
-    return `${this.awayTeamName(poolId, seasonId)} at ${this.homeTeamName(poolId, seasonId)}`;
+    return `${this.awayTeamOwner(poolId, seasonId)} ${this.awayTeamPick(poolId, seasonId)} at ${this.homeTeamOwner(poolId, seasonId)} ${this.homeTeamPick(poolId, seasonId)}`;
   },
 
   homeTeamOwner(poolId, seasonId) {
