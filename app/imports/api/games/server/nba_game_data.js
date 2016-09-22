@@ -42,7 +42,7 @@ export default {
         leagueId: league._id,
         seasonId: season._id,
         leagueTeamId: leagueTeam._id,
-        abbreviation: leagueTeam.abbrevation,
+        abbreviation: leagueTeam.abbreviation,
       },
       {
         $set: {
