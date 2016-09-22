@@ -45,14 +45,16 @@ Template.Pools_wins.helpers({
 });
 
 Template.Pools_wins.onCreated(function () {
-  new SimpleSchema({
+  const schema = new SimpleSchema({
     title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
     linkTitle: { type: Boolean, optional: true, defaultValue: false },
-    seasonId: { type: String },
     poolId: { type: String },
+    seasonId: { type: String },
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
     poolTeamId: { type: String, optional: true },
-  }).validate(this.data);
+  });
+  schema.clean(this.data);
+  schema.validate(this.data);
 
   this.getPool = () => Pools.findOne(this.data.poolId);
 
@@ -62,6 +64,7 @@ Template.Pools_wins.onCreated(function () {
     }
 
     const poolTeam = PoolTeams.findOne({
+      poolId: this.data.poolId,
       seasonId: this.data.seasonId,
       userId: Meteor.userId(),
     });
