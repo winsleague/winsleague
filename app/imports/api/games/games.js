@@ -167,8 +167,8 @@ Games.helpers({
   friendlyDate() {
     let date = '';
 
-    const gameDate = moment(this.gameDate);
-    const today = moment();
+    const gameDate = moment(this.gameDate).tz('US/Pacific');
+    const today = moment().tz('US/Pacific');
     const isGameToday = gameDate.date() === today.date() &&
       gameDate.month() === today.month() &&
       gameDate.year() === today.year();
@@ -179,7 +179,7 @@ Games.helpers({
 
     const timezoneGuess = moment.tz.guess();
     let time = '';
-    if (timezoneGuess) {
+    if (timezoneGuess && !timezoneGuess.includes('UTC')) {
       time = moment(this.gameDate).tz(timezoneGuess).format('ha z');
     } else {
       const est = moment(this.gameDate).tz('US/Eastern').format('ha');
