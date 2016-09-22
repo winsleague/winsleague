@@ -68,7 +68,7 @@ Template.Pools_games_to_watch.onCreated(function () {
   };
 
   this.autorun(() => {
-    this.subscribe('leagueTeams.ofLeague', this.data.leagueId, () => {
+    this.subscribe('seasonLeagueTeams.ofLeagueSeason', this.data.leagueId, this.data.seasonId, () => {
       this.subscribe('myGames.ofPoolTeam', this.data.poolTeamId, () => {
         log.debug(`myGames.ofPoolTeam subscription ready: ${Games.find().count()}`);
       });

@@ -22,6 +22,9 @@ SeasonLeagueTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  abbreviation: {
+    type: String,
+  },
   wins: {
     type: Number,
     defaultValue: 0,
