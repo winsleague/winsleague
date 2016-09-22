@@ -18,7 +18,7 @@
               <tr>
                 <td class="col-xs-6 {{myTeamClass game.awayTeamId}}">
                   {{#strongWinner isWinner=game.isAwayWinner}}
-                    {{game.awayTeamName poolId seasonId}}
+                    <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
                   {{/strongWinner}}
                 </td>
                 <td class="col-xs-1 {{myTeamClass game.awayTeamId}} text-right">
@@ -36,7 +36,7 @@
               <tr>
                 <td class="{{myTeamClass game.homeTeamId}}">
                   {{#strongWinner isWinner=game.isHomeWinner}}
-                    {{game.homeTeamName poolId seasonId}}
+                    <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
                   {{/strongWinner}}
                 </td>
                 <td class="{{myTeamClass game.homeTeamId}} text-right">

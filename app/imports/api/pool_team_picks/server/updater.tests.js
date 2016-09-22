@@ -35,6 +35,7 @@ describe('Pool Team Picks Updater', function () {
         leagueId: poolTeam.leagueId,
         seasonId: poolTeam.seasonId,
         leagueTeamId: leagueTeam._id,
+        abbreviation: leagueTeam.abbreviation,
         wins: currentWins, // intentionally not 16 games
         losses: currentLosses,
         pointsFor: 10,
