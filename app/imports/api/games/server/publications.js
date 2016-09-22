@@ -2,7 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
 import { Games } from '../games';
@@ -25,9 +25,9 @@ function relevantNflWeek(seasonId) {
   // if Tuesday, look backward
 
   const season = Seasons.findOne(seasonId);
-  const startMoment = moment(season.startDate).startOf('day');
+  const startMoment = moment(season.startDate).tz('US/Pacific').startOf('day');
 
-  const daysSinceStart = moment().startOf('day').diff(startMoment, 'days');
+  const daysSinceStart = moment().tz('US/Pacific').startOf('day').diff(startMoment, 'days');
 
   // we subtract 2 from daysSinceStart so that Wednesday is the start of the week
   return Math.round((daysSinceStart - 2) / 7) + 1;
@@ -61,8 +61,8 @@ function relevantNflGames(seasonId, poolTeamId) {
 function todaysGames(seasonId, poolTeamId) {
   const myTeams = myLeagueTeams(poolTeamId);
 
-  const today = moment().startOf('day').toDate();
-  const tomorrow = moment().startOf('day').add(1, 'days').toDate();
+  const today = moment().tz('US/Pacific').startOf('day').toDate();
+  const tomorrow = moment().tz('US/Pacific').startOf('day').add(1, 'days').toDate();
 
   return Games.find({
     seasonId,
