@@ -11,7 +11,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+.coverage
 app/lcov.info
 app/report.json
 

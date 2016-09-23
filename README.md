@@ -10,9 +10,9 @@
 
 1. Launch the development environment:
 
-    ```bash
-    $ (cd app; meteor)
-    ```
+```bash
+$ (cd app; meteor npm install; meteor)
+```
 
 2. Open a browser to view the app:
 
@@ -46,14 +46,11 @@ $ (cd app; meteor npm run test-watch)
 $ (cd app; meteor npm run test-app-watch)
 ```
 
-### Running tests with code coverage
+### Exporting coverage reports
 
 ```
-$ (cd app; COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor test --driver-package practicalmeteor:mocha)
-$ http://localhost:3000
+$ (cd app; meteor npm run coverage)
 ```
-
-In browser console, run `Meteor.sendCoverage(function(stats,err) { console.log(stats,err);});` to capture client coverage.
 
 ### Running acceptance tests
 
