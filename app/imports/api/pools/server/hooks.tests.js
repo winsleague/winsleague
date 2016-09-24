@@ -11,6 +11,8 @@ import './hooks';
 import { assert } from 'chai';
 
 describe('Pools Hooks', function () {
+  this.timeout(5000);
+
   it('should remove its PoolTeams when Pool is removed', function () {
     const poolTeam = Factory.create('poolTeam');
     const poolId = poolTeam.poolId;

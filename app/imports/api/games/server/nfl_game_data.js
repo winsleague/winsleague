@@ -8,7 +8,7 @@ import SeasonFinder from '../../seasons/finder';
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { Games } from '../games';
 
-function cleanPeriod(old) {
+function friendlyQuarter(old) {
   if (old === 'P') { return 'pregame'; }
   if (old === 'O') { return 'overtime'; }
   if (old === 'F') { return 'final'; }
@@ -17,8 +17,8 @@ function cleanPeriod(old) {
 }
 
 function cleanStatus(old) {
-  if (old === 'P') { return 'scheduled'; }
-  if (old === 'F' || old === 'FO') { return 'completed'; }
+  if (old === 'P' || old === 'Pregame') { return 'scheduled'; }
+  if (old === 'F' || old === 'Final' || old === 'FO' || old === 'final overtime') { return 'completed'; }
   return 'in progress';
 }
 
@@ -33,6 +33,7 @@ export default {
     if (!season) {
       throw new Error(`Season is not found for league ${league._id}!`);
     }
+    const seasonId = season._id;
 
     if (today.isSameOrBefore(season.startDate) && !force) {
       log.info(`Not refreshing NFL standings because ${today.toDate()} is before ${season.startDate}`);
@@ -55,18 +56,21 @@ export default {
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = gameData[10];
-      const period = gameData[2].toLowerCase();
-      const timeRemaining = gameData[3];
+      const status = cleanStatus(gameData[2]);
+      const quarter = gameData[2].toLowerCase();
+      const timeRemaining = gameData[3].length ? moment(gameData[3], 'mm:ss').format('m:ss') : ''; // '09:32'
       const homeScore = gameData[7];
       const awayScore = gameData[5];
 
       const affected = Games.update(
         {
           leagueId: league._id,
+          seasonId,
           gameId,
         }, {
           $set: {
-            period,
+            quarter,
+            status,
             timeRemaining,
             homeScore,
             awayScore,
@@ -74,21 +78,19 @@ export default {
         }
       );
 
-      log.info(`Updated game with leagueId: ${league._id} and gameId: ${gameId} (affected: ${affected})`);
+      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
     }
   },
 
   ingestSeasonData(season) {
-    if (! season) {
+    if (!season) {
       throw new Error('Season is null!');
     }
 
     const league = LeagueFinder.getByName('NFL');
-    if (! league) {
+    if (!league) {
       throw new Error('League is not found!');
     }
-
-    Games.remove({ leagueId: league._id, seasonId: season._id });
 
     for (let week = 1; week <= 17; week++) {
       this.ingestWeekData(season, week);
@@ -123,7 +125,7 @@ export default {
         $regex: new RegExp(game.hnn, 'i'),
       },
     });
-    if (! homeLeagueTeam) {
+    if (!homeLeagueTeam) {
       throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.hnn}`);
     }
 
@@ -134,23 +136,28 @@ export default {
         $options: 'i',
       },
     });
-    if (! awayLeagueTeam) {
+    if (!awayLeagueTeam) {
       throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.vnn}`);
     }
 
-    Games.insert({
-      leagueId,
-      seasonId: season._id,
-      gameId: game.gsis,
-      gameDate,
-      week,
-      homeTeamId: homeLeagueTeam._id,
-      homeScore: game.hs,
-      awayTeamId: awayLeagueTeam._id,
-      awayScore: game.vs,
-      period: cleanPeriod(game.q),
-      status: cleanStatus(game.q),
-    });
+    const result = Games.upsert(
+      {
+        leagueId,
+        seasonId: season._id,
+        gameId: game.gsis,
+      }, {
+        $set: {
+          gameDate,
+          week,
+          homeTeamId: homeLeagueTeam._id,
+          homeScore: game.hs,
+          awayTeamId: awayLeagueTeam._id,
+          awayScore: game.vs,
+          quarter: friendlyQuarter(game.q),
+          status: cleanStatus(game.q),
+        },
+      });
+    log.debug(`Games.upsert for leagueId ${leagueId}, seasonId ${season._id}, gameId: ${game.gsis}: gameDate ${gameDate}, week ${week}, homeTeamId ${homeLeagueTeam._id}, ${result.numberAffected} affected`);
   },
 
   parseGameDate(game) {

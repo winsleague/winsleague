@@ -18,8 +18,8 @@ dependencies:
     - "app/.meteor/local/bundler-cache"
     - "app/.meteor/local/isopacks"
     - "app/.meteor/local/plugin-cache"
-    - "/home/ubuntu/nvm/versions/node/v5.2.0/bin"
-    - "/home/ubuntu/nvm/versions/node/v5.2.0/lib/node_modules"
+    - "/opt/circleci/nodejs/v5.2.0/bin"
+    - "/opt/circleci/nodejs/v5.2.0/lib/node_modules"
 
   override:
     - (cd app; ./.testing/upgrade_chrome_version.sh)
@@ -34,7 +34,7 @@ checkout:
 
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; ./.testing/unit_and_full_app_run.sh) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run test) ;; 1) (cd app; meteor npm run test-app) ;; 2) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
         parallel: true
 
 deployment:

@@ -6,8 +6,9 @@ import NflGameData from '../../api/games/server/nfl_game_data';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
 
+import RatingCalculator from '../../api/pool_game_interest_ratings/server/calculator';
 import WeeklyLeaderboardEmail from '../../api/emails/server/weekly-leaderboard-email';
-import WeeklyTopUpcomingGamesEmail from '../../api/emails/server/weekly-top-upcoming-games';
+import WeeklyGamesToWatchEmail from '../../api/emails/server/weekly-games-to-watch';
 
 if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
@@ -27,7 +28,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh NFL standings',
     schedule(parser) {
-      return parser.recur().every(10).minute();
+      return parser.recur().every(5).minute();
     },
     job() {
       try {
@@ -61,7 +62,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh MLB standings',
     schedule(parser) {
-      return parser.recur().every(10).minute();
+      return parser.recur().every(5).minute();
     },
     job() {
       try {
@@ -78,7 +79,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Send weekly leaderboard emails',
     schedule(parser) {
-      return parser.text('at 6:00 am on Tuesday');
+      return parser.text('at 10:00 am on Tuesday'); // 2am-ish PST
     },
     job() {
       try {
@@ -93,17 +94,34 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   });
 
   SyncedCron.add({
-    name: 'Send weekly top upcoming games emails',
+    name: 'Refresh weekly games to watch',
+    schedule(parser) {
+      return parser.text('at 11:00 am on Tuesday'); // 3am-ish PST
+    },
+    job() {
+      try {
+        RatingCalculator.calculateAllInterestRatings();
+      } catch (e) {
+        log.error(e);
+        handleError(e, {
+          job: 'RatingCalculator.calculateAllInterestRatings();',
+        });
+      }
+    },
+  });
+
+  SyncedCron.add({
+    name: 'Send weekly games to watch emails',
     schedule(parser) {
       return parser.text('at 5:00 pm on Wednesday');
     },
     job() {
       try {
-        WeeklyTopUpcomingGamesEmail.sendAll();
+        WeeklyGamesToWatchEmail.sendAll();
       } catch (e) {
         log.error(e);
         handleError(e, {
-          job: 'WeeklyTopUpcomingGamesEmail.sendAll()',
+          job: 'WeeklyGamesToWatchEmail.sendAll()',
         });
       }
     },

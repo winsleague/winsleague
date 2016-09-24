@@ -109,6 +109,10 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: Number,
     defaultValue: 0,
   },
+  plusMinus: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.

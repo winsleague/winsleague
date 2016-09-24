@@ -1,4 +1,5 @@
 import '../../api/games/server/hooks';
+import '../../api/games/server/publications';
 import '../../api/games/methods';
 
 import '../../api/league_teams/finder';
@@ -19,6 +20,7 @@ import '../../api/pools/server/hooks';
 import '../../api/pools/server/publications';
 
 import '../../api/season_league_teams/server/hooks';
+import '../../api/season_league_teams/server/publications';
 
 import '../../api/seasons/finder';
 import '../../api/seasons/server/publications';

@@ -1,6 +1,7 @@
 import log from '../../../utils/log';
 
 import { Games } from '../../games/games';
+import { LeagueTeams } from '../../league_teams/league_teams';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 import '../../season_league_teams/server/hooks';
 
@@ -61,13 +62,16 @@ export default {
       }
     });
 
+    const abbreviation = LeagueTeams.findOne(leagueTeamId).abbreviation;
+
     const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId },
       { $set: {
+        abbreviation,
         wins, losses, ties,
         homeWins, homeLosses, homeTies,
         awayWins, awayLosses, awayTies,
         pointsFor, pointsAgainst,
       } });
-    log.debug(`SeasonLeagueTeams.upsert: ${result.numberAffected} rows affected`);
+    log.debug(`SeasonLeagueTeams.upsert for leagueId ${leagueId}, seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
   },
 };

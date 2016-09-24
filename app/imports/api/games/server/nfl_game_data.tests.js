@@ -12,7 +12,9 @@ import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
 import { Games } from '../../games/games';
 
-describe('NFL Game Data', () => {
+describe('NFL Game Data', function () {
+  this.timeout(10000);
+
   beforeEach(() => {
     NflUtils.create();
 
@@ -37,6 +39,7 @@ describe('NFL Game Data', () => {
   describe('Ingest Week Data', () => {
     it('should ingest all games for week 17', () => {
       const game = Games.findOne({ gameId: '56744' });
+      assert.equal(game.status, 'in progress');
       assert.equal(game.homeScore, 10);
       assert.equal(game.awayScore, 7);
     });
@@ -55,7 +58,7 @@ describe('NFL Game Data', () => {
       HTTP.get.restore();
 
       const game = Games.findOne({ gameId: '56744' });
-
+      assert.equal(game.status, 'completed');
       assert.equal(game.homeScore, 22);
       assert.equal(game.awayScore, 17);
     });

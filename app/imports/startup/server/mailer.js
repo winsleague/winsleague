@@ -3,7 +3,7 @@ import { Mailer } from 'meteor/lookback:emails';
 import log from '../../utils/log';
 
 import weeklyLeaderboardTemplate from './mailer/weekly-leaderboard-template';
-import weeklyTopUpcomingGamesTemplate from './mailer/weekly-top-upcoming-games-template';
+import weeklyGamesToWatchTemplate from './mailer/weekly-games-to-watch-template';
 
 Mailer.config({
   from: 'Wins League <no-reply@winsleague.com>',
@@ -21,7 +21,7 @@ Meteor.startup(() => {
   Mailer.init({
     templates: {
       weeklyLeaderboardTemplate,
-      weeklyTopUpcomingGamesTemplate,
+      weeklyGamesToWatchTemplate,
     },
     helpers: {},
     layout: {

@@ -8,7 +8,7 @@ import { PoolGameInterestRatings } from '../../pool_game_interest_ratings/pool_g
 
 export default {
   sendAll() {
-    log.info('Sending out weekly top upcoming games email');
+    log.info('Sending out weekly games to watch email');
 
     RatingCalculator.calculateAllInterestRatings();
 
@@ -18,7 +18,7 @@ export default {
   },
 
   sendPoolEmail(pool) {
-    log.info(`Emailing top upcoming games email to pool ${pool._id} for season ${pool.latestSeasonId}`);
+    log.info(`Emailing games to watch email to pool ${pool._id} for season ${pool.latestSeasonId}`);
 
     const poolId = pool._id;
     const poolName = pool.name;
@@ -45,8 +45,8 @@ export default {
 
     const success = Mailer.send({
       to: playerEmails,
-      subject: `Top Upcoming Games for ${poolName}`,
-      template: 'weeklyTopUpcomingGamesTemplate',
+      subject: `Games to watch for ${poolName}`,
+      template: 'weeklyGamesToWatchTemplate',
       data: {
         poolId,
         poolName,
@@ -55,7 +55,7 @@ export default {
     });
 
     if (!success) {
-      throwError(`Error sending Top Upcoming Games mail to ${poolName}`);
+      throwError(`Error sending games to watch email to ${poolName}`);
     }
   },
 };

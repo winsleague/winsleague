@@ -126,7 +126,8 @@ export default {
       homeScore: _.get(game, 'home_team_runs', 0),
       awayTeamId: getLeagueTeamIdByAbbreviation(league, game.away_name_abbrev),
       awayScore: _.get(game, 'away_team_runs', 0),
-      period: _.get(game, 'inning', 'pregame'),
+      inning: _.get(game, 'inning', 'pregame'),
+      topInning: _.get(game, 'top_inning'),
       status: cleanStatus(game.status),
     };
 
@@ -146,11 +147,11 @@ export default {
   refreshStandings() {
     const league = LeagueFinder.getByName('MLB');
 
-    let day = moment();
+    let day = moment.tz('US/Pacific');
 
     // if early in the morning, download yesterday's feed to make sure we got all the late games
     if (day.hour() < 6) {
-      day = moment().add(-1, 'days');
+      day = day.add(-1, 'days');
     }
 
     // only run during season

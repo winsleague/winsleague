@@ -12,7 +12,9 @@ import PoolTeamPicksUpdater from '../../pool_team_picks/server/updater';
 
 import { assert } from 'chai';
 
-describe('Pool Team Picks Updater', () => {
+describe('Pool Team Picks Updater', function () {
+  this.timeout(5000);
+
   describe('updatePickQuality', () => {
     it('should update the pick quality ', () => {
       const poolTeam = Factory.create('poolTeam');
@@ -33,8 +35,11 @@ describe('Pool Team Picks Updater', () => {
         leagueId: poolTeam.leagueId,
         seasonId: poolTeam.seasonId,
         leagueTeamId: leagueTeam._id,
+        abbreviation: leagueTeam.abbreviation,
         wins: currentWins, // intentionally not 16 games
         losses: currentLosses,
+        pointsFor: 10,
+        pointsAgainst: 4,
       });
 
       let poolTeamPick = Factory.create('poolTeamPick', {
@@ -51,6 +56,7 @@ describe('Pool Team Picks Updater', () => {
       assert.equal(poolTeamPick.actualWins, currentWins, 'actualWins');
       assert.equal(poolTeamPick.expectedWins.toFixed(1), '3.3', 'expectedWins'); // toFixed returns string
       assert.equal(poolTeamPick.pickQuality.toFixed(1), '6.8', 'pickQuality'); // toFixed returns string
+      assert.equal(poolTeamPick.plusMinus, 6, 'plusMinus');
     });
   });
 });

@@ -11,6 +11,8 @@ import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { assert } from 'chai';
 
 describe('Pool Teams Hooks', function () {
+  this.timeout(5000);
+
   it('should remove its PoolTeamPicks when PoolTeam is removed', function () {
     const poolTeamPick = Factory.create('poolTeamPick');
     const poolTeamId = poolTeamPick.poolTeamId;

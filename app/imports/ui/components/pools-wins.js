@@ -11,7 +11,7 @@ import './pools-wins.html';
 
 Template.Pools_wins.helpers({
   poolTeams: () => {
-    const seasonId = Template.instance().getSeasonId();
+    const seasonId = Template.currentData().seasonId;
     const poolId = Template.currentData().poolId;
     return PoolTeams.find({ poolId, seasonId }, {
       sort: {
@@ -19,6 +19,7 @@ Template.Pools_wins.helpers({
         totalGames: 1,  // if two teams are tied in wins,
                         // rank the one with fewest games played higher
         totalPlusMinus: -1,
+        userTeamName: 1, // just in case everyone is tied, let's sort predictably
       },
     });
   },
@@ -34,24 +35,41 @@ Template.Pools_wins.helpers({
 
   isCommissioner: () => Meteor.userId() === _.get(Template.instance().getPool(),
     'commissionerUserId'),
+
+  myTeamClass: (poolTeamId) => {
+    if (poolTeamId === Template.instance().getMyPoolTeamId()) {
+      return 'info';
+    }
+    return '';
+  },
 });
 
 Template.Pools_wins.onCreated(function () {
-  new SimpleSchema({
+  const schema = new SimpleSchema({
     title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
     linkTitle: { type: Boolean, optional: true, defaultValue: false },
-    seasonId: { type: String, optional: true },
     poolId: { type: String },
+    seasonId: { type: String },
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
-  }).validate(this.data);
-
-  this.getSeasonId = () => {
-    if (this.data.seasonId) return this.data.seasonId;
-
-    return _.get(this.getPool(), 'latestSeasonId');
-  };
+    poolTeamId: { type: String, optional: true },
+  });
+  schema.clean(this.data);
+  schema.validate(this.data);
 
   this.getPool = () => Pools.findOne(this.data.poolId);
+
+  this.getMyPoolTeamId = () => {
+    if (this.data.poolTeamId) {
+      return this.data.poolTeamId;
+    }
+
+    const poolTeam = PoolTeams.findOne({
+      poolId: this.data.poolId,
+      seasonId: this.data.seasonId,
+      userId: Meteor.userId(),
+    });
+    return _.get(poolTeam, '_id');
+  };
 
   this.autorun(() => {
     this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId, () => {

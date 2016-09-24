@@ -15,7 +15,7 @@
         </thead>
         <tbody>
         {{#each poolTeamPick in poolTeamPicks}}
-          <tr id="{{poolTeamPick._id}}">
+          <tr id="{{poolTeamPick._id}}" class="{{myTeamClass poolTeamPick.poolTeamId}}">
             <td>
               <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamPick.poolTeamId}}">{{playerName poolTeamPick}}</a>
             </td>
