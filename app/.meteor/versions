@@ -64,7 +64,7 @@ lai:collection-extensions@0.1.4
 launch-screen@1.0.12
 less@2.6.5
 livedata@1.0.18
-lmieulet:meteor-coverage@0.9.4
+lmieulet:meteor-coverage@1.0.1
 localstorage@1.0.11
 logging@1.0.14
 lookback:emails@0.7.4
