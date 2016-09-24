@@ -54,7 +54,6 @@ xolvio:cleaner
 practicalmeteor:mocha
 dispatch:mocha-phantomjs
 dburles:factory
-lmieulet:meteor-coverage
 practicalmeteor:mocha-console-runner
 kadira:flow-router
 hwillson:stub-collections
@@ -63,3 +62,4 @@ tmeasday:acceptance-test-driver
 yogiben:autoform-modals
 okgrow:analytics
 reywood:publish-composite
+lmieulet:meteor-coverage

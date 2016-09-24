@@ -1,0 +1,13 @@
+
+{
+  "coverage": {
+    "coverage_app_folder": "/Users/noah/Projects/league-wins-pool/app/",
+    "is_coverage_active": true,
+    "verbose": false
+  },
+  "public": {
+    "analyticsSettings": {
+      "Google Analytics": {"trackingId": "XXXXX"}
+    }
+  }
+}
