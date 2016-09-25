@@ -9,14 +9,15 @@ import { PoolTeams } from '../pool_teams';
 Meteor.publish('poolTeams.ofPool', function poolTeamsOfPool(poolId, seasonId = null) {
   check(poolId, String);
   check(seasonId, Match.Maybe(String));
-  if (!poolId) return this.ready();
+  if (!poolId) {
+    return this.ready();
+  }
 
   if (seasonId) {
     check(seasonId, String);
     return PoolTeams.find({ poolId, seasonId });
-  } else {
-    return PoolTeams.find({ poolId });
   }
+  return PoolTeams.find({ poolId });
 });
 
 Meteor.publish('poolTeams.single', function poolTeamsSingle(_id) {
