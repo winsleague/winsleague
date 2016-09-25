@@ -226,7 +226,11 @@ Games.helpers({
     } else if (this.status === 'in progress') {
       if (this.quarter) {
         const q = (!isNaN(this.quarter) ? 'Q' : '');
-        return `${q}${_.capitalize(this.quarter)} ${this.timeRemaining}`;
+        const quarter = `${q}${_.capitalize(this.quarter)}`;
+        if (this.timeRemaining) {
+          return `${quarter} ${this.timeRemaining}`;
+        }
+        return quarter;
       } else if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;

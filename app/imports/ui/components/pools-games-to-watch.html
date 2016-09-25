@@ -16,12 +16,12 @@
           <table class="table" id="game{{game._id}}">
             <tbody>
               <tr>
-                <td class="col-xs-6 {{myTeamClass game.awayTeamId}}">
+                <td class="col-xs-6 {{myTeamClass game false}}">
                   {{#strongWinner isWinner=game.isAwayWinner}}
                     <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
                   {{/strongWinner}}
                 </td>
-                <td class="col-xs-1 {{myTeamClass game.awayTeamId}} text-right">
+                <td class="col-xs-1 {{myTeamClass game false}} text-right">
                   {{#if game.showScore}}
                     {{#strongWinner isWinner=game.isAwayWinner}}
                       {{game.awayScore}}
@@ -34,12 +34,12 @@
                 </td>
               </tr>
               <tr>
-                <td class="{{myTeamClass game.homeTeamId}}">
+                <td class="{{myTeamClass game true}}">
                   {{#strongWinner isWinner=game.isHomeWinner}}
                     <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
                   {{/strongWinner}}
                 </td>
-                <td class="{{myTeamClass game.homeTeamId}} text-right">
+                <td class="{{myTeamClass game true}} text-right">
                   {{#if game.showScore}}
                     {{#strongWinner isWinner=game.isHomeWinner}}
                       {{game.homeScore}}

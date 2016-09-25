@@ -9,11 +9,16 @@ import { PoolGameInterestRatings } from '../../api/pool_game_interest_ratings/po
 
 import './pools-games-to-watch.html';
 
-function myLeagueTeams(poolTeamId) {
-  const poolTeamPicks = PoolTeamPicks.find({
-    poolTeamId,
-  });
-  return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+function myTeamClassHelper(leagueTeamId, myScore, theirScore) {
+  if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
+    if (myScore > theirScore) {
+      return 'success';
+    } else if (myScore < theirScore) {
+      return 'danger';
+    }
+    return 'info';
+  }
+  return '';
 }
 
 Template.Pools_games_to_watch.helpers({
@@ -32,11 +37,11 @@ Template.Pools_games_to_watch.helpers({
 
   seasonId: () => Template.currentData().seasonId,
 
-  myTeamClass: (leagueTeamId) => {
-    if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
-      return 'info';
+  myTeamClass: (game, isHomeTeam) => {
+    if (isHomeTeam) {
+      return myTeamClassHelper(game.homeTeamId, game.homeScore, game.awayScore);
     }
-    return '';
+    return myTeamClassHelper(game.awayTeamId, game.awayScore, game.homeScore);
   },
 
   poolGameInterestRatings: () => {
