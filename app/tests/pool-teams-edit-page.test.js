@@ -66,7 +66,7 @@ describe('PoolTeams.edit page ui', () => {
 
     browser.waitForVisible('h2#Pools_title');
 
-    const rowCount = browser.elements("//table[@id='Pools_wins']/tbody/tr").value.length;
+    const rowCount = browser.elements("//table[@class='pools-wins']/tbody/tr").value.length;
 
     assert.equal(rowCount, 0);
   });
