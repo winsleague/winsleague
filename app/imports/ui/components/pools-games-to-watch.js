@@ -78,7 +78,9 @@ Template.Pools_games_to_watch.onCreated(function () {
         log.debug(`myGames.ofPoolTeam subscription ready: ${Games.find().count()}`);
       });
 
-      this.subscribe('poolTeamPicks.ofPoolTeam', this.data.poolTeamId, () => {
+      this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId);
+
+      this.subscribe('poolTeamPicks.ofPool', this.data.poolId, this.data.seasonId, () => {
         log.debug(`poolTeamPicks.ofPoolTeam subscription ready: ${PoolTeamPicks.find().count()}`);
       });
 
