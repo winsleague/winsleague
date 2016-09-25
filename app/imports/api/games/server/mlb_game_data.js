@@ -43,6 +43,8 @@ function cleanStatus(status) {
       return 'postponed';
     case 'Suspended':
       return 'suspended';
+    case 'Cancelled':
+      return 'cancelled';
     default:
       throw new Error(`Unrecognized status: ${status}`);
   }
