@@ -12,7 +12,12 @@ Template.Pools_records_pool_teams_most_season.helpers({
     const sort = Template.currentData().sort;
     const filter = { sort: {}, limit: 3 };
     filter.sort[metricField] = sort;
-    return PoolTeams.find({}, filter);
+    return PoolTeams.find(
+      {
+        poolId: Template.currentData().poolId,
+      },
+      filter
+    );
   },
 
   getMetric: (poolTeam) => _.get(poolTeam, Template.currentData().metricField),

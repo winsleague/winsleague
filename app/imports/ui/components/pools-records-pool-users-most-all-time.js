@@ -9,7 +9,15 @@ Template.Pools_records_pool_users_most_all_time.helpers({
   poolUsers: () => {
     const collection = CollectionCache.getCollection(Template.currentData().collectionName);
     const sort = Template.currentData().sort;
-    return collection.find({}, { sort: { metric: sort }, limit: 3 });
+    return collection.find(
+      {}, // don't filter by PoolId because we're only pulling from aggregate result
+      {
+        sort: {
+          metric: sort,
+        },
+        limit: 3,
+      }
+    );
   },
 });
 
