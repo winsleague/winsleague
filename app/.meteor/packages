@@ -14,7 +14,6 @@ tracker                 # Meteor's client-side reactive programming library
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-twbs:bootstrap
 promise
 
 
@@ -48,7 +47,6 @@ zimme:active-route
 useraccounts:bootstrap
 useraccounts:flow-routing
 u2622:persistent-session
-standard-minifier-css
 standard-minifier-js
 xolvio:cleaner
 practicalmeteor:mocha
@@ -63,3 +61,5 @@ tmeasday:acceptance-test-driver
 yogiben:autoform-modals
 okgrow:analytics
 reywood:publish-composite
+fourseven:scss
+juliancwirko:postcss

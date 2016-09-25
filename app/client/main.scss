@@ -1,0 +1,14 @@
+@import '{}/node_modules/bootstrap/scss/bootstrap.scss';
+
+html {
+  font-size: 14px;
+}
+
+body {
+  padding-top: 70px; // account for fixed top navbar
+}
+
+span.avoidwrap {
+  display:inline-block;
+}
+
