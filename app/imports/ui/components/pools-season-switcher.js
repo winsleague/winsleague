@@ -9,9 +9,7 @@ import './pools-season-switcher.html';
 
 Template.Pools_season_switcher.helpers({
   seasons: () => Seasons.find(
-    {
-      poolId: Template.currentData().poolId,
-    },
+    {},
     {
       sort: {
         year: -1,
