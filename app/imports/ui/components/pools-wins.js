@@ -38,10 +38,12 @@ Template.Pools_wins.helpers({
 
   myTeamClass: (poolTeamId) => {
     if (poolTeamId === Template.instance().getMyPoolTeamId()) {
-      return 'info';
+      return 'table-info';
     }
     return '';
   },
+
+  poolId: () => Template.currentData().poolId,
 });
 
 Template.Pools_wins.onCreated(function () {
@@ -77,3 +79,7 @@ Template.Pools_wins.onCreated(function () {
     });
   });
 });
+
+//Template.Pools_wins.onRendered(function () {
+//  this.$('[data-toggle="tooltip"]').tooltip();
+//});
