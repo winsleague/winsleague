@@ -1,34 +1,27 @@
 <template name="App_body">
-  <div class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Wins League</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            {{> Pools_menu}}
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="{{ActiveRoute.isActiveRoute 'Pools.new'}}">
-              <a id="Pools_new_link" class="hidden-xs" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
-              <a id="Pools_new_link" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
-            </li>
-            <li>
-              {{> atNavButton}}
-            </li>
-          </ul>
-        </div>
+  <nav class="navbar navbar-default navbar-fixed-top navbar-dark bg-primary">
+    <div>
+      <button class="navbar-toggler hidden-md-up pull-xs-left btn-primary" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
+        &#9776;
+      </button>
+      <a class="navbar-brand" href="/">Wins League</a>
+      <div class="pull-xs-right">
+        {{> atNavButton}}
       </div>
     </div>
-  </div>
-  <div class="container">
+    <div class="collapse navbar-toggleable-xs navbar-toggleable-sm" id="exCollapsingNavbar">
+      <div class="bg-inverse p-a-1">
+        <ul class="nav navbar-nav">
+          {{> Pools_menu}}
+          <li class="nav-item {{ActiveRoute.isActiveRoute 'Pools.new'}}">
+            <a id="Pools_new_link" class="nav-link hidden-sm-down" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
+            <a id="Pools_new_link" class="nav-link hidden-md-up nav-link-toggle" href="{{pathFor 'Pools.new'}}"><b>Create Pool</b></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
     {{> Template.dynamic template=content}}
     <br/><br/>
   </div>
