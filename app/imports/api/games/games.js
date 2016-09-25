@@ -258,6 +258,10 @@ Games.helpers({
   isAwayWinner() {
     return (this.status === 'completed' && this.awayScore > this.homeScore);
   },
+
+  isCompleted() {
+    return this.status === 'completed';
+  },
 });
 
 // Deny all client-side updates since we will be using methods to manage this collection
