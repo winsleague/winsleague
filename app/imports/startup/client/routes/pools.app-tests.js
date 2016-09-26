@@ -47,7 +47,6 @@ if (Meteor.isClient) {
       const page = {
         getPoolTeamRowSelector: poolTeamId => `tr[id="${poolTeamId}"]`,
         getSeasonSwitcherSelector: seasonId => `a[id="${seasonId}"]`,
-        getSecondPoolTeamRowSelector: () => 'tr:nth-child(2)',
       };
 
       beforeEach(() =>
