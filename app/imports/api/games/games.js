@@ -53,7 +53,7 @@ Games.schema = new SimpleSchema({
   quarter: {
     type: String,
     allowedValues: ['pregame', '1', '2', 'halftime', '3', '4', '5',
-      'final', 'final overtime'],
+      'suspended', 'final', 'final overtime'],
     optional: true,
   },
   inning: {
