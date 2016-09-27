@@ -4,6 +4,7 @@ import { LeagueTeams } from '../../league_teams/league_teams';
 import { PoolTeams } from '../pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
+import { Games } from '../../games/games';
 
 import PoolTeamPickUpdater from '../../pool_team_picks/server/updater';
 
@@ -15,6 +16,7 @@ export default {
     poolTeamPicks.forEach(poolTeamPick => {
       this.updatePoolTeamRecord(poolTeamPick.poolTeamId);
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
+      this.updatePoolTeamUndefeatedWeeks(poolTeamPick.poolTeamId);
     });
 
     log.debug(`Done finding PoolTeams who picked leagueTeamId ${leagueTeamId} for seasonId ${seasonId}`);
@@ -62,6 +64,58 @@ export default {
     PoolTeamPicks.find({ poolTeamId }).forEach(poolTeamPick => {
       PoolTeamPickUpdater.updatePickQuality(poolTeamPick);
     });
+  },
+
+  updatePoolTeamUndefeatedWeeks(poolTeamId) {
+    log.info('Updating PoolTeam undefeated and defeated weeks', poolTeamId);
+
+    let undefeatedWeeks = 0;
+    let defeatedWeeks = 0;
+
+    const poolTeam = PoolTeams.findOne(poolTeamId);
+    const seasonId = poolTeam.seasonId;
+
+    const picks = PoolTeamPicks.find({ poolTeamId });
+    const pickCount = picks.count();
+    if (pickCount === 0) {
+      return;
+    }
+
+    const leagueTeams = picks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+
+    for (let week = 1; week < 18; week++) {
+      const gamesWon = Games.find({
+        seasonId,
+        week,
+        status: 'completed',
+        winnerTeamId: { $in: leagueTeams },
+      });
+      if (gamesWon.count() === pickCount) {
+        undefeatedWeeks++;
+      }
+
+      const gamesLost = Games.find({
+        seasonId,
+        week,
+        status: 'completed',
+        loserTeamId: { $in: leagueTeams },
+      });
+      if (gamesLost.count() === pickCount) {
+        defeatedWeeks++;
+      }
+    }
+
+    const numberAffected = PoolTeams.direct.update(poolTeamId,
+      {
+        $set: {
+          undefeatedWeeks,
+          defeatedWeeks,
+        },
+      }
+    );
+
+    log.debug(`PoolTeams.update ${poolTeamId} with undefeatedWeeks: ${undefeatedWeeks}, defeatedWeeks: ${defeatedWeeks}, ` +
+      `numberAffected: ${numberAffected}`);
   },
 
   updateTeamSummary(poolTeamId) {

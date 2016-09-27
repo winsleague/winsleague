@@ -10,6 +10,7 @@ function updatePoolTeam(doc) {
   PoolTeamUpdater.updateTeamSummary(doc.poolTeamId);
   PoolTeamUpdater.updatePoolTeamRecord(doc.poolTeamId);
   PoolTeamUpdater.updatePoolTeamPickQuality(doc.poolTeamId);
+  PoolTeamUpdater.updatePoolTeamUndefeatedWeeks(doc.poolTeamId);
 
   const pool = Pools.findOne(doc.poolId);
   RatingCalculator.calculatePoolInterestRatings(pool);
