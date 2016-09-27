@@ -32,7 +32,7 @@ Meteor.methods({
     const userId = Accounts.createUser({ email: 'test@test.com', password: 'test' });
     const poolId = Factory.create('pool', { leagueId, latestSeasonId: seasonId, commissionerUserId: userId })._id;
     const poolTeamId = Factory.create('poolTeam', { seasonId, poolId, userId })._id;
-    Factory.create('poolTeamPick', { poolTeamId, leagueTeamId, seasonId });
+    Factory.create('poolTeamPick', { poolTeamId, poolId, leagueTeamId, seasonId });
 
     Factory.create('seasonLeagueTeam', {
       leagueId,

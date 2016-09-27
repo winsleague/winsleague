@@ -26,8 +26,6 @@ Template.Pools_pick_quality.helpers({
 
   leagueTeamName: (leagueTeamId) => LeagueTeams.findOne(leagueTeamId).abbreviation,
 
-  roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
-
   myTeamClass: (poolTeamId) => {
     if (poolTeamId === Template.currentData().poolTeamId) {
       if (Template.currentData().sort === -1) {

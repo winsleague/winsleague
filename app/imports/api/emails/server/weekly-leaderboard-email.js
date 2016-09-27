@@ -7,6 +7,8 @@ import Common from './common';
 import { Seasons } from '../../seasons/seasons';
 import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
+import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
+import { LeagueTeams } from '../../league_teams/league_teams';
 
 export default {
   sendAll() {
@@ -21,9 +23,7 @@ export default {
     });
   },
 
-  sendIndividual(poolId, seasonId) {
-    log.info(`Emailing weekly leaderboard report to pool ${poolId}`);
-
+  getEmailData(poolId, seasonId) {
     const pool = Pools.findOne(poolId);
     const poolName = pool.name;
     const poolTeams = PoolTeams.find({
@@ -36,18 +36,58 @@ export default {
       },
     });
 
+    const bestPick = PoolTeamPicks.findOne(
+      {
+        seasonId,
+        poolId,
+      },
+      {
+        sort: {
+          pickQuality: -1,
+        },
+      });
+    const bestPickPoolTeam = PoolTeams.findOne(bestPick.poolTeamId);
+    const bestPickLeagueTeam = LeagueTeams.findOne(bestPick.leagueTeamId);
+
+    const worstPick = PoolTeamPicks.findOne(
+      {
+        seasonId,
+        poolId,
+      },
+      {
+        sort: {
+          pickQuality: 1,
+        },
+      });
+    const worstPickPoolTeam = PoolTeams.findOne(worstPick.poolTeamId);
+    const worstPickLeagueTeam = LeagueTeams.findOne(worstPick.leagueTeamId);
+
+    return {
+      poolId,
+      seasonId,
+      poolName,
+      poolTeams,
+      bestPick,
+      bestPickPoolTeam,
+      bestPickLeagueTeam,
+      worstPick,
+      worstPickPoolTeam,
+      worstPickLeagueTeam,
+    };
+  },
+
+  sendIndividual(poolId, seasonId) {
+    log.info(`Emailing weekly leaderboard report to pool ${poolId}`);
+
     const playerEmails = Common.getPlayerEmails(poolId, seasonId);
+
+    const data = this.getEmailData(poolId, seasonId);
 
     const success = Mailer.send({
       to: playerEmails,
-      subject: `Wins Leaderboard for ${poolName}`,
+      subject: `Wins Leaderboard for ${data.poolName}`,
       template: 'weeklyLeaderboardTemplate',
-      data: {
-        poolId,
-        seasonId,
-        poolName,
-        poolTeams,
-      },
+      data,
     });
 
     if (!success) {
