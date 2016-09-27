@@ -77,31 +77,29 @@ export default {
 
     const picks = PoolTeamPicks.find({ poolTeamId });
     const pickCount = picks.count();
-    if (pickCount === 0) {
-      return;
-    }
+    if (pickCount > 0) {
+      const leagueTeams = picks.map(poolTeamPick => poolTeamPick.leagueTeamId);
 
-    const leagueTeams = picks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+      for (let week = 1; week < 18; week++) {
+        const gamesWon = Games.find({
+          seasonId,
+          week,
+          status: 'completed',
+          winnerTeamId: { $in: leagueTeams },
+        });
+        if (gamesWon.count() === pickCount) {
+          undefeatedWeeks++;
+        }
 
-    for (let week = 1; week < 18; week++) {
-      const gamesWon = Games.find({
-        seasonId,
-        week,
-        status: 'completed',
-        winnerTeamId: { $in: leagueTeams },
-      });
-      if (gamesWon.count() === pickCount) {
-        undefeatedWeeks++;
-      }
-
-      const gamesLost = Games.find({
-        seasonId,
-        week,
-        status: 'completed',
-        loserTeamId: { $in: leagueTeams },
-      });
-      if (gamesLost.count() === pickCount) {
-        defeatedWeeks++;
+        const gamesLost = Games.find({
+          seasonId,
+          week,
+          status: 'completed',
+          loserTeamId: { $in: leagueTeams },
+        });
+        if (gamesLost.count() === pickCount) {
+          defeatedWeeks++;
+        }
       }
     }
 
