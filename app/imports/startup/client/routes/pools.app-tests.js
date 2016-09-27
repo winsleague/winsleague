@@ -131,6 +131,10 @@ if (Meteor.isClient) {
           'table#pool_users_best_plus_minus_all_time tbody tr td.metric',
         getWorstPlusMinusAllTimeCellSelector: () =>
           'table#pool_users_worst_plus_minus_all_time tbody tr td.metric',
+        getMostUndefeatedWeeksAllTimeCellSelector: () =>
+          'table#pool_users_most_undefeated_weeks_all_time tbody tr td.metric',
+        getMostDefeatedWeeksAllTimeCellSelector: () =>
+          'table#pool_users_most_defeated_weeks_all_time tbody tr td.metric',
 
         getMostWinsSeasonCellSelector: () =>
           'table#pool_teams_most_wins_season tbody tr td.metric',
@@ -140,6 +144,10 @@ if (Meteor.isClient) {
           'table#pool_teams_best_plus_minus_season tbody tr td.metric',
         getWorstPlusMinusSeasonCellSelector: () =>
           'table#pool_teams_worst_plus_minus_season tbody tr td.metric',
+        getMostUndefeatedWeeksSeasonCellSelector: () =>
+          'table#pool_teams_most_undefeated_weeks_season tbody tr td.metric',
+        getMostDefeatedWeeksSeasonCellSelector: () =>
+          'table#pool_teams_most_defeated_weeks_season tbody tr td.metric',
 
         getBestPickQualitySeasonCellSelector: () =>
           'table#pool_team_picks_best_pick_quality_season tbody tr td.metric',
@@ -178,6 +186,18 @@ if (Meteor.isClient) {
         };
       });
 
+      it('should display the teams with the most undefeated weeks of all time', () => {
+        return () => {
+          assert.equal($(page.getMostUndefeatedWeeksAllTimeCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most defeated weeks of all time', () => {
+        return () => {
+          assert.equal($(page.getMostDefeatedWeeksAllTimeCellSelector()).text(), 0);
+        };
+      });
+
       it('should display the teams with the most wins in a single season', () => {
         return () => {
           assert.equal($(page.getMostWinsSeasonCellSelector()).text(), 10);
@@ -199,6 +219,18 @@ if (Meteor.isClient) {
       it('should display the teams with the worst point differential in a single season', () => {
         return () => {
           assert.equal($(page.getWorstPlusMinusSeasonCellSelector()).text(), 3);
+        };
+      });
+
+      it('should display the teams with the most undefeated weeks in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostUndefeatedWeeksSeasonCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most defeated weeks in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostDefeatedWeeksSeasonCellSelector()).text(), 0);
         };
       });
 

@@ -84,6 +84,16 @@ PoolTeams.schema = new SimpleSchema({
     type: Number,
     defaultValue: 0,
   },
+  undefeatedWeeks: { // only for NFL
+    type: Number,
+    optional: true,
+    defaultValue: 0,
+  },
+  defeatedWeeks: { // only for NFL
+    type: Number,
+    optional: true,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.

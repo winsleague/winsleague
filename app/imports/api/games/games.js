@@ -46,6 +46,16 @@ Games.schema = new SimpleSchema({
     type: Number,
     optional: true,
   },
+  winnerTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+  },
+  loserTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+  },
   status: {
     type: String,
     allowedValues: ['scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
