@@ -61,6 +61,8 @@ export default {
           awayTies: 0,
           pointsFor: teamData.points_for,
           pointsAgainst: teamData.points_against,
+          closeWins: 0,
+          closeLosses: 0,
         },
       });
   },
