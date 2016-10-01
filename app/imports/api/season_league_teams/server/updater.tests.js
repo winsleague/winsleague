@@ -45,6 +45,8 @@ describe('Season League Teams Updater', () => {
       });
       assert.equal(homeSeasonLeagueTeam.wins, 1, 'wins');
       assert.equal(homeSeasonLeagueTeam.losses, 0, 'losses');
+      assert.equal(homeSeasonLeagueTeam.closeWins, 0, 'closeWins');
+      assert.equal(homeSeasonLeagueTeam.closeLosses, 0, 'closeLosses');
     });
   });
 });
