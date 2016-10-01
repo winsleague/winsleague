@@ -1,5 +1,5 @@
-<template name="strongWinner">
-  {{#if isWinner}}
+<template name="strongContent">
+  {{#if isStrong}}
     <strong>{{> Template.contentBlock}}</strong>
   {{else}}
     {{> Template.contentBlock}}
@@ -13,37 +13,39 @@
     <div class="row">
       {{#each game in games}}
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-          <table class="table">
+          <table class="table" id="game{{game._id}}">
             <tbody>
               <tr>
-                <td class="col-xs-6 {{myTeamClass game.awayTeamId}}">
-                  {{#strongWinner isWinner=game.isAwayWinner}}
-                    {{game.awayTeamName poolId seasonId}}
-                  {{/strongWinner}}
+                <td class="col-xs-6 {{myTeamClass game false}}">
+                  {{#strongContent isStrong=game.isAwayWinner}}
+                    <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
+                  {{/strongContent}}
                 </td>
-                <td class="col-xs-1 {{myTeamClass game.awayTeamId}} text-right">
+                <td class="col-xs-1 {{myTeamClass game false}} text-right">
                   {{#if game.showScore}}
-                    {{#strongWinner isWinner=game.isAwayWinner}}
+                    {{#strongContent isStrong=game.isAwayWinner}}
                       {{game.awayScore}}
-                    {{/strongWinner}}
+                    {{/strongContent}}
                   {{/if}}
                 </td>
                 <td class="col-xs-1" rowspan="2">&nbsp;</td>
-                <td class="col-xs-4 text-muted" rowspan="2" style="vertical-align: middle !important;">
-                  {{game.timeStatus}}
+                <td class="col-xs-4 " rowspan="2" style="vertical-align: middle !important;">
+                  {{#strongContent isStrong=game.isCompleted}}
+                    {{game.timeStatus}}
+                  {{/strongContent}}
                 </td>
               </tr>
               <tr>
-                <td class="{{myTeamClass game.homeTeamId}}">
-                  {{#strongWinner isWinner=game.isHomeWinner}}
-                    {{game.homeTeamName poolId seasonId}}
-                  {{/strongWinner}}
+                <td class="{{myTeamClass game true}}">
+                  {{#strongContent isStrong=game.isHomeWinner}}
+                    <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
+                  {{/strongContent}}
                 </td>
-                <td class="{{myTeamClass game.homeTeamId}} text-right">
+                <td class="{{myTeamClass game true}} text-right">
                   {{#if game.showScore}}
-                    {{#strongWinner isWinner=game.isHomeWinner}}
+                    {{#strongContent isStrong=game.isHomeWinner}}
                       {{game.homeScore}}
-                    {{/strongWinner}}
+                    {{/strongContent}}
                   {{/if}}
                 </td>
               </tr>
@@ -69,7 +71,9 @@
   </div>
 
   {{#unless currentUser}}
-    <a href="/sign-in">Login to see your current teams!</a>
+    <div class="alert alert-info" role="alert">
+      <a href="/sign-in">Login to see your teams' games!</a>
+    </div>
     <br/>
   {{/unless}}
 

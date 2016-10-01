@@ -22,6 +22,9 @@ SeasonLeagueTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  abbreviation: {
+    type: String,
+  },
   wins: {
     type: Number,
     defaultValue: 0,
@@ -119,6 +122,7 @@ Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
   leagueId: Factory.get('league'),
   seasonId: Factory.get('season'),
   leagueTeamId: Factory.get('leagueTeam'),
+  abbreviation: 'NYG',
 }).after(factory => {
   const season = Seasons.findOne(factory.seasonId);
   season.leagueId = factory.leagueId;

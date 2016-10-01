@@ -9,11 +9,16 @@ import { PoolGameInterestRatings } from '../../api/pool_game_interest_ratings/po
 
 import './pools-games-to-watch.html';
 
-function myLeagueTeams(poolTeamId) {
-  const poolTeamPicks = PoolTeamPicks.find({
-    poolTeamId,
-  });
-  return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+function myTeamClassHelper(leagueTeamId, myScore, theirScore) {
+  if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
+    if (myScore > theirScore) {
+      return 'success';
+    } else if (myScore < theirScore) {
+      return 'danger';
+    }
+    return 'info';
+  }
+  return '';
 }
 
 Template.Pools_games_to_watch.helpers({
@@ -32,11 +37,11 @@ Template.Pools_games_to_watch.helpers({
 
   seasonId: () => Template.currentData().seasonId,
 
-  myTeamClass: (leagueTeamId) => {
-    if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
-      return 'info';
+  myTeamClass: (game, isHomeTeam) => {
+    if (isHomeTeam) {
+      return myTeamClassHelper(game.homeTeamId, game.homeScore, game.awayScore);
     }
-    return '';
+    return myTeamClassHelper(game.awayTeamId, game.awayScore, game.homeScore);
   },
 
   poolGameInterestRatings: () => {
@@ -50,12 +55,15 @@ Template.Pools_games_to_watch.helpers({
 });
 
 Template.Pools_games_to_watch.onCreated(function () {
-  new SimpleSchema({
+  const schema = new SimpleSchema({
     leagueId: { type: String },
     seasonId: { type: String },
     poolId: { type: String },
     poolTeamId: { type: String, optional: true },
-  }).validate(this.data);
+    includeInterestRatings: { type: Boolean, defaultValue: true },
+  });
+  schema.clean(this.data);
+  schema.validate(this.data);
 
   this.getMyLeagueTeams = () => {
     const poolTeamPicks = PoolTeamPicks.find({
@@ -65,18 +73,22 @@ Template.Pools_games_to_watch.onCreated(function () {
   };
 
   this.autorun(() => {
-    this.subscribe('leagueTeams.ofLeague', this.data.leagueId, () => {
+    this.subscribe('seasonLeagueTeams.ofLeagueSeason', this.data.leagueId, this.data.seasonId, () => {
       this.subscribe('myGames.ofPoolTeam', this.data.poolTeamId, () => {
         log.debug(`myGames.ofPoolTeam subscription ready: ${Games.find().count()}`);
       });
 
-      this.subscribe('poolTeamPicks.ofPoolTeam', this.data.poolTeamId, () => {
+      this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId);
+
+      this.subscribe('poolTeamPicks.ofPool', this.data.poolId, this.data.seasonId, () => {
         log.debug(`poolTeamPicks.ofPoolTeam subscription ready: ${PoolTeamPicks.find().count()}`);
       });
 
-      this.subscribe('poolGameInterestRatings.ofPool', this.data.poolId, () => {
-        log.debug(`poolGameInterestRatings.of_pool subscription ready: ${PoolGameInterestRatings.find().count()}`);
-      });
+      if (this.data.includeInterestRatings) {
+        this.subscribe('poolGameInterestRatings.ofPool', this.data.poolId, () => {
+          log.debug(`poolGameInterestRatings.of_pool subscription ready: ${PoolGameInterestRatings.find().count()}`);
+        });
+      }
     });
   });
 });

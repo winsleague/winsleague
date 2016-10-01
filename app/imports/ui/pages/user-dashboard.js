@@ -9,7 +9,7 @@ import './user-dashboard.html';
 import '../components/pools-wins';
 
 Template.User_dashboard.helpers({
-  pools: () => Pools.find({}, { sort: { updatedAt: -1, createdAt: -1 } }),
+  pools: () => Pools.find({}, { sort: { name: 1, updatedAt: -1, createdAt: -1 } }),
 
   poolNameLink: (pool) => `<a href="/pools/${pool._id}">${pool.name}</a>`,
 });

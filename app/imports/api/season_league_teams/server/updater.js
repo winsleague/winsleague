@@ -1,6 +1,7 @@
 import log from '../../../utils/log';
 
 import { Games } from '../../games/games';
+import { LeagueTeams } from '../../league_teams/league_teams';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 import '../../season_league_teams/server/hooks';
 
@@ -16,10 +17,9 @@ export default {
       throw new Error('Undefined leagueTeamId!');
     }
 
-    log.info(`Updating stats for seasonId ${seasonId} and leagueTeam ${leagueTeamId}`);
+    log.info(`Updating team stats for seasonId ${seasonId} and leagueTeam ${leagueTeamId}`);
 
     const games = Games.find({
-      leagueId,
       seasonId,
       status: 'completed',
       $or: [
@@ -61,13 +61,18 @@ export default {
       }
     });
 
-    const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId },
-      { $set: {
-        wins, losses, ties,
-        homeWins, homeLosses, homeTies,
-        awayWins, awayLosses, awayTies,
-        pointsFor, pointsAgainst,
-      } });
-    log.debug(`SeasonLeagueTeams.upsert for leagueId ${leagueId}, seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
+    const abbreviation = LeagueTeams.findOne(leagueTeamId).abbreviation;
+
+    const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId }, // leagueId needed because it could be an insert
+      {
+        $set: {
+          abbreviation,
+          wins, losses, ties,
+          homeWins, homeLosses, homeTies,
+          awayWins, awayLosses, awayTies,
+          pointsFor, pointsAgainst,
+        },
+      });
+    log.debug(`SeasonLeagueTeams.upsert for seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
   },
 };

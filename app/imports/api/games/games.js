@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import { _ } from 'lodash';
 
 import { PoolTeams } from '../pool_teams/pool_teams';
-import { LeagueTeams } from '../league_teams/league_teams';
+import { SeasonLeagueTeams } from '../season_league_teams/season_league_teams';
 import { PoolTeamPicks } from '../pool_team_picks/pool_team_picks';
 import { PoolGameInterestRatings } from '../pool_game_interest_ratings/pool_game_interest_ratings';
 
@@ -46,14 +46,24 @@ Games.schema = new SimpleSchema({
     type: Number,
     optional: true,
   },
+  winnerTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+  },
+  loserTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+  },
   status: {
     type: String,
     allowedValues: ['scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   },
   quarter: {
     type: String,
-    allowedValues: ['pregame', '1', '2', 'halftime', '3', '4',
-      'overtime', 'final', 'final overtime'],
+    allowedValues: ['pregame', '1', '2', 'halftime', '3', '4', '5',
+      'suspended', 'final', 'final overtime'],
     optional: true,
   },
   inning: {
@@ -118,57 +128,88 @@ function ordinalSuffixOf(i) {
 
 Games.helpers({
   title(poolId, seasonId) {
-    // "Noah's #6 NYG at Charlie's #8 GB"
+    // "Noah's #6 NYG (2-1) at Charlie's #8 GB (1-2)"
 
-    return `${this.awayTeamName(poolId, seasonId)} at ${this.homeTeamName(poolId, seasonId)}`;
+    return `${this.awayTeamOwner(poolId, seasonId)} ${this.awayTeamPick(poolId, seasonId)} at ${this.homeTeamOwner(poolId, seasonId)} ${this.homeTeamPick(poolId, seasonId)}`;
   },
 
-  homeTeamName(poolId, seasonId) {
+  homeTeamOwner(poolId, seasonId) {
     const homePoolTeamPick = PoolTeamPicks.findOne({
       seasonId,
       poolId,
       leagueTeamId: this.homeTeamId,
     });
 
-    let homePick = '';
     if (homePoolTeamPick) {
       const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
-      homePick = `${homePoolTeam.userTeamName}'s #${homePoolTeamPick.pickNumber} `;
-    }
-
-    const homeLeagueTeam = LeagueTeams.findOne(this.homeTeamId);
-
-    if (homeLeagueTeam) {
-      return `${homePick}${homeLeagueTeam.abbreviation}`;
+      return `${homePoolTeam.userTeamName}'s`;
     }
     return '';
   },
 
-  awayTeamName(poolId, seasonId) {
+  homeTeamPick(poolId, seasonId) {
+    const homePoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.homeTeamId,
+    });
+    let homePick = '';
+    if (homePoolTeamPick) {
+      homePick = `#${homePoolTeamPick.pickNumber} `;
+    }
+
+    const homeLeagueTeam = SeasonLeagueTeams.findOne({
+      leagueTeamId: this.homeTeamId,
+      seasonId,
+    });
+    if (homeLeagueTeam) {
+      const record = ` (${homeLeagueTeam.record()})`;
+      return `${homePick}${homeLeagueTeam.abbreviation}${record}`;
+    }
+    return homePick;
+  },
+
+  awayTeamOwner(poolId, seasonId) {
     const awayPoolTeamPick = PoolTeamPicks.findOne({
       seasonId,
       poolId,
       leagueTeamId: this.awayTeamId,
     });
 
-    let awayPick = '';
     if (awayPoolTeamPick) {
       const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
-      awayPick = `${awayPoolTeam.userTeamName}'s #${awayPoolTeamPick.pickNumber} `;
-    }
-
-    const awayLeagueTeam = LeagueTeams.findOne(this.awayTeamId);
-    if (awayLeagueTeam) {
-      return `${awayPick}${awayLeagueTeam.abbreviation}`;
+      return `${awayPoolTeam.userTeamName}'s`;
     }
     return '';
+  },
+
+  awayTeamPick(poolId, seasonId) {
+    const awayPoolTeamPick = PoolTeamPicks.findOne({
+      seasonId,
+      poolId,
+      leagueTeamId: this.awayTeamId,
+    });
+    let awayPick = '';
+    if (awayPoolTeamPick) {
+      awayPick = `#${awayPoolTeamPick.pickNumber} `;
+    }
+
+    const awayLeagueTeam = SeasonLeagueTeams.findOne({
+      leagueTeamId: this.awayTeamId,
+      seasonId,
+    });
+    if (awayLeagueTeam) {
+      const record = ` (${awayLeagueTeam.record()})`;
+      return `${awayPick}${awayLeagueTeam.abbreviation}${record}`;
+    }
+    return awayPick;
   },
 
   friendlyDate() {
     let date = '';
 
-    const gameDate = moment(this.gameDate);
-    const today = moment();
+    const gameDate = moment(this.gameDate).tz('US/Pacific');
+    const today = moment().tz('US/Pacific');
     const isGameToday = gameDate.date() === today.date() &&
       gameDate.month() === today.month() &&
       gameDate.year() === today.year();
@@ -179,7 +220,7 @@ Games.helpers({
 
     const timezoneGuess = moment.tz.guess();
     let time = '';
-    if (timezoneGuess) {
+    if (timezoneGuess && !timezoneGuess.includes('UTC')) {
       time = moment(this.gameDate).tz(timezoneGuess).format('ha z');
     } else {
       const est = moment(this.gameDate).tz('US/Eastern').format('ha');
@@ -195,7 +236,11 @@ Games.helpers({
     } else if (this.status === 'in progress') {
       if (this.quarter) {
         const q = (!isNaN(this.quarter) ? 'Q' : '');
-        return `${q}${_.capitalize(this.quarter)} ${this.timeRemaining}`;
+        const quarter = `${q}${_.capitalize(this.quarter)}`;
+        if (this.timeRemaining) {
+          return `${quarter} ${this.timeRemaining}`;
+        }
+        return quarter;
       } else if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
@@ -222,6 +267,10 @@ Games.helpers({
 
   isAwayWinner() {
     return (this.status === 'completed' && this.awayScore > this.homeScore);
+  },
+
+  isCompleted() {
+    return this.status === 'completed';
   },
 });
 

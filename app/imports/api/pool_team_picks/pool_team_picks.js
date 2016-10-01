@@ -149,6 +149,14 @@ PoolTeamPicks.helpers({
     }
     return `${this.actualWins}-${this.actualLosses}`;
   },
+
+  roundedPickQuality() {
+    return this.pickQuality.toFixed(1);
+  },
+
+  roundedExpectedWins() {
+    return this.expectedWins.toFixed(1);
+  },
 });
 
 /* Access control */

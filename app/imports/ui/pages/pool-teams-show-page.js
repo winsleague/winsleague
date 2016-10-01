@@ -8,6 +8,7 @@ import log from '../../utils/log';
 import './pool-teams-show-page.html';
 
 import '../components/pools-header';
+import '../components/pools-games-to-watch';
 
 import { LeagueTeams } from '../../api/league_teams/league_teams';
 import { Pools } from '../../api/pools/pools';
@@ -18,6 +19,8 @@ Template.PoolTeams_show_page.helpers({
   poolId: () => Template.instance().getPoolId(),
 
   poolTeamId: () => Template.instance().getPoolTeamId(),
+
+  leagueId: () => Template.instance().getLeagueId(),
 
   seasonId: () => Template.instance().getSeasonId(),
 
