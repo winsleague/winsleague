@@ -48,6 +48,8 @@ describe('Pool Teams Updater', function () {
       assert.equal(poolTeam.totalWins, 1, 'totalWins');
       assert.equal(poolTeam.totalGames, 1, 'totalGames');
       assert.equal(poolTeam.totalPlusMinus, 7, 'totalPlusMinus');
+      assert.equal(poolTeam.closeWins, 0, 'closeWins');
+      assert.equal(poolTeam.closeLosses, 0, 'closeLosses');
     });
   });
 

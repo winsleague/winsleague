@@ -61,6 +61,24 @@
           sort=-1
         }}
 
+        {{> Pools_records_pool_users_most_all_time
+          poolId=poolId
+          recordTitle="Most Close Wins, All Time"
+          metricTitle="Close Wins"
+          metricField="closeWins"
+          collectionName="pool_users_most_close_wins_all_time"
+          sort=-1
+        }}
+
+        {{> Pools_records_pool_users_most_all_time
+          poolId=poolId
+          recordTitle="Most Close Losses, All Time"
+          metricTitle="Close Losses"
+          metricField="closeLosses"
+          collectionName="pool_users_most_close_losses_all_time"
+          sort=-1
+        }}
+
       </div>
       <div class="col-md-2">
       </div>
@@ -118,6 +136,24 @@
           metricField="defeatedWeeks"
           sort=-1
           tableId="pool_teams_most_defeated_weeks_season"
+        }}
+
+        {{> Pools_records_pool_teams_most_season
+          poolId=poolId
+          recordTitle="Most Close Wins, Season"
+          metricTitle="Close Wins"
+          metricField="closeWins"
+          sort=-1
+          tableId="pool_teams_most_close_wins_season"
+        }}
+
+        {{> Pools_records_pool_teams_most_season
+          poolId=poolId
+          recordTitle="Most Close Losses, Season"
+          metricTitle="Close Losses"
+          metricField="closeLosses"
+          sort=-1
+          tableId="pool_teams_most_close_losses_season"
         }}
 
         {{> Pools_records_pool_team_picks_most_season

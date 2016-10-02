@@ -8,8 +8,15 @@ import log from '../../utils/log';
 export const Leagues = new Mongo.Collection('leagues');
 
 Leagues.schema = new SimpleSchema({
-  name: { type: String },
-  seasonGameCount: { type: Number },
+  name: {
+    type: String,
+  },
+  seasonGameCount: {
+    type: Number,
+  },
+  closeScore: {
+    type: Number,
+  },
 });
 
 Leagues.attachSchema(Leagues.schema);
@@ -24,6 +31,7 @@ Leagues.deny({
 Factory.define('league', Leagues, {
   name: () => `${faker.lorem.word()}-${Random.id()}`, // faker is not guaranteed to be random
   seasonGameCount: 16,
-}).after(league => {
+  closeScore: 3,
+}).after((league) => {
   log.debug('league factory created:', league);
 });

@@ -94,6 +94,14 @@ PoolTeams.schema = new SimpleSchema({
     optional: true,
     defaultValue: 0,
   },
+  closeWins: {
+    type: Number,
+    defaultValue: 0,
+  },
+  closeLosses: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
