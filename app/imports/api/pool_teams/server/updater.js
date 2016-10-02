@@ -29,6 +29,8 @@ export default {
     let totalLosses = 0;
     let totalGames = 0;
     let totalPlusMinus = 0;
+    let closeWins = 0;
+    let closeLosses = 0;
 
     const picks = PoolTeamPicks.find({ poolTeamId });
 
@@ -42,6 +44,8 @@ export default {
             actualWins: seasonLeagueTeam.wins,
             actualLosses: seasonLeagueTeam.losses,
             actualTies: seasonLeagueTeam.ties,
+            closeWins: seasonLeagueTeam.closeWins,
+            closeLosses: seasonLeagueTeam.closeLosses,
           },
         });
 
@@ -49,15 +53,27 @@ export default {
         totalLosses += seasonLeagueTeam.losses;
         totalGames += seasonLeagueTeam.totalGames();
         totalPlusMinus += seasonLeagueTeam.pointsFor - seasonLeagueTeam.pointsAgainst;
+        closeWins += seasonLeagueTeam.closeWins;
+        closeLosses += seasonLeagueTeam.closeLosses;
       }
     });
 
     // .direct is needed to avoid an infinite recursion loop
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
     const numberAffected = PoolTeams.direct.update(poolTeamId,
-      { $set: { totalWins, totalLosses, totalGames, totalPlusMinus } });
-    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, ` +
-      `totalLosses: ${totalLosses}, numberAffected: ${numberAffected}`);
+      {
+        $set: {
+          totalWins,
+          totalLosses,
+          totalGames,
+          totalPlusMinus,
+          closeWins,
+          closeLosses,
+        },
+      });
+    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, ` +
+      `closeWins: ${closeWins}, closeLosses: ${closeLosses}, ` +
+      `numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamPickQuality(poolTeamId) {

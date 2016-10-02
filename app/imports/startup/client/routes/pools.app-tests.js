@@ -135,6 +135,10 @@ if (Meteor.isClient) {
           'table#pool_users_most_undefeated_weeks_all_time tbody tr td.metric',
         getMostDefeatedWeeksAllTimeCellSelector: () =>
           'table#pool_users_most_defeated_weeks_all_time tbody tr td.metric',
+        getMostCloseWinsAllTimeCellSelector: () =>
+          'table#pool_teams_most_close_wins_all_time tbody tr td.metric',
+        getMostCloseLossesAllTimeCellSelector: () =>
+          'table#pool_teams_most_close_losses_all_time tbody tr td.metric',
 
         getMostWinsSeasonCellSelector: () =>
           'table#pool_teams_most_wins_season tbody tr td.metric',
@@ -148,6 +152,10 @@ if (Meteor.isClient) {
           'table#pool_teams_most_undefeated_weeks_season tbody tr td.metric',
         getMostDefeatedWeeksSeasonCellSelector: () =>
           'table#pool_teams_most_defeated_weeks_season tbody tr td.metric',
+        getMostCloseWinsSeasonCellSelector: () =>
+          'table#pool_teams_most_close_wins_season tbody tr td.metric',
+        getMostCloseLossesSeasonCellSelector: () =>
+          'table#pool_teams_most_close_losses_season tbody tr td.metric',
 
         getBestPickQualitySeasonCellSelector: () =>
           'table#pool_team_picks_best_pick_quality_season tbody tr td.metric',
@@ -198,6 +206,18 @@ if (Meteor.isClient) {
         };
       });
 
+      it('should display the teams with the most close wins of all time', () => {
+        return () => {
+          assert.equal($(page.getMostCloseWinsAllTimeCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close losses of all time', () => {
+        return () => {
+          assert.equal($(page.getMostCloseLossesAllTimeCellSelector()).text(), 0);
+        };
+      });
+
       it('should display the teams with the most wins in a single season', () => {
         return () => {
           assert.equal($(page.getMostWinsSeasonCellSelector()).text(), 10);
@@ -231,6 +251,18 @@ if (Meteor.isClient) {
       it('should display the teams with the most defeated weeks in a single season', () => {
         return () => {
           assert.equal($(page.getMostDefeatedWeeksSeasonCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close wins in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostCloseWinsSeasonCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close losses in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostCloseLossesSeasonCellSelector()).text(), 0);
         };
       });
 

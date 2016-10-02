@@ -12,6 +12,8 @@
           <th>Record</th>
           <th>Pick Quality</th>
           <th>+/-</th>
+          <th>Close Wins</th>
+          <th>Close Losses</th>
           <th>&nbsp;</th>
         </tr>
         </thead>
@@ -22,6 +24,8 @@
             <td>{{poolTeamPick.record}}</td>
             <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
             <td>{{poolTeamPick.plusMinus}}</td>
+            <td>{{poolTeamPick.closeWins}}</td>
+            <td>{{poolTeamPick.closeLosses}}</td>
             <td>
               {{#if isCommissioner}}
                 <a href="{{pathFor 'PoolTeamPicks.edit' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPick._id}}" class="PoolTeamPicks_edit">Edit</a>

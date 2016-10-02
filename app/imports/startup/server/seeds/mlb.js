@@ -21,6 +21,7 @@ export default {
     Leagues.insert({
       name: 'MLB',
       seasonGameCount: 162,
+      closeScore: 1,
     });
   },
 
