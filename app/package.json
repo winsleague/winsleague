@@ -48,8 +48,8 @@
     "coverage": "meteor npm run coverage-app-unit && meteor npm run coverage-app-full",
     "coverage-app-unit": "node_modules/spacejam/bin/spacejam --driver-package practicalmeteor:mocha-console-runner test --coverage 'out_lcovonly out_coverage out_html' --settings settings.coverage.json",
     "coverage-app-full": "node_modules/spacejam/bin/spacejam --driver-package practicalmeteor:mocha-console-runner test --full-app --coverage 'out_lcovonly out_coverage out_html in_coverage' --settings settings.coverage.json",
-    "coverage-app-unit-watch": "meteor --driver-package practicalmeteor:mocha test --settings settings.coverage.json",
-    "coverage-app-full-watch": "meteor --driver-package practicalmeteor:mocha test --full-app --settings settings.coverage.json",
+    "coverage-app-unit-watch": "COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor --driver-package practicalmeteor:mocha test --settings settings.coverage.json",
+    "coverage-app-full-watch": "COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor --driver-package practicalmeteor:mocha test --full-app --settings settings.coverage.json",
     "lint": "eslint ."
   },
   "author": "",
