@@ -44,14 +44,21 @@ export default {
       return;
     }
 
-    const url = `http://www.nfl.com/liveupdate/scorestrip/scorestrip.json`;
+    const url = 'http://www.nfl.com/liveupdate/scorestrip/scorestrip.json';
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
     let content = response.content.replace(/,,/g, ',"",');
     content = content.replace(/,,/g, ',"",'); // do it again to address multiple commas in a row
     log.debug(`fixed content: ${content}`);
-    const json = JSON.parse(content);
-    log.debug('parsed json:', json);
+
+    let json;
+    try {
+      json = JSON.parse(content);
+      log.debug('parsed json:', json);
+    } catch (e) {
+      log.error(content, e);
+      return;
+    }
 
     for (const gameData of json.ss) {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
