@@ -7,9 +7,11 @@ const srcDir = baseDir;
 
 const cacheMeteor = function() {
   console.log('Caching build & dependencies (can take a while the first time)');
+  const env = Object.create(process.env);
+  env.COVERAGE = 0;
   const childProcess = spawn('meteor', ['test', '--full-app', '--driver-package', 'tmeasday:acceptance-test-driver', '--raw-logs'], {
     cwd: srcDir,
-    env: process.env
+    env,
   });
   childProcess.stdout.setEncoding('utf8');
   childProcess.stderr.setEncoding('utf8');

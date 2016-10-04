@@ -5,9 +5,8 @@ machine:
 general:
   artifacts:
     - "app/.meteor/local/log"
+    - "app/.coverage"
     - "log"
-    - "app/report.json" # from meteor_coverage's out_coverage
-    - "app/lcov.info"
 
 dependencies:
   cache_directories:
@@ -34,17 +33,16 @@ checkout:
 
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run test) ;; 1) (cd app; meteor npm run test-app) ;; 2) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
         parallel: true
 
 deployment:
   production:
     branch: master
     commands:
-      # Publish code coverage data to CodeClimate (only works on master branch).
-      # $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
-      # - npm install -g codeclimate-test-reporter@0.3.3
-      # - (cd app; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < lcov.info)
+      # Publish code coverage data (only works on master branch).
+      - npm install -g codacy-coverage@2.0.0
+      - cat app/.coverage/lcov.info | CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN codacy-coverage --commit $CIRCLE_SHA1 --verbose --debug
 
       # Decrypt Meteor Up config
       - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
