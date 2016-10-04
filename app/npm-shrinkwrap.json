@@ -263,6 +263,23 @@
       "from": "base64-js@>=1.0.2 <2.0.0",
       "resolved": "./node_shrinkwrap/base64-js-1.1.2.tar"
     },
+    "bcrypt": {
+      "version": "0.8.7",
+      "from": "bcrypt@0.8.7",
+      "resolved": "./node_shrinkwrap/bcrypt-0.8.7.tar",
+      "dependencies": {
+        "nan": {
+          "version": "2.3.5",
+          "from": "nan@2.3.5",
+          "resolved": "./node_shrinkwrap/nan-2.3.5.tar"
+        }
+      }
+    },
+    "bindings": {
+      "version": "1.2.1",
+      "from": "bindings@1.2.1",
+      "resolved": "./node_shrinkwrap/bindings-1.2.1.tar"
+    },
     "bl": {
       "version": "1.0.3",
       "from": "bl@>=1.0.0 <1.1.0",
