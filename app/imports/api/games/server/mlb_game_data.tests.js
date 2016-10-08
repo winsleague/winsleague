@@ -12,7 +12,11 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 
 describe('MLB Game Data', function () {
-  beforeEach(() => {
+  this.timeout(15000);
+
+  beforeEach(function () {
+    this.timeout(15000);
+
     MlbSeeds.create();
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
@@ -35,8 +39,6 @@ describe('MLB Game Data', function () {
   });
 
   describe('Ingest Day Data', function () {
-    this.timeout(20000);
-
     it('should ingest all games for on June 15, 2016', () => {
       const game = Games.findOne({ gameId: '2016_06_15_lanmlb_arimlb_1' });
       const diamondbacks = LeagueTeams.findOne({ cityName: 'Arizona', mascotName: 'Diamondbacks' });
