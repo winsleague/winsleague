@@ -98,10 +98,20 @@ Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeam
   const nflLeagueId = LeagueFinder.getIdByName('NFL');
 
   const poolTeam = PoolTeams.findOne(poolTeamId);
+  if (!poolTeam) {
+    log.error('Cannot find PoolTeam ', poolTeamId);
+    return this.ready();
+  }
+
   const seasonId = poolTeam.seasonId;
   const poolId = poolTeam.poolId;
 
   const pool = Pools.findOne(poolId);
+  if (!pool) {
+    log.error('Cannot find Pool ', poolId);
+    return this.ready();
+  }
+
   if (pool.leagueId === nflLeagueId) {
     return relevantNflGames(seasonId, poolTeamId);
   } else {
