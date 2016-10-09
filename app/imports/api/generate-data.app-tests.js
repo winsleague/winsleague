@@ -2,6 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import log from '../utils/log';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { denodeify } from '../utils/denodeify';
@@ -60,6 +61,8 @@ if (Meteor.isClient) {
   const testConnection = Meteor.connect(Meteor.absoluteUrl());
 
   generateData = denodeify((cb) => {
+    log.info('Going to homepage');
+    FlowRouter.go('/?force=true');
     testConnection.call('generateFixtures', cb);
   });
 }
