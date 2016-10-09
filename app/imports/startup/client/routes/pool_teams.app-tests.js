@@ -30,8 +30,8 @@ if (Meteor.isClient) {
         .then(waitForSubscriptions)
     );
 
-    afterEach(function (done) {
-      Meteor.logout(function () {
+    afterEach((done) => {
+      Meteor.logout(() => {
         log.info('Logged out');
         FlowRouter.go('/?force=true');
         FlowRouter.watchPathChange();
