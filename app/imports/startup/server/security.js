@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
+import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
 
 // Don't let people write arbitrary data to their 'profile' field from the client
@@ -27,7 +28,9 @@ const AUTH_METHODS = [
   'ATResendVerificationEmail',
 ];
 
-if (Meteor.isServer) {
+if (Meteor.isTest || Meteor.isAppTest) {
+  Accounts.removeDefaultRateLimit();
+} else {
   // Only allow 2 login attempts per connection per 5 seconds
   DDPRateLimiter.addRule({
     name(name) {
@@ -35,6 +38,9 @@ if (Meteor.isServer) {
     },
 
     // Rate limit per connection ID
-    connectionId() { return true; },
+    connectionId() {
+      return true;
+    },
   }, 2, 5000);
 }
+

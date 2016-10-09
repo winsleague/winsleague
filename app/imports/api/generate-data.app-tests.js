@@ -6,6 +6,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import log from '../utils/log';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { denodeify } from '../utils/denodeify';
+import { check, Match } from 'meteor/check';
 
 import { Leagues } from '../api/leagues/leagues';
 import LeagueFinder from '../api/leagues/finder';
@@ -13,7 +14,9 @@ import SeasonFinder from '../api/seasons/finder';
 import { LeagueTeams } from '../api/league_teams/league_teams';
 
 Meteor.methods({
-  generateFixtures() {
+  generateFixtures(arg) {
+    check(arg, Match.Any);
+
     // runs on server so it's a lot easier to create fixtures here
 
     log.info('Resetting database');
@@ -51,6 +54,8 @@ Meteor.methods({
       pointsFor: 17,
       pointsAgainst: 14,
     });
+
+    log.info('Done loading fixtures');
   },
 });
 
@@ -61,8 +66,6 @@ if (Meteor.isClient) {
   const testConnection = Meteor.connect(Meteor.absoluteUrl());
 
   generateData = denodeify((cb) => {
-    log.info('Going to homepage');
-    FlowRouter.go('/?force=true');
     testConnection.call('generateFixtures', cb);
   });
 }
