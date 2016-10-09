@@ -39,7 +39,6 @@ if (Meteor.isClient) {
     beforeEach(() =>
       generateData()
         .then(() => Meteor.loginWithPassword('test@test.com', 'test'))
-        .then(() => FlowRouter.go('/'))
         .then(waitForSubscriptions)
     );
 
@@ -51,6 +50,7 @@ if (Meteor.isClient) {
 
       beforeEach(() =>
         afterFlushPromise()
+          .then(waitForSubscriptions)
           .then(() => FlowRouter.go('Pools.show', { poolId: Pools.findOne()._id }))
           .then(waitForSubscriptions)
       );
@@ -68,6 +68,9 @@ if (Meteor.isClient) {
 
         beforeEach(() => {
           const pool = Pools.findOne();
+          if (!pool) {
+            log.error('Cannot find a Pool!');
+          }
           const poolId = pool._id;
           const leagueId = pool.leagueId;
           seasonId = Factory.create('season', { leagueId })._id;
@@ -113,6 +116,7 @@ if (Meteor.isClient) {
         $('form').submit();
 
         return afterFlushPromise()
+          .then(() => waitForSubscriptions())
           .then(() => {
             const pool = Pools.findOne({ name: poolName });
             assert.isNotNull(pool, 'pool');
