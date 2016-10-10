@@ -6,10 +6,6 @@ const setup = () => {
   // we must navigate to client first so Meteor methods are available
   browser.url('http://localhost:3100');
 
-  browser.timeouts('script', 5000);
-  browser.timeouts('implicit', 5000);
-  browser.timeouts('page load', 5000);
-
   server.call('logout');
 
   browser.executeAsync(function (done) {

@@ -34,13 +34,13 @@ var startTestApp = function(onStarted, options) {
 var startChimpWatch = function() {
   processes.start({
     name: 'Chimp Watch',
-    command: 'chimp --ddp=http://localhost:3100 --watch --path=tests --mocha --chai --browser=chrome',
+    command: 'chimp tests/chimp.config.js --ddp=http://localhost:3100 --watch --path=tests --mocha --chai --browser=chrome',
     options: { cwd: baseDir }
   });
 };
 
 var startChimpCi = function() {
-  var command = 'chimp --ddp=http://localhost:3100 --path=tests --mocha --chai --browser=chrome';
+  var command = 'chimp tests/chimp.config.js --ddp=http://localhost:3100 --path=tests --mocha --chai --browser=chrome';
   processes.start({
     name: 'Chimp CI',
     command: command,
