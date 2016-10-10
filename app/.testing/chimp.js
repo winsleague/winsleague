@@ -10,6 +10,7 @@ var processes = require('./processes.js');
 var isCi = process.argv[2] === '--ci';
 
 var startTestApp = function(onStarted, options) {
+  options.COVERAGE = 0;
   return processes.start({
     name: 'Test App',
     command: 'meteor test --full-app --driver-package tmeasday:acceptance-test-driver --port=3100',
