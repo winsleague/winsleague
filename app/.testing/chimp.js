@@ -10,14 +10,15 @@ var processes = require('./processes.js');
 var isCi = process.argv[2] === '--ci';
 
 var startTestApp = function(onStarted, options) {
-  options.COVERAGE = 0;
+  const env = Object.create(process.env);
+  env.COVERAGE = 0;
   return processes.start({
     name: 'Test App',
     command: 'meteor test --full-app --driver-package tmeasday:acceptance-test-driver --port=3100',
     waitForMessage: 'App running at: http://localhost:3100',
     options: {
       cwd: srcDir,
-      env: extend(process.env, options)
+      env: extend(env, options)
     }
   }, function() {
     console.log("Test app is running …");
