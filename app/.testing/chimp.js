@@ -10,15 +10,20 @@ var processes = require('./processes.js');
 var isCi = process.argv[2] === '--ci';
 
 var startTestApp = function(onStarted, options) {
-  const env = Object.create(process.env);
+  const command = 'meteor test --full-app --driver-package tmeasday:acceptance-test-driver --port=3100';
+
+  let env = Object.create(process.env);
   env.COVERAGE = 0;
+  env = extend(env, options);
+  console.log(`Launching ${command} with ${env}`);
+
   return processes.start({
     name: 'Test App',
-    command: 'meteor test --full-app --driver-package tmeasday:acceptance-test-driver --port=3100',
+    command,
     waitForMessage: 'App running at: http://localhost:3100',
     options: {
       cwd: srcDir,
-      env: extend(env, options)
+      env,
     }
   }, function() {
     console.log("Test app is running …");
@@ -35,7 +40,7 @@ var startChimpWatch = function() {
 };
 
 var startChimpCi = function() {
-  var command = 'chimp --ddp=http://localhost:3100 --path=tests --browser=chrome --mocha --chai';
+  var command = 'chimp --ddp=http://localhost:3100 --path=tests --mocha --chai --browser=chrome';
   processes.start({
     name: 'Chimp CI',
     command: command,
