@@ -15,7 +15,7 @@ var startTestApp = function(onStarted, options) {
   let env = Object.create(process.env);
   env.COVERAGE = 0;
   env = extend(env, options);
-  console.log(`Launching ${command} with ${env}`);
+  console.log(`Launching ${command} with ${JSON.stringify(env)}`);
 
   return processes.start({
     name: 'Test App',
