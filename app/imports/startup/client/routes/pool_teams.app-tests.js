@@ -3,47 +3,41 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { Tracker } from 'meteor/tracker';
-import { DDP } from 'meteor/ddp-client';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { assert, expect } from 'chai';
 import 'chai-jquery';
-import { Promise } from 'meteor/promise';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';
 
-import { denodeify } from '../../../utils/denodeify';
-import { generateData } from '../../../api/generate-data.app-tests.js';
+import { waitForSubscriptions, afterFlushPromise, resetRoute, login } from './helpers.app-tests';
+import { generateData } from '../../../api/generate-data.app-tests';
 
 import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../../api/pool_team_picks/pool_team_picks';
 import { Games } from '../../../api/games/games';
 
-// Utility -- returns a promise which resolves when all subscriptions are done
-const waitForSubscriptions = () => new Promise(resolve => {
-  const poll = Meteor.setInterval(() => {
-    if (DDP._allSubscriptionsReady()) {
-      Meteor.clearInterval(poll);
-      resolve();
-    }
-  }, 200);
-});
 
-// Tracker.afterFlush runs code when all consequent of a tracker based change
-//   (such as a route change) have occured. This makes it a promise.
-const afterFlushPromise = denodeify(Tracker.afterFlush);
 
 if (Meteor.isClient) {
   describe('Full-app test of PoolTeams', function () {
-    this.timeout(5000);
+    this.timeout(10000);
 
     beforeEach(() =>
-      generateData()
-        .then(() => Meteor.loginWithPassword('test@test.com', 'test'))
-        .then(() => FlowRouter.go('/'))
+      resetRoute()
+        .then(() => generateData())
+        .then(login)
         .then(waitForSubscriptions)
     );
+
+    afterEach((done) => {
+      Meteor.logout(() => {
+        log.info('Logged out');
+        FlowRouter.go('/?force=true');
+        FlowRouter.watchPathChange();
+        done();
+      });
+    });
 
     describe('Full-app test of PoolTeams.show', () => {
       const page = {
@@ -53,7 +47,11 @@ if (Meteor.isClient) {
 
       beforeEach(() =>
         afterFlushPromise()
+          .then(() => FlowRouter.go('Pools.show', { poolId: Pools.findOne()._id }))
+          .then(() => afterFlushPromise())
+          .then(waitForSubscriptions)
           .then(() => FlowRouter.go('PoolTeams.show', { poolId: Pools.findOne()._id, poolTeamId: PoolTeams.findOne()._id }))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -64,14 +62,6 @@ if (Meteor.isClient) {
             expect($(page.getPoolTeamPickRowSelector(poolTeamPick._id))).to.exist;
           });
       });
-
-      it('shows current games for the pool team', () => {
-        return afterFlushPromise()
-          .then(() => {
-            const game = Games.findOne();
-            expect($(page.getGameSelector(game._id))).to.exist;
-          });
-      })
     });
 
     describe('Full-app test of PoolTeams.new', () => {
@@ -83,6 +73,7 @@ if (Meteor.isClient) {
       beforeEach(() =>
         afterFlushPromise()
           .then(() => FlowRouter.go('PoolTeams.new', { poolId: Pools.findOne()._id }))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -106,6 +97,7 @@ if (Meteor.isClient) {
         $('form').submit();
 
         return afterFlushPromise()
+          .then(waitForSubscriptions)
           .then(() => {
             const poolTeam = PoolTeams.findOne({ userTeamName });
             assert.isNotNull(poolTeam, 'poolTeam');
