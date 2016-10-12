@@ -17,6 +17,8 @@ function storeLastUrl(context) {
 }
 
 function redirectToLastUrl(context) {
+  // needed because iOS always opens to / even though user may have been on another page
+
   if (context.queryParams.force) {
     // don't redirect
     return;
