@@ -99,7 +99,7 @@ Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeam
 
   const poolTeam = PoolTeams.findOne(poolTeamId);
   if (!poolTeam) {
-    log.error('Cannot find PoolTeam ', poolTeamId);
+    log.error('myGames.ofPoolTeam: Cannot find PoolTeam ', poolTeamId);
     return this.ready();
   }
 
@@ -108,7 +108,7 @@ Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeam
 
   const pool = Pools.findOne(poolId);
   if (!pool) {
-    log.error('Cannot find Pool ', poolId);
+    log.error('myGames.ofPoolTeam: Cannot find Pool ', poolId);
     return this.ready();
   }
 

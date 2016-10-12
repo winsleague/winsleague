@@ -3,45 +3,38 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { Tracker } from 'meteor/tracker';
-import { DDP } from 'meteor/ddp-client';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { assert, expect } from 'chai';
 import 'chai-jquery';
-import { Promise } from 'meteor/promise';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';
 
-import { denodeify } from '../../../utils/denodeify';
-import { generateData } from '../../../api/generate-data.app-tests.js';
+import { waitForSubscriptions, afterFlushPromise, resetRoute, login } from './helpers.app-tests';
+import { generateData } from '../../../api/generate-data.app-tests';
 
 import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 
-// Utility -- returns a promise which resolves when all subscriptions are done
-const waitForSubscriptions = () => new Promise(resolve => {
-  const poll = Meteor.setInterval(() => {
-    if (DDP._allSubscriptionsReady()) {
-      Meteor.clearInterval(poll);
-      resolve();
-    }
-  }, 200);
-});
-
-// Tracker.afterFlush runs code when all consequent of a tracker based change
-//   (such as a route change) have occured. This makes it a promise.
-const afterFlushPromise = denodeify(Tracker.afterFlush);
-
 if (Meteor.isClient) {
   describe('Full-app test of Pools', function () {
-    this.timeout(5000);
+    this.timeout(10000);
 
     beforeEach(() =>
-      generateData()
-        .then(() => Meteor.loginWithPassword('test@test.com', 'test'))
-        .then(() => FlowRouter.go('/'))
+      resetRoute()
+        .then(() => generateData())
+        .then(login)
         .then(waitForSubscriptions)
     );
+
+    afterEach((done) => {
+      Meteor.logout(() => {
+        log.info('Logged out');
+        FlowRouter.go('/?force=true');
+        FlowRouter.watchPathChange();
+        done();
+      });
+    });
+
 
     describe('Full-app test of Pools.show', () => {
       const page = {
@@ -52,6 +45,7 @@ if (Meteor.isClient) {
       beforeEach(() =>
         afterFlushPromise()
           .then(() => FlowRouter.go('Pools.show', { poolId: Pools.findOne()._id }))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -68,6 +62,9 @@ if (Meteor.isClient) {
 
         beforeEach(() => {
           const pool = Pools.findOne();
+          if (!pool) {
+            log.error('Cannot find a Pool!');
+          }
           const poolId = pool._id;
           const leagueId = pool.leagueId;
           seasonId = Factory.create('season', { leagueId })._id;
@@ -83,6 +80,7 @@ if (Meteor.isClient) {
       });
     });
 
+
     describe('Full-app test of Pools.new', () => {
       const page = {
         getFirstLeagueSelector: () => 'input[name="leagueId"]:first',
@@ -92,6 +90,7 @@ if (Meteor.isClient) {
       beforeEach(() =>
         afterFlushPromise()
           .then(() => FlowRouter.go('Pools.new'))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -108,11 +107,14 @@ if (Meteor.isClient) {
       });
 
       it('should create new pool', () => {
+        log.info('should create new pool', FlowRouter.current().path);
+
         const poolName = 'Dummy';
         $(page.getNameSelector()).val(poolName);
         $('form').submit();
 
         return afterFlushPromise()
+          .then(waitForSubscriptions)
           .then(() => {
             const pool = Pools.findOne({ name: poolName });
             assert.isNotNull(pool, 'pool');
@@ -120,6 +122,7 @@ if (Meteor.isClient) {
           });
       });
     });
+
 
     describe('Full-app test of Pools.records', () => {
       const page = {
@@ -165,8 +168,8 @@ if (Meteor.isClient) {
 
       beforeEach(() =>
         afterFlushPromise()
-          .then(waitForSubscriptions)
           .then(() => FlowRouter.go('Pools.records', { poolId: Pools.findOne()._id }))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -278,6 +281,5 @@ if (Meteor.isClient) {
         };
       });
     });
-
   });
 }
