@@ -14,6 +14,7 @@ var startTestApp = function(onStarted, options) {
 
   let env = Object.create(process.env);
   env.COVERAGE = 0;
+  env.COVERAGE_VERBOSE = 1;
   env = extend(env, options);
   console.log(`Launching ${command} with ${JSON.stringify(env)}`);
 
