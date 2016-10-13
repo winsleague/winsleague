@@ -39,8 +39,8 @@ Template.PoolTeams_edit_page.onCreated(function () {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()} pools`);
       if (Pools.find(this.getPoolId()).count() === 0) {
-        log.warn('poolTeamsEdit: redirecting to / because no Pools found for ', this.getPoolId());
-        FlowRouter.go('/');
+        log.warn('poolTeamsEdit: Redirecting to /?force=true because no Pools found for ', this.getPoolId());
+        FlowRouter.go('/?force=true');
         return;
       }
 
