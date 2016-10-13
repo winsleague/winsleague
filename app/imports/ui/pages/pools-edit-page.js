@@ -19,7 +19,7 @@ Template.Pools_edit_page.helpers({
       log.debug('onRemoveSuccess called');
       $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
       log.debug('poolsEdit: onRemoveSuccess: redirect to /');
-      FlowRouter.go('/');
+      FlowRouter.go('/?force=true');
     };
   },
 });
@@ -33,8 +33,8 @@ Template.Pools_edit_page.onCreated(function () {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
       if (Pools.find(this.getPoolId()).count() === 0) {
-        log.warn('poolsEdit: Redirecting to / because Pools.count=0');
-        FlowRouter.go('/');
+        log.warn('poolsEdit: Redirecting to /?force=true because Pools.count=0');
+        FlowRouter.go('/?force=true');
       }
     });
   });
