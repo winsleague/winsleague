@@ -28,8 +28,8 @@ Template.Pools_records_page.onCreated(function () {
     this.subscribe('pools.single', this.getPoolId(), () => {
       log.debug(`pools.single subscription ready: ${Pools.find(this.getPoolId()).count()}`);
       if (Pools.find(this.getPoolId()).count() === 0) {
-        log.warn('poolsRecords: Redirecting to / because Pools.count=0');
-        FlowRouter.go('/');
+        log.warn('poolsRecords: Redirecting to /?force=true because Pools.count=0');
+        FlowRouter.go('/?force=true');
       }
     });
   });

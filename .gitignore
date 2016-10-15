@@ -33,7 +33,6 @@ node_modules
 
 # Secrets
 secrets.env
-.deploy/staging/mup.js
 .deploy/production/mup.js
 
 # Temporary data, for things like preprocessors

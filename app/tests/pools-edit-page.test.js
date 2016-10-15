@@ -71,6 +71,6 @@ describe('Pools.edit page ui', () => {
 
     browser.waitForVisible('h2#User_dashboard_title');
 
-    assert.equal(browser.getUrl(), 'http://localhost:3100/');
+    assert.equal(browser.getUrl(), 'http://localhost:3100/?force=true');
   });
 });

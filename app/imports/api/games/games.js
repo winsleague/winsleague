@@ -46,14 +46,24 @@ Games.schema = new SimpleSchema({
     type: Number,
     optional: true,
   },
+  winnerTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+  },
+  loserTeamId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+  },
   status: {
     type: String,
     allowedValues: ['scheduled', 'in progress', 'completed', 'postponed', 'suspended', 'cancelled'],
   },
   quarter: {
     type: String,
-    allowedValues: ['pregame', '1', '2', 'halftime', '3', '4',
-      'overtime', 'final', 'final overtime'],
+    allowedValues: ['pregame', '1', '2', 'halftime', '3', '4', '5',
+      'suspended', 'final', 'final overtime'],
     optional: true,
   },
   inning: {
@@ -226,7 +236,11 @@ Games.helpers({
     } else if (this.status === 'in progress') {
       if (this.quarter) {
         const q = (!isNaN(this.quarter) ? 'Q' : '');
-        return `${q}${_.capitalize(this.quarter)} ${this.timeRemaining}`;
+        const quarter = `${q}${_.capitalize(this.quarter)}`;
+        if (this.timeRemaining) {
+          return `${quarter} ${this.timeRemaining}`;
+        }
+        return quarter;
       } else if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
@@ -253,6 +267,10 @@ Games.helpers({
 
   isAwayWinner() {
     return (this.status === 'completed' && this.awayScore > this.homeScore);
+  },
+
+  isCompleted() {
+    return this.status === 'completed';
   },
 });
 

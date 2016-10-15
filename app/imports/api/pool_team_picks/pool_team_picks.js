@@ -113,6 +113,14 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: Number,
     defaultValue: 0,
   },
+  closeWins: {
+    type: Number,
+    defaultValue: 0,
+  },
+  closeLosses: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     // Force value to be current date (on server) upon insert
     // and prevent updates thereafter.
@@ -148,6 +156,14 @@ PoolTeamPicks.helpers({
       return `${this.actualWins}-${this.actualLosses}-${this.actualTies}`;
     }
     return `${this.actualWins}-${this.actualLosses}`;
+  },
+
+  roundedPickQuality() {
+    return this.pickQuality.toFixed(1);
+  },
+
+  roundedExpectedWins() {
+    return this.expectedWins.toFixed(1);
   },
 });
 

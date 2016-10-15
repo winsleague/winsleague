@@ -15,20 +15,19 @@ Template.Pools_records_pool_team_picks_most_season.helpers({
     const sort = Template.currentData().sort;
     const filter = { sort: {}, limit: 3 };
     filter.sort[metricField] = sort;
-    return PoolTeamPicks.find({}, filter);
+    return PoolTeamPicks.find(
+      {
+        poolId: Template.currentData().poolId,
+      },
+      filter
+    );
   },
 
-  getMetric: (poolTeamPick) => {
-    return _.get(poolTeamPick, Template.currentData().metricField);
-  },
+  getMetric: (poolTeamPick) => _.get(poolTeamPick, Template.currentData().metricField),
 
-  playerName: (poolTeamPick) => {
-    return _.get(Template.instance().getPoolTeam(poolTeamPick.poolTeamId), 'userTeamName');
-  },
+  playerName: (poolTeamPick) => _.get(Template.instance().getPoolTeam(poolTeamPick.poolTeamId), 'userTeamName'),
 
-  leagueTeamName: (leagueTeamId) => {
-    return _.get(LeagueTeams.findOne(leagueTeamId), 'abbreviation');
-  },
+  leagueTeamName: (leagueTeamId) => _.get(LeagueTeams.findOne(leagueTeamId), 'abbreviation'),
 
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });

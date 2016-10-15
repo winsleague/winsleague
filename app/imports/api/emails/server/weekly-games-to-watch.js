@@ -4,6 +4,7 @@ import log from '../../../utils/log';
 
 import RatingCalculator from '../../pool_game_interest_ratings/server/calculator';
 import Common from './common';
+import { Pools } from '../../pools/pools';
 import { PoolGameInterestRatings } from '../../pool_game_interest_ratings/pool_game_interest_ratings';
 
 export default {
@@ -13,18 +14,16 @@ export default {
     RatingCalculator.calculateAllInterestRatings();
 
     RatingCalculator.nflPools().forEach(pool => {
-      this.sendPoolEmail(pool);
+      this.sendPoolEmail(pool._id, pool.latestSeasonId);
     });
   },
 
-  sendPoolEmail(pool) {
-    log.info(`Emailing games to watch email to pool ${pool._id} for season ${pool.latestSeasonId}`);
-
-    const poolId = pool._id;
+  getEmailData(poolId) {
+    const pool = Pools.findOne(poolId);
     const poolName = pool.name;
     const poolGameInterestRatings = PoolGameInterestRatings.find(
       {
-        poolId: pool._id,
+        poolId,
         rating: {
           $gte: 50,
         },
@@ -36,26 +35,33 @@ export default {
         limit: 5,
       });
 
-    if (poolGameInterestRatings.count() === 0) {
+    return {
+      poolId,
+      poolName,
+      poolGameInterestRatings,
+    };
+  },
+
+  sendPoolEmail(poolId, seasonId) {
+    log.info(`Emailing games to watch email to pool ${poolId} for season ${seasonId}`);
+
+    const playerEmails = Common.getPlayerEmails(poolId, seasonId);
+
+    const data = this.getEmailData(poolId);
+    if (data.poolGameInterestRatings.count() === 0) {
       log.info(`Not sending Games to Watch email to pool ${poolId} because there are no interest ratings.`);
       return;
     }
 
-    const playerEmails = Common.getPlayerEmails(poolId, pool.latestSeasonId);
-
     const success = Mailer.send({
       to: playerEmails,
-      subject: `Games to watch for ${poolName}`,
+      subject: `Games to watch for ${data.poolName}`,
       template: 'weeklyGamesToWatchTemplate',
-      data: {
-        poolId,
-        poolName,
-        poolGameInterestRatings,
-      },
+      data,
     });
 
     if (!success) {
-      throwError(`Error sending games to watch email to ${poolName}`);
+      throwError(`Error sending games to watch email to ${data.poolName}`);
     }
   },
 };

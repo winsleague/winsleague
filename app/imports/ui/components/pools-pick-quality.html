@@ -20,9 +20,9 @@
               <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamPick.poolTeamId}}">{{playerName poolTeamPick}}</a>
             </td>
             <td>{{leagueTeamName poolTeamPick.leagueTeamId}} #{{poolTeamPick.pickNumber}}</td>
-            <td>{{roundedPickQuality poolTeamPick.pickQuality}}</td>
+            <td>{{poolTeamPick.roundedPickQuality}}</td>
             <td>{{poolTeamPick.actualWins}}</td>
-            <td>{{roundedPickQuality poolTeamPick.expectedWins}}</td>
+            <td>{{poolTeamPick.roundedExpectedWins}}</td>
           </tr>
         {{/each}}
         </tbody>

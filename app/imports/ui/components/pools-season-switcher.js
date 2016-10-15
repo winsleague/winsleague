@@ -8,7 +8,14 @@ import { Seasons } from '../../api/seasons/seasons';
 import './pools-season-switcher.html';
 
 Template.Pools_season_switcher.helpers({
-  seasons: () => Seasons.find({}, { sort: { year: -1 } }),
+  seasons: () => Seasons.find(
+    {},
+    {
+      sort: {
+        year: -1,
+      },
+    }
+  ),
 
   isMultipleSeasons: () => Seasons.find().count() > 1,
 });

@@ -3,56 +3,49 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { Tracker } from 'meteor/tracker';
-import { DDP } from 'meteor/ddp-client';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { assert, expect } from 'chai';
 import 'chai-jquery';
-import { Promise } from 'meteor/promise';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';
 
-import { denodeify } from '../../../utils/denodeify';
-import { generateData } from '../../../api/generate-data.app-tests.js';
+import { waitForSubscriptions, afterFlushPromise, resetRoute, login } from './helpers.app-tests';
+import { generateData } from '../../../api/generate-data.app-tests';
 
 import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 
-// Utility -- returns a promise which resolves when all subscriptions are done
-const waitForSubscriptions = () => new Promise(resolve => {
-  const poll = Meteor.setInterval(() => {
-    if (DDP._allSubscriptionsReady()) {
-      Meteor.clearInterval(poll);
-      resolve();
-    }
-  }, 200);
-});
-
-// Tracker.afterFlush runs code when all consequent of a tracker based change
-//   (such as a route change) have occured. This makes it a promise.
-const afterFlushPromise = denodeify(Tracker.afterFlush);
-
 if (Meteor.isClient) {
   describe('Full-app test of Pools', function () {
-    this.timeout(5000);
+    this.timeout(10000);
 
     beforeEach(() =>
-      generateData()
-        .then(() => Meteor.loginWithPassword('test@test.com', 'test'))
-        .then(() => FlowRouter.go('/'))
+      resetRoute()
+        .then(() => generateData())
+        .then(login)
         .then(waitForSubscriptions)
     );
+
+    afterEach((done) => {
+      Meteor.logout(() => {
+        log.info('Logged out');
+        FlowRouter.go('/?force=true');
+        FlowRouter.watchPathChange();
+        done();
+      });
+    });
+
 
     describe('Full-app test of Pools.show', () => {
       const page = {
         getPoolTeamRowSelector: poolTeamId => `tr[id="${poolTeamId}"]`,
         getSeasonSwitcherSelector: seasonId => `a[id="${seasonId}"]`,
-        getSecondPoolTeamRowSelector: () => 'tr:nth-child(2)',
       };
 
       beforeEach(() =>
         afterFlushPromise()
           .then(() => FlowRouter.go('Pools.show', { poolId: Pools.findOne()._id }))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -69,6 +62,9 @@ if (Meteor.isClient) {
 
         beforeEach(() => {
           const pool = Pools.findOne();
+          if (!pool) {
+            log.error('Cannot find a Pool!');
+          }
           const poolId = pool._id;
           const leagueId = pool.leagueId;
           seasonId = Factory.create('season', { leagueId })._id;
@@ -84,6 +80,7 @@ if (Meteor.isClient) {
       });
     });
 
+
     describe('Full-app test of Pools.new', () => {
       const page = {
         getFirstLeagueSelector: () => 'input[name="leagueId"]:first',
@@ -93,6 +90,7 @@ if (Meteor.isClient) {
       beforeEach(() =>
         afterFlushPromise()
           .then(() => FlowRouter.go('Pools.new'))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -109,11 +107,14 @@ if (Meteor.isClient) {
       });
 
       it('should create new pool', () => {
+        log.info('should create new pool', FlowRouter.current().path);
+
         const poolName = 'Dummy';
         $(page.getNameSelector()).val(poolName);
         $('form').submit();
 
         return afterFlushPromise()
+          .then(waitForSubscriptions)
           .then(() => {
             const pool = Pools.findOne({ name: poolName });
             assert.isNotNull(pool, 'pool');
@@ -121,6 +122,7 @@ if (Meteor.isClient) {
           });
       });
     });
+
 
     describe('Full-app test of Pools.records', () => {
       const page = {
@@ -132,6 +134,14 @@ if (Meteor.isClient) {
           'table#pool_users_best_plus_minus_all_time tbody tr td.metric',
         getWorstPlusMinusAllTimeCellSelector: () =>
           'table#pool_users_worst_plus_minus_all_time tbody tr td.metric',
+        getMostUndefeatedWeeksAllTimeCellSelector: () =>
+          'table#pool_users_most_undefeated_weeks_all_time tbody tr td.metric',
+        getMostDefeatedWeeksAllTimeCellSelector: () =>
+          'table#pool_users_most_defeated_weeks_all_time tbody tr td.metric',
+        getMostCloseWinsAllTimeCellSelector: () =>
+          'table#pool_teams_most_close_wins_all_time tbody tr td.metric',
+        getMostCloseLossesAllTimeCellSelector: () =>
+          'table#pool_teams_most_close_losses_all_time tbody tr td.metric',
 
         getMostWinsSeasonCellSelector: () =>
           'table#pool_teams_most_wins_season tbody tr td.metric',
@@ -141,6 +151,14 @@ if (Meteor.isClient) {
           'table#pool_teams_best_plus_minus_season tbody tr td.metric',
         getWorstPlusMinusSeasonCellSelector: () =>
           'table#pool_teams_worst_plus_minus_season tbody tr td.metric',
+        getMostUndefeatedWeeksSeasonCellSelector: () =>
+          'table#pool_teams_most_undefeated_weeks_season tbody tr td.metric',
+        getMostDefeatedWeeksSeasonCellSelector: () =>
+          'table#pool_teams_most_defeated_weeks_season tbody tr td.metric',
+        getMostCloseWinsSeasonCellSelector: () =>
+          'table#pool_teams_most_close_wins_season tbody tr td.metric',
+        getMostCloseLossesSeasonCellSelector: () =>
+          'table#pool_teams_most_close_losses_season tbody tr td.metric',
 
         getBestPickQualitySeasonCellSelector: () =>
           'table#pool_team_picks_best_pick_quality_season tbody tr td.metric',
@@ -150,8 +168,8 @@ if (Meteor.isClient) {
 
       beforeEach(() =>
         afterFlushPromise()
-          .then(waitForSubscriptions)
           .then(() => FlowRouter.go('Pools.records', { poolId: Pools.findOne()._id }))
+          .then(() => afterFlushPromise())
           .then(waitForSubscriptions)
       );
 
@@ -179,6 +197,30 @@ if (Meteor.isClient) {
         };
       });
 
+      it('should display the teams with the most undefeated weeks of all time', () => {
+        return () => {
+          assert.equal($(page.getMostUndefeatedWeeksAllTimeCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most defeated weeks of all time', () => {
+        return () => {
+          assert.equal($(page.getMostDefeatedWeeksAllTimeCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close wins of all time', () => {
+        return () => {
+          assert.equal($(page.getMostCloseWinsAllTimeCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close losses of all time', () => {
+        return () => {
+          assert.equal($(page.getMostCloseLossesAllTimeCellSelector()).text(), 0);
+        };
+      });
+
       it('should display the teams with the most wins in a single season', () => {
         return () => {
           assert.equal($(page.getMostWinsSeasonCellSelector()).text(), 10);
@@ -203,6 +245,30 @@ if (Meteor.isClient) {
         };
       });
 
+      it('should display the teams with the most undefeated weeks in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostUndefeatedWeeksSeasonCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most defeated weeks in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostDefeatedWeeksSeasonCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close wins in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostCloseWinsSeasonCellSelector()).text(), 0);
+        };
+      });
+
+      it('should display the teams with the most close losses in a single season', () => {
+        return () => {
+          assert.equal($(page.getMostCloseLossesSeasonCellSelector()).text(), 0);
+        };
+      });
+
       it('should display the teams with the best pick quality in a single season', () => {
         return () => {
           assert.equal($(page.getBestPickQualitySeasonCellSelector()).text(), -3.8);
@@ -215,6 +281,5 @@ if (Meteor.isClient) {
         };
       });
     });
-
   });
 }
