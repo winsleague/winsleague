@@ -13,6 +13,7 @@ dependencies:
   cache_directories:
     - "~/.npm"
     - "~/.meteor"
+    - "~/.yarn-cache"
     - "app/node_modules"
     - "app/.meteor/local/build"
     - "app/.meteor/local/bundler-cache"
@@ -22,7 +23,7 @@ dependencies:
     - "/opt/circleci/nodejs/v4.5.0/lib/node_modules"
 
   override:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - if [ ! -e ~/.yarn ]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
