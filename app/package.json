@@ -16,7 +16,7 @@
     "lodash": "4.15.0",
     "loggly": "1.1.1",
     "meteor-node-stubs": "0.2.3",
-    "moment": "2.14.1",
+    "moment": "2.15.1",
     "moment-timezone": "0.5.5",
     "store": "1.3.20",
     "winston": "2.2.0",
