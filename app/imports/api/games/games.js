@@ -142,7 +142,11 @@ Games.helpers({
 
     if (homePoolTeamPick) {
       const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
-      return `${homePoolTeam.userTeamName}'s`;
+      let ranking = '';
+      if (homePoolTeam.currentRanking) {
+        ranking = `(${homePoolTeam.currentRanking}) `;
+      }
+      return `${ranking}${homePoolTeam.userTeamName}'s`;
     }
     return '';
   },
@@ -178,7 +182,11 @@ Games.helpers({
 
     if (awayPoolTeamPick) {
       const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
-      return `${awayPoolTeam.userTeamName}'s`;
+      let ranking = '';
+      if (awayPoolTeam.currentRanking) {
+        ranking = `(${awayPoolTeam.currentRanking}) `;
+      }
+      return `${ranking}${awayPoolTeam.userTeamName}'s`;
     }
     return '';
   },

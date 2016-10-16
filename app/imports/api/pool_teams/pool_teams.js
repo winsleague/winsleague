@@ -84,6 +84,10 @@ PoolTeams.schema = new SimpleSchema({
     type: Number,
     defaultValue: 0,
   },
+  currentRanking: {
+    type: Number,
+    optional: true, // there's no ranking at the start of the season
+  },
   undefeatedWeeks: { // only for NFL
     type: Number,
     optional: true,

@@ -7,6 +7,7 @@ import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams
 import { Games } from '../../games/games';
 
 import PoolTeamPickUpdater from '../../pool_team_picks/server/updater';
+import PoolUpdater from '../../pools/server/updater';
 
 export default {
   updateWhoPickedLeagueTeam(seasonId, leagueTeamId) {
@@ -16,6 +17,7 @@ export default {
     poolTeamPicks.forEach((poolTeamPick) => {
       this.updatePoolTeamRecord(poolTeamPick.poolTeamId);
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
+      PoolUpdater.updateRankings(poolTeamPick.poolId, poolTeamPick.seasonId);
       this.updatePoolTeamUndefeatedWeeks(poolTeamPick.poolTeamId);
     });
 
