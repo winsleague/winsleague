@@ -17,7 +17,8 @@ Template.App_body.onRendered(function () {
 });
 
 Template.App_body.events({
-  'click .menuLink'(event) {
-    $('.navbar-toggle').click();
+  // so we close the navbar dropdown when a link in it is clicked
+  'click .nav-link-toggle'(event) {
+    $('.navbar-toggler').click();
   },
 });
