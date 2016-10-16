@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 5.2.0
+    version: 4.5.0
 
 general:
   artifacts:
@@ -13,15 +13,17 @@ dependencies:
   cache_directories:
     - "~/.npm"
     - "~/.meteor"
+    - "~/.yarn-cache"
     - "app/node_modules"
     - "app/.meteor/local/build"
     - "app/.meteor/local/bundler-cache"
     - "app/.meteor/local/isopacks"
     - "app/.meteor/local/plugin-cache"
-    - "/opt/circleci/nodejs/v5.2.0/bin"
-    - "/opt/circleci/nodejs/v5.2.0/lib/node_modules"
+    - "/opt/circleci/nodejs/v4.5.0/bin"
+    - "/opt/circleci/nodejs/v4.5.0/lib/node_modules"
 
   override:
+    - if [ ! -e ~/.yarn ]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
@@ -49,6 +51,7 @@ deployment:
       - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
 
       # Deploy
+      - npm install -g ssh2@0.4.15 # needed for meteor-up
       - npm install -g mup@1.0.1 # install meteor-up for deployment
       - (cd .deploy/production; mup deploy)
 
