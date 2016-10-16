@@ -13,7 +13,7 @@ export default {
     log.info(`Finding PoolTeams who picked leagueTeamId ${leagueTeamId} for seasonId ${seasonId}`);
 
     const poolTeamPicks = PoolTeamPicks.find({ seasonId, leagueTeamId });
-    poolTeamPicks.forEach(poolTeamPick => {
+    poolTeamPicks.forEach((poolTeamPick) => {
       this.updatePoolTeamRecord(poolTeamPick.poolTeamId);
       this.updatePoolTeamPickQuality(poolTeamPick.poolTeamId);
       this.updatePoolTeamUndefeatedWeeks(poolTeamPick.poolTeamId);
@@ -34,7 +34,7 @@ export default {
 
     const picks = PoolTeamPicks.find({ poolTeamId });
 
-    picks.forEach(poolTeamPick => {
+    picks.forEach((poolTeamPick) => {
       const seasonId = poolTeamPick.seasonId;
       const leagueTeamId = poolTeamPick.leagueTeamId;
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
@@ -77,7 +77,7 @@ export default {
   },
 
   updatePoolTeamPickQuality(poolTeamId) {
-    PoolTeamPicks.find({ poolTeamId }).forEach(poolTeamPick => {
+    PoolTeamPicks.find({ poolTeamId }).forEach((poolTeamPick) => {
       PoolTeamPickUpdater.updatePickQuality(poolTeamPick);
     });
   },
@@ -96,7 +96,7 @@ export default {
     if (pickCount > 0) {
       const leagueTeams = picks.map(poolTeamPick => poolTeamPick.leagueTeamId);
 
-      for (let week = 1; week < 18; week++) {
+      for (let week = 1; week < 18; week += 1) {
         const gamesWon = Games.find({
           seasonId,
           week,
@@ -104,7 +104,7 @@ export default {
           winnerTeamId: { $in: leagueTeams },
         });
         if (gamesWon.count() === pickCount) {
-          undefeatedWeeks++;
+          undefeatedWeeks += 1;
         }
 
         const gamesLost = Games.find({
@@ -114,7 +114,7 @@ export default {
           loserTeamId: { $in: leagueTeams },
         });
         if (gamesLost.count() === pickCount) {
-          defeatedWeeks++;
+          defeatedWeeks += 1;
         }
       }
     }
@@ -128,8 +128,8 @@ export default {
       }
     );
 
-    log.debug(`PoolTeams.update ${poolTeamId} with undefeatedWeeks: ${undefeatedWeeks}, defeatedWeeks: ${defeatedWeeks}, ` +
-      `numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with undefeatedWeeks: ${undefeatedWeeks}, ` +
+      `defeatedWeeks: ${defeatedWeeks}, numberAffected: ${numberAffected}`);
   },
 
   updateTeamSummary(poolTeamId) {
@@ -137,7 +137,7 @@ export default {
 
     let teamSummary = '';
     const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
-    picks.forEach(poolTeamPick => {
+    picks.forEach((poolTeamPick) => {
       const leagueTeam = LeagueTeams.findOne(poolTeamPick.leagueTeamId);
       teamSummary += `${leagueTeam.abbreviation}, `;
     });
