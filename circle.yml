@@ -25,6 +25,8 @@ dependencies:
   override:
     - sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
     - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    - sudo apt-get update -y && sudo apt-get install yarn
+    - yarn --version
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
