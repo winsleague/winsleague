@@ -134,6 +134,15 @@ PoolTeams.schema = new SimpleSchema({
 });
 PoolTeams.attachSchema(PoolTeams.schema);
 
+PoolTeams.helpers({
+  friendlyTeamName() {
+    if (this.currentRanking) {
+      return `(${this.currentRanking}) ${this.userTeamName}`;
+    }
+    return this.userTeamName;
+  },
+});
+
 PoolTeams.formSchema = new SimpleSchema({
   poolId: {
     type: String,

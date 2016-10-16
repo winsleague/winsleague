@@ -12,7 +12,7 @@ import './pools-pick-quality.html';
 Template.Pools_pick_quality.helpers({
   playerName: (poolTeamPick) => {
     const poolTeam = Template.instance().getPoolTeam(poolTeamPick.poolTeamId);
-    return _.get(poolTeam, 'userTeamName');
+    return poolTeam.friendlyTeamName();
   },
 
   poolTeamPicks: () => {

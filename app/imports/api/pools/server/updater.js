@@ -5,7 +5,7 @@ export default {
   updateRankings(poolId, seasonId) {
     log.info('Updating Pool ranking', poolId);
 
-    const poolTeams = PoolTeams.find({poolId, seasonId}, {
+    const poolTeams = PoolTeams.find({ poolId, seasonId }, {
       sort: {
         totalWins: -1,
         totalGames: 1,  // if two teams are tied in wins,
