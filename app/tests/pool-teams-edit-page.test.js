@@ -55,7 +55,7 @@ describe('PoolTeams.edit page ui', () => {
 
     browser.waitForExist('h3#PoolTeams_show_title');
 
-    assert.equal(browser.getText('h3#PoolTeams_show_title'), newTeamName);
+    assert.equal(browser.getText('h3#PoolTeams_show_title'), `(1) ${newTeamName}`);
   });
 
   it('can delete a pool team', () => {

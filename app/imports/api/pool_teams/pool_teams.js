@@ -84,6 +84,10 @@ PoolTeams.schema = new SimpleSchema({
     type: Number,
     defaultValue: 0,
   },
+  currentRanking: {
+    type: Number,
+    optional: true, // there's no ranking at the start of the season
+  },
   undefeatedWeeks: { // only for NFL
     type: Number,
     optional: true,
@@ -129,6 +133,15 @@ PoolTeams.schema = new SimpleSchema({
   },
 });
 PoolTeams.attachSchema(PoolTeams.schema);
+
+PoolTeams.helpers({
+  friendlyTeamName() {
+    if (this.currentRanking) {
+      return `(${this.currentRanking}) ${this.userTeamName}`;
+    }
+    return this.userTeamName;
+  },
+});
 
 PoolTeams.formSchema = new SimpleSchema({
   poolId: {

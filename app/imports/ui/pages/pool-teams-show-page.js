@@ -24,7 +24,7 @@ Template.PoolTeams_show_page.helpers({
 
   seasonId: () => Template.instance().getSeasonId(),
 
-  poolTeamName: () => _.get(Template.instance().getPoolTeam(), 'userTeamName'),
+  poolTeamName: () => Template.instance().getPoolTeam().friendlyTeamName(),
 
   poolTeamPicks: () => {
     const poolTeamId = Template.instance().getPoolTeamId();

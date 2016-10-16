@@ -142,7 +142,7 @@ Games.helpers({
 
     if (homePoolTeamPick) {
       const homePoolTeam = PoolTeams.findOne(homePoolTeamPick.poolTeamId);
-      return `${homePoolTeam.userTeamName}'s`;
+      return homePoolTeam.friendlyTeamName();
     }
     return '';
   },
@@ -178,7 +178,7 @@ Games.helpers({
 
     if (awayPoolTeamPick) {
       const awayPoolTeam = PoolTeams.findOne(awayPoolTeamPick.poolTeamId);
-      return `${awayPoolTeam.userTeamName}'s`;
+      return awayPoolTeam.friendlyTeamName();
     }
     return '';
   },
