@@ -51,6 +51,7 @@ deployment:
       - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
 
       # Deploy
+      - npm install -g ssh2@0.4.15 # needed for meteor-up
       - npm install -g mup@1.0.1 # install meteor-up for deployment
       - (cd .deploy/production; mup deploy)
 
