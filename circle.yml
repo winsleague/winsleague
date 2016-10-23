@@ -27,6 +27,7 @@ dependencies:
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
         timeout: 1200
+    - (cd app; meteor npm install)
 
 checkout:
   post:
