@@ -35,7 +35,7 @@
     "shell-source": "1.1.0",
     "sinon": "1.17.5",
     "sinon-chai": "2.8.0",
-    "spacejam": "https://github.com/serut/spacejam/tarball/windows-suppport-rc4"
+    "spacejam": "https://codeload.github.com/serut/spacejam/legacy.tar.gz/dev/1-relaunch-on-boot"
   },
   "scripts": {
     "start": "meteor",
