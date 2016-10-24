@@ -35,50 +35,31 @@ checkout:
 
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
+    - (cd app; meteor npm run coverage-app-unit)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
          
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
          
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
          
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
          
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) (cd app; meteor npm run coverage) ;; 1) (cd app; ./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
-         parallel: true
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
+    - (cd app; meteor npm run coverage-app-full)
          
 deployment:
   production:
