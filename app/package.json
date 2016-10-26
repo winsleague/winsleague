@@ -35,7 +35,7 @@
     "shell-source": "1.1.0",
     "sinon": "1.17.5",
     "sinon-chai": "2.8.0",
-    "spacejam": "https://github.com/serut/spacejam/tarball/0df9d6f4eaca3661709ae198df7c3ebf0c3a8503"
+    "spacejam": "https://github.com/serut/spacejam/tarball/dev/2-relaunch-on-client-failure"
   },
   "scripts": {
     "start": "meteor",
