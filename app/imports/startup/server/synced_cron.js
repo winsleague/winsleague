@@ -45,7 +45,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh NBA standings',
     schedule(parser) {
-      return parser.recur().on(12).hour();
+      return parser.recur().every(5).minute();
     },
     job() {
       try {
