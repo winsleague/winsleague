@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
 import LeagueFinder from '../../leagues/finder';
@@ -16,17 +15,6 @@ export default {
 
     if (!season) {
       season = SeasonFinder.getLatestByLeague(league);
-    }
-
-    // only run during season
-    const day = moment.tz('US/Pacific');
-    if (day.isBefore(season.startDate)) {
-      log.info(`Not refreshing NBA standings because ${day.toDate()} is before ${season.startDate}`);
-      return;
-    }
-    if (day.isAfter(season.endDate)) {
-      log.info(`Not refreshing NBA standings because ${day.toDate()} is after ${season.endDate}`);
-      return;
     }
 
     const url = 'https://erikberg.com/nba/standings.json';
