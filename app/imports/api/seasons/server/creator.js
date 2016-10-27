@@ -26,7 +26,7 @@ export default {
     });
     log.info('Created new season ', newLatestSeasonId);
 
-    Pools.find({ leagueId }).forEach(pool => {
+    Pools.find({ leagueId }).forEach((pool) => {
       log.info(`Updating poolId ${pool._id} with latestSeasonId ${newLatestSeasonId}`);
       Pools.direct.update(pool._id, {
         $set: {
@@ -34,7 +34,7 @@ export default {
         },
       });
 
-      PoolTeams.find({ poolId: pool._id, seasonId: originalLatestSeason._id }).forEach(poolTeam => {
+      PoolTeams.find({ poolId: pool._id, seasonId: originalLatestSeason._id }).forEach((poolTeam) => {
         log.info(`Migrating poolTeams for poolId ${pool._id} to seasonId ${newLatestSeasonId}`);
         PoolTeams.insert({
           leagueId,
