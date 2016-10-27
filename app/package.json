@@ -33,7 +33,7 @@
     "eslint-plugin-meteor": "4.0.0",
     "eslint-plugin-react": "6.3.0",
     "shell-source": "1.1.0",
-    "sinon": "1.17.5",
+    "sinon": "1.17.6",
     "sinon-chai": "2.8.0",
     "spacejam": "https://github.com/serut/spacejam/tarball/windows-suppport-rc4"
   },
