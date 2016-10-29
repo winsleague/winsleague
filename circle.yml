@@ -22,7 +22,7 @@ dependencies:
     - "/opt/circleci/nodejs/v4.5.0/lib/node_modules"
 
   override:
-    - if [ ! -e ~/.yarn ]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):

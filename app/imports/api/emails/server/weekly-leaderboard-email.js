@@ -15,9 +15,9 @@ export default {
     log.info('Sending out weekly leaderboard email');
 
     const seasons = this.findActiveSeasons();
-    seasons.forEach(season => {
+    seasons.forEach((season) => {
       const poolIds = this.findEligiblePoolIds(season._id);
-      poolIds.forEach(poolId => {
+      poolIds.forEach((poolId) => {
         this.sendIndividual(poolId, season._id);
       });
     });
@@ -91,7 +91,7 @@ export default {
     });
 
     if (!success) {
-      throwError(`Error sending Wins Leaderboard mail to ${poolName}`);
+      throwError(`Error sending Wins Leaderboard mail to pool ${poolId} (${data.poolName})`);
     }
   },
 

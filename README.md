@@ -22,14 +22,6 @@
 
 3. Meteor automatically watches for changes and hot reloads the app.
 
-### Adding NPM packages
-
-After installing NPM packages, make sure to run ``shrinkwrap`` and ``shrinkpack`` to freeze versions.
-
-```
-$ (cd app; meteor npm shrinkwrap --dev; shrinkpack)
-```
-
 
 ## Testing
 

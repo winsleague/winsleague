@@ -16,7 +16,7 @@
         {{#each poolTeam in poolTeams}}
           <tr id="{{poolTeam._id}}" class="PoolTeams_row {{myTeamClass poolTeam._id}}">
             <td>
-              <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeam._id}}" class="PoolTeams_show">{{poolTeam.userTeamName}}</a>
+              <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeam._id}}" class="PoolTeams_show">{{poolTeam.friendlyTeamName}}</a>
             </td>
             <td>{{poolTeam.teamSummary}}</td>
             <td>{{poolTeam.totalWins}}</td>

@@ -21,7 +21,7 @@ export default {
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url, {
-      headers: { 'user-agent': 'Meteor/1.2 (https://github.com/winsleague/winsleague)' },
+      headers: { 'user-agent': 'Meteor/1.4 (https://github.com/winsleague/winsleague)' },
     });
     // clean the JSON because the keys don't have quotes
     const cleanJSON = response.content.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?: /g, '"$2": ');
@@ -29,7 +29,7 @@ export default {
     const parsedJSON = JSON.parse(cleanJSON);
 
     log.debug('parsedJSON.standing: ', parsedJSON.standing);
-    parsedJSON.standing.forEach(teamData => {
+    parsedJSON.standing.forEach((teamData) => {
       log.debug('teamData: ', teamData);
       this.saveTeam(league, season, teamData);
     });

@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
+import moment from 'moment-timezone';
 import log from '../../utils/log';
 
+import SeasonFinder from '../../api/seasons/finder';
 import NflGameData from '../../api/games/server/nfl_game_data';
 import NbaGameData from '../../api/games/server/nba_game_data';
 import MlbGameData from '../../api/games/server/mlb_game_data';
@@ -45,10 +47,23 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh NBA standings',
     schedule(parser) {
-      return parser.recur().on(12).hour();
+      return parser.recur().every(5).minute();
     },
     job() {
       try {
+
+        // only run during season
+        const season = SeasonFinder.getLatestByLeagueName('NBA');
+        const day = moment.tz('US/Pacific');
+        if (day.isBefore(season.startDate)) {
+          log.info(`Not refreshing NBA standings because ${day.toDate()} is before ${season.startDate}`);
+          return;
+        }
+        if (day.isAfter(season.endDate)) {
+          log.info(`Not refreshing NBA standings because ${day.toDate()} is after ${season.endDate}`);
+          return;
+        }
+
         NbaGameData.ingestSeasonData();
       } catch (e) {
         log.error(e);
