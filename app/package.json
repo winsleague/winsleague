@@ -39,7 +39,6 @@
   },
   "scripts": {
     "start": "meteor",
-    "start-coverage": "COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor",
     "pretest": "echo 'npm run lint --silent'",
     "test": "meteor test --once --driver-package dispatch:mocha-phantomjs --port 3100",
     "test-app": "meteor test --full-app --once --driver-package dispatch:mocha-phantomjs --port 3100",
@@ -47,8 +46,11 @@
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha --port 3100",
     "test-watch-terminal": "TEST_WATCH=1 meteor test --driver-package dispatch:mocha-phantomjs --port 3100",
     "test-app-watch-terminal": "TEST_WATCH=1 meteor test --full-app --driver-package dispatch:mocha-phantomjs --port 3100",
-    "test-coverage-app-unit": "node_modules/spacejam/bin/spacejam test            --driver-package practicalmeteor:mocha-console-runner --loglevel debug --coverage out_coverage",
-    "test-coverage-app-full": "node_modules/spacejam/bin/spacejam test --full-app --driver-package practicalmeteor:mocha-console-runner --loglevel debug --coverage 'in_coverage|out_lcovonly'",
+    "coverage": "meteor npm run coverage-app-unit && meteor npm run coverage-app-full",
+    "coverage-app-unit": "node_modules/spacejam/bin/spacejam --driver-package practicalmeteor:mocha-console-runner test --coverage 'out_lcovonly out_coverage out_html' --settings settings.coverage.json",
+    "coverage-app-full": "node_modules/spacejam/bin/spacejam --driver-package practicalmeteor:mocha-console-runner test --full-app --coverage 'out_lcovonly out_coverage out_html in_coverage' --settings settings.coverage.json",
+    "coverage-app-unit-watch": "COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor --driver-package practicalmeteor:mocha test --settings settings.coverage.json",
+    "coverage-app-full-watch": "COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor --driver-package practicalmeteor:mocha test --full-app --settings settings.coverage.json",
     "lint": "eslint ."
   },
   "author": "",
