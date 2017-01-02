@@ -23,6 +23,13 @@
 3. Meteor automatically watches for changes and hot reloads the app.
 
 
+### Updating Node packages
+
+```bash
+$ (cd app; yarn)
+```
+
+
 ## Testing
 
 ### Running tests once
