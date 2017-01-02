@@ -19,7 +19,7 @@ Seasons.schema = new SimpleSchema({
   startDate: {
     type: Date,
   },
-  endDate: {
+  endDate: { // this should be the day after the last game of the season
     type: Date,
   },
   status: {
