@@ -35,11 +35,11 @@ export default {
     }
     const seasonId = season._id;
 
-    if (today.isSameOrBefore(season.startDate) && !force) {
+    if (today.isBefore(season.startDate) && !force) {
       log.info(`Not refreshing NFL standings because ${today.toDate()} is before ${season.startDate}`);
       return;
     }
-    if (today.isSameOrAfter(season.endDate) && !force) {
+    if (today.isAfter(season.endDate) && !force) {
       log.info(`Not refreshing NFL standings because ${today.toDate()} is after ${season.endDate}`);
       return;
     }
