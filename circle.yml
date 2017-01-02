@@ -13,7 +13,8 @@ dependencies:
   cache_directories:
     - "~/.npm"
     - "~/.meteor"
-    - "~/.yarn-cache"
+    - "~/.cache/yarn"
+    - "~/.config/yarn"
     - "app/node_modules"
     - "app/.meteor/local/build"
     - "app/.meteor/local/bundler-cache"
