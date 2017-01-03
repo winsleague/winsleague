@@ -18,8 +18,16 @@
     "handleError": false
   },
   "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
     "no-underscore-dangle": "off",
-    "max-len": ["error", 120],
+    "object-shorthand": [
+      "error",
+      "always",
+      {
+        "avoidQuotes": false
+      }
+    ],
     "meteor/eventmap-params": [
       "error",
       {
@@ -29,7 +37,8 @@
     ],
     "meteor/template-names": [
       "off"
-    ]
+    ],
+    "max-len": ["error", 120]
   },
   "settings": {
     "import/resolver": {

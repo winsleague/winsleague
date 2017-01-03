@@ -1,6 +1,9 @@
 machine:
   node:
     version: 4.5.0
+  environment: # https://circleci.com/docs/install-and-use-yarn/
+    YARN_VERSION: 0.18.1
+    PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 general:
   artifacts:
@@ -10,9 +13,19 @@ general:
     - "app/lcov.info"
 
 dependencies:
+  pre:
+    - |
+      if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
+        echo "Download and install Yarn."
+        curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+      else
+        echo "The correct version of Yarn is already installed."
+      fi
+
   cache_directories:
     - "~/.npm"
     - "~/.meteor"
+    - "~/.yarn"
     - "~/.cache/yarn"
     - "~/.config/yarn"
     - "app/node_modules"
@@ -24,7 +37,6 @@ dependencies:
     - "/opt/circleci/nodejs/v4.5.0/lib/node_modules"
 
   override:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
