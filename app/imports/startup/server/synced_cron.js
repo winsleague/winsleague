@@ -94,7 +94,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Send weekly leaderboard emails',
     schedule(parser) {
-      return parser.text('at 10:00 am on Tuesday'); // 2am-ish PST
+      return parser.text('at 10:02 am on Tuesday'); // 2am-ish PST
     },
     job() {
       try {
@@ -111,7 +111,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Refresh weekly games to watch',
     schedule(parser) {
-      return parser.text('at 11:00 am on Tuesday'); // 3am-ish PST
+      return parser.text('at 11:02 am on Tuesday'); // 3am-ish PST
     },
     job() {
       try {
@@ -128,7 +128,7 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
   SyncedCron.add({
     name: 'Send weekly games to watch emails',
     schedule(parser) {
-      return parser.text('at 5:00 pm on Wednesday');
+      return parser.text('at 5:02 pm on Wednesday');
     },
     job() {
       try {
