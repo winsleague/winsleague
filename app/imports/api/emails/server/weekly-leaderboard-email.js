@@ -24,6 +24,8 @@ export default {
   },
 
   getEmailData(poolId, seasonId) {
+    log.info(`Getting email data for pool ${poolId} and seasonId ${seasonId}`);
+
     const pool = Pools.findOne(poolId);
     const poolName = pool.name;
     const poolTeams = PoolTeams.find({
@@ -46,6 +48,9 @@ export default {
           pickQuality: -1,
         },
       });
+    if (!bestPick) {
+      log.error(`Unable to find best pick for pool ${poolId} and seasonId ${seasonId}`);
+    }
     const bestPickPoolTeam = PoolTeams.findOne(bestPick.poolTeamId);
     const bestPickLeagueTeam = LeagueTeams.findOne(bestPick.leagueTeamId);
 
@@ -59,6 +64,9 @@ export default {
           pickQuality: 1,
         },
       });
+    if (!worstPick) {
+      log.error(`Unable to find worst pick for pool ${poolId} and seasonId ${seasonId}`);
+    }
     const worstPickPoolTeam = PoolTeams.findOne(worstPick.poolTeamId);
     const worstPickLeagueTeam = LeagueTeams.findOne(worstPick.leagueTeamId);
 
