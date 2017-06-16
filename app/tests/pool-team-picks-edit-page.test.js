@@ -26,10 +26,17 @@ const setup = () => {
 };
 
 const clickElement = (selector) => {
-  browser.waitForVisible(selector);
+  browser.waitForVisible(selector, 2000);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.click(selector);
+};
+
+const selectElementIndex = (selector, index) => {
+  browser.waitForVisible(selector, 2000);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.selectByIndex(selector, index);
 };
 
 describe('PoolTeamPicks.edit page ui', () => {
@@ -47,12 +54,10 @@ describe('PoolTeamPicks.edit page ui', () => {
   });
 
   it('can edit a pool team pick', () => {
-    browser.waitForVisible('select#leagueTeamId');
-    browser.selectByIndex('select#leagueTeamId', 4);
+    selectElementIndex('select#leagueTeamId', 4);
 
     const pickNumber = 6;
-    browser.waitForVisible('select#pickNumber');
-    browser.selectByIndex('select#pickNumber', pickNumber);
+    selectElementIndex('select#pickNumber', pickNumber);
 
     browser.submitForm('form');
 
