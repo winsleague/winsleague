@@ -45,15 +45,15 @@ deployment:
     commands:
       # Publish code coverage data to CodeClimate (only works on master branch).
       # $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
-      # - npm install -g codeclimate-test-reporter@0.3.3
+      # - yarn global add codeclimate-test-reporter@0.3.3
       # - (cd app; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < lcov.info)
 
       # Decrypt Meteor Up config
       - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
 
       # Deploy
-      - npm install -g ssh2@0.4.15 # needed for meteor-up
-      - npm install -g mup@1.0.1 # install meteor-up for deployment
+      - yarn global add ssh2@0.4.15 # needed for meteor-up
+      - yarn global add mup@1.0.1 # install meteor-up for deployment
       - (cd .deploy/production; mup deploy)
 
       # Notify Rollbar about deploy
