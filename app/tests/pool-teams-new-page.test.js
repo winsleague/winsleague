@@ -8,7 +8,7 @@ const setup = () => {
 
   browser.timeouts('script', 5000);
   browser.timeouts('implicit', 5000);
-  browser.timeouts('page load', 5000);
+  browser.timeouts('pageLoad', 5000);
 
   server.call('logout');
 
