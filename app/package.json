@@ -35,8 +35,7 @@
     "nightmare": "^2.10.0",
     "shell-source": "1.1.0",
     "sinon": "1.17.6",
-    "sinon-chai": "2.8.0",
-    "spacejam": "https://github.com/serut/spacejam/tarball/windows-suppport-rc4"
+    "sinon-chai": "2.8.0"
   },
   "scripts": {
     "start": "meteor",
