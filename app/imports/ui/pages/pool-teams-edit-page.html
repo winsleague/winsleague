@@ -11,9 +11,7 @@
     <br/>
     <a class="btn btn-default" href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamId}}">Back to Player</a>
     &nbsp;
-    {{> autoformModals}}
-    {{#afModal class="btn btn-danger" collection="pool_teams" operation="remove" doc=poolTeamDoc._id onSuccess=onRemoveSuccess}}
-      Delete
-    {{/afModal}}
+    {{> Delete_modal onDelete=onDelete}}
+    <a class="btn btn-danger" id="delete" href="#">Delete</a>
   {{/if}}
 </template>

@@ -63,7 +63,7 @@ describe('PoolTeamPicks.edit page ui', () => {
 
     browser.submitForm('form');
 
-    browser.waitForExist('h3#PoolTeams_show_title');
+    browser.waitForExist('h3#PoolTeams_show_title', timeout);
 
     // Buffalo is team 4
     assert.equal(browser.getText('td.PoolTeamPick:nth-Child(1)'), `#${pickNumber} BUF`);
@@ -75,7 +75,7 @@ describe('PoolTeamPicks.edit page ui', () => {
     // on the modal
     clickElement('#confirmDelete');
 
-    browser.waitForVisible('h3#PoolTeams_show_title');
+    browser.waitForVisible('h3#PoolTeams_show_title', timeout);
 
     const rowCount = browser.elements("//table[@id='PoolTeamPicks']/tbody/tr").value.length;
 

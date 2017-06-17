@@ -25,8 +25,10 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const timeout = 2000;
+
 const clickElement = (selector) => {
-  browser.waitForVisible(selector);
+  browser.waitForVisible(selector, timeout);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.click(selector);
@@ -47,26 +49,26 @@ describe('PoolTeams.edit page ui', () => {
   });
 
   it('can edit a pool team', () => {
-    browser.waitForExist('input[name="userTeamName"]');
-    browser.waitForValue('input[name="userTeamName"]');
+    browser.waitForExist('input[name="userTeamName"]', timeout);
+    browser.waitForValue('input[name="userTeamName"]', timeout);
 
     const newTeamName = 'new name';
 
     browser.setValue('input[name="userTeamName"]', newTeamName);
     browser.submitForm('form');
 
-    browser.waitForExist('h3#PoolTeams_show_title');
+    browser.waitForExist('h3#PoolTeams_show_title', timeout);
 
     assert.equal(browser.getText('h3#PoolTeams_show_title'), `(1) ${newTeamName}`);
   });
 
   it('can delete a pool team', () => {
-    clickElement('a.btn-danger');
+    clickElement('#delete');
 
     // on the modal
-    clickElement('button.btn-danger');
+    clickElement('#confirmDelete');
 
-    browser.waitForVisible('h2#Pools_title');
+    browser.waitForVisible('h2#Pools_title', timeout);
 
     const rowCount = browser.elements("//table[@id='Pools_wins']/tbody/tr").value.length;
 
