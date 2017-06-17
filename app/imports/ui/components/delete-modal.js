@@ -7,8 +7,8 @@ Template.Delete_modal.onCreated(function () {
 });
 
 Template.Delete_modal.events({
-  'click #confirmDelete': function(e) {
-    e.preventDefault();
+  'click #confirmDelete': (event) => {
+    event.preventDefault();
 
     // this timeout lets backdrop disappear
     setTimeout(() => this.onDelete(), 500);

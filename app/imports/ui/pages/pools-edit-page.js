@@ -44,8 +44,8 @@ Template.Pools_edit_page.onCreated(function () {
 
 
 Template.Pools_edit_page.events({
-  'click #delete': function(e) {
-    e.preventDefault();
+  'click #delete': (event) => {
+    event.preventDefault();
 
     $('#deleteModal').modal('show');
   },
