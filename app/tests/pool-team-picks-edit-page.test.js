@@ -25,15 +25,17 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const timeout = 2000;
+
 const clickElement = (selector) => {
-  browser.waitForVisible(selector, 2000);
+  browser.waitForVisible(selector, timeout);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.click(selector);
 };
 
 const selectElementIndex = (selector, index) => {
-  browser.waitForVisible(selector, 2000);
+  browser.waitForVisible(selector, timeout);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.selectByIndex(selector, index);
@@ -68,10 +70,10 @@ describe('PoolTeamPicks.edit page ui', () => {
   });
 
   it('can delete a pool team pick', () => {
-    clickElement('a.btn-danger');
+    clickElement('#delete');
 
     // on the modal
-    clickElement('button.btn-danger');
+    clickElement('#confirmDelete');
 
     browser.waitForVisible('h3#PoolTeams_show_title');
 
