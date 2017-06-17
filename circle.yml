@@ -24,14 +24,8 @@ dependencies:
     - "/opt/circleci/nodejs/v4.8.1/bin"
     - "/opt/circleci/nodejs/v4.8.1/lib/node_modules"
 
-  pre:
-    # upgrade Chrome. https://gist.github.com/Arjeno/8564d9643f16d072a85b9c9b5a9f7de0
-    - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - sudo dpkg -i google-chrome.deb
-    - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-    - rm google-chrome.deb
-
   override:
+    - ./.testing/upgrade_chrome_version.sh
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
