@@ -25,7 +25,7 @@ dependencies:
     - "/opt/circleci/nodejs/v4.8.1/lib/node_modules"
 
   override:
-    - ./.testing/upgrade_chrome_version.sh
+    - (cd app; ./.testing/upgrade_chrome_version.sh)
     - (cd app; ./.testing/cache_meteor.sh)
     - (cd app; ./.testing/cache_npm_dependencies.sh)
     - (cd app; ./.testing/cache_build_and_dependencies.sh):
