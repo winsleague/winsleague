@@ -5,4 +5,4 @@
 # if [ ! -e /home/ubuntu/nvm/versions/node/v4.8.1/lib/node_modules/spacejam/bin/spacejam ]; then yarn global add spacejam; fi
 
 echo "Installing local packages …"
-yarn --verbose --ignore-engines
+yarn --verbose
