@@ -63,7 +63,7 @@ Template.PoolTeamPicks_edit_page.onCreated(function () {
 });
 
 Template.PoolTeamPicks_edit_page.events({
-  'click #delete': (event) => {
+  'click #delete': function (event) {
     event.preventDefault();
 
     $('#deleteModal').modal('show');
