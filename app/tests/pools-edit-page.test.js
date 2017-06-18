@@ -25,8 +25,10 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const timeout = 2000;
+
 const clickElement = (selector) => {
-  browser.waitForVisible(selector);
+  browser.waitForVisible(selector, timeout);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.click(selector);
@@ -41,13 +43,13 @@ describe('Pools.edit page ui', () => {
   });
 
   it('can edit a pool', () => {
-    browser.waitForVisible('#Pools_title');
+    browser.waitForVisible('#Pools_title', timeout);
     const oldTitle = browser.getText('#Pools_title');
 
     clickElement('a#Pools_edit');
 
-    browser.waitForExist('input[name="name"]');
-    browser.waitForValue('input[name="name"]');
+    browser.waitForExist('input[name="name"]', timeout);
+    browser.waitForValue('input[name="name"]', timeout);
 
     // needed because we prepend the seasonYear to name
     const oldName = browser.getValue('input[name="name"]');
@@ -58,7 +60,7 @@ describe('Pools.edit page ui', () => {
     browser.setValue('input[name="name"]', newName);
     browser.submitForm('form');
 
-    browser.waitForExist('h3.Pools_show');
+    browser.waitForExist('h3.Pools_show', timeout);
 
     assert.equal(browser.getText('#Pools_title'), newTitle);
   });
@@ -66,12 +68,12 @@ describe('Pools.edit page ui', () => {
   it('can delete a pool', () => {
     clickElement('a#Pools_edit');
 
-    clickElement('a.btn-danger');
+    clickElement('#delete');
 
     // on the modal
-    clickElement('button.btn-danger');
+    clickElement('#confirmDelete');
 
-    browser.waitForVisible('h2#User_dashboard_title');
+    browser.waitForVisible('h2#User_dashboard_title', timeout);
 
     assert.equal(browser.getUrl(), 'http://localhost:3100/?force=true');
   });

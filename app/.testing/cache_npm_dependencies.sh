@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Disabled while we use the forked Spacejam in package.json (needed to instrument coverage)
+# Disabled until we get code coverage working. Right now it's a major pain.
 # echo "Installing Spacejam …"
-# if [ ! -e /home/ubuntu/nvm/versions/node/v4.5.0/lib/node_modules/spacejam/bin/spacejam ]; then npm install -g spacejam; fi
+# if [ ! -e /home/ubuntu/nvm/versions/node/v4.8.1/lib/node_modules/spacejam/bin/spacejam ]; then yarn global add spacejam; fi
 
 echo "Installing local packages …"
 yarn --verbose

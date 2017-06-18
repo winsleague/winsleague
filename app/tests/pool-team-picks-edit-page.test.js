@@ -25,11 +25,20 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const timeout = 2000;
+
 const clickElement = (selector) => {
-  browser.waitForVisible(selector);
+  browser.waitForVisible(selector, timeout);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.click(selector);
+};
+
+const selectElementIndex = (selector, index) => {
+  browser.waitForVisible(selector, timeout);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.selectByIndex(selector, index);
 };
 
 describe('PoolTeamPicks.edit page ui', () => {
@@ -47,28 +56,26 @@ describe('PoolTeamPicks.edit page ui', () => {
   });
 
   it('can edit a pool team pick', () => {
-    browser.waitForVisible('select#leagueTeamId');
-    browser.selectByIndex('select#leagueTeamId', 4);
+    selectElementIndex('select#leagueTeamId', 4);
 
     const pickNumber = 6;
-    browser.waitForVisible('select#pickNumber');
-    browser.selectByIndex('select#pickNumber', pickNumber);
+    selectElementIndex('select#pickNumber', pickNumber);
 
     browser.submitForm('form');
 
-    browser.waitForExist('h3#PoolTeams_show_title');
+    browser.waitForExist('h3#PoolTeams_show_title', timeout);
 
     // Buffalo is team 4
     assert.equal(browser.getText('td.PoolTeamPick:nth-Child(1)'), `#${pickNumber} BUF`);
   });
 
   it('can delete a pool team pick', () => {
-    clickElement('a.btn-danger');
+    clickElement('#delete');
 
     // on the modal
-    clickElement('button.btn-danger');
+    clickElement('#confirmDelete');
 
-    browser.waitForVisible('h3#PoolTeams_show_title');
+    browser.waitForVisible('h3#PoolTeams_show_title', timeout);
 
     const rowCount = browser.elements("//table[@id='PoolTeamPicks']/tbody/tr").value.length;
 

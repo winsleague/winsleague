@@ -4,6 +4,7 @@ import { AutoForm } from 'meteor/aldeed:autoform';
 import log from '../../utils/log';
 
 import './pool-teams-edit-page.html';
+import '../components/delete-modal';
 
 import { Pools } from '../../api/pools/pools';
 import { PoolTeams } from '../../api/pool_teams/pool_teams';
@@ -18,9 +19,10 @@ Template.PoolTeams_edit_page.helpers({
 
   poolTeamDoc: () => Template.instance().getPoolTeamDoc(),
 
-  onRemoveSuccess: () => {
+  onDelete: () => {
     return () => {
-      $('.modal-backdrop').hide(); // https://github.com/yogiben/meteor-autoform-modals/issues/65
+      PoolTeams.remove(FlowRouter.getParam('poolTeamId'));
+
       FlowRouter.go('Pools.show', { poolId: FlowRouter.getParam('poolId') });
     };
   },
@@ -57,6 +59,15 @@ Template.PoolTeams_edit_page.onCreated(function () {
       }
     });
   });
+});
+
+
+Template.PoolTeams_edit_page.events({
+  'click #delete': function (event) {
+    event.preventDefault();
+
+    $('#deleteModal').modal('show');
+  },
 });
 
 

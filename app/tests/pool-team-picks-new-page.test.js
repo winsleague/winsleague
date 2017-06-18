@@ -25,11 +25,20 @@ const setup = () => {
   browser.url('http://localhost:3100');
 };
 
+const timeout = 2000;
+
 const clickElement = (selector) => {
-  browser.waitForVisible(selector);
+  browser.waitForVisible(selector, timeout);
   // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
   browser.scroll(selector);
   browser.click(selector);
+};
+
+const selectElementIndex = (selector, index) => {
+  browser.waitForVisible(selector, timeout);
+  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
+  browser.scroll(selector);
+  browser.selectByIndex(selector, index);
 };
 
 describe('PoolTeamPicks.new page ui', () => {
@@ -49,15 +58,13 @@ describe('PoolTeamPicks.new page ui', () => {
   it('can create a pool team pick', () => {
     const pickNumber = 5;
 
-    browser.waitForVisible('select#leagueTeamId');
-    browser.selectByIndex('select#leagueTeamId', 3);
+    selectElementIndex('select#leagueTeamId', 3);
 
-    browser.waitForVisible('select#pickNumber');
-    browser.selectByIndex('select#pickNumber', 5);
+    selectElementIndex('select#pickNumber', pickNumber);
 
     browser.submitForm('form');
 
-    browser.waitForExist('h3#PoolTeams_show_title');
+    browser.waitForExist('h3#PoolTeams_show_title', timeout);
 
     const rowCount = browser.elements("//table[@id='PoolTeamPicks']/tbody/tr").value.length;
     assert.equal(rowCount, 2); // one for the original and one for the new
