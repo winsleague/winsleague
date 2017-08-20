@@ -25,7 +25,7 @@ function redirectToLastUrl(context) {
   }
 
   const url = store.get('lastUrl');
-  if (url && url !== '/?force=true') {
+  if (url && url !== '/?force=true' && url !== '/sign-in') {
     FlowRouter.redirect(url);
   }
 }
