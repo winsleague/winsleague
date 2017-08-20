@@ -2,37 +2,7 @@
 // These are Chimp globals */
 /* globals browser server assert */
 
-const setup = () => {
-  // we must navigate to client first so Meteor methods are available
-  browser.url('http://localhost:3100');
-
-  browser.timeouts('script', 5000);
-  browser.timeouts('implicit', 5000);
-  browser.timeouts('page load', 5000);
-
-  server.call('logout');
-
-  browser.executeAsync(function (done) {
-    Meteor.logout(done);
-  });
-
-  server.call('generateFixtures');
-
-  browser.executeAsync(function (done) {
-    Meteor.loginWithPassword('test@test.com', 'test', done);
-  });
-
-  browser.url('http://localhost:3100');
-};
-
-const timeout = 2000;
-
-const clickElement = (selector) => {
-  browser.waitForVisible(selector, timeout);
-  // http://stackoverflow.com/questions/29508143/selenium-element-is-not-clickable-at-point
-  browser.scroll(selector);
-  browser.click(selector);
-};
+import { setup, timeout, clickElement } from '../.testing/chimp-shared';
 
 describe('PoolTeams.new page ui', () => {
   beforeEach(() => {
