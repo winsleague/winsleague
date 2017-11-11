@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 4.8.1
+    version: 8.8.1
   environment: # https://circleci.com/docs/install-and-use-yarn/
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
@@ -21,8 +21,8 @@ dependencies:
     - "app/.meteor/local/bundler-cache"
     - "app/.meteor/local/isopacks"
     - "app/.meteor/local/plugin-cache"
-    - "/opt/circleci/nodejs/v4.8.1/bin"
-    - "/opt/circleci/nodejs/v4.8.1/lib/node_modules"
+    - "/opt/circleci/nodejs/v8.8.1/bin"
+    - "/opt/circleci/nodejs/v8.8.1/lib/node_modules"
 
   override:
     - (cd app; ./.testing/upgrade_chrome_version.sh)
