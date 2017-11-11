@@ -10,6 +10,7 @@ general:
     - "log"
     - "app/report.json" # from meteor_coverage's out_coverage
     - "app/lcov.info"
+    - "app/node_cache/_logs"
 
 dependencies:
   cache_directories:
