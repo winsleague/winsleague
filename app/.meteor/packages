@@ -26,7 +26,6 @@ accounts-password@1.5.0
 dburles:collection-helpers
 matb33:collection-hooks
 kadira:blaze-layout
-meteorhacks:fast-render
 fortawesome:fontawesome
 alanning:roles
 aldeed:autoform
@@ -60,5 +59,6 @@ tmeasday:acceptance-test-driver
 okgrow:analytics
 reywood:publish-composite
 shell-server@0.3.0
-dispatch:mocha
 dynamic-import
+meteortesting:mocha
+staringatlights:fast-render
