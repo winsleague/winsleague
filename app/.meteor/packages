@@ -4,25 +4,25 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-base@1.0.4             # Packages every Meteor app needs to have
-mobile-experience@1.0.4       # Packages for a great mobile UX
-mongo@1.1.16                   # The database Meteor supports right now
+meteor-base@1.2.0             # Packages every Meteor app needs to have
+mobile-experience@1.0.5       # Packages for a great mobile UX
+mongo@1.3.0                   # The database Meteor supports right now
 session@1.1.7                 # Client-side reactive dictionary for your app
 jquery@1.11.10                  # Helpful client-side library
-tracker@1.1.2                 # Meteor's client-side reactive programming library
+tracker@1.1.3                 # Meteor's client-side reactive programming library
 
 es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
-ecmascript@0.7.2              # Enable ECMAScript2015+ syntax in app code
+ecmascript@0.9.0              # Enable ECMAScript2015+ syntax in app code
 
 twbs:bootstrap
-promise@0.8.8
+promise@0.10.0
 
 
-http@1.2.12
+http@1.3.0
 peerlibrary:xml2js
 blaze-html-templates@1.0.4
 aldeed:collection2
-accounts-password@1.3.5
+accounts-password@1.5.0
 dburles:collection-helpers
 matb33:collection-hooks
 kadira:blaze-layout
@@ -47,12 +47,11 @@ zimme:active-route
 useraccounts:bootstrap
 useraccounts:flow-routing
 u2622:persistent-session
-standard-minifier-css@1.3.4
-standard-minifier-js@2.0.0
+standard-minifier-css@1.3.5
+standard-minifier-js@2.2.0
 xolvio:cleaner
 practicalmeteor:mocha
 dburles:factory
-lmieulet:meteor-coverage
 practicalmeteor:mocha-console-runner
 kadira:flow-router
 hwillson:stub-collections
@@ -60,5 +59,6 @@ audit-argument-checks@1.0.7
 tmeasday:acceptance-test-driver
 okgrow:analytics
 reywood:publish-composite
-shell-server@0.2.3
+shell-server@0.3.0
 dispatch:mocha
+dynamic-import
