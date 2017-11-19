@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-node -v
-yarn -v
+echo "environment versions:"
+echo "operation system $(uname -a)"
+echo "node $(node -v)"
+echo "yarn $(yarn -v)"
 /opt/google/chrome/google-chrome --version
