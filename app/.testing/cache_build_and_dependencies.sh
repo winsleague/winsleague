@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export MONGO_URL="mongodb://localhost:27017/cache"
 echo "Running meteor to cache it …"
