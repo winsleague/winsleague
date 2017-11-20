@@ -5,5 +5,7 @@ echo "environment versions:"
 echo "operating system $VERSION"
 echo "kernel $(uname -a)"
 echo "node $(node -v)"
+echo "$(meteor --version)"
+echo "meteor node $(meteor node -v)"
 echo "yarn $(yarn -v)"
 /opt/google/chrome/google-chrome --version
