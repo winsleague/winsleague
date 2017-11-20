@@ -35,7 +35,7 @@ $ (cd app; yarn)
 ### Running tests once
 
 ```
-$ (cd app; meteor test)
+$ (cd app; meteor npm run test)
 ```
 
 ### Running tests during development
