@@ -8,8 +8,9 @@ export default {
     // each userId can have multiple emails
     // each email has an address property and a verified property
     // return in the format 'name <email@domain.com>, name <email@domain.com>'
+    // don't include players if they haven't drafted any teams that season
 
-    const players = PoolTeams.find({ poolId, seasonId })
+    const players = PoolTeams.find({ poolId, seasonId, teamSummary: { $ne: '' } })
       .map(poolTeam => {
         return {
           _id: poolTeam.userId,

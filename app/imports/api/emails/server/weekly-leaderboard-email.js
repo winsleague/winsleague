@@ -16,9 +16,9 @@ export default {
 
     const seasons = this.findActiveSeasons();
     seasons.forEach((season) => {
-      const poolIds = this.findEligiblePoolIds(season._id);
-      poolIds.forEach((poolId) => {
-        this.sendIndividual(poolId, season._id);
+      const pools = this.findEligiblePools(season._id);
+      pools.forEach((pool) => {
+        this.sendIndividual(pool._id, season._id);
       });
     });
   },
@@ -85,9 +85,14 @@ export default {
   },
 
   sendIndividual(poolId, seasonId) {
-    log.info(`Emailing weekly leaderboard report to pool ${poolId}`);
+    log.info(`Emailing weekly leaderboard report to pool ${poolId} for season ${seasonId}`);
 
     const playerEmails = Common.getPlayerEmails(poolId, seasonId);
+
+    if (!playerEmails) {
+      log.info(`Not sending email because no one has drafted anyone. pool ${poolId} for season ${seasonId}`);
+      return;
+    }
 
     const data = this.getEmailData(poolId, seasonId);
 
@@ -115,20 +120,9 @@ export default {
     });
   },
 
-  findEligiblePoolIds(seasonId) {
-    const poolAggregation = PoolTeams.aggregate([
-      {
-        $match: {
-          seasonId,
-        },
-      },
-      {
-        $group: {
-          _id: '$poolId',
-          poolId: { $first: '$poolId' },
-        },
-      },
-    ]);
-    return poolAggregation.map(result => result._id);
+  findEligiblePools(seasonId) {
+    return Pools.find({
+      latestSeasonId: seasonId,
+    });
   },
 };
