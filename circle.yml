@@ -56,8 +56,7 @@ deployment:
       - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
 
       # Deploy
-      - yarn global add ssh2@0.4.15 # needed for meteor-up
-      - yarn global add mup@1.0.1 # install meteor-up for deployment
+      - yarn global add mup@1.3.5 # install meteor-up for deployment
       - (cd .deploy/production; mup deploy)
 
       # Notify Rollbar about deploy
