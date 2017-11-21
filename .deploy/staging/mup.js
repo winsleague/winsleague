@@ -27,7 +27,7 @@ module.exports = {
       KADIRA_APP_SECRET: "",
       MAIL_URL: ""
     },
-    dockerImage: "abernix/meteord:base",
+    dockerImage: "abernix/meteord:node-8-base",
     deployCheckWaitTime: 60,
   },
 
