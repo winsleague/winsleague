@@ -1,15 +1,14 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
+import { assert } from 'chai';
+import sinon from 'sinon';
 import moment from 'moment';
 import MlbGameData from './mlb_game_data';
 
 import MlbSeeds from '../../../startup/server/seeds/mlb';
 import { Games } from '../../../api/games/games';
 import { LeagueTeams } from '../../../api/league_teams/league_teams';
-
-import { assert } from 'chai';
-import sinon from 'sinon';
 
 describe('MLB Game Data', function () {
   this.timeout(10000);

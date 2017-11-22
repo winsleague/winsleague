@@ -1,9 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Factory } from 'meteor/dburles:factory';
-import { Random } from 'meteor/random';
-import faker from 'faker';
-import log from '../../utils/log';
 
 export const Leagues = new Mongo.Collection('leagues');
 
@@ -26,12 +22,4 @@ Leagues.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; },
-});
-
-Factory.define('league', Leagues, {
-  name: () => `${faker.lorem.word()}-${Random.id()}`, // faker is not guaranteed to be random
-  seasonGameCount: 16,
-  closeScore: 3,
-}).after((league) => {
-  log.debug('league factory created:', league);
 });

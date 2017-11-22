@@ -5,9 +5,9 @@ import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
 import log from '../../../utils/log';
 
-import '../../pool_teams/pool_teams'; // needed for factory
-import '../../league_teams/league_teams'; // needed for factory
-import '../../pool_team_picks/pool_team_picks'; // needed for factory
+import '../../pool_teams/pool_teams_factory';
+import '../../league_teams/league_teams_factory';
+import '../../pool_team_picks/pool_team_picks_factory';
 
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Games } from '../../games/games';

@@ -4,8 +4,6 @@
 import { assert } from 'chai';
 import sinon from 'sinon';
 
-import log from '../../../utils/log';
-
 import NflGameData from './nfl_game_data';
 import NflUtils from '../../../startup/server/seeds/nfl';
 import LeagueFinder from '../../leagues/finder';

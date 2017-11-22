@@ -1,15 +1,17 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
+import { assert } from 'chai';
 import log from '../../../utils/log';
 import { Factory } from 'meteor/dburles:factory';
+
 import { PoolTeams } from '../../pool_teams/pool_teams';
-import '../../league_teams/league_teams'; // needed for factory
-import '../../pool_team_picks/pool_team_picks'; // needed for factory
-import './hooks'; // needed because it's not auto included during test
 import { Games } from '../../games/games';
 
-import { assert } from 'chai';
+import '../../league_teams/league_teams_factory';
+import '../../pool_team_picks/pool_team_picks_factory';
+
+import './hooks'; // needed because it's not auto included during test
 
 describe('Game hooks', function() {
   describe('When inserting or updating games', function() {

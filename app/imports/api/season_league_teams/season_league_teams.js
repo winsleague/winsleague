@@ -1,11 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Factory } from 'meteor/dburles:factory';
-import log from '../../utils/log';
-
-import '../leagues/leagues'; // needed for factory
-import { Seasons } from '../seasons/seasons'; // needed for factory
-import { LeagueTeams } from '../league_teams/league_teams'; // needed for factory
 
 export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
@@ -123,32 +117,4 @@ SeasonLeagueTeams.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; },
-});
-
-
-Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
-  leagueId: Factory.get('league'),
-  seasonId: Factory.get('season'),
-  leagueTeamId: Factory.get('leagueTeam'),
-  abbreviation: 'NYG',
-}).after(factory => {
-  const season = Seasons.findOne(factory.seasonId);
-  season.leagueId = factory.leagueId;
-  Seasons.update(season._id,
-    {
-      $set: {
-        leagueId: factory.leagueId,
-      },
-    });
-
-  const leagueTeam = LeagueTeams.findOne(factory.leagueTeamId);
-  leagueTeam.leagueId = factory.leagueId;
-  LeagueTeams.update(leagueTeam._id,
-    {
-      $set: {
-        leagueId: factory.leagueId,
-      },
-    });
-
-  log.debug('seasonLeagueTeam factory created:', factory);
 });

@@ -3,8 +3,6 @@
 
 import { assert } from 'chai';
 
-import log from '../../../../utils/log';
-
 import PoolTeamsTotalWins from './pool-teams-total-wins';
 
 describe('Interest Rating Calculators > Pool Teams Total Wins', function () {

@@ -8,7 +8,12 @@ import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { denodeify } from '../utils/denodeify';
 import { check, Match } from 'meteor/check';
 
-import { Leagues } from '../api/leagues/leagues';
+import '../api/leagues/leagues_factory';
+import '../api/pools/pools_factory';
+import '../api/pool_teams/pool_teams_factory';
+import '../api/pool_team_picks/pool_team_picks_factory';
+import '../api/season_league_teams/season_league_teams_factory';
+
 import LeagueFinder from '../api/leagues/finder';
 import SeasonFinder from '../api/seasons/finder';
 import { LeagueTeams } from '../api/league_teams/league_teams';

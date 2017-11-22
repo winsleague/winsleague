@@ -3,8 +3,6 @@
 
 import { assert } from 'chai';
 
-import log from '../../../../utils/log';
-
 import TopPicks from './top-picks';
 
 describe('Interest Rating Calculators > Top Picks', function () {
