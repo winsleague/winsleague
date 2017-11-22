@@ -1,10 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Factory } from 'meteor/dburles:factory';
-import { Random } from 'meteor/random';
-import faker from 'faker';
-import moment from 'moment-timezone';
-import log from '../../utils/log';
 
 import { Games } from '../games/games';
 
@@ -81,10 +76,4 @@ PoolGameInterestRatings.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; },
-});
-
-Factory.define('pool_game_interest_rating', PoolGameInterestRatings, {
-  // TODO
-}).after(factory => {
-  log.debug('pool game interest rating factory created:', factory);
 });

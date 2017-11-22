@@ -1,10 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Factory } from 'meteor/dburles:factory';
-import faker from 'faker';
-import log from '../../utils/log';
 
-import '../users/users'; // needed for factory
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
 import SeasonFinder from '../seasons/finder';
@@ -182,18 +178,3 @@ if (Meteor.isServer) {
     },
   });
 }
-
-
-Factory.define('poolTeam', PoolTeams, {
-  seasonId: Factory.get('season'),
-  poolId: Factory.get('pool'),
-  userId: Factory.get('user'),
-  userTeamName: () => faker.company.companyName(),
-  teamSummary: () => faker.company.companyName(),
-}).after(factory => {
-  const pool = Pools.findOne(factory.poolId);
-  const season = Seasons.findOne(factory.seasonId);
-  season.leagueId = pool.leagueId;
-
-  log.debug('poolTeam factory created:', factory);
-});

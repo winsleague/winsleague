@@ -1,15 +1,13 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import { Factory } from 'meteor/dburles:factory';
-import log from '../../../utils/log';
-
-import PoolTeamUpdater from '../../pool_teams/server/updater';
-import './hooks';
-
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import { Factory } from 'meteor/dburles:factory';
+
+import PoolTeamUpdater from '../../pool_teams/server/updater';
+import './hooks';
 
 chai.use(sinonChai);
 

@@ -1,14 +1,12 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
+import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
-import log from '../../../utils/log';
 
 import { PoolTeams } from '../pool_teams';
-import './hooks';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
-
-import { assert } from 'chai';
+import './hooks';
 
 describe('Pool Teams Hooks', function () {
   this.timeout(5000);

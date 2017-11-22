@@ -1,16 +1,15 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
-import { Factory } from 'meteor/dburles:factory';
+import { assert } from 'chai';
+import sinon from 'sinon';
+
 import NbaGameData from './nba_game_data';
 import NbaSeeds from '../../../startup/server/seeds/nba';
 import LeagueFinder from '../../leagues/finder';
 import LeagueTeamFinder from '../../league_teams/finder';
 import SeasonFinder from '../../seasons/finder';
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
-
-import { assert } from 'chai';
-import sinon from 'sinon';
 
 describe('NBA Game Data', function () {
   this.timeout(10000);

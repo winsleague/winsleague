@@ -3,8 +3,6 @@
 
 import { assert } from 'chai';
 
-import log from '../../../../utils/log';
-
 import LeagueTeamsRecentWins from './league-teams-recent-wins';
 
 describe('Interest Rating Calculators > League Teams Recent Twins', function () {

@@ -1,14 +1,12 @@
 /* eslint-env mocha */
 /* eslint-disable func-names, prefer-arrow-callback */
 
+import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
-import log from '../../../utils/log';
 
 import Common from './common';
 
-import '../../pool_teams/pool_teams'; // needed for factory
-
-import { assert } from 'chai';
+import '../../pool_teams/pool_teams_factory';
 
 describe('Email > Common', () => {
   it('puts together player emails', () => {
