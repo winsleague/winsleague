@@ -2,7 +2,6 @@ import WeeklyLeaderboardEmail from '../../../api/emails/server/weekly-leaderboar
 
 export default {
   path: 'weekly-leaderboard-email/template.html',    // Relative to the 'private' dir.
-  css: 'weekly-leaderboard-email/style.css',       // Mail specific CSS.
 
   helpers: {
     preview() {

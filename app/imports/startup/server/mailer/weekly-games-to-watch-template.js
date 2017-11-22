@@ -2,7 +2,6 @@ import WeeklyGamesToWatch from '../../../api/emails/server/weekly-games-to-watch
 
 export default {
   path: 'weekly-games-to-watch-email/template.html',    // Relative to the 'private' dir.
-  css: 'weekly-games-to-watch-email/style.css',       // Mail specific CSS.
 
   helpers: {
     preview() {
