@@ -24,7 +24,7 @@ export default {
   },
 
   getEmailData(poolId, seasonId) {
-    log.info(`Getting email data for pool ${poolId} and seasonId ${seasonId}`);
+    log.info(`Getting leaderboard email data for pool ${poolId} and seasonId ${seasonId}`);
 
     const pool = Pools.findOne(poolId);
     const poolName = pool.name;
@@ -85,12 +85,12 @@ export default {
   },
 
   sendIndividual(poolId, seasonId) {
-    log.info(`Emailing weekly leaderboard report to pool ${poolId} for season ${seasonId}`);
+    log.info(`Sending leaderboard email to pool ${poolId} for season ${seasonId}`);
 
     const playerEmails = Common.getPlayerEmails(poolId, seasonId);
 
     if (!playerEmails) {
-      log.info(`Not sending email because no one has drafted anyone. pool ${poolId} for season ${seasonId}`);
+      log.info(`Not sending leaderboard email because no one has drafted anyone. pool ${poolId} for season ${seasonId}`);
       return;
     }
 
@@ -103,8 +103,10 @@ export default {
       data,
     });
 
-    if (!success) {
-      throwError(`Error sending Wins Leaderboard mail to pool ${poolId} (${data.poolName})`);
+    if (success) {
+      log.info(`Successfully sent leaderboard email to pool ${poolId} for season ${seasonId}`);
+    } else {
+      throwError(`Error sending leaderboard email to pool ${poolId} (${data.poolName})`);
     }
   },
 
