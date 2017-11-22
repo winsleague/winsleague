@@ -38,7 +38,7 @@ export default {
   saveTeam(league, season, teamData) {
     const leagueTeam = LeagueTeamFinder.getByName(league, teamData.first_name, teamData.last_name);
     if (!leagueTeam) {
-      throw new Error('Unable to find team!', teamData);
+      throw new Error(`Unable to find team! ${teamData.first_name} ${teamData.last_name}`);
     }
 
     SeasonLeagueTeams.upsert(
