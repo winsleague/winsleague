@@ -45,15 +45,6 @@ $ (cd app; meteor npm run test-watch)
 $ (cd app; meteor npm run test-app-watch)
 ```
 
-### Running tests with code coverage
-
-```
-$ (cd app; COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor test --driver-package practicalmeteor:mocha)
-$ http://localhost:3000
-```
-
-In browser console, run `Meteor.sendCoverage(function(stats,err) { console.log(stats,err);});` to capture client coverage.
-
 ### Running acceptance tests
 
 In one terminal:
@@ -97,6 +88,12 @@ Open app in the browser and press Control + M. See [Mongol documentation](https:
 
 ```
 $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-local-meteor-mongodb
+```
+
+### Bundle Visualizing
+
+```
+$ (cd app; meteor --extra-packages bundle-visualizer --production)
 ```
 
 

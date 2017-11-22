@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-mkdir .coverage
-
 meteor npm run test
 UNIT_RESULT=$?
 

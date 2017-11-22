@@ -8,8 +8,6 @@ general:
   artifacts:
     - "app/.meteor/local/log"
     - "log"
-    - "app/report.json" # from meteor_coverage's out_coverage
-    - "app/lcov.info"
     - "app/node_cache/_logs"
 
 dependencies:
@@ -47,11 +45,6 @@ deployment:
   production:
     branch: master
     commands:
-      # Publish code coverage data to CodeClimate (only works on master branch).
-      # $CODECLIMATE_REPO_TOKEN is an environment variable setup in CircleCI.
-      # - yarn global add codeclimate-test-reporter@0.3.3
-      # - (cd app; CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < lcov.info)
-
       # Decrypt Meteor Up config
       - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
 

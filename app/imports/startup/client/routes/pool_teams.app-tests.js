@@ -94,7 +94,7 @@ if (Meteor.isClient) {
         $(page.getUserEmailSelector()).val(userEmail);
         const userTeamName = 'Dummy Dummies';
         $(page.getUserTeamNameSelector()).val(userTeamName);
-        $('form').submit();
+        $('#submitButton').click();
 
         return afterFlushPromise()
           .then(waitForSubscriptions)
