@@ -43,13 +43,13 @@ export default {
   },
 
   sendPoolEmail(poolId, seasonId) {
-    log.info(`Emailing games to watch email to pool ${poolId} for season ${seasonId}`);
+    log.info(`Sending games to watch email to pool ${poolId} for season ${seasonId}`);
 
     const playerEmails = Common.getPlayerEmails(poolId, seasonId);
 
     const data = this.getEmailData(poolId);
     if (data.poolGameInterestRatings.count() === 0) {
-      log.info(`Not sending Games to Watch email to pool ${poolId} because there are no interest ratings.`);
+      log.info(`Not sending games to watch email to pool ${poolId} because there are no interest ratings.`);
       return;
     }
 
@@ -60,7 +60,9 @@ export default {
       data,
     });
 
-    if (!success) {
+    if (success) {
+      log.info(`Successfully sent games to watch email to pool ${poolId} for season ${seasonId}`);
+    } else {
       throwError(`Error sending games to watch email to ${data.poolName}`);
     }
   },
