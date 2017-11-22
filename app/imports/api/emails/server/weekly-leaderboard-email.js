@@ -50,6 +50,7 @@ export default {
       });
     if (!bestPick) {
       log.error(`Unable to find best pick for pool ${poolId} and seasonId ${seasonId}`);
+      return null;
     }
     const bestPickPoolTeam = PoolTeams.findOne(bestPick.poolTeamId);
     const bestPickLeagueTeam = LeagueTeams.findOne(bestPick.leagueTeamId);
@@ -66,6 +67,7 @@ export default {
       });
     if (!worstPick) {
       log.error(`Unable to find worst pick for pool ${poolId} and seasonId ${seasonId}`);
+      return null;
     }
     const worstPickPoolTeam = PoolTeams.findOne(worstPick.poolTeamId);
     const worstPickLeagueTeam = LeagueTeams.findOne(worstPick.leagueTeamId);
@@ -95,6 +97,10 @@ export default {
     }
 
     const data = this.getEmailData(poolId, seasonId);
+    if (!data) {
+      log.info(`Not sending leaderboard email to pool ${poolId} (${data.poolName}) because of no template data.`);
+      return;
+    }
 
     const success = Mailer.send({
       to: playerEmails,
