@@ -130,7 +130,7 @@ Games.helpers({
   title(poolId, seasonId) {
     // "Noah's #6 NYG (2-1) at Charlie's #8 GB (1-2)"
 
-    return `${this.awayTeamOwner(poolId, seasonId)} ${this.awayTeamPick(poolId, seasonId)} at ${this.homeTeamOwner(poolId, seasonId)} ${this.homeTeamPick(poolId, seasonId)}`;
+    return `${this.awayTeamOwner(poolId, seasonId)} ${this.awayTeamPick(poolId, seasonId)} ${this.awayTeamRecord(seasonId)} at ${this.homeTeamOwner(poolId, seasonId)} ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
   },
 
   homeTeamOwner(poolId, seasonId) {
@@ -162,11 +162,20 @@ Games.helpers({
       leagueTeamId: this.homeTeamId,
       seasonId,
     });
-    if (homeLeagueTeam) {
-      const record = ` (${homeLeagueTeam.record()})`;
-      return `${homePick}${homeLeagueTeam.abbreviation}${record}`;
-    }
+    homePick = `${homePick}${homeLeagueTeam.abbreviation}`;
+
     return homePick;
+  },
+
+  homeTeamRecord(seasonId) {
+    const homeLeagueTeam = SeasonLeagueTeams.findOne({
+      leagueTeamId: this.homeTeamId,
+      seasonId,
+    });
+    if (homeLeagueTeam) {
+      return ` (${homeLeagueTeam.record()})`;
+    }
+    return '';
   },
 
   awayTeamOwner(poolId, seasonId) {
@@ -198,11 +207,20 @@ Games.helpers({
       leagueTeamId: this.awayTeamId,
       seasonId,
     });
-    if (awayLeagueTeam) {
-      const record = ` (${awayLeagueTeam.record()})`;
-      return `${awayPick}${awayLeagueTeam.abbreviation}${record}`;
-    }
+    awayPick = `${awayPick}${awayLeagueTeam.abbreviation}`;
+
     return awayPick;
+  },
+
+  awayTeamRecord(seasonId) {
+    const awayLeagueTeam = SeasonLeagueTeams.findOne({
+      leagueTeamId: this.awayTeamId,
+      seasonId,
+    });
+    if (awayLeagueTeam) {
+      return ` (${awayLeagueTeam.record()})`;
+    }
+    return '';
   },
 
   friendlyDate() {
