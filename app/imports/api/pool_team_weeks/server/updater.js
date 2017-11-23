@@ -41,6 +41,7 @@ export default {
       const seasonId = poolTeamPick.seasonId;
 
       const homeGame = Games.findOne({
+        seasonId: poolTeam.seasonId,
         week,
         homeTeamId: poolTeamPick.leagueTeamId,
       });
@@ -53,6 +54,7 @@ export default {
         gameSummaries.push(`${homeScoreSummary} vs ${awayScoreSummary}`);
       } else {
         const awayGame = Games.findOne({
+          seasonId: poolTeam.seasonId,
           week,
           awayTeamId: poolTeamPick.leagueTeamId,
         });
@@ -60,10 +62,11 @@ export default {
         if (awayGame) {
           pointsFor += awayGame.awayScore;
           pointsAgainst += awayGame.homeScore;
-          const homeScoreSummary = `${awayGame.homeTeamPick(poolId, seasonId)} ${homeGame.homeScore}`;
-          const awayScoreSummary = `${awayGame.awayTeamPick(poolId, seasonId)} ${homeGame.awayScore}`;
+          const homeScoreSummary = `${awayGame.homeTeamPick(poolId, seasonId)} ${awayGame.homeScore}`;
+          const awayScoreSummary = `${awayGame.awayTeamPick(poolId, seasonId)} ${awayGame.awayScore}`;
           gameSummaries.push(`${awayScoreSummary} at ${homeScoreSummary}`);
         } else {
+          log.debug(`${poolTeamPick.leagueTeamId} team had a bye week`);
           // their team had a bye week
         }
       }

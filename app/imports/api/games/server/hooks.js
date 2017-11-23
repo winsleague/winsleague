@@ -20,8 +20,8 @@ Games.after.update((userId, doc, fieldNames, modifier, options) => {
     SeasonLeagueTeamUpdater.updateTeamStats(doc.leagueId, doc.seasonId, doc.awayTeamId);
 
     if (doc.week) {
-      PoolTeamWeeksUpdater.updateLeagueTeam(doc.leagueId, doc.seasonId, doc.homeTeamId, week);
-      PoolTeamWeeksUpdater.updateLeagueTeam(doc.leagueId, doc.seasonId, doc.awayTeamId, week);
+      PoolTeamWeeksUpdater.updateLeagueTeam(doc.leagueId, doc.seasonId, doc.homeTeamId, doc.week);
+      PoolTeamWeeksUpdater.updateLeagueTeam(doc.leagueId, doc.seasonId, doc.awayTeamId, doc.week);
     }
   }
 });
