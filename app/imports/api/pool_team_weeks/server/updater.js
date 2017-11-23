@@ -27,7 +27,7 @@ export default {
       throw new Error(`Unable to find poolTeam ${poolTeamId}`);
     }
 
-    log.info(`poolTeam: ${JSON.stringify(poolTeam)}`);
+    log.debug(`poolTeam: ${JSON.stringify(poolTeam)}`);
 
     let pointsFor = 0;
     let pointsAgainst = 0;
@@ -35,7 +35,7 @@ export default {
 
     const poolTeamPicks = PoolTeamPicks.find({ poolTeamId });
     poolTeamPicks.forEach((poolTeamPick) => {
-      log.info(`poolTeamPick: ${JSON.stringify(poolTeamPick)}`);
+      log.debug(`poolTeamPick: ${JSON.stringify(poolTeamPick)}`);
 
       const poolId = poolTeamPick.poolId;
       const seasonId = poolTeamPick.seasonId;
@@ -44,6 +44,7 @@ export default {
         seasonId: poolTeam.seasonId,
         week,
         homeTeamId: poolTeamPick.leagueTeamId,
+        status: 'completed',
       });
 
       if (homeGame) {
@@ -57,6 +58,7 @@ export default {
           seasonId: poolTeam.seasonId,
           week,
           awayTeamId: poolTeamPick.leagueTeamId,
+          status: 'completed',
         });
 
         if (awayGame) {
@@ -73,25 +75,26 @@ export default {
     });
 
     const gameSummary = gameSummaries.join(', ');
+    log.debug(`gameSummary: ${gameSummary}`);
 
-    log.info(`gameSummary: ${gameSummary}`);
-
-    PoolTeamWeeks.upsert({
-      leagueId: poolTeam.leagueId,
-      seasonId: poolTeam.seasonId,
-      seasonYear: poolTeam.seasonYear,
-      week,
-      poolId: poolTeam.poolId,
-      poolTeamId,
-    }, {
-      $set: {
-        pointsFor,
-        pointsAgainst,
-        plusMinus: pointsFor - pointsAgainst,
-        gameSummary,
-        userId: poolTeam.userId,
-        userTeamName: poolTeam.userTeamName,
-      },
-    });
+    if (gameSummary) { // make sure at least one game was completed
+      PoolTeamWeeks.upsert({
+        leagueId: poolTeam.leagueId,
+        seasonId: poolTeam.seasonId,
+        seasonYear: poolTeam.seasonYear,
+        week,
+        poolId: poolTeam.poolId,
+        poolTeamId,
+      }, {
+        $set: {
+          pointsFor,
+          pointsAgainst,
+          plusMinus: pointsFor - pointsAgainst,
+          gameSummary,
+          userId: poolTeam.userId,
+          userTeamName: poolTeam.userTeamName,
+        },
+      });
+    }
   },
 };

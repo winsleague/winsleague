@@ -7,7 +7,8 @@
         <tr>
           <th class="col-xs-3 player">Player</th>
           <th class="col-xs-2 metricTitle">{{metricTitle}}</th>
-          <th class="col-xs-7 season">Week</th>
+          <th class="col-xs-2 week">Week</th>
+          <th class="col-xs-5 games">Games</th>
         </tr>
         </thead>
         <tbody>
@@ -15,7 +16,8 @@
           <tr>
             <td class="userTeamName">{{poolTeamWeek.userTeamName}}</td>
             <td class="metric">{{getMetric poolTeamWeek}}</td>
-            <td class="season">Week {{poolTeamWeek.week}}: {{poolTeamWeek.gameSummary}}</td>
+            <td class="week">{{poolTeamWeek.seasonYear}} week {{poolTeamWeek.week}}</td>
+            <td class="games">{{poolTeamWeek.gameSummary}}</td>
           </tr>
         {{/each}}
         </tbody>
