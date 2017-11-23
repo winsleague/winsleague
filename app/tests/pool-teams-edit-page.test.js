@@ -25,7 +25,7 @@ describe('PoolTeams.edit page ui', () => {
     const newTeamName = 'new name';
 
     browser.setValue('input[name="userTeamName"]', newTeamName);
-    $('#submitButton').click();
+    clickElement('#submitButton');
 
     browser.waitForExist('h3#PoolTeams_show_title', timeout);
 

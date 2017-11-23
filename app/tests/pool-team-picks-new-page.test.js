@@ -25,7 +25,7 @@ describe('PoolTeamPicks.new page ui', () => {
 
     selectElementIndex('select#pickNumber', pickNumber);
 
-    $('#submitButton').click();
+    clickElement('#submitButton');
 
     browser.waitForExist('h3#PoolTeams_show_title', timeout);
 

@@ -24,7 +24,7 @@ describe('PoolTeams.new page ui', () => {
     browser.waitForVisible('input#userTeamName', timeout);
     browser.setValue('input#userTeamName', newTeamName);
 
-    $('#submitButton').click();
+    clickElement('#submitButton');
 
     browser.waitForExist('h3#PoolTeams_show_title', timeout);
 

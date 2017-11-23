@@ -28,7 +28,7 @@ describe('Pools.edit page ui', () => {
     const newTitle = `${oldTitle}${append}`;
 
     browser.setValue('input[name="name"]', newName);
-    $('#submitButton').click();
+    clickElement('#submitButton');
 
     browser.waitForExist('h3.Pools_show', timeout);
 
