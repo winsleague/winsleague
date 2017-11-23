@@ -24,7 +24,7 @@ describe('PoolTeamPicks.edit page ui', () => {
     const pickNumber = 6;
     selectElementIndex('select#pickNumber', pickNumber);
 
-    browser.submitForm('form');
+    clickElement('#submitButton');
 
     browser.waitForExist('h3#PoolTeams_show_title', timeout);
 

@@ -15,9 +15,6 @@ import { generateData } from '../../../api/generate-data.app-tests';
 import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../../api/pool_team_picks/pool_team_picks';
-import { Games } from '../../../api/games/games';
-
-
 
 if (Meteor.isClient) {
   describe('Full-app test of PoolTeams', function () {
@@ -94,7 +91,7 @@ if (Meteor.isClient) {
         $(page.getUserEmailSelector()).val(userEmail);
         const userTeamName = 'Dummy Dummies';
         $(page.getUserTeamNameSelector()).val(userTeamName);
-        $('form').submit();
+        $('#submitButton').click();
 
         return afterFlushPromise()
           .then(waitForSubscriptions)

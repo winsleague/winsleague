@@ -17,7 +17,7 @@ describe('Pools.new page ui', () => {
     browser.waitForVisible('input#name', timeout);
     browser.setValue('input#name', newTitle);
 
-    browser.submitForm('form');
+    clickElement('#submitButton');
 
     browser.waitForExist('h3.Pools_show', timeout);
 

@@ -42,7 +42,6 @@
   },
   "scripts": {
     "start": "meteor",
-    "start-coverage": "COVERAGE=1 COVERAGE_VERBOSE=1 COVERAGE_APP_FOLDER=${PWD/#$HOME/~}/ meteor",
     "pretest": "echo 'npm run lint --silent'",
     "test": "TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package meteortesting:mocha --port 3100",
     "test-app": "TEST_BROWSER_DRIVER=chrome meteor test --full-app --once --driver-package meteortesting:mocha --port 3100",
@@ -50,8 +49,6 @@
     "test-app-watch": "meteor test --full-app --driver-package practicalmeteor:mocha --port 3100",
     "test-watch-terminal": "TEST_WATCH=1 TEST_BROWSER_DRIVER=chrome meteor test --driver-package meteortesting:mocha --port 3100",
     "test-app-watch-terminal": "TEST_WATCH=1 TEST_BROWSER_DRIVER=chrome meteor test --full-app --driver-package meteortesting:mocha --port 3100",
-    "test-coverage-app-unit": "node_modules/spacejam/bin/spacejam test            --driver-package practicalmeteor:mocha-console-runner --loglevel debug --coverage out_coverage",
-    "test-coverage-app-full": "node_modules/spacejam/bin/spacejam test --full-app --driver-package practicalmeteor:mocha-console-runner --loglevel debug --coverage 'in_coverage|out_lcovonly'",
     "lint": "eslint ."
   },
   "author": "",

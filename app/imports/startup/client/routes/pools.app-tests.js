@@ -111,7 +111,7 @@ if (Meteor.isClient) {
 
         const poolName = 'Dummy';
         $(page.getNameSelector()).val(poolName);
-        $('form').submit();
+        $('#submitButton').click();
 
         return afterFlushPromise()
           .then(waitForSubscriptions)
