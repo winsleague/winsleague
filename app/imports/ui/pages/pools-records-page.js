@@ -8,6 +8,7 @@ import './pools-records-page.html';
 import '../components/pools-header';
 import '../components/pools-records-pool-team-picks-most-season';
 import '../components/pools-records-pool-teams-most-season';
+import '../components/pools-records-pool-teams-most-week';
 import '../components/pools-records-pool-users-most-all-time';
 import '../components/pools-season-switcher';
 

@@ -79,6 +79,24 @@
           sort=-1
         }}
 
+        {{> Pools_records_pool_teams_most_week
+          poolId=poolId
+          recordTitle="Best Point Differential, Week"
+          metricTitle="Point +/-"
+          metricField="plusMinus"
+          sort=-1
+          tableId="pool_teams_best_plus_minus_week"
+        }}
+
+        {{> Pools_records_pool_teams_most_week
+          poolId=poolId
+          recordTitle="Worst Point Differential, Week"
+          metricTitle="Point +/-"
+          metricField="plusMinus"
+          sort=1
+          tableId="pool_teams_worst_plus_minus_week"
+        }}
+
       </div>
       <div class="col-md-2">
       </div>

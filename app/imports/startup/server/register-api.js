@@ -12,6 +12,8 @@ import '../../api/pool_game_interest_ratings/server/publications';
 import '../../api/pool_team_picks/server/hooks';
 import '../../api/pool_team_picks/server/publications';
 
+import '../../api/pool_team_weeks/server/publications';
+
 import '../../api/pool_teams/server/hooks';
 import '../../api/pool_teams/server/methods';
 import '../../api/pool_teams/server/publications';

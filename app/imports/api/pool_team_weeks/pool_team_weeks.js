@@ -59,6 +59,14 @@ PoolTeamWeeks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  userId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+  },
+  userTeamName: {
+    label: 'Team name',
+    type: String,
+  },
   pointsFor: {
     type: Number,
     defaultValue: 0,

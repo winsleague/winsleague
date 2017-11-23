@@ -89,6 +89,8 @@ export default {
         pointsAgainst,
         plusMinus: pointsFor - pointsAgainst,
         gameSummary,
+        userId: poolTeam.userId,
+        userTeamName: poolTeam.userTeamName,
       },
     });
   },

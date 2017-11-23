@@ -1,0 +1,27 @@
+<template name="Pools_records_pool_teams_most_week">
+  <h4>{{recordTitle}}</h4>
+  {{#if Template.subscriptionsReady}}
+    <div class="table-responsive">
+      <table id="{{tableId}}" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th class="col-xs-3 player">Player</th>
+          <th class="col-xs-2 metricTitle">{{metricTitle}}</th>
+          <th class="col-xs-7 season">Week</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each poolTeamWeek in poolTeamWeeks}}
+          <tr>
+            <td class="userTeamName">{{poolTeamWeek.userTeamName}}</td>
+            <td class="metric">{{getMetric poolTeamWeek}}</td>
+            <td class="season">Week {{poolTeamWeek.week}}: {{poolTeamWeek.gameSummary}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+  <br/>
+</template>
