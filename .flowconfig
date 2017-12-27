@@ -1,9 +1,8 @@
 [ignore]
 .*/node_modules
-.*/app/.meteor
+.*/.meteor
 
 [include]
-./app
 
 [libs]
 

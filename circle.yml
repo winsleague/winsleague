@@ -6,29 +6,29 @@ machine:
 
 general:
   artifacts:
-    - "app/.meteor/local/log"
+    - ".meteor/local/log"
     - "log"
-    - "app/node_cache/_logs"
+    - "node_cache/_logs"
 
 dependencies:
   cache_directories:
     - "~/.npm"
     - "~/.meteor"
     - "~/.cache/yarn"
-    - "app/node_modules"
-    - "app/.meteor/local/build"
-    - "app/.meteor/local/bundler-cache"
-    - "app/.meteor/local/isopacks"
-    - "app/.meteor/local/plugin-cache"
+    - "node_modules"
+    - ".meteor/local/build"
+    - ".meteor/local/bundler-cache"
+    - ".meteor/local/isopacks"
+    - ".meteor/local/plugin-cache"
     - "/opt/circleci/nodejs/v8.8.1/bin"
     - "/opt/circleci/nodejs/v8.8.1/lib/node_modules"
 
   override:
-    - (cd app; ./.testing/upgrade_chrome_version.sh)
-    - (cd app; ./.testing/cache_meteor.sh)
-    - (cd app; ./.testing/print_environment.sh)
-    - (cd app; ./.testing/cache_npm_dependencies.sh)
-    - (cd app; ./.testing/cache_build_and_dependencies.sh):
+    - ./.testing/upgrade_chrome_version.sh
+    - ./.testing/cache_meteor.sh
+    - ./.testing/print_environment.sh
+    - ./.testing/cache_npm_dependencies.sh
+    - ./.testing/cache_build_and_dependencies.sh:
         timeout: 1200
 
 checkout:

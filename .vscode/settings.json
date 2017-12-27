@@ -2,9 +2,9 @@
     "files.exclude": {
         ".idea": true,
         ".vagrant": true,
-        "app/.meteor/local": true,
-        "app/node_cache": true,
-        "app/node_modules": true,
+        ".meteor/local": true,
+        "node_cache": true,
+        "node_modules": true,
         "backups": true
     }
 }

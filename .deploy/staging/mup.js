@@ -9,7 +9,7 @@ module.exports = {
 
   meteor: {
     name: "winsleague",
-    path: "../../app/",
+    path: "../../",
     servers: {
       one: {},
     },
