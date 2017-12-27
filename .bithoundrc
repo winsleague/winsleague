@@ -1,6 +1,6 @@
 {
   "ignore": [
-    "**/app/packages/**"
+    "**/packages/**"
   ],
   "test": [
     "**/tests/**",
@@ -14,5 +14,5 @@
       "bcrypt"
     ]
   },
-  "packageJsonLocation": "app/package.json"
+  "packageJsonLocation": "package.json"
 }

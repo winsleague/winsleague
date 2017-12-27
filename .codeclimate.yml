@@ -13,7 +13,7 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "app/**/*"
+  - "**/*"
   - "**.js"
   - "**.jsx"
   - "**.css"

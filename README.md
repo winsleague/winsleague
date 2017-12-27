@@ -11,7 +11,7 @@
 1. Launch the development environment:
 
     ```bash
-    $ (cd app; meteor)
+    $ meteor
     ```
 
 2. Open a browser to view the app:
@@ -26,7 +26,7 @@
 ### Updating Node packages
 
 ```bash
-$ (cd app; yarn)
+$ yarn
 ```
 
 
@@ -35,26 +35,26 @@ $ (cd app; yarn)
 ### Running tests once
 
 ```
-$ (cd app; meteor npm run test)
+$ meteor npm run test
 ```
 
 ### Running tests during development
 
 ```
-$ (cd app; meteor npm run test-watch)
-$ (cd app; meteor npm run test-app-watch)
+$ meteor npm run test-watch
+$ meteor npm run test-app-watch
 ```
 
 ### Running acceptance tests
 
 In one terminal:
 ```
-$ (cd app; meteor test --full-app --driver-package tmeasday:acceptance-test-driver)
+$ meteor test --full-app --driver-package tmeasday:acceptance-test-driver
 ```
 
 In another terminal:
 ```
-$ (cd app; ./tests/acceptance_run)
+$ ./tests/acceptance_run
 ```
 
 We run these in two separate terminals so the acceptance tests don't wipe out the dev database.
@@ -77,7 +77,7 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 ### Interactive Development Console
 
 ```
-$ (cd app; meteor shell)
+$ meteor shell
 ```
 
 ### View and Edit Client Documents
@@ -93,7 +93,7 @@ $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-
 ### Bundle Visualizing
 
 ```
-$ (cd app; meteor --extra-packages bundle-visualizer --production)
+$ meteor --extra-packages bundle-visualizer --production
 ```
 
 
