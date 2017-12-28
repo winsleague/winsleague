@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import { _ } from 'lodash';
 
 import { PoolTeamWeeks } from '../../api/pool_team_weeks/pool_team_weeks';
@@ -29,7 +29,7 @@ Template.Pools_records_pool_teams_most_week.onCreated(function () {
     recordTitle: { type: String },
     metricTitle: { type: String },
     metricField: { type: String },
-    sort: { type: Number, allowedValues: [1, -1] },
+    sort: { type: SimpleSchema.Integer, allowedValues: [1, -1] },
     tableId: { type: String },
   }).validate(this.data);
 

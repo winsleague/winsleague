@@ -38,6 +38,7 @@ $ yarn
 
 ```
 $ meteor npm run test
+$ meteor npm run test-app
 ```
 
 ### Running tests during development
@@ -71,7 +72,7 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 
 ### Other tips:
 
-1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
+1. Change `describe()` to `describe.only()` or `it()` to `it.only()` to only run specific specs.
 
 
 ## Debugging
@@ -96,6 +97,12 @@ $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-
 
 ```
 $ meteor --extra-packages bundle-visualizer --production
+```
+
+### Meteor Package Dependencies
+
+```
+$ for p in `meteor list | grep '^[a-z]' | awk '{ print $1"@"$2 }'`; do echo "$p"; meteor show "$p" | grep -E '^  [a-z]'; echo; done
 ```
 
 

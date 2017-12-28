@@ -1,8 +1,7 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import { Pools } from '../pools/pools';
-import { Seasons } from '../seasons/seasons';
 import SeasonFinder from '../seasons/finder';
 
 export const PoolTeamWeeks = new Mongo.Collection('pool_team_weeks');
@@ -12,7 +11,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert) {
+      if (this.isInsert && !this.isSet) {
         return Pools.findOne(this.field('poolId').value).leagueId;
       }
     },
@@ -21,35 +20,27 @@ PoolTeamWeeks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
-        // select latest season for league
-        const leagueIdField = this.field('leagueId');
-        if (leagueIdField.isSet) {
-          const leagueId = leagueIdField.value;
-          const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
-          if (latestSeason) return latestSeason._id;
-          throw new Error(`No season found for leagueId ${leagueId}`);
-        }
-        this.unset();
+      if (this.isInsert && !this.isSet) {
+        const { leagueId } = Pools.findOne(this.field('poolId').value);
+        const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
+        if (latestSeason) return latestSeason._id;
+        throw new Error(`No season found for leagueId ${leagueId}`);
       }
     },
   },
   seasonYear: {
-    type: Number,
+    type: SimpleSchema.Integer,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
-        const seasonIdField = this.field('seasonId');
-        if (seasonIdField.isSet) {
-          const seasonId = seasonIdField.value;
-          const season = Seasons.findOne(seasonId);
-          if (season) return season.year;
-          throw new Error(`No season found for seasonId ${seasonId}`);
-        }
+      if (this.isInsert && !this.isSet) {
+        const { leagueId } = Pools.findOne(this.field('poolId').value);
+        const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
+        if (latestSeason) return latestSeason.year;
+        throw new Error(`No season found for leagueId ${leagueId}`);
       }
     },
   },
   week: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
   poolId: {
     type: String,
@@ -68,15 +59,15 @@ PoolTeamWeeks.schema = new SimpleSchema({
     type: String,
   },
   pointsFor: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   pointsAgainst: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   plusMinus: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   gameSummary: {

@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import 'meteor/dburles:collection-helpers';
 
 import { Leagues } from '../leagues/leagues';
@@ -11,7 +11,7 @@ Seasons.schema = new SimpleSchema({
     type: String,
   },
   year: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
   startDate: {
     type: Date,

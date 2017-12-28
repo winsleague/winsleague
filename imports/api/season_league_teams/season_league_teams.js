@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 export const SeasonLeagueTeams = new Mongo.Collection('season_league_teams');
 
@@ -20,55 +20,55 @@ SeasonLeagueTeams.schema = new SimpleSchema({
     type: String,
   },
   wins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   losses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   ties: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   homeWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   homeLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   homeTies: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   awayWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   awayLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   awayTies: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   pointsFor: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   pointsAgainst: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   closeWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   closeLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   createdAt: {

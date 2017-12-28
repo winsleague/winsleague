@@ -9,7 +9,6 @@ import '../users/users_factory';
 import '../seasons/seasons_factory';
 
 Factory.define('pool', Pools, {
-  leagueId: Factory.get('league'),
   name: () => faker.lorem.words(),
   commissionerUserId: Factory.get('user'),
   latestSeasonId: Factory.get('season'),

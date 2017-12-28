@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { _ } from 'lodash';
 import log from '../../utils/log';
@@ -53,7 +53,7 @@ Template.Pools_wins.onCreated(function () {
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
     poolTeamId: { type: String, optional: true },
   });
-  schema.clean(this.data);
+  schema.clean(this.data, { mutate: true });
   schema.validate(this.data);
 
   this.getPool = () => Pools.findOne(this.data.poolId);

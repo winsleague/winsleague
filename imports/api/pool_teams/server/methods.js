@@ -41,11 +41,12 @@ export const insert = new ValidatedMethod({
         isUpsert: false,
         isFromTrustedCode: false,
       },
+      mutate: true,
     });
 
     log.debug('newDoc: ', newDoc);
 
-    check(newDoc, PoolTeams.schema);
+    PoolTeams.schema.validate(newDoc);
     return PoolTeams.insert(newDoc);
   },
 });

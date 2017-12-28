@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import { _ } from 'meteor/underscore';
 
 import { LeagueTeams } from '../league_teams/league_teams';
@@ -9,12 +9,13 @@ import { Seasons } from '../seasons/seasons';
 
 export const PoolTeamPicks = new Mongo.Collection('pool_team_picks');
 
+SimpleSchema.extendOptions(['autoform']);
 PoolTeamPicks.schema = new SimpleSchema({
   leagueId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert) {
+      if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).leagueId;
       }
     },
@@ -23,22 +24,19 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
+      if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).seasonId;
       }
     },
   },
   seasonYear: {
-    type: Number,
+    type: SimpleSchema.Integer,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
-        const seasonIdField = this.field('seasonId');
-        if (seasonIdField.isSet) {
-          const seasonId = seasonIdField.value;
-          const season = Seasons.findOne(seasonId);
-          if (season) return season.year;
-          throw new Error(`No season found for seasonId ${seasonId}`);
-        }
+      if (this.isInsert && !this.isSet) {
+        const { seasonId } = PoolTeams.findOne(this.field('poolTeamId').value);
+        const season = Seasons.findOne(seasonId);
+        if (season) return season.year;
+        throw new Error(`No season found for seasonId ${seasonId}`);
       }
     },
   },
@@ -46,7 +44,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
+      if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).poolId;
       }
     },
@@ -71,7 +69,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     },
   },
   pickNumber: {
-    type: Number,
+    type: SimpleSchema.Integer,
     label: 'Pick number',
     autoform: {
       afFieldInput: {
@@ -85,37 +83,35 @@ PoolTeamPicks.schema = new SimpleSchema({
     },
   },
   actualWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   expectedWins: {
     type: Number,
-    decimal: true,
     defaultValue: 0,
   },
   pickQuality: {
     type: Number,
-    decimal: true,
     defaultValue: 0,
   },
   actualLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   actualTies: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   plusMinus: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   closeWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   closeLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   createdAt: {
@@ -143,7 +139,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-});
+}, { tracker: Tracker });
 
 PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
 

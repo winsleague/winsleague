@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import SeasonFinder from '../seasons/finder';
+import { Seasons } from '../seasons/seasons';
 
 export const Pools = new Mongo.Collection('pools');
 
+SimpleSchema.extendOptions(['autoform']);
 Pools.schema = new SimpleSchema({
   leagueId: {
     type: String,
@@ -12,6 +14,15 @@ Pools.schema = new SimpleSchema({
     label: 'League',
     autoform: {
       type: 'select-radio-inline',
+    },
+    autoValue() {
+      if (this.isInsert && !this.isSet) {
+        const seasonIdField = this.field('latestSeasonId');
+        if (seasonIdField.isSet) {
+          const { leagueId } = Seasons.findOne(seasonIdField.value);
+          return leagueId;
+        }
+      }
     },
   },
   name: {
@@ -31,7 +42,7 @@ Pools.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
+      if (this.isInsert && !this.isSet) {
         // select latest season for league
         const leagueIdField = this.field('leagueId');
         if (leagueIdField.isSet) {
@@ -69,7 +80,7 @@ Pools.schema = new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-});
+}, { tracker: Tracker });
 
 Pools.attachSchema(Pools.schema);
 

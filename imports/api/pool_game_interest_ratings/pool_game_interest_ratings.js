@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import { Games } from '../games/games';
 
@@ -17,7 +17,7 @@ PoolGameInterestRatings.schema = new SimpleSchema({
   },
 
   rating: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
 
   gameTitle: {

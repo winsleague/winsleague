@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import { _ } from 'lodash';
 import log from '../../utils/log';
 
@@ -62,7 +62,7 @@ Template.Pools_games_to_watch.onCreated(function () {
     poolTeamId: { type: String, optional: true },
     includeInterestRatings: { type: Boolean, defaultValue: true },
   });
-  schema.clean(this.data);
+  schema.clean(this.data, { mutate: true });
   schema.validate(this.data);
 
   this.getMyLeagueTeams = () => {

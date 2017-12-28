@@ -1,8 +1,7 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import { Pools } from '../pools/pools';
-import { Seasons } from '../seasons/seasons';
 import SeasonFinder from '../seasons/finder';
 
 export const PoolTeams = new Mongo.Collection('pool_teams');
@@ -12,7 +11,7 @@ PoolTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert) {
+      if (this.isInsert && !this.isSet) {
         return Pools.findOne(this.field('poolId').value).leagueId;
       }
     },
@@ -21,30 +20,22 @@ PoolTeams.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
-        // select latest season for league
-        const leagueIdField = this.field('leagueId');
-        if (leagueIdField.isSet) {
-          const leagueId = leagueIdField.value;
-          const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
-          if (latestSeason) return latestSeason._id;
-          throw new Error(`No season found for leagueId ${leagueId}`);
-        }
-        this.unset();
+      if (this.isInsert && !this.isSet) {
+        const { leagueId } = Pools.findOne(this.field('poolId').value);
+        const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
+        if (latestSeason) return latestSeason._id;
+        throw new Error(`No season found for leagueId ${leagueId}`);
       }
     },
   },
   seasonYear: {
-    type: Number,
+    type: SimpleSchema.Integer,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
-        const seasonIdField = this.field('seasonId');
-        if (seasonIdField.isSet) {
-          const seasonId = seasonIdField.value;
-          const season = Seasons.findOne(seasonId);
-          if (season) return season.year;
-          throw new Error(`No season found for seasonId ${seasonId}`);
-        }
+      if (this.isInsert && !this.isSet) {
+        const { leagueId } = Pools.findOne(this.field('poolId').value);
+        const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
+        if (latestSeason) return latestSeason.year;
+        throw new Error(`No season found for leagueId ${leagueId}`);
       }
     },
   },
@@ -65,41 +56,41 @@ PoolTeams.schema = new SimpleSchema({
     defaultValue: '',
   },
   totalWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   totalLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   totalGames: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   totalPlusMinus: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   currentRanking: {
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true, // there's no ranking at the start of the season
   },
   undefeatedWeeks: { // only for NFL
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
     defaultValue: 0,
   },
   defeatedWeeks: { // only for NFL
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
     defaultValue: 0,
   },
   closeWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   closeLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   createdAt: {
@@ -112,7 +103,7 @@ PoolTeams.schema = new SimpleSchema({
       } else if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
     },
   },
   updatedAt: {
@@ -127,7 +118,8 @@ PoolTeams.schema = new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-});
+}, { tracker: Tracker });
+
 PoolTeams.attachSchema(PoolTeams.schema);
 
 PoolTeams.helpers({
@@ -153,7 +145,7 @@ PoolTeams.formSchema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Email,
   },
-});
+}, { tracker: Tracker });
 
 
 /* Access control */
@@ -163,7 +155,7 @@ if (Meteor.isServer) {
 
     update(userId, doc, fieldNames, modifier) {
       // verify userId either owns PoolTeam or is commissioner of pool
-      const poolId = doc.poolId;
+      const { poolId } = doc;
       const pool = Pools.findOne(poolId);
       return (userId === doc.userId ||
         userId === pool.commissionerUserId);
@@ -171,7 +163,7 @@ if (Meteor.isServer) {
 
     remove(userId, doc) {
       // verify userId either owns PoolTeam or is commissioner of pool
-      const poolId = doc.poolId;
+      const { poolId } = doc;
       const pool = Pools.findOne(poolId);
       return (userId === doc.userId ||
       userId === pool.commissionerUserId);
