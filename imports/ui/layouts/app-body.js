@@ -3,7 +3,6 @@ import './app-body.html';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import log from '../../utils/log';
 import { Template } from 'meteor/templating';
-import { ActiveRoute } from 'meteor/zimme:active-route';
 import { atNavButton } from 'meteor/useraccounts:bootstrap';
 
 import '../components/pools-menu';

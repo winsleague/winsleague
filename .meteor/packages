@@ -30,7 +30,6 @@ fortawesome:fontawesome
 alanning:roles
 aldeed:autoform
 check@1.2.5
-arillo:flow-router-helpers
 percolate:synced-cron
 brentjanderson:winston-client
 saucecode:rollbar
@@ -41,9 +40,7 @@ percolate:migrations
 msavin:mongol
 lookback:emails
 meteorhacks:aggregate
-zimme:active-route
 useraccounts:bootstrap
-useraccounts:flow-routing
 u2622:persistent-session
 standard-minifier-css@1.3.5
 standard-minifier-js@2.2.0
@@ -61,3 +58,4 @@ dynamic-import
 meteortesting:mocha
 staringatlights:fast-render
 ostrio:flow-router-extra
+mealsunite:flow-routing-extra
