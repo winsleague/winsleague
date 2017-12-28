@@ -19,7 +19,7 @@ describe('NBA Game Data', function () {
 
     // it'd be great if this could be pulled from an external file but I couldn't figure out
     // how to get it to copy the external js file to the mirror
-    sinon.stub(HTTP, 'get', function () {
+    stub(HTTP, 'get').callsFake(function (url) {
       return {
         content: `{
 standings_date: "2016-01-30T22:44:00-05:00",
