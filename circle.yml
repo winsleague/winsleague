@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 8.8.1
+    version: 8.9.3
   environment: # https://circleci.com/docs/install-and-use-yarn/
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
@@ -20,8 +20,8 @@ dependencies:
     - ".meteor/local/bundler-cache"
     - ".meteor/local/isopacks"
     - ".meteor/local/plugin-cache"
-    - "/opt/circleci/nodejs/v8.8.1/bin"
-    - "/opt/circleci/nodejs/v8.8.1/lib/node_modules"
+    - "/opt/circleci/nodejs/v8.9.3/bin"
+    - "/opt/circleci/nodejs/v8.9.3/lib/node_modules"
 
   pre:
     - yarn global add greenkeeper-lockfile@1
