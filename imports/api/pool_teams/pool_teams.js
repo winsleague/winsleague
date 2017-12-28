@@ -119,6 +119,7 @@ PoolTeams.schema = new SimpleSchema({
     optional: true,
   },
 }, { tracker: Tracker });
+
 PoolTeams.attachSchema(PoolTeams.schema);
 
 PoolTeams.helpers({
@@ -144,7 +145,7 @@ PoolTeams.formSchema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Email,
   },
-});
+}, { tracker: Tracker });
 
 
 /* Access control */
