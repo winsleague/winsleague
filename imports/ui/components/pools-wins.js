@@ -53,7 +53,7 @@ Template.Pools_wins.onCreated(function () {
     isCommissioner: { type: Boolean, optional: true, defaultValue: false },
     poolTeamId: { type: String, optional: true },
   });
-  schema.clean(this.data);
+  schema.clean(this.data, { mutate: true });
   schema.validate(this.data);
 
   this.getPool = () => Pools.findOne(this.data.poolId);

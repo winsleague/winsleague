@@ -62,7 +62,7 @@ Template.Pools_games_to_watch.onCreated(function () {
     poolTeamId: { type: String, optional: true },
     includeInterestRatings: { type: Boolean, defaultValue: true },
   });
-  schema.clean(this.data);
+  schema.clean(this.data, { mutate: true });
   schema.validate(this.data);
 
   this.getMyLeagueTeams = () => {

@@ -41,6 +41,7 @@ export const insert = new ValidatedMethod({
         isUpsert: false,
         isFromTrustedCode: false,
       },
+      mutate: true,
     });
 
     log.debug('newDoc: ', newDoc);
