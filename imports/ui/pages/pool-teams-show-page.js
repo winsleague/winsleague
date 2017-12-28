@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { AutoForm } from 'meteor/aldeed:autoform';
 import { _ } from 'lodash';
 import log from '../../utils/log';

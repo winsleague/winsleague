@@ -6,7 +6,7 @@ import { assert } from 'chai';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import { $ } from 'meteor/jquery';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import sinon from 'sinon';
 
 import { withRenderedTemplate } from '../../test-helpers.js';

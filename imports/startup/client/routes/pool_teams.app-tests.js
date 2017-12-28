@@ -3,7 +3,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { assert, expect } from 'chai';
 import 'chai-jquery';
 import { $ } from 'meteor/jquery';
