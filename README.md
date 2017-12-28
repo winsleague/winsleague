@@ -38,6 +38,7 @@ $ yarn
 
 ```
 $ meteor npm run test
+$ meteor npm run test-app
 ```
 
 ### Running tests during development
