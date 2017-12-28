@@ -40,6 +40,13 @@
     "sinon-chai": "2.14.0",
     "xmlbuilder": "9.0.4"
   },
+  "greenkeeper": {
+    "ignore": [
+      "loggly",
+      "winston",
+      "winston-loggly-bulk"
+    ]
+  },
   "scripts": {
     "start": "meteor",
     "pretest": "echo 'npm run lint --silent'",
