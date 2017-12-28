@@ -118,7 +118,7 @@ PoolTeams.schema = new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-});
+}, { tracker: Tracker });
 PoolTeams.attachSchema(PoolTeams.schema);
 
 PoolTeams.helpers({

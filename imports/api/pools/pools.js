@@ -80,7 +80,7 @@ Pools.schema = new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-});
+}, { tracker: Tracker });
 
 Pools.attachSchema(Pools.schema);
 

@@ -139,7 +139,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     denyInsert: true,
     optional: true,
   },
-});
+}, { tracker: Tracker });
 
 PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
 
