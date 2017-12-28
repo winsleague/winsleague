@@ -18,9 +18,7 @@ describe('Email > Common', () => {
       userId: firstUser._id,
     });
 
-    const leagueId = poolTeam.leagueId;
-    const seasonId = poolTeam.seasonId;
-    const poolId = poolTeam.poolId;
+    const { leagueId, seasonId, poolId } = poolTeam;
 
     const secondUser = Factory.create('user');
 
@@ -34,7 +32,9 @@ describe('Email > Common', () => {
 
     const playerEmails = Common.getPlayerEmails(poolId, seasonId);
 
-    assert.equal(playerEmails, 
-      `first user <${firstUser.emails[0].address}>, second user <${secondUser.emails[0].address}>`);
+    assert.equal(
+      playerEmails,
+      `first user <${firstUser.emails[0].address}>, second user <${secondUser.emails[0].address}>`,
+    );
   });
 });

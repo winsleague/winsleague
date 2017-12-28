@@ -19,11 +19,11 @@ Pools.schema = new SimpleSchema({
       if (this.isInsert && !this.isSet) {
         const seasonIdField = this.field('latestSeasonId');
         if (seasonIdField.isSet) {
-          const { leagueId } = Seasons.findOne(seasonIdField.value)
+          const { leagueId } = Seasons.findOne(seasonIdField.value);
           return leagueId;
         }
       }
-    }
+    },
   },
   name: {
     type: String,

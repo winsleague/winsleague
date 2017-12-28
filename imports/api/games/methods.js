@@ -1,6 +1,5 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { LoggedInMixin } from 'meteor/tunifight:loggedin-mixin';
-import SimpleSchema from 'simpl-schema';
 
 import mlbGameData from './server/mlb_game_data';
 import SeasonFinder from '../seasons/finder';
