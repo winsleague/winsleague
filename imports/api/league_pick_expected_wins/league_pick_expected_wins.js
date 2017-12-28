@@ -12,7 +12,7 @@ LeaguePickExpectedWins.schema = new SimpleSchema({
     type: SimpleSchema.Integer,
   },
   wins: {
-    type: SimpleSchema.Integer,
+    type: Number,
   },
 });
 
