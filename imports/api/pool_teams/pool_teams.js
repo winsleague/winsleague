@@ -103,7 +103,7 @@ PoolTeams.schema = new SimpleSchema({
       } else if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
     },
   },
   updatedAt: {
@@ -155,7 +155,7 @@ if (Meteor.isServer) {
 
     update(userId, doc, fieldNames, modifier) {
       // verify userId either owns PoolTeam or is commissioner of pool
-      const poolId = doc.poolId;
+      const { poolId } = doc;
       const pool = Pools.findOne(poolId);
       return (userId === doc.userId ||
         userId === pool.commissionerUserId);
@@ -163,7 +163,7 @@ if (Meteor.isServer) {
 
     remove(userId, doc) {
       // verify userId either owns PoolTeam or is commissioner of pool
-      const poolId = doc.poolId;
+      const { poolId } = doc;
       const pool = Pools.findOne(poolId);
       return (userId === doc.userId ||
       userId === pool.commissionerUserId);
