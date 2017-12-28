@@ -23,6 +23,9 @@ dependencies:
     - "/opt/circleci/nodejs/v8.8.1/bin"
     - "/opt/circleci/nodejs/v8.8.1/lib/node_modules"
 
+  pre:
+    - yarn global add greenkeeper-lockfile@1
+
   override:
     - ./.testing/upgrade_chrome_version.sh
     - ./.testing/cache_meteor.sh
@@ -37,9 +40,13 @@ checkout:
     - git submodule update --init --recursive --remote
 
 test:
+  pre:
+    - greenkeeper-lockfile-update
   override:
     - case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./.testing/install_chimp.sh; ./tests/acceptance_run) ;; esac:
         parallel: true
+  post:
+    - greenkeeper-lockfile-upload
 
 deployment:
   production:
