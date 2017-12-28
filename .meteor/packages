@@ -62,3 +62,4 @@ shell-server@0.3.0
 dynamic-import
 meteortesting:mocha
 staringatlights:fast-render
+tinytest
