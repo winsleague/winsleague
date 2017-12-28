@@ -1,7 +1,6 @@
 {
   "extends": [
     "airbnb",
-    "eslint:recommended",
     "plugin:meteor/recommended"
   ],
   "env": {
