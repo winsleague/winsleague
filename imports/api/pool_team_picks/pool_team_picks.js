@@ -15,7 +15,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert) {
+      if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).leagueId;
       }
     },
@@ -24,7 +24,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
+      if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).seasonId;
       }
     },
@@ -32,14 +32,11 @@ PoolTeamPicks.schema = new SimpleSchema({
   seasonYear: {
     type: SimpleSchema.Integer,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
-        const seasonIdField = this.field('seasonId');
-        if (seasonIdField.isSet) {
-          const seasonId = seasonIdField.value;
-          const season = Seasons.findOne(seasonId);
-          if (season) return season.year;
-          throw new Error(`No season found for seasonId ${seasonId}`);
-        }
+      if (this.isInsert && !this.isSet) {
+        const { seasonId } = PoolTeams.findOne(this.field('poolTeamId').value);
+        const season = Seasons.findOne(seasonId);
+        if (season) return season.year;
+        throw new Error(`No season found for seasonId ${seasonId}`);
       }
     },
   },
@@ -47,7 +44,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     autoValue() {
-      if (this.isInsert && ! this.isSet) {
+      if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).poolId;
       }
     },
