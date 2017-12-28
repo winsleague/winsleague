@@ -135,6 +135,7 @@ staringatlights:fast-render@2.16.5
 staringatlights:inject-data@2.0.5
 templating@1.2.14
 templating-tools@1.1.1
+tinytest@1.0.12
 tmeasday:acceptance-test-driver@0.1.0
 tmeasday:test-reporter-helpers@0.2.1
 tracker@1.1.3
