@@ -15,7 +15,7 @@ import '../home_page.js';
 describe('Home_page', function () {
   beforeEach(function () {
     Template.registerHelper('_', key => key);
-    stub(Meteor, 'subscribe').callsFake(() => ({
+    sinon.stub(Meteor, 'subscribe').callsFake(() => ({
       subscriptionId: 0,
       ready: () => true,
     }));
