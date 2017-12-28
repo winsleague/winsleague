@@ -99,6 +99,12 @@ $ http://stackoverflow.com/questions/22020580/how-to-connect-mongodb-clients-to-
 $ meteor --extra-packages bundle-visualizer --production
 ```
 
+### Meteor Package Dependencies
+
+```
+$ for p in `meteor list | grep '^[a-z]' | awk '{ print $1"@"$2 }'`; do echo "$p"; meteor show "$p" | grep -E '^  [a-z]'; echo; done
+```
+
 
 ## Migrations
 
