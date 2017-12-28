@@ -34,7 +34,6 @@ arillo:flow-router-helpers
 percolate:synced-cron
 brentjanderson:winston-client
 saucecode:rollbar
-kadira:debug
 mdg:validated-method
 tunifight:loggedin-mixin
 jcbernack:reactive-aggregate
@@ -52,7 +51,6 @@ xolvio:cleaner
 practicalmeteor:mocha
 dburles:factory
 practicalmeteor:mocha-console-runner
-kadira:flow-router
 hwillson:stub-collections
 audit-argument-checks@1.0.7
 tmeasday:acceptance-test-driver
@@ -62,4 +60,4 @@ shell-server@0.3.0
 dynamic-import
 meteortesting:mocha
 staringatlights:fast-render
-tinytest
+ostrio:flow-router-extra

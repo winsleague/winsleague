@@ -2,7 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import log from '../utils/log';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { denodeify } from '../utils/denodeify';

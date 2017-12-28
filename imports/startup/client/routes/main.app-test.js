@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import { Meteor } from 'meteor/meteor';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { assert } from 'chai';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';

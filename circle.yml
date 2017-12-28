@@ -34,11 +34,6 @@ dependencies:
     - ./.testing/cache_build_and_dependencies.sh:
         timeout: 1200
 
-checkout:
-  post:
-    - git submodule sync
-    - git submodule update --init --recursive --remote
-
 test:
   pre:
     - greenkeeper-lockfile-update
