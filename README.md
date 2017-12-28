@@ -72,7 +72,7 @@ Note that Flow doesn't yet support TypeScript declarations so it will complain a
 
 ### Other tips:
 
-1. Change `describe()` to `fdescribe()` or `it()` to `fit()` to only run specific specs.
+1. Change `describe()` to `describe.only()` or `it()` to `it.only()` to only run specific specs.
 
 
 ## Debugging
