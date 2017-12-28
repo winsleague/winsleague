@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import moment from 'moment-timezone';
 import { _ } from 'lodash';
 
@@ -27,7 +27,7 @@ Games.schema = new SimpleSchema({
     type: Date,
   },
   week: {
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
   }, // only for NFL
   homeTeamId: {
@@ -35,7 +35,7 @@ Games.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
   },
   homeScore: {
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
   },
   awayTeamId: {
@@ -43,7 +43,7 @@ Games.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
   },
   awayScore: {
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
   },
   winnerTeamId: {

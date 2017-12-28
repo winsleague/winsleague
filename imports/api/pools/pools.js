@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import SeasonFinder from '../seasons/finder';
 
 export const Pools = new Mongo.Collection('pools');
 
+SimpleSchema.extendOptions(['autoform']);
 Pools.schema = new SimpleSchema({
   leagueId: {
     type: String,

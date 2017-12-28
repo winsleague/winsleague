@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import { _ } from 'lodash';
 
 import { LeagueTeams } from '../../api/league_teams/league_teams';
@@ -43,7 +43,7 @@ Template.Pools_pick_quality.onCreated(function () {
     seasonId: { type: String },
     poolId: { type: String },
     tableTitle: { type: String },
-    sort: { type: Number },
+    sort: { type: SimpleSchema.Integer, allowedValues: [1, -1] },
     poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 

@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 export const Leagues = new Mongo.Collection('leagues');
 
@@ -8,10 +8,10 @@ Leagues.schema = new SimpleSchema({
     type: String,
   },
   seasonGameCount: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
   closeScore: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
 });
 

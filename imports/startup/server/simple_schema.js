@@ -5,6 +5,6 @@
   certain actions are failing validation.
  */
 
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 SimpleSchema.debug = false;

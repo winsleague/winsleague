@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import CollectionCache from '../../api/collection_cache';
 
@@ -27,7 +27,7 @@ Template.Pools_records_pool_users_most_all_time.onCreated(function () {
     recordTitle: { type: String },
     metricTitle: { type: String },
     metricField: { type: String },
-    sort: { type: Number, allowedValues: [1, -1] },
+    sort: { type: SimpleSchema.Integer, allowedValues: [1, -1] },
     collectionName: { type: String },
   }).validate(this.data);
 

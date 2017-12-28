@@ -45,7 +45,7 @@ export const insert = new ValidatedMethod({
 
     log.debug('newDoc: ', newDoc);
 
-    check(newDoc, PoolTeams.schema);
+    PoolTeams.validate(newDoc);
     return PoolTeams.insert(newDoc);
   },
 });

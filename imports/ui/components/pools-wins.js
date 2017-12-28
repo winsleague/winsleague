@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { _ } from 'lodash';
 import log from '../../utils/log';

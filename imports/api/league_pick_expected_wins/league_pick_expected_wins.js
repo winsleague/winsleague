@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 export const LeaguePickExpectedWins = new Mongo.Collection('league_pick_expected_wins');
 
@@ -9,11 +9,10 @@ LeaguePickExpectedWins.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
   },
   rank: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
   wins: {
-    type: Number,
-    decimal: true,
+    type: SimpleSchema.Integer,
   },
 });
 

@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
@@ -35,7 +35,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
     },
   },
   seasonYear: {
-    type: Number,
+    type: SimpleSchema.Integer,
     autoValue() {
       if (this.isInsert && ! this.isSet) {
         const seasonIdField = this.field('seasonId');
@@ -49,7 +49,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
     },
   },
   week: {
-    type: Number,
+    type: SimpleSchema.Integer,
   },
   poolId: {
     type: String,
@@ -68,15 +68,15 @@ PoolTeamWeeks.schema = new SimpleSchema({
     type: String,
   },
   pointsFor: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   pointsAgainst: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   plusMinus: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   gameSummary: {

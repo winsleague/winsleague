@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import { Pools } from '../pools/pools';
 import { Seasons } from '../seasons/seasons';
@@ -35,7 +35,7 @@ PoolTeams.schema = new SimpleSchema({
     },
   },
   seasonYear: {
-    type: Number,
+    type: SimpleSchema.Integer,
     autoValue() {
       if (this.isInsert && ! this.isSet) {
         const seasonIdField = this.field('seasonId');
@@ -65,41 +65,41 @@ PoolTeams.schema = new SimpleSchema({
     defaultValue: '',
   },
   totalWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   totalLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   totalGames: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   totalPlusMinus: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   currentRanking: {
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true, // there's no ranking at the start of the season
   },
   undefeatedWeeks: { // only for NFL
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
     defaultValue: 0,
   },
   defeatedWeeks: { // only for NFL
-    type: Number,
+    type: SimpleSchema.Integer,
     optional: true,
     defaultValue: 0,
   },
   closeWins: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   closeLosses: {
-    type: Number,
+    type: SimpleSchema.Integer,
     defaultValue: 0,
   },
   createdAt: {
