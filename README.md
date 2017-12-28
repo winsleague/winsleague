@@ -1,5 +1,7 @@
 # Wins League
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/winsleague/winsleague.svg)](https://greenkeeper.io/)
+
 ## Getting Started
 
 1. [Install Meteor](https://www.meteor.com/install)
