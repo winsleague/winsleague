@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import SeasonFinder from '../seasons/finder';
+import { Seasons } from '../seasons/seasons';
 
 export const Pools = new Mongo.Collection('pools');
 
@@ -14,6 +15,15 @@ Pools.schema = new SimpleSchema({
     autoform: {
       type: 'select-radio-inline',
     },
+    autoValue() {
+      if (this.isInsert && !this.isSet) {
+        const seasonIdField = this.field('latestSeasonId');
+        if (seasonIdField.isSet) {
+          const { leagueId } = Seasons.findOne(seasonIdField.value)
+          return leagueId;
+        }
+      }
+    }
   },
   name: {
     type: String,

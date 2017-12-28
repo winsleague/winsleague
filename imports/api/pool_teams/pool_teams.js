@@ -2,7 +2,6 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 import { Pools } from '../pools/pools';
-import { Seasons } from '../seasons/seasons';
 import SeasonFinder from '../seasons/finder';
 
 export const PoolTeams = new Mongo.Collection('pool_teams');
