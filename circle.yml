@@ -24,7 +24,7 @@ dependencies:
     - "/opt/circleci/nodejs/v8.9.3/lib/node_modules"
 
   pre:
-    - yarn global add greenkeeper-lockfile@1
+    - yarn global add greenkeeper-lockfile@github:jasonLaster/greenkeeper-lockfile
 
   override:
     - ./.testing/upgrade_chrome_version.sh
