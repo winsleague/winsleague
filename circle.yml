@@ -9,7 +9,7 @@ general:
     - ".meteor/local/log"
     - "log"
     - "node_cache/_logs"
-    - "~/.config/yarn"
+    - "~/.config/yarn/global/yarn-error.log"
 
 dependencies:
   cache_directories:
