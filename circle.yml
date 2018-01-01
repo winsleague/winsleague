@@ -9,6 +9,7 @@ general:
     - ".meteor/local/log"
     - "log"
     - "node_cache/_logs"
+    - "~/.config/yarn"
 
 dependencies:
   cache_directories:
@@ -23,10 +24,8 @@ dependencies:
     - "/opt/circleci/nodejs/v8.9.3/bin"
     - "/opt/circleci/nodejs/v8.9.3/lib/node_modules"
 
-  pre:
-    - yarn global add greenkeeper-lockfile@github:jasonLaster/greenkeeper-lockfile
-
   override:
+    - yarn global add greenkeeper-lockfile@github:jasonLaster/greenkeeper-lockfile
     - ./.testing/upgrade_chrome_version.sh
     - ./.testing/cache_meteor.sh
     - ./.testing/print_environment.sh
