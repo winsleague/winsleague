@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 echo "Installing local packages …"
-yarn --verbose
+yarn install --frozen-lockfile
