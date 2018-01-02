@@ -1,10 +1,10 @@
+import { _ } from 'lodash';
+
 import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
 import { LeaguePickExpectedWins } from '../../league_pick_expected_wins/league_pick_expected_wins';
 import { Leagues } from '../../leagues/leagues';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import log from '../../../utils/log';
-
-import { _ } from 'lodash';
 
 export default {
   updatePickQuality(poolTeamPick) {
@@ -23,12 +23,12 @@ export default {
     });
 
     if (!expectedWinsRecord) {
-      return;
+      return null;
     }
 
     const expectedWinsFullSeason = expectedWinsRecord.wins;
 
-    const seasonGameCount = Leagues.findOne(poolTeamPick.leagueId).seasonGameCount;
+    const { seasonGameCount } = Leagues.findOne(poolTeamPick.leagueId);
 
     const expectedWins = (gamesPlayed / seasonGameCount) * expectedWinsFullSeason;
 
@@ -36,11 +36,13 @@ export default {
 
     const plusMinus = _.get(seasonLeagueTeam, 'pointsFor', 0) - _.get(seasonLeagueTeam, 'pointsAgainst', 0);
 
-    log.info('Updating PoolTeamPick quality:', poolTeamPick,
+    log.info(
+      'Updating PoolTeamPick quality:', poolTeamPick,
       'actualWins:', actualWins,
       'expectedWins:', expectedWins,
       'pickQuality:', pickQuality,
-      'plusMinus:', plusMinus);
+      'plusMinus:', plusMinus,
+    );
 
     PoolTeamPicks.direct.update(poolTeamPick._id, {
       $set: {
@@ -50,5 +52,7 @@ export default {
         plusMinus,
       },
     });
+
+    return pickQuality;
   },
 };
