@@ -11,25 +11,24 @@ import './pools-records-pool-team-picks-most-season.html';
 
 Template.Pools_records_pool_team_picks_most_season.helpers({
   poolTeamPicks: () => {
-    const metricField = Template.currentData().metricField;
-    const sort = Template.currentData().sort;
-    const filter = { sort: {}, limit: 3 };
+    const { metricField, sort } = Template.currentData();
+    const filter = { sort: {}, limit: 10 };
     filter.sort[metricField] = sort;
     return PoolTeamPicks.find(
       {
         poolId: Template.currentData().poolId,
       },
-      filter
+      filter,
     );
   },
 
-  getMetric: (poolTeamPick) => _.get(poolTeamPick, Template.currentData().metricField),
+  getMetric: poolTeamPick => _.get(poolTeamPick, Template.currentData().metricField),
 
-  playerName: (poolTeamPick) => _.get(Template.instance().getPoolTeam(poolTeamPick.poolTeamId), 'userTeamName'),
+  playerName: poolTeamPick => _.get(Template.instance().getPoolTeam(poolTeamPick.poolTeamId), 'userTeamName'),
 
-  leagueTeamName: (leagueTeamId) => _.get(LeagueTeams.findOne(leagueTeamId), 'abbreviation'),
+  leagueTeamName: leagueTeamId => _.get(LeagueTeams.findOne(leagueTeamId), 'abbreviation'),
 
-  roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
+  roundedPickQuality: pickQuality => pickQuality.toFixed(1),
 });
 
 Template.Pools_records_pool_team_picks_most_season.onCreated(function () {
@@ -46,7 +45,7 @@ Template.Pools_records_pool_team_picks_most_season.onCreated(function () {
 
   this.getLeagueId = () => _.get(this.getPool(), 'leagueId');
 
-  this.getPoolTeam = (poolTeamId) => PoolTeams.findOne(poolTeamId);
+  this.getPoolTeam = poolTeamId => PoolTeams.findOne(poolTeamId);
 
   this.autorun(() => {
     this.subscribe('poolTeamPicks.ofPool', this.data.poolId);

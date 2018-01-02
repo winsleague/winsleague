@@ -8,15 +8,14 @@ import './pools-records-pool-teams-most-week.html';
 
 Template.Pools_records_pool_teams_most_week.helpers({
   poolTeamWeeks: () => {
-    const metricField = Template.currentData().metricField;
-    const sort = Template.currentData().sort;
-    const filter = { sort: {}, limit: 3 };
+    const { metricField, sort } = Template.currentData();
+    const filter = { sort: {}, limit: 5 };
     filter.sort[metricField] = sort;
     return PoolTeamWeeks.find(
       {
         poolId: Template.currentData().poolId,
       },
-      filter
+      filter,
     );
   },
 
