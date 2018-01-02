@@ -8,19 +8,18 @@ import './pools-records-pool-teams-most-season.html';
 
 Template.Pools_records_pool_teams_most_season.helpers({
   poolTeams: () => {
-    const metricField = Template.currentData().metricField;
-    const sort = Template.currentData().sort;
-    const filter = { sort: {}, limit: 3 };
+    const { metricField, sort } = Template.currentData();
+    const filter = { sort: {}, limit: 10 };
     filter.sort[metricField] = sort;
     return PoolTeams.find(
       {
         poolId: Template.currentData().poolId,
       },
-      filter
+      filter,
     );
   },
 
-  getMetric: (poolTeam) => _.get(poolTeam, Template.currentData().metricField),
+  getMetric: poolTeam => _.get(poolTeam, Template.currentData().metricField),
 });
 
 Template.Pools_records_pool_teams_most_season.onCreated(function () {

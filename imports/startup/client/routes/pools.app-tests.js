@@ -130,6 +130,10 @@ if (Meteor.isClient) {
           'table#pool_users_most_wins_all_time tbody tr td.metric',
         getMostLossesAllTimeCellSelector: () =>
           'table#pool_users_most_losses_all_time tbody tr td.metric',
+        getBestPickQualityAllTimeCellSelector: () =>
+          'table#pool_users_best_pick_quality_all_time tbody tr td.metric',
+        getWorstPickQualityAllTimeCellSelector: () =>
+          'table#pool_users_worst_pick_quality_all_time tbody tr td.metric',
         getBestPlusMinusAllTimeCellSelector: () =>
           'table#pool_users_best_plus_minus_all_time tbody tr td.metric',
         getWorstPlusMinusAllTimeCellSelector: () =>
@@ -142,11 +146,19 @@ if (Meteor.isClient) {
           'table#pool_teams_most_close_wins_all_time tbody tr td.metric',
         getMostCloseLossesAllTimeCellSelector: () =>
           'table#pool_teams_most_close_losses_all_time tbody tr td.metric',
+        getBestPlusMinusWeekCellSelector: () =>
+          'table#pool_teams_best_plus_minus_week tbody tr td.metric',
+        getWorstPlusMinusWeekCellSelector: () =>
+          'table#pool_teams_worst_plus_minus_week tbody tr td.metric',
 
         getMostWinsSeasonCellSelector: () =>
           'table#pool_teams_most_wins_season tbody tr td.metric',
         getMostLossesSeasonCellSelector: () =>
           'table#pool_teams_most_losses_season tbody tr td.metric',
+        getBestPickQualitySeasonCellSelector: () =>
+          'table#pool_team_picks_best_pick_quality_season tbody tr td.metric',
+        getWorstPickQualitySeasonCellSelector: () =>
+          'table#pool_team_picks_worst_pick_quality_season tbody tr td.metric',
         getBestPlusMinusSeasonCellSelector: () =>
           'table#pool_teams_best_plus_minus_season tbody tr td.metric',
         getWorstPlusMinusSeasonCellSelector: () =>
@@ -159,11 +171,6 @@ if (Meteor.isClient) {
           'table#pool_teams_most_close_wins_season tbody tr td.metric',
         getMostCloseLossesSeasonCellSelector: () =>
           'table#pool_teams_most_close_losses_season tbody tr td.metric',
-
-        getBestPickQualitySeasonCellSelector: () =>
-          'table#pool_team_picks_best_pick_quality_season tbody tr td.metric',
-        getWorstPickQualitySeasonCellSelector: () =>
-          'table#pool_team_picks_worst_pick_quality_season tbody tr td.metric',
       };
 
       beforeEach(() =>
@@ -182,6 +189,18 @@ if (Meteor.isClient) {
       it('should display the teams with the most losses of all time', () => {
         return () => {
           assert.equal($(page.getMostLossesAllTimeCellSelector()).text(), 6);
+        };
+      });
+
+      it('should display the teams with the best pick quality of all time', () => {
+        return () => {
+          assert.equal($(page.getBestPickQualityAllTimeCellSelector()).text(), 3);
+        };
+      });
+
+      it('should display the teams with the worst pick quality of all time', () => {
+        return () => {
+          assert.equal($(page.getWorstPickQualityAllTimeCellSelector()).text(), 3);
         };
       });
 
@@ -221,6 +240,18 @@ if (Meteor.isClient) {
         };
       });
 
+      it('should display the teams with the best plus minus in a single week', () => {
+        return () => {
+          assert.equal($(page.getBestPlusMinusWeekCellSelector()).text(), -3.8);
+        };
+      });
+
+      it('should display the teams with the worst plus minus in a single week', () => {
+        return () => {
+          assert.equal($(page.getWorstPlusMinusWeekCellSelector()).text(), -3.8);
+        };
+      });
+
       it('should display the teams with the most wins in a single season', () => {
         return () => {
           assert.equal($(page.getMostWinsSeasonCellSelector()).text(), 10);
@@ -230,6 +261,18 @@ if (Meteor.isClient) {
       it('should display the teams with the most losses in a single season', () => {
         return () => {
           assert.equal($(page.getMostLossesSeasonCellSelector()).text(), 6);
+        };
+      });
+
+      it('should display the teams with the best pick quality in a single season', () => {
+        return () => {
+          assert.equal($(page.getBestPickQualitySeasonCellSelector()).text(), -3.8);
+        };
+      });
+
+      it('should display the teams with the worst pick quality in a single season', () => {
+        return () => {
+          assert.equal($(page.getWorstPickQualitySeasonCellSelector()).text(), -3.8);
         };
       });
 
@@ -266,18 +309,6 @@ if (Meteor.isClient) {
       it('should display the teams with the most close losses in a single season', () => {
         return () => {
           assert.equal($(page.getMostCloseLossesSeasonCellSelector()).text(), 0);
-        };
-      });
-
-      it('should display the teams with the best pick quality in a single season', () => {
-        return () => {
-          assert.equal($(page.getBestPickQualitySeasonCellSelector()).text(), -3.8);
-        };
-      });
-
-      it('should display the teams with the worst pick quality in a single season', () => {
-        return () => {
-          assert.equal($(page.getWorstPickQualitySeasonCellSelector()).text(), -3.8);
         };
       });
     });

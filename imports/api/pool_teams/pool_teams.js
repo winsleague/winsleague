@@ -67,6 +67,10 @@ PoolTeams.schema = new SimpleSchema({
     type: SimpleSchema.Integer,
     defaultValue: 0,
   },
+  totalPickQuality: {
+    type: Number,
+    defaultValue: 0,
+  },
   totalPlusMinus: {
     type: SimpleSchema.Integer,
     defaultValue: 0,

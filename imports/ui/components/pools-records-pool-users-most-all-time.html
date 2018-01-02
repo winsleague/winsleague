@@ -13,7 +13,7 @@
         {{#each poolUser in poolUsers}}
           <tr>
             <td class="userTeamName">{{poolUser.userTeamName}}</td>
-            <td class="metric">{{poolUser.metric}}</td>
+            <td class="metric">{{roundedMetric poolUser.metric}}</td>
           </tr>
         {{/each}}
         </tbody>

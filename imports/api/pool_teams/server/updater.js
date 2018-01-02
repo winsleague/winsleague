@@ -37,8 +37,7 @@ export default {
     const picks = PoolTeamPicks.find({ poolTeamId });
 
     picks.forEach((poolTeamPick) => {
-      const seasonId = poolTeamPick.seasonId;
-      const leagueTeamId = poolTeamPick.leagueTeamId;
+      const { seasonId, leagueTeamId } = poolTeamPick;
       const seasonLeagueTeam = SeasonLeagueTeams.findOne({ seasonId, leagueTeamId });
       if (seasonLeagueTeam) {
         PoolTeamPicks.direct.update(poolTeamPick._id, {
@@ -62,7 +61,8 @@ export default {
 
     // .direct is needed to avoid an infinite recursion loop
     // https://github.com/matb33/meteor-collection-hooks#direct-access-circumventing-hooks
-    const numberAffected = PoolTeams.direct.update(poolTeamId,
+    const numberAffected = PoolTeams.direct.update(
+      poolTeamId,
       {
         $set: {
           totalWins,
@@ -72,16 +72,31 @@ export default {
           closeWins,
           closeLosses,
         },
-      });
+      },
+    );
     log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, ` +
+      `totalPlusMins: ${totalPlusMinus}, ` +
       `closeWins: ${closeWins}, closeLosses: ${closeLosses}, ` +
       `numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamPickQuality(poolTeamId) {
+    let totalPickQuality = 0;
     PoolTeamPicks.find({ poolTeamId }).forEach((poolTeamPick) => {
-      PoolTeamPickUpdater.updatePickQuality(poolTeamPick);
+      const pickQuality = PoolTeamPickUpdater.updatePickQuality(poolTeamPick);
+      totalPickQuality += pickQuality;
     });
+
+    const numberAffected = PoolTeams.direct.update(
+      poolTeamId,
+      {
+        $set: {
+          totalPickQuality,
+        },
+      },
+    );
+    log.debug(`PoolTeams.update ${poolTeamId} with totalPickQuality: ${totalPickQuality}, ` +
+      `numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamUndefeatedWeeks(poolTeamId) {
@@ -91,7 +106,7 @@ export default {
     let defeatedWeeks = 0;
 
     const poolTeam = PoolTeams.findOne(poolTeamId);
-    const seasonId = poolTeam.seasonId;
+    const { seasonId } = poolTeam;
 
     const picks = PoolTeamPicks.find({ poolTeamId });
     const pickCount = picks.count();
@@ -127,7 +142,7 @@ export default {
           undefeatedWeeks,
           defeatedWeeks,
         },
-      }
+      },
     );
 
     log.debug(`PoolTeams.update ${poolTeamId} with undefeatedWeeks: ${undefeatedWeeks}, ` +
@@ -149,12 +164,14 @@ export default {
       teamSummary = 'No teams drafted!';
     }
 
-    const numberAffected = PoolTeams.direct.update(poolTeamId,
+    const numberAffected = PoolTeams.direct.update(
+      poolTeamId,
       {
         $set: {
           teamSummary,
         },
-      });
+      },
+    );
     log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, ` +
       `numberAffected: ${numberAffected}`);
   },
