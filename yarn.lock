@@ -1589,7 +1589,7 @@ ctype@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/ctype/-/ctype-0.5.3.tgz#82c18c2461f74114ef16c135224ad0b9144ca12f"
 
-cucumber@xolvio/cucumber-js#v1.3.0-chimp.6:
+"cucumber@github:xolvio/cucumber-js#v1.3.0-chimp.6":
   version "1.3.0"
   resolved "https://codeload.github.com/xolvio/cucumber-js/tar.gz/cf953cb5b5de30dbcc279f59e4ebff3aa040071c"
   dependencies:
@@ -2494,7 +2494,7 @@ glob@^7.0.3, glob@^7.0.5:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@lucetius/node-glob#chimp:
+"glob@github:lucetius/node-glob#chimp":
   version "7.1.1"
   resolved "https://codeload.github.com/lucetius/node-glob/tar.gz/51c7ca6e69bfbd17db5f1ea710e3f2a7a457d9ce"
   dependencies:
@@ -3657,9 +3657,9 @@ moment@2.20.1, moment@2.x.x, "moment@>= 2.9.0":
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
-mongo-object@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/mongo-object/-/mongo-object-0.1.1.tgz#363a97827409a1a324ac2a67c734fa292fd6c8a7"
+mongo-object@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/mongo-object/-/mongo-object-0.1.2.tgz#1102ad0c12a23c9ad8dc4e0ce230d25bb39544be"
   dependencies:
     lodash.foreach "^4.5.0"
     lodash.isempty "^4.4.0"
@@ -4691,9 +4691,9 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-simpl-schema@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/simpl-schema/-/simpl-schema-1.4.0.tgz#6a3b8a4461c146a0e862c546fdd2866a9518f347"
+simpl-schema@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/simpl-schema/-/simpl-schema-1.4.1.tgz#40e143556076f7a6337dc1b3d5c26fb61dec905b"
   dependencies:
     clone "^2.1.1"
     extend "^3.0.1"
@@ -4708,7 +4708,7 @@ simpl-schema@1.4.0:
     lodash.union "^4.6.0"
     lodash.uniq "^4.5.0"
     message-box "^0.2.0"
-    mongo-object "^0.1.1"
+    mongo-object "^0.1.2"
 
 sinon-chai@2.14.0:
   version "2.14.0"
