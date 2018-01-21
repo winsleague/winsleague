@@ -43,6 +43,7 @@
   },
   "greenkeeper": {
     "ignore": [
+      "babel-runtime",
       "loggly",
       "winston",
       "winston-loggly-bulk"
