@@ -8,6 +8,11 @@
     "**/*.app-tests.js"
   ],
   "dependencies": {
+    "mute": [
+      "chimp",
+      "winston",
+      "winston-loggly-bulk"
+    ],
     "unused-ignores": [
       "loggly",
       "meteor-node-stubs",
