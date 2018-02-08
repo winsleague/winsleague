@@ -5349,9 +5349,9 @@ xml2js@^0.4.17:
     sax ">=0.6.0"
     xmlbuilder "~9.0.1"
 
-xmlbuilder@9.0.4:
-  version "9.0.4"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.4.tgz#519cb4ca686d005a8420d3496f3f0caeecca580f"
+xmlbuilder@9.0.5:
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.5.tgz#f86681badb4854d35ce03ca5fcc56ef81bdc3114"
 
 xmlbuilder@~9.0.1:
   version "9.0.1"
