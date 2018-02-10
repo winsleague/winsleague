@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.5.1",
     "selenium-webdriver": "^3.6.0",
     "shell-source": "1.1.0",
-    "sinon": "4.2.3",
+    "sinon": "4.3.0",
     "sinon-chai": "2.14.0",
     "xmlbuilder": "9.0.7"
   },
