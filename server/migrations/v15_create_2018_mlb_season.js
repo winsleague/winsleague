@@ -14,7 +14,7 @@ Migrations.add({
       leagueName,
       year,
       new Date(year, 2, 29), // months are zero-based
-      new Date(year, 9, 31), // months are zero-based
+      new Date(year, 9, 1), // months are zero-based
     );
 
     const season = SeasonFinder.getByYear(leagueName, year);
