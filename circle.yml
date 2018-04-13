@@ -39,7 +39,7 @@ jobs:
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache
     - restore_cache:
-      keys:
+        keys:
         # This branch if available
         - v1-dep-{{ .Branch }}-
         # Default branch if not
