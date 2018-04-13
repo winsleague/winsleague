@@ -39,13 +39,7 @@ jobs:
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache
     - restore_cache:
-        name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-{{ .Branch }}
-            - yarn-packages-master
-            - yarn-packages-
-        keys:
+      keys:
         # This branch if available
         - v1-dep-{{ .Branch }}-
         # Default branch if not
@@ -65,10 +59,11 @@ jobs:
         no_output_timeout: 1200s
     # Save dependency cache
     - save_cache:
-        name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules/
+      - name: Save Yarn Package Cache
+        key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        paths:
+        - node_modules/
+      - name: Default folders
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
         # This is a broad list of cache paths to include many possible development environments
