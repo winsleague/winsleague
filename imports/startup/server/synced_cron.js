@@ -51,7 +51,6 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
     },
     job() {
       try {
-
         // only run during season
         const season = SeasonFinder.getLatestByLeagueName('NBA');
         const day = moment.tz('US/Pacific');
@@ -59,8 +58,9 @@ if (!Meteor.isTest && !Meteor.isAppTest) {
           log.info(`Not refreshing NBA standings because ${day.toDate()} is before ${season.startDate}`);
           return;
         }
-        if (day.isAfter(season.endDate)) {
-          log.info(`Not refreshing NBA standings because ${day.toDate()} is after ${season.endDate}`);
+        const safeSeasonEndDate = moment(season.endDate).add(5, 'days');
+        if (day.isAfter(safeSeasonEndDate)) {
+          log.info(`Not refreshing NBA standings because ${day.toDate()} is after ${safeSeasonEndDate}`);
           return;
         }
 
