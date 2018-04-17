@@ -60,6 +60,9 @@ jobs:
             - ./node_modules
 
   acceptance_test_1:
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
     steps:
       - run: meteor npm run test
       - run:
@@ -67,14 +70,23 @@ jobs:
           command: greenkeeper-lockfile-upload
 
   acceptance_test_2:
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
     steps:
       - run: meteor npm run test-app
 
   acceptance_test_3:
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
     steps:
       - run: ./tests/acceptance_run
 
   deploy:
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
     steps:
       - run: (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
