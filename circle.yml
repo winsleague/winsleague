@@ -12,8 +12,7 @@ jobs:
     #  PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin
     
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-      command: /sbin/init
+      - image: abernix/meteord:node-8-base
     steps:
       - restore_cache:
           keys:
@@ -80,8 +79,7 @@ jobs:
 
   acceptance_test_1:
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-      command: /sbin/init
+      - image: abernix/meteord:node-8-base
     steps:
       - restore_cache:
           key: meteor-v1-{{ checksum ".meteor/release" }}
@@ -94,8 +92,7 @@ jobs:
 
   acceptance_test_2:
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-      command: /sbin/init
+      - image: abernix/meteord:node-8-base
     steps:
       - restore_cache:
           key: meteor-v1-{{ checksum ".meteor/release" }}
@@ -105,8 +102,7 @@ jobs:
 
   acceptance_test_3:
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-      command: /sbin/init
+      - image: abernix/meteord:node-8-base
     steps:
       - restore_cache:
           key: meteor-v1-{{ checksum ".meteor/release" }}
@@ -116,8 +112,7 @@ jobs:
 
   deploy:
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-      command: /sbin/init
+      - image: abernix/meteord:node-8-base
     steps:
       - run: (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
