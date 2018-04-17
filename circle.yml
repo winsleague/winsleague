@@ -41,7 +41,15 @@ jobs:
       - run: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
       - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
       - run: ./.testing/upgrade_chrome_version.sh
+
+      - restore_cache:
+          key: meteor-v1-{{ checksum ".meteor/release" }}
       - run: ./.testing/cache_meteor.sh
+      - save_cache:
+          key: meteor-v1-{{ checksum ".meteor/release" }}
+          paths:
+            - ~/.meteor
+
       - run: ./.testing/print_environment.sh
       - run: greenkeeper-lockfile-update
       - run: ./.testing/cache_npm_dependencies.sh
@@ -56,22 +64,29 @@ jobs:
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
           paths:
-            - ~/.npm
-            - ~/.meteor
             - ~/.cache/yarn
             - ~/node_modules
-            - ~/.meteor/local/build
-            - ~/.meteor/local/bundler-cache
-            - ~/.meteor/local/isopacks
-            - ~/.meteor/local/plugin-cache
             - /opt/circleci/nodejs/v8.9.3/bin
             - /opt/circleci/nodejs/v8.9.3/lib/node_modules
+
+      - persist_to_workspace:
+          root: ~/.meteor/local
+          paths:
+            - build
+            - bundler-cache
+            - isopacks
+            - plugin-cache
+
 
   acceptance_test_1:
     docker:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
       command: /sbin/init
     steps:
+      - restore_cache:
+          key: meteor-v1-{{ checksum ".meteor/release" }}
+      - attach_workspace:
+          at: ~/.meteor/local
       - run: meteor npm run test
       - run:
           name: greenkeeper-lockfile-upload
@@ -82,6 +97,10 @@ jobs:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
       command: /sbin/init
     steps:
+      - restore_cache:
+          key: meteor-v1-{{ checksum ".meteor/release" }}
+      - attach_workspace:
+          at: ~/.meteor/local
       - run: meteor npm run test-app
 
   acceptance_test_3:
@@ -89,6 +108,10 @@ jobs:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
       command: /sbin/init
     steps:
+      - restore_cache:
+          key: meteor-v1-{{ checksum ".meteor/release" }}
+      - attach_workspace:
+          at: ~/.meteor/local
       - run: ./tests/acceptance_run
 
   deploy:
