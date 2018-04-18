@@ -33,11 +33,13 @@ jobs:
             - dep-v1-master-
 
       - run: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
+      - run: echo $PATH
       - run:
           name: Update PATH and Define Environment Variable at Runtime
           command: |
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"'
-
+      - run: echo $PATH
+      
       - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
 
       - restore_cache:
