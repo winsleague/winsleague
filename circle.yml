@@ -30,15 +30,7 @@ jobs:
 
       - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
 
-      - restore_cache:
-          name: Restore Meteor runtime cache
-          key: meteor-runtime-v2-{{ checksum ".meteor/release" }}
       - run: ./.testing/cache_meteor.sh
-      - save_cache:
-          name: Save Meteor runtime cache
-          key: meteor-runtime-v2-{{ checksum ".meteor/release" }}
-          paths:
-            - ~/.meteor
 
       - run: ./.testing/print_environment.sh
 
@@ -46,11 +38,11 @@ jobs:
 
       - restore_cache:
           name: Restore Yarn package cache
-          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run: ./.testing/cache_npm_dependencies.sh
       - save_cache:
           name: Save Yarn package cache
-          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - ~/node_modules
@@ -58,21 +50,21 @@ jobs:
 
       - restore_cache:
           name: Restore Meteor plugin cache
-          key: meteor-plugin-v1-{{ checksum ".meteor/release" }}
+          key: meteor-plugin-v2-{{ checksum ".meteor/release" }}
       - restore_cache:
           name: Restore Meteor build cache
-          key: meteor-build-v1-{{ .Branch }}-{{ .Revision }}
+          key: meteor-build-v2-{{ .Branch }}-{{ .Revision }}
       - run:
           command: ./.testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
       - save_cache:
           name: Save Meteor build cache
-          key: meteor-build-v1-{{ .Branch }}-{{ .Revision }}
+          key: meteor-build-v2-{{ .Branch }}-{{ .Revision }}
           paths:
             - build
       - save_cache:
           name: Save Meteor plugin cache
-          key: meteor-plugin-v1-{{ checksum ".meteor/release" }}
+          key: meteor-plugin-v2-{{ checksum ".meteor/release" }}
           paths:
             - bundler-cache
             - isopacks # need to figure out when this expires
