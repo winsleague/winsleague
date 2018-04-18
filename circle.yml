@@ -11,6 +11,7 @@ jobs:
     
     docker:
       - image: circleci/node:8-browsers
+      - image: circleci/mongo:3.4.5
     steps:
       - checkout
 
