@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/winsleague/winsleague
     parallelism: 3
     # CircleCI 2.0 does not support environment variables that refer to each other the same way as 1.0 did.
     # If any of these refer to each other, rewrite them so that they don't or see https://circleci.com/docs/2.0/env-vars/#interpolating-environment-variables-to-set-other-environment-variables .
@@ -42,11 +41,11 @@ jobs:
 
       - restore_cache:
           name: Restore Meteor runtime cache
-          key: meteor-v1-{{ checksum ".meteor/release" }}
+          key: meteor-runtime-v1-{{ checksum ".meteor/release" }}
       - run: ./.testing/cache_meteor.sh
       - save_cache:
           name: Save Meteor runtime cache
-          key: meteor-v1-{{ checksum ".meteor/release" }}
+          key: meteor-runtime-v1-{{ checksum ".meteor/release" }}
           paths:
             - ~/.meteor
 
@@ -56,28 +55,42 @@ jobs:
 
       - restore_cache:
           name: Restore Yarn package cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run: ./.testing/cache_npm_dependencies.sh
       - save_cache:
           name: Save Yarn package cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - ~/node_modules
             - /opt/circleci/nodejs/v8.9.3/lib/node_modules
 
+      - restore_cache:
+          name: Restore Meteor plugin cache
+          key: meteor-plugin-v1-{{ checksum ".meteor/release" }}
+      - restore_cache:
+          name: Restore Meteor build cache
+          key: meteor-build-v1-{{ .Branch }}-{{ .Revision }}
       - run:
           command: ./.testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
+      - save_cache:
+          name: Save Meteor build cache
+          key: meteor-build-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - build
+      - save_cache:
+          name: Save Meteor plugin cache
+          key: meteor-plugin-v1-{{ checksum ".meteor/release" }}
+          paths:
+            - bundler-cache
+            - isopacks # need to figure out when this expires
+            - plugin-cache
 
       - persist_to_workspace:
           root: ~/.meteor/local
           paths:
             - build
-            - bundler-cache
-            - isopacks
-            - plugin-cache
-
 
   acceptance_test_1:
     docker:
