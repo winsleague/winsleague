@@ -50,25 +50,25 @@ jobs:
 
       - restore_cache:
           name: Restore Meteor plugin cache
-          key: meteor-plugin-v3-{{ checksum ".meteor/release" }}
+          key: meteor-plugin-v4-{{ checksum ".meteor/release" }}
       - restore_cache:
           name: Restore Meteor build cache
-          key: meteor-build-v3-{{ .Branch }}-{{ .Revision }}
+          key: meteor-build-v4-{{ .Branch }}-{{ .Revision }}
       - run:
           command: ./.testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
       - save_cache:
           name: Save Meteor build cache
-          key: meteor-build-v3-{{ .Branch }}-{{ .Revision }}
+          key: meteor-build-v4-{{ .Branch }}-{{ .Revision }}
           paths:
-            - ~/.meteor/local/build
+            - ~/project/.meteor/local/build
       - save_cache:
           name: Save Meteor plugin cache
-          key: meteor-plugin-v3-{{ checksum ".meteor/release" }}
+          key: meteor-plugin-v4-{{ checksum ".meteor/release" }}
           paths:
-            - ~/.meteor/local/bundler-cache
-            - ~/.meteor/local/isopacks # need to figure out when this expires
-            - ~/.meteor/local/plugin-cache
+            - ~/project/.meteor/local/bundler-cache
+            - ~/project/.meteor/local/isopacks # need to figure out when this expires
+            - ~/project/.meteor/local/plugin-cache
 
       - persist_to_workspace:
           root: ~/project/.meteor/local
