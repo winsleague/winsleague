@@ -7,7 +7,6 @@ jobs:
     environment:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-      METEOR_ALLOW_SUPERUSER: 1
     #  PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin
     
     docker:
@@ -33,11 +32,11 @@ jobs:
 
       - restore_cache:
           name: Restore Meteor runtime cache
-          key: meteor-runtime-v1-{{ checksum ".meteor/release" }}
+          key: meteor-runtime-v2-{{ checksum ".meteor/release" }}
       - run: ./.testing/cache_meteor.sh
       - save_cache:
           name: Save Meteor runtime cache
-          key: meteor-runtime-v1-{{ checksum ".meteor/release" }}
+          key: meteor-runtime-v2-{{ checksum ".meteor/release" }}
           paths:
             - ~/.meteor
 
