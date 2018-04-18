@@ -106,6 +106,7 @@ jobs:
     machine: # we need sudo access to upgrade chrome
       image: circleci/classic:201711-01
     steps:
+      - run: /opt/google/chrome/google-chrome --version
       - run: ./.testing/upgrade_chrome_version.sh
       - restore_cache:
           key: meteor-v1-{{ checksum ".meteor/release" }}

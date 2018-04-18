@@ -10,4 +10,3 @@ echo "METEOR_WATCH_FORCE_POLLING: $METEOR_WATCH_FORCE_POLLING"
 echo "$(meteor --version)"
 echo "meteor node $(meteor node -v)"
 echo "yarn $(yarn -v)"
-/opt/google/chrome/google-chrome --version
