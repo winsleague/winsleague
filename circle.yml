@@ -83,6 +83,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project/.meteor/local
+      - run: ./.testing/cache_meteor.sh
       - run: meteor npm run test
       - run:
           name: greenkeeper-lockfile-upload
