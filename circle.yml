@@ -72,9 +72,10 @@ jobs:
             - ~/.meteor/local/plugin-cache
 
       - persist_to_workspace:
-          root: ~/.meteor/local
+          root: ~/project/.meteor/local
           paths:
             - build
+            - dev_bundle
 
   acceptance_test_1:
     docker:
