@@ -11,7 +11,7 @@ jobs:
     #  PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin
     
     docker:
-      - image: abernix/meteord:node-8-base
+      - image: circleci/buildpack-deps:trusty-curl-browsers
     steps:
       - restore_cache:
           name: Restore repo cache
@@ -25,6 +25,9 @@ jobs:
           key: source-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ".git"
+
+      # install node 8.9.3
+      # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
 
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
