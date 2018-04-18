@@ -13,17 +13,7 @@ jobs:
     docker:
       - image: circleci/node:8-browsers
     steps:
-      - restore_cache:
-          name: Restore repo cache
-          keys:
-            - source-v1-{{ .Branch }}-{{ .Revision }}
-            - source-v1-{{ .Branch }}-
       - checkout
-      - save_cache:
-          name: Save repo cache
-          key: source-v1-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - ".git"
 
       # install node 8.9.3
       # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
