@@ -1,16 +1,16 @@
 version: 2
 jobs:
   build:
-    # CircleCI 2.0 does not support environment variables that refer to each other the same way as 1.0 did.
-    # If any of these refer to each other, rewrite them so that they don't or see https://circleci.com/docs/2.0/env-vars/#interpolating-environment-variables-to-set-other-environment-variables .
+    parallelism: 3
+
     environment:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-    #  PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin
     
     docker:
-      - image: circleci/node:8-browsers
+      - image: abernix/meteord:node-8-base
       - image: circleci/mongo:3.4.5
+
     steps:
       - checkout
 
@@ -70,46 +70,11 @@ jobs:
             - ~/project/.meteor/local/isopacks # need to figure out when this expires
             - ~/project/.meteor/local/plugin-cache
 
-      - persist_to_workspace:
-          root: ~/project/.meteor/local
-          paths:
-            - build
-            - dev_bundle
-
-  acceptance_test_1:
-    docker:
-      - image: abernix/meteord:node-8-base
-      - image: circleci/mongo:3.4.5
-    steps:
-      - attach_workspace:
-          at: ~/project/.meteor/local
-      - run: ./.testing/cache_meteor.sh
-      - run: meteor npm run test
+      - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./.testing/upgrade_chrome_version.sh && ./tests/acceptance_run) ;; esac
+    
       - run:
           name: greenkeeper-lockfile-upload
-          command: greenkeeper-lockfile-upload
-
-  acceptance_test_2:
-    docker:
-      - image: abernix/meteord:node-8-base
-    steps:
-      - restore_cache:
-          key: meteor-v1-{{ checksum ".meteor/release" }}
-      - attach_workspace:
-          at: ~/project/.meteor/local
-      - run: meteor npm run test-app
-
-  acceptance_test_3:
-    machine: # we need sudo access to upgrade chrome
-      image: circleci/classic:201711-01
-    steps:
-      - run: /opt/google/chrome/google-chrome --version
-      - run: ./.testing/upgrade_chrome_version.sh
-      - restore_cache:
-          key: meteor-v1-{{ checksum ".meteor/release" }}
-      - attach_workspace:
-          at: ~/project/.meteor/local
-      - run: ./tests/acceptance_run
+          command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
 
   deploy:
     docker:
@@ -132,27 +97,3 @@ jobs:
           path: node_cache/_logs
       - store_artifacts:
           path: ~/.config/yarn/global/yarn-error.log
-
-workflows:
-  version: 2
-  build_accept_deploy:
-    jobs:
-      - build
-      - acceptance_test_1:
-          requires:
-            - build
-      - acceptance_test_2:
-          requires:
-            - build
-      - acceptance_test_3:
-          requires:
-            - build
-      - deploy:
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - acceptance_test_1
-            - acceptance_test_2
-            - acceptance_test_3
