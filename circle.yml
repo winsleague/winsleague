@@ -78,8 +78,7 @@ jobs:
           key: meteor-build-v4-{{ .Branch }}
       - run:
           name: Cache build & dependencies
-          command: |
-            env=development meteor test --full-app --driver-package tmeasday:acceptance-test-driver --raw-logs
+          command: ./testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
       - save_cache:
           name: Save Meteor build cache
