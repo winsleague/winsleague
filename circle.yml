@@ -40,6 +40,19 @@ jobs:
             if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
             if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
+      - run:
+          name: Install Selenium dependencies
+          command: apt-get update && apt-get install default-jre -y
+
+      - run:
+          name: Install Chromedriver latest version
+          command: |
+            apt-get install lsb-release libappindicator3-1 fonts-liberation libxss1 wget xdg-utils -y	
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb	
+            dpkg -i google-chrome.deb	
+            sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome	
+            rm google-chrome.deb
+
       - run: 
           name: Print Environment
           command: |
