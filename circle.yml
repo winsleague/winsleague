@@ -46,16 +46,34 @@ jobs:
 
       - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
 
-      - run: ./.testing/cache_meteor.sh
+      - run: 
+          name: Install Meteor
+          command: |
+            if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+            if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
-      - run: ./.testing/print_environment.sh
+      - run: 
+          name: Print Environment
+          command: |
+            echo "environment versions:"
+            . /etc/os-release
+            echo "operating system $VERSION"
+            echo "kernel $(uname -a)"
+            echo "which node: $(which node)"
+            echo "node $(node -v)"
+            echo "METEOR_WATCH_FORCE_POLLING: $METEOR_WATCH_FORCE_POLLING"
+            echo "$(meteor --version)"
+            echo "meteor node $(meteor node -v)"
+            echo "yarn $(yarn -v)"
 
       - run: greenkeeper-lockfile-update
 
       - restore_cache:
           name: Restore Yarn package cache
           key: yarn-packages-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      - run: ./.testing/cache_npm_dependencies.sh
+      - run: 
+          name: Install Yarn packages
+          command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn package cache
           key: yarn-packages-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
@@ -71,7 +89,9 @@ jobs:
           name: Restore Meteor build cache
           key: meteor-build-v4-{{ .Branch }}
       - run:
-          command: ./.testing/cache_build_and_dependencies.sh
+          name: Cache build & dependencies
+          command: |
+            METEOR_PROFILE=1 env=development meteor test --full-app --driver-package tmeasday:acceptance-test-driver --raw-logs
           no_output_timeout: 1200s
       - save_cache:
           name: Save Meteor build cache
