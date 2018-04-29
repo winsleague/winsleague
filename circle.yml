@@ -33,7 +33,16 @@ jobs:
 
       - run:
           name: Install Selenium dependencies
-          command: apt-get update && apt-get install default-jre -y && ./.testing/upgrade_chrome_version.sh
+          command: apt-get update && apt-get install default-jre -y
+
+      - run:
+          name: Install Chromedriver latest version
+          command: |
+            apt-get install lsb-release libappindicator3-1
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            dpkg -i google-chrome.deb
+            sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
 
       - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
 
