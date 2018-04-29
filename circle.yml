@@ -43,8 +43,11 @@ jobs:
       - run:
           name: Install Selenium dependencies
           command: |
+            apt-get install software-properties-common -y
+            add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" -y
             apt-get update
-            apt-get install default-jdk -y
+            apt-get install oracle-java8-installer -y
+            apt-get install oracle-java8-set-default -y
             update-alternatives --config java 
 
       - run:
