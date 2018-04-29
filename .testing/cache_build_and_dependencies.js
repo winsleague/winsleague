@@ -10,7 +10,8 @@ const cacheMeteor = function() {
   const childProcess = spawn('meteor', ['test', '--full-app', '--driver-package', 'tmeasday:acceptance-test-driver', '--raw-logs'], {
     cwd: srcDir,
     env: process.env,
-    METEOR_PROFILE: 1
+    METEOR_PROFILE: 1,
+    METEOR_DEBUG_BUILD: 1
   });
   childProcess.stdout.setEncoding('utf8');
   childProcess.stderr.setEncoding('utf8');
