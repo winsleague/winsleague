@@ -60,24 +60,26 @@ jobs:
           key: meteor-plugin-v4-{{ checksum ".meteor/release" }}
       - restore_cache:
           name: Restore Meteor build cache
-          key: meteor-build-v4-{{ .Branch }}-{{ .Revision }}
+          key: meteor-build-v4-{{ .Branch }}
       - run:
           command: ./.testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
       - save_cache:
           name: Save Meteor build cache
-          key: meteor-build-v4-{{ .Branch }}-{{ .Revision }}
+          key: meteor-build-v4-{{ .Branch }}
           paths:
             - ~/project/.meteor/local/build
       - save_cache:
           name: Save Meteor plugin cache
           key: meteor-plugin-v4-{{ checksum ".meteor/release" }}
           paths:
+            - ~/.meteor/packages
+            - ~/.meteor/package-metadata
             - ~/project/.meteor/local/bundler-cache
             - ~/project/.meteor/local/isopacks # need to figure out when this expires
             - ~/project/.meteor/local/plugin-cache
 
-      - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./.testing/upgrade_chrome_version.sh && ./tests/acceptance_run) ;; esac
+      - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
     
       - run:
           name: greenkeeper-lockfile-upload
