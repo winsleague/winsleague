@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: Install Selenium dependencies
-          command: apt-get install default-jre -y
+          command: apt-get update && apt-get install default-jre -y
 
       - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
 
