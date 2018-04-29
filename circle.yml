@@ -42,7 +42,10 @@ jobs:
 
       - run:
           name: Install Selenium dependencies
-          command: add-apt-repository -y ppa:openjdk-r/ppa && apt-get update && apt-get install openjdk-8-jdk -y
+          command: |
+            apt-get update
+            apt-get install default-jdk -y
+            update-alternatives --config java 
 
       - run:
           name: Install Chromedriver latest version
