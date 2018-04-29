@@ -60,6 +60,8 @@ jobs:
             . /etc/os-release
             echo "operating system $VERSION"
             echo "kernel $(uname -a)"
+            echo "which java: $(which java)"
+            echo "java $(java -version)"
             echo "which node: $(which node)"
             echo "node $(node -v)"
             echo "METEOR_WATCH_FORCE_POLLING: $METEOR_WATCH_FORCE_POLLING"
