@@ -13,6 +13,7 @@ jobs:
     docker:
       - image: abernix/meteord:node-8-base
       - image: circleci/mongo:3.4.5
+      - image: selenium/standalone-chrome:3.11.0
 
     steps:
       - checkout
