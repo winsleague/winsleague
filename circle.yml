@@ -73,6 +73,7 @@ jobs:
             echo "$(meteor --version)"
             echo "meteor node $(meteor node -v)"
             echo "yarn $(yarn -v)"
+            /opt/google/chrome/google-chrome --version
 
       - run: greenkeeper-lockfile-update
 
