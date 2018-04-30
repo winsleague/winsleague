@@ -11,7 +11,7 @@ jobs:
       LC_ALL: C.UTF-8
     
     docker:
-      - image: abernix/meteord:node-8-base
+      - image: abernix/meteord:node-8.9.3
       - image: circleci/mongo:3.4.5
       - image: selenium/standalone-chrome:3.11.0
 
