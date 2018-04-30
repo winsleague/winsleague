@@ -55,7 +55,7 @@ jobs:
             apt-get install lsb-release libappindicator3-1 fonts-liberation libxss1 wget xdg-utils -y	
             curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb	
             dpkg -i google-chrome.deb	
-            sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome	
+            sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome	
             rm google-chrome.deb
             apt-get install chromedriver -y
 
@@ -74,7 +74,7 @@ jobs:
             echo "$(meteor --version)"
             echo "meteor node $(meteor node -v)"
             echo "yarn $(yarn -v)"
-            /opt/google/chrome/google-chrome --version
+            /opt/google/chrome/google-chrome --version --headless
 
       - run: greenkeeper-lockfile-update
 
