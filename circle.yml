@@ -44,7 +44,6 @@ jobs:
           name: Install Selenium dependencies
           command: |
             apt-get install software-properties-common -y
-            add-apt-repository ppa:openjdk-r/ppa -y
             apt-get update
             apt-get install openjdk-8-jdk -y
             apt-get install oracle-java8-set-default -y
