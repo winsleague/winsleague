@@ -4,8 +4,6 @@ jobs:
     parallelism: 3
 
     environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       METEOR_ALLOW_SUPERUSER: 1
       LANG: C
       LC_ALL: C.UTF-8
@@ -16,8 +14,6 @@ jobs:
 
     steps:
       - checkout
-
-      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
       - run: 
           name: Install Yarn
@@ -118,24 +114,20 @@ jobs:
           name: greenkeeper-lockfile-upload
           command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
 
-  deploy:
-    docker:
-      - image: abernix/meteord:node-8-base
-    steps:
-      - run: (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
-      - run: yarn global add ssh2@0.4.15 # needed for meteor-up
-      - run: yarn global add mup@1.0.1 # install meteor-up for deployment
-      - run: (cd .deploy/production; mup deploy)
-      - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
-      - store_test_results:
-          path: /tmp/circleci-test-results
-      - store_artifacts:
-          path: /tmp/circleci-artifacts
-      - store_artifacts:
-          path: .meteor/local/log
-      - store_artifacts:
-          path: log
       - store_artifacts:
           path: node_cache/_logs
       - store_artifacts:
+          path: .meteor/local/log
+      - store_artifacts:
           path: ~/.config/yarn/global/yarn-error.log
+
+
+  deploy:
+    docker:
+      - image: abernix/meteord:node-8.9.3-base
+    steps:
+      - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
+      - run: yarn global add ssh2@0.4.15 # needed for meteor-up
+      - run: yarn global add mup@1.0.1 # install meteor-up for deployment
+      - run: (cd ~/.deploy/production; mup deploy)
+      - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
