@@ -17,9 +17,6 @@ jobs:
     steps:
       - checkout
 
-      # install node 8.9.3
-      # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
-
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
       - run: 
@@ -97,7 +94,7 @@ jobs:
           name: Restore Meteor build cache
           key: meteor-build-v5-{{ .Branch }}
       - run:
-          name: Cache build & dependencies
+          name: Build Meteor app & dependencies
           command: ./.testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
       - save_cache:
