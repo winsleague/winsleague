@@ -52,9 +52,9 @@ okgrow:analytics
 reywood:publish-composite
 shell-server@0.3.1
 dynamic-import@0.3.0
-meteortesting:mocha
 staringatlights:fast-render
 ostrio:flow-router-extra
 mealsunite:flow-routing-extra
 aldeed:collection2-core@2.0.0
 aldeed:schema-deny
+meteortesting:mocha
