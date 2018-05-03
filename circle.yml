@@ -132,3 +132,15 @@ jobs:
       - run: yarn global add mup@1.0.1 # install meteor-up for deployment
       - run: (cd ~/.deploy/production; mup deploy)
       - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
