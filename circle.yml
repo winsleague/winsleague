@@ -86,7 +86,7 @@ jobs:
 
       - restore_cache:
           name: Restore Meteor plugin cache
-          key: meteor-plugin-v5-{{ checksum ".meteor/release" }}
+          key: meteor-plugin-v5-{{ checksum ".meteor/versions" }}
       - restore_cache:
           name: Restore Meteor build cache
           key: meteor-build-v5-{{ .Branch }}
@@ -101,10 +101,11 @@ jobs:
             - ~/project/.meteor/local/build
       - save_cache:
           name: Save Meteor plugin cache
-          key: meteor-plugin-v5-{{ checksum ".meteor/release" }}
+          key: meteor-plugin-v5-{{ checksum ".meteor/versions" }}
           paths:
             - ~/.meteor/packages
             - ~/.meteor/package-metadata
+            - ~/project/.meteor/local/build
             - ~/project/.meteor/local/bundler-cache
             - ~/project/.meteor/local/isopacks # need to figure out when this expires
             - ~/project/.meteor/local/plugin-cache
