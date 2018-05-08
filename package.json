@@ -16,7 +16,7 @@
     "faker": "4.1.0",
     "lodash": "4.17.5",
     "loggly": "1.1.1",
-    "meteor-node-stubs": "0.3.3",
+    "meteor-node-stubs": "0.4.0",
     "moment": "2.22.1",
     "moment-timezone": "0.5.14",
     "simpl-schema": "1.4.3",
