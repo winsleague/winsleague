@@ -128,8 +128,31 @@ jobs:
     docker:
       - image: abernix/meteord:node-8.9.3-base
     steps:
+      - checkout
+
+      - run: 
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
+      - run:
+          name: Update PATH for Yarn
+          command: |
+            echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+
       - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
       - run: yarn global add mup@1.0.1 # install meteor-up for deployment
-      - run: (cd ~/.deploy/production; mup deploy)
+      - run: (cd ~/project/.deploy/production; mup deploy)
       - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
