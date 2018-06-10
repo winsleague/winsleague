@@ -2,11 +2,11 @@
 # yarn lockfile v1
 
 
-"@babel/runtime@7.0.0-beta.46":
-  version "7.0.0-beta.46"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
+"@babel/runtime@7.0.0-beta.49":
+  version "7.0.0-beta.49"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.49.tgz#03b3bf07eb982072c8e851dd2ddd5110282e61bf"
   dependencies:
-    core-js "^2.5.3"
+    core-js "^2.5.6"
     regenerator-runtime "^0.11.1"
 
 "@sinonjs/formatio@^2.0.0":
@@ -1502,9 +1502,9 @@ core-js@^2.5.0:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
-core-js@^2.5.3:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
+core-js@^2.5.6:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
 core-js@~2.3.0:
   version "2.3.0"
@@ -3504,9 +3504,9 @@ message-box@^0.2.0:
     lodash.merge "^4.6.0"
     lodash.template "^4.4.0"
 
-meteor-node-stubs@0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-0.3.3.tgz#4037ec464573642b0efee3961a649a4818f796db"
+meteor-node-stubs@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-0.4.1.tgz#f755d8f127c1a1ae3d57dc71df197bb8c0e26767"
   dependencies:
     assert "^1.4.1"
     browserify-zlib "^0.1.4"
@@ -3522,7 +3522,7 @@ meteor-node-stubs@0.3.3:
     process "^0.11.9"
     punycode "^1.4.1"
     querystring-es3 "^0.2.1"
-    readable-stream "git+https://github.com/meteor/readable-stream.git"
+    readable-stream "^2.3.6"
     stream-browserify "^2.0.1"
     stream-http "^2.8.0"
     string_decoder "^1.1.0"
@@ -4278,15 +4278,16 @@ readable-stream@^2.3.3:
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
-"readable-stream@git+https://github.com/meteor/readable-stream.git":
-  version "2.3.3"
-  resolved "git+https://github.com/meteor/readable-stream.git#d64a64aa6061b9b6855feff4d09e58fb3b2e4502"
+readable-stream@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
   dependencies:
+    core-util-is "~1.0.0"
     inherits "~2.0.3"
     isarray "~1.0.0"
-    process-nextick-args "~1.0.6"
+    process-nextick-args "~2.0.0"
     safe-buffer "~5.1.1"
-    string_decoder "~1.0.3"
+    string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
 readable-stream@~1.0.26:
@@ -4957,6 +4958,12 @@ string_decoder@~1.0.0:
 string_decoder@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.3.tgz#0fc67d7c141825de94282dd536bec6b9bce860ab"
+  dependencies:
+    safe-buffer "~5.1.0"
+
+string_decoder@~1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
   dependencies:
     safe-buffer "~5.1.0"
 

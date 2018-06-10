@@ -10,7 +10,7 @@ jobs:
     
     docker:
       - image: abernix/meteord:node-8.9.3-base
-      - image: circleci/mongo:3.4.5
+      - image: circleci/mongo:3.6.4
 
     steps:
       - checkout
