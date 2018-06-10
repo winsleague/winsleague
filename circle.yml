@@ -45,7 +45,7 @@ jobs:
           name: Install Chromedriver latest version
           command: |
             apt-get install lsb-release=4.1+Debian13+nmu1 libappindicator3-1=0.4.92-3.1 fonts-liberation=1.07.4-1 -y
-            apt-get install libxss1=1:1.2.2-1 wget=1.16-1+deb8u4 xdg-utils=1.1.0~rc1+git20111210-7.4 -y
+            apt-get install libxss1=1:1.2.2-1 wget xdg-utils -y
             curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             dpkg -i google-chrome.deb
             sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome
