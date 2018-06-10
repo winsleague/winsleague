@@ -98,7 +98,7 @@ export default {
 
     const data = this.getEmailData(poolId, seasonId);
     if (!data) {
-      log.info(`Not sending leaderboard email to pool ${poolId} (${data.poolName}) because of no template data.`);
+      log.info(`Not sending leaderboard email to pool ${poolId} because of no template data.`);
       return;
     }
 
