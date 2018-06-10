@@ -38,7 +38,7 @@ jobs:
             echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list
             apt-get update
             apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
-            apt-get install openjdk-8-jdk=8u162-b12-1~bpo8+1 -y
+            apt-get install openjdk-8-jdk -y
             update-java-alternatives -s java-1.8.0-openjdk-amd64
 
       - run:
