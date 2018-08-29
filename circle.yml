@@ -38,14 +38,14 @@ jobs:
             echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list
             apt-get update
             apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
-            apt-get install openjdk-8-jdk=8u162-b12-1~bpo8+1 -y
+            apt-get install openjdk-8-jdk -y
             update-java-alternatives -s java-1.8.0-openjdk-amd64
 
       - run:
           name: Install Chromedriver latest version
           command: |
             apt-get install lsb-release=4.1+Debian13+nmu1 libappindicator3-1=0.4.92-3.1 fonts-liberation=1.07.4-1 -y
-            apt-get install libxss1=1:1.2.2-1 wget=1.16-1+deb8u4 xdg-utils=1.1.0~rc1+git20111210-7.4 -y
+            apt-get install libxss1=1:1.2.2-1 wget xdg-utils -y
             curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             dpkg -i google-chrome.deb
             sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome
@@ -127,10 +127,34 @@ jobs:
     docker:
       - image: abernix/meteord:node-8.9.3-base
     steps:
+      - checkout
+
+      - run: 
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
+      - run:
+          name: Update PATH for Yarn
+          command: |
+            echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+
+      - restore_cache:
+          name: Restore Yarn package cache
+          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: 
+          name: Install Yarn packages
+          command: yarn install --frozen-lockfile
+      
+      - run: 
+          name: Install Meteor
+          command: |
+            if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+            if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+
       - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
       - run: yarn global add mup@1.0.1 # install meteor-up for deployment
-      - run: (cd ~/.deploy/production; mup deploy)
+      - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy --verbose)
       - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
 
 workflows:
