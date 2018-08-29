@@ -9,7 +9,7 @@ jobs:
       LC_ALL: C.UTF-8
     
     docker:
-      - image: abernix/meteord:node-8.9.3-base
+      - image: abernix/meteord:node-8.11.3-base
       - image: circleci/mongo:3.6.4
 
     steps:
