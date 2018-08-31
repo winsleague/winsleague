@@ -1,58 +1,170 @@
-machine:
-  node:
-    version: 8.9.3
-  environment: # https://circleci.com/docs/install-and-use-yarn/
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+version: 2
+jobs:
+  build:
+    parallelism: 3
 
-general:
-  artifacts:
-    - ".meteor/local/log"
-    - "log"
-    - "node_cache/_logs"
-    - "~/.config/yarn/global/yarn-error.log"
+    environment:
+      METEOR_ALLOW_SUPERUSER: 1
+      LANG: C
+      LC_ALL: C.UTF-8
+    
+    docker:
+      - image: abernix/meteord:node-8.9.3-base
+      - image: circleci/mongo:3.4.5
 
-dependencies:
-  cache_directories:
-    - "~/.npm"
-    - "~/.meteor"
-    - "~/.cache/yarn"
-    - "node_modules"
-    - ".meteor/local/build"
-    - ".meteor/local/bundler-cache"
-    - ".meteor/local/isopacks"
-    - ".meteor/local/plugin-cache"
-    - "/opt/circleci/nodejs/v8.9.3/bin"
-    - "/opt/circleci/nodejs/v8.9.3/lib/node_modules"
+    steps:
+      - checkout
 
-  override:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
-    - yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
-    - ./.testing/upgrade_chrome_version.sh
-    - ./.testing/cache_meteor.sh
-    - ./.testing/print_environment.sh
-    - greenkeeper-lockfile-update
-    - ./.testing/cache_npm_dependencies.sh
-    - ./.testing/cache_build_and_dependencies.sh:
-        timeout: 1200
+      - run: 
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
+      - run:
+          name: Update PATH for Yarn
+          command: |
+            echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
 
-test:
-  override:
-    - case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac:
-        parallel: true
-  post:
-    - greenkeeper-lockfile-upload
+      - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
 
-deployment:
-  production:
-    branch: master
-    commands:
-      # Decrypt Meteor Up config
-      - (cd .deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
+      - run: 
+          name: Install Meteor
+          command: |
+            if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+            if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
-      # Deploy
-      - yarn global add ssh2@0.4.15 # needed for meteor-up
-      - yarn global add mup@1.0.1 # install meteor-up for deployment
-      - (cd .deploy/production; mup deploy)
+      - run:
+          name: Install Selenium dependencies
+          command: |
+            echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list
+            apt-get update
+            apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
+            apt-get install openjdk-8-jdk -y
+            update-java-alternatives -s java-1.8.0-openjdk-amd64
 
-      # Notify Rollbar about deploy
-      - curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
+      - run:
+          name: Install Chromedriver latest version
+          command: |
+            apt-get install lsb-release=4.1+Debian13+nmu1 libappindicator3-1=0.4.92-3.1 fonts-liberation=1.07.4-1 -y
+            apt-get install libxss1=1:1.2.2-1 wget xdg-utils -y
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            dpkg -i google-chrome.deb
+            sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
+            apt-get install chromedriver=57.0.2987.98-1~deb8u1 -y
+
+      - run: 
+          name: Print Environment
+          command: |
+            echo "environment versions:"
+            . /etc/os-release
+            echo "operating system $VERSION"
+            echo "kernel $(uname -a)"
+            echo "which java: $(which java)"
+            echo "java $(java -version)"
+            echo "which node: $(which node)"
+            echo "node $(node -v)"
+            echo "METEOR_WATCH_FORCE_POLLING: $METEOR_WATCH_FORCE_POLLING"
+            echo "$(meteor --version)"
+            echo "meteor node $(meteor node -v)"
+            echo "yarn $(yarn -v)"
+
+      - run: greenkeeper-lockfile-update
+
+      - restore_cache:
+          name: Restore Yarn package cache
+          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: 
+          name: Install Yarn packages
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn package cache
+          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - ~/node_modules
+            - /opt/circleci/nodejs/v8.9.3/lib/node_modules
+
+      - restore_cache:
+          name: Restore Meteor plugin cache
+          key: meteor-plugin-v5-{{ checksum ".meteor/release" }}
+      - restore_cache:
+          name: Restore Meteor build cache
+          key: meteor-build-v5-{{ .Branch }}
+      - run:
+          name: Build Meteor app & dependencies
+          command: ./.testing/cache_build_and_dependencies.sh
+          no_output_timeout: 1200s
+      - save_cache:
+          name: Save Meteor build cache
+          key: meteor-build-v5-{{ .Branch }}
+          paths:
+            - ~/project/.meteor/local/build
+      - save_cache:
+          name: Save Meteor plugin cache
+          key: meteor-plugin-v5-{{ checksum ".meteor/release" }}
+          paths:
+            - ~/.meteor/packages
+            - ~/.meteor/package-metadata
+            - ~/project/.meteor/local/bundler-cache
+            - ~/project/.meteor/local/isopacks # need to figure out when this expires
+            - ~/project/.meteor/local/plugin-cache
+
+      - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
+    
+      - run:
+          name: greenkeeper-lockfile-upload
+          command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
+
+      - store_artifacts:
+          path: node_cache/_logs
+      - store_artifacts:
+          path: .meteor/local/log
+      - store_artifacts:
+          path: ~/.config/yarn/global/yarn-error.log
+
+
+  deploy:
+    docker:
+      - image: abernix/meteord:node-8.9.3-base
+    steps:
+      - checkout
+
+      - run: 
+          name: Install Yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
+      - run:
+          name: Update PATH for Yarn
+          command: |
+            echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+
+      - restore_cache:
+          name: Restore Yarn package cache
+          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: 
+          name: Install Yarn packages
+          command: yarn install --frozen-lockfile
+      
+      - run: 
+          name: Install Meteor
+          command: |
+            if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
+            if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+
+      - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
+      - run: yarn global add ssh2@0.4.15 # needed for meteor-up
+      - run: yarn global add mup@1.0.1 # install meteor-up for deployment
+      - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy --verbose)
+      - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
