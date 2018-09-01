@@ -124,8 +124,12 @@ jobs:
 
 
   deploy:
+    environment:
+      METEOR_ALLOW_SUPERUSER: 1
+
     docker:
       - image: abernix/meteord:node-8.9.3-base
+      
     steps:
       - checkout
 
