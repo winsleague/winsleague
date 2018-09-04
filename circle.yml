@@ -124,8 +124,12 @@ jobs:
 
 
   deploy:
+    environment:
+      METEOR_ALLOW_SUPERUSER: 1
+
     docker:
       - image: abernix/meteord:node-8.9.3-base
+      
     steps:
       - checkout
 
@@ -154,7 +158,7 @@ jobs:
       - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
       - run: yarn global add mup@1.4.5 # install meteor-up for deployment
-      - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy --verbose)
+      - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy)
       - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
 
 workflows:
