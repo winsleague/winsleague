@@ -45,7 +45,7 @@ jobs:
           name: Install Chromedriver latest version
           command: |
             apt-get install lsb-release=4.1+Debian13+nmu1 libappindicator3-1=0.4.92-3.1 fonts-liberation=1.07.4-1 -y
-            apt-get install libxss1=1:1.2.2-1 wget=1.16-1+deb8u4 xdg-utils=1.1.0~rc1+git20111210-7.4 -y
+            apt-get install libxss1=1:1.2.2-1 wget xdg-utils -y
             curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             dpkg -i google-chrome.deb
             sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome
@@ -124,8 +124,12 @@ jobs:
 
 
   deploy:
+    environment:
+      METEOR_ALLOW_SUPERUSER: 1
+
     docker:
       - image: abernix/meteord:node-8.9.3-base
+      
     steps:
       - checkout
 
@@ -153,8 +157,8 @@ jobs:
 
       - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
-      - run: yarn global add mup@1.0.1 # install meteor-up for deployment
-      - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy --verbose)
+      - run: yarn global add mup@1.4.5 # install meteor-up for deployment
+      - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy)
       - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
 
 workflows:
