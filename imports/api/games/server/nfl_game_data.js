@@ -48,52 +48,6 @@ export default {
     const week = this.relevantNflWeek(seasonId);
     log.info(`Updating NFL season ${season.year} for week ${week}`);
     this.ingestWeekData(season, week);
-
-    /*
-    const url = `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
-    const response = HTTP.get(url);
-    log.debug(`raw content: ${response.content}`);
-    let content = response.content.replace(/,,/g, ',"",');
-    content = content.replace(/,,/g, ',"",'); // do it again to address multiple commas in a row
-    log.debug(`fixed content: ${content}`);
-
-    let json;
-    try {
-      json = JSON.parse(content);
-      log.debug('parsed json:', json);
-    } catch (e) {
-      log.error(content, e);
-      return;
-    }
-
-    for (const gameData of json.ss) {
-      // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
-      const gameId = gameData[10];
-      const status = cleanStatus(gameData[2]);
-      const quarter = gameData[2].toLowerCase();
-      const timeRemaining = gameData[3].length ? moment(gameData[3], 'mm:ss').format('m:ss') : ''; // '09:32'
-      const homeScore = gameData[7];
-      const awayScore = gameData[5];
-
-      const affected = Games.update(
-        {
-          leagueId: league._id,
-          seasonId,
-          gameId,
-        }, {
-          $set: {
-            quarter,
-            status,
-            timeRemaining,
-            homeScore,
-            awayScore,
-          },
-        }
-      );
-
-      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
-    }
-    */
   },
 
   ingestSeasonData(season) {
