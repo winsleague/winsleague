@@ -3,6 +3,7 @@ import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
 import LeagueFinder from '../../leagues/finder';
+import { Seasons } from '../../seasons/seasons';
 import SeasonFinder from '../../seasons/finder';
 
 import { LeagueTeams } from '../../league_teams/league_teams';
@@ -44,7 +45,12 @@ export default {
       return;
     }
 
-    const url = 'http://www.nfl.com/liveupdate/scorestrip/scorestrip.json';
+    const week = this.relevantNflWeek(seasonId);
+    log.info(`Updating NFL season ${season.year} for week ${week}`);
+    this.ingestWeekData(season, week);
+
+    /*
+    const url = `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
     let content = response.content.replace(/,,/g, ',"",');
@@ -87,6 +93,7 @@ export default {
 
       log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
     }
+    */
   },
 
   ingestSeasonData(season) {
@@ -172,5 +179,18 @@ export default {
     // t: 1:00
     const ymd = `${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`;
     return moment.tz(`${ymd} ${game.t} PM`, 'YYYY-MM-DD h:mm A', 'US/Eastern').toDate();
+  },
+
+  relevantNflWeek(seasonId) {
+    // if Wednesday or later, look forward
+    // if Tuesday, look backward
+  
+    const season = Seasons.findOne(seasonId);
+    const startMoment = moment(season.startDate).tz('US/Pacific').startOf('day');
+  
+    const daysSinceStart = moment().tz('US/Pacific').startOf('day').diff(startMoment, 'days');
+  
+    // we subtract 2 from daysSinceStart so that Wednesday is the start of the week
+    return Math.round((daysSinceStart - 2) / 7) + 1;
   },
 };
