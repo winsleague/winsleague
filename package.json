@@ -14,7 +14,7 @@
     "babel-runtime": "6.26.0",
     "bcrypt": "3.0.0",
     "faker": "4.1.0",
-    "lodash": "4.17.5",
+    "lodash": "4.17.11",
     "loggly": "1.1.1",
     "meteor-node-stubs": "0.4.1",
     "moment": "2.22.2",
