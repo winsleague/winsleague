@@ -9,8 +9,9 @@ import { Games } from '../games';
 import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
-import NflGameData from './nfl_game_data';
+import { Seasons } from '../../seasons/seasons';
 import LeagueFinder from '../../leagues/finder';
+import SeasonFinder from '../../seasons/finder';
 
 function myLeagueTeams(poolTeamId) {
   const poolTeamPicks = PoolTeamPicks.find({
@@ -19,8 +20,21 @@ function myLeagueTeams(poolTeamId) {
   return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
 }
 
+function relevantNflWeek(seasonId) {
+  // if Wednesday or later, look forward
+  // if Tuesday, look backward
+
+  const season = Seasons.findOne(seasonId);
+  const startMoment = moment(season.startDate).tz('US/Pacific').startOf('day');
+
+  const daysSinceStart = moment().tz('US/Pacific').startOf('day').diff(startMoment, 'days');
+
+  // we subtract 2 from daysSinceStart so that Wednesday is the start of the week
+  return Math.round((daysSinceStart - 2) / 7) + 1;
+}
+
 function relevantNflGames(seasonId, poolTeamId) {
-  const week = NflGameData.relevantNflWeek(seasonId);
+  const week = relevantNflWeek(seasonId);
 
   if (!week) {
     return this.ready();

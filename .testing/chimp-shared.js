@@ -1,4 +1,4 @@
-const timeout = 3000;
+const timeout = 2000;
 
 const setup = () => {
   // we must navigate to client first so Meteor methods are available
