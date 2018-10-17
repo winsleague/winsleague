@@ -11,7 +11,7 @@
     "test": "tests"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0",
+    "@babel/runtime": "7.0.0-beta.55",
     "bcrypt": "3.0.0",
     "faker": "4.1.0",
     "lodash": "4.17.11",
