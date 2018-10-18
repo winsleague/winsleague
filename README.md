@@ -102,7 +102,7 @@ $ meteor --extra-packages bundle-visualizer --production
 ### Meteor Package Dependencies
 
 ```
-$ for p in `meteor list | grep '^[a-z]' | awk '{ print $1"@"$2 }'`; do echo "$p"; meteor show "$p" | grep -E '^  [a-z]'; echo; done
+$ for p in `meteor list | grep '^[a-z]' | awk '{sub(/[+*]$/, "", $2); print $1"@"$2 }'`; do echo "$p"; meteor show "$p" | grep -E '^  [a-z]'; echo; done
 ```
 
 
