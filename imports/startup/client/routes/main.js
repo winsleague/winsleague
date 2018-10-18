@@ -46,9 +46,8 @@ FlowRouter.route('/', {
   },
 });
 
-FlowRouter.notFound = {
+FlowRouter.route('*', {
   action() {
     BlazeLayout.render('App_body', { content: 'App_notFound' });
   },
-};
-
+});
