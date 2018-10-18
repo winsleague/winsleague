@@ -9,7 +9,7 @@ jobs:
       LC_ALL: C.UTF-8
     
     docker:
-      - image: abernix/meteord:node-8.9.3-base
+      - image: abernix/meteord:node-8.11.2-base
       - image: circleci/mongo:3.4.5
 
     steps:
@@ -82,7 +82,8 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/node_modules
-            - /opt/circleci/nodejs/v8.9.3/lib/node_modules
+            - /opt/circleci/nodejs/v8.11.2/lib/node_modules
+            - /opt/circleci/nodejs/v8.11.4/lib/node_modules
 
       - restore_cache:
           name: Restore Meteor plugin cache
@@ -128,7 +129,7 @@ jobs:
       METEOR_ALLOW_SUPERUSER: 1
 
     docker:
-      - image: abernix/meteord:node-8.9.3-base
+      - image: abernix/meteord:node-8.11.2-base
       
     steps:
       - checkout
