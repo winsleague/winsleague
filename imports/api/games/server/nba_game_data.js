@@ -27,7 +27,7 @@ export default {
 
     log.debug('parsedJSON.league.standard.teams: ', parsedJSON.league.standard.teams);
     parsedJSON.league.standard.teams.forEach((teamData) => {
-      log.debug('teamData: ', teamData);
+      log.debug('NBA teamData: ', teamData);
       this.saveTeam(league, season, teamData);
     });
   },
@@ -35,7 +35,7 @@ export default {
   saveTeam(league, season, teamData) {
     const leagueTeam = LeagueTeamFinder.getByNbaNetTeamId(league, teamData.teamId);
     if (!leagueTeam) {
-      throw new Error(`Unable to find team! ${teamData.first_name} ${teamData.last_name}`);
+      throw new Error(`Unable to find team! nbaNetTeamId: ${teamData.teamId}`);
     }
 
     SeasonLeagueTeams.upsert(

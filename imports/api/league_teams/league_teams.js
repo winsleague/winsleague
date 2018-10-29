@@ -29,7 +29,7 @@ LeagueTeams.schema = new SimpleSchema({
     ],
   },
   nbaNetTeamId: { // for nba.net lookup
-    type: SimpleSchema.Integer,
+    type: String,
     optional: true,
   },
 });
