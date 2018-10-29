@@ -26,9 +26,8 @@ export default {
     });
   },
 
-  createTeams() {
-    const leagueId = LeagueFinder.getIdByName('NBA');
-    const teams = [
+  teams() {
+    return [
       {
         cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL',
         conference: 'East', division: 'Southeast',
@@ -180,6 +179,11 @@ export default {
         nbaNetTeamId: 1610612764,
       },
     ];
+  },
+
+  createTeams() {
+    const leagueId = LeagueFinder.getIdByName('NBA');
+    const teams = this.teams();
     for (const team of teams) {
       team.leagueId = leagueId;
       LeagueTeams.insert(team);
