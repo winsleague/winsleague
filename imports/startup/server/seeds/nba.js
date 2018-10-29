@@ -32,122 +32,152 @@ export default {
       {
         cityName: 'Atlanta', mascotName: 'Hawks', abbreviation: 'ATL',
         conference: 'East', division: 'Southeast',
+        nbaNetTeamId: 1610612737,
       },
       {
         cityName: 'Boston', mascotName: 'Celtics', abbreviation: 'BOS',
         conference: 'East', division: 'Atlantic',
+        nbaNetTeamId: 1610612738,
       },
       {
         cityName: 'Brooklyn', mascotName: 'Nets', abbreviation: 'BKN',
         conference: 'East', division: 'Atlantic',
+        nbaNetTeamId: 1610612751,
       },
       {
         cityName: 'Charlotte', mascotName: 'Hornets', abbreviation: 'CHA',
         conference: 'East', division: 'Southeast',
+        nbaNetTeamId: 1610612766,
       },
       {
         cityName: 'Chicago', mascotName: 'Bulls', abbreviation: 'CHI',
         conference: 'East', division: 'Central',
+        nbaNetTeamId: 1610612741,
       },
       {
         cityName: 'Cleveland', mascotName: 'Cavaliers', abbreviation: 'CLE',
         conference: 'East', division: 'Central',
+        nbaNetTeamId: 1610612739,
       },
       {
         cityName: 'Dallas', mascotName: 'Mavericks', abbreviation: 'DAL',
         conference: 'West', division: 'Southwest',
+        nbaNetTeamId: 1610612742,
       },
       {
         cityName: 'Denver', mascotName: 'Nuggets', abbreviation: 'DEN',
         conference: 'West', division: 'Northwest',
+        nbaNetTeamId: 1610612743,
       },
       {
         cityName: 'Detroit', mascotName: 'Pistons', abbreviation: 'DET',
         conference: 'East', division: 'Central',
+        nbaNetTeamId: 1610612765,
       },
       {
         cityName: 'Golden State', mascotName: 'Warriors', abbreviation: 'GS',
         conference: 'West', division: 'Pacific',
+        nbaNetTeamId: 1610612744,
       },
       {
         cityName: 'Houston', mascotName: 'Rockets', abbreviation: 'HOU',
         conference: 'West', division: 'Southwest',
+        nbaNetTeamId: 1610612745,
       },
       {
         cityName: 'Indiana', mascotName: 'Pacers', abbreviation: 'IND',
         conference: 'East', division: 'Central',
+        nbaNetTeamId: 1610612754,
       },
       {
         cityName: 'Los Angeles', mascotName: 'Clippers', abbreviation: 'LAC',
         conference: 'West', division: 'Pacific',
+        nbaNetTeamId: 1610612746,
       },
       {
         cityName: 'Los Angeles', mascotName: 'Lakers', abbreviation: 'LAL',
         conference: 'West', division: 'Pacific',
+        nbaNetTeamId: 1610612747,
       },
       {
         cityName: 'Memphis', mascotName: 'Grizzlies', abbreviation: 'MEM',
         conference: 'West', division: 'Southwest',
+        nbaNetTeamId: 1610612763,
       },
       {
         cityName: 'Miami', mascotName: 'Heat', abbreviation: 'MIA',
         conference: 'East', division: 'Southeast',
+        nbaNetTeamId: 1610612748,
       },
       {
         cityName: 'Milwaukee', mascotName: 'Bucks', abbreviation: 'MIL',
         conference: 'East', division: 'Central',
+        nbaNetTeamId: 1610612749,
       },
       {
         cityName: 'Minnesota', mascotName: 'Timberwolves', abbreviation: 'MIN',
         conference: 'West', division: 'Northwest',
+        nbaNetTeamId: 1610612750,
       },
       {
         cityName: 'New Orleans', mascotName: 'Pelicans', abbreviation: 'NO',
         conference: 'West', division: 'Southwest',
+        nbaNetTeamId: 1610612740,
       },
       {
         cityName: 'New York', mascotName: 'Knicks', abbreviation: 'NY',
         conference: 'East', division: 'Atlantic',
+        nbaNetTeamId: 1610612752,
       },
       {
         cityName: 'Oklahoma City', mascotName: 'Thunder', abbreviation: 'OKC',
         conference: 'West', division: 'Northwest',
+        nbaNetTeamId: 1610612760,
       },
       {
         cityName: 'Orlando', mascotName: 'Magic', abbreviation: 'ORL',
         conference: 'East', division: 'Southeast',
+        nbaNetTeamId: 1610612753,
       },
       {
         cityName: 'Philadelphia', mascotName: '76ers', abbreviation: 'PHI',
         conference: 'East', division: 'Atlantic',
+        nbaNetTeamId: 1610612755,
       },
       {
         cityName: 'Phoenix', mascotName: 'Suns', abbreviation: 'PHO',
         conference: 'West', division: 'Pacific',
+        nbaNetTeamId: 1610612756,
       },
       {
         cityName: 'Portland', mascotName: 'Trail Blazers', abbreviation: 'POR',
         conference: 'West', division: 'Northwest',
+        nbaNetTeamId: 1610612757,
       },
       {
         cityName: 'Sacramento', mascotName: 'Kings', abbreviation: 'SAC',
         conference: 'West', division: 'Pacific',
+        nbaNetTeamId: 1610612758,
       },
       {
         cityName: 'San Antonio', mascotName: 'Spurs', abbreviation: 'SA',
         conference: 'West', division: 'Southwest',
+        nbaNetTeamId: 1610612759,
       },
       {
         cityName: 'Toronto', mascotName: 'Raptors', abbreviation: 'TOR',
         conference: 'East', division: 'Atlantic',
+        nbaNetTeamId: 1610612761,
       },
       {
         cityName: 'Utah', mascotName: 'Jazz', abbreviation: 'UTA',
         conference: 'West', division: 'Northwest',
+        nbaNetTeamId: 1610612762,
       },
       {
         cityName: 'Washington', mascotName: 'Wizards', abbreviation: 'WAS',
         conference: 'East', division: 'Southeast',
+        nbaNetTeamId: 1610612764,
       },
     ];
     for (const team of teams) {
