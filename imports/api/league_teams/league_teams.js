@@ -28,6 +28,10 @@ LeagueTeams.schema = new SimpleSchema({
       'Atlantic', 'Pacific', 'Northwest', 'Southeast', 'Southwest', 'Central',
     ],
   },
+  nbaNetTeamId: { // for nba.net lookup
+    type: SimpleSchema.Integer,
+    optional: true,
+  },
 });
 
 LeagueTeams.attachSchema(LeagueTeams.schema);
