@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
-    "bcrypt": "3.0.1",
+    "bcrypt": "3.0.0",
     "faker": "4.1.0",
     "lodash": "4.17.11",
     "loggly": "1.1.1",
     "meteor-node-stubs": "0.4.1",
     "moment": "2.22.2",
-    "moment-timezone": "0.5.15",
+    "moment-timezone": "0.5.22",
     "simpl-schema": "1.5.3",
     "store": "2.0.12",
     "winston": "2.3.0",
@@ -39,7 +39,7 @@
     "shell-source": "1.1.0",
     "sinon": "~6.0.0",
     "sinon-chai": "~3.2.0",
-    "xmlbuilder": "10.0.0"
+    "xmlbuilder": "10.1.1"
   },
   "greenkeeper": {
     "ignore": [
