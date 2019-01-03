@@ -2309,7 +2309,7 @@ eslint-plugin-jsx-a11y@^6.0.3:
     emoji-regex "^6.1.0"
     jsx-ast-utils "^2.0.0"
 
-eslint-plugin-meteor@^5.1.0:
+eslint-plugin-meteor@5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-meteor/-/eslint-plugin-meteor-5.1.0.tgz#06e24981129cb74a2b17b43e285e24e671efb77a"
   integrity sha512-0/mQ0vOhmJQSDbhU84CsLGFEq967ye6sqyJKG/H8Nwv3+Ti1ayfsKqI0iEK85NcI8v6jJ7o/0EHkHg14bcLbaw==
