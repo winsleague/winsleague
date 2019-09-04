@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
-    "bcrypt": "3.0.0",
+    "bcrypt": "3.0.3",
     "faker": "4.1.0",
     "lodash": "4.17.15",
     "loggly": "1.1.1",
@@ -39,7 +39,7 @@
     "shell-source": "1.1.0",
     "sinon": "~7.2.4",
     "sinon-chai": "~3.2.0",
-    "xmlbuilder": "11.0.0"
+    "xmlbuilder": "13.0.2"
   },
   "greenkeeper": {
     "ignore": [
