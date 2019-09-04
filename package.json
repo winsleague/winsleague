@@ -52,12 +52,12 @@
   "scripts": {
     "start": "meteor",
     "pretest": "echo 'npm run lint --silent'",
-    "test": "TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package meteortesting:mocha --port 3100",
-    "test-app": "TEST_BROWSER_DRIVER=chrome meteor test --full-app --once --driver-package meteortesting:mocha --port 3100",
-    "test-watch": "meteor test --driver-package meteortesting:mocha --port 3100",
-    "test-app-watch": "meteor test --full-app --driver-package meteortesting:mocha --port 3100",
-    "test-watch-terminal": "TEST_WATCH=1 TEST_BROWSER_DRIVER=chrome meteor test --driver-package meteortesting:mocha --port 3100",
-    "test-app-watch-terminal": "TEST_WATCH=1 TEST_BROWSER_DRIVER=chrome meteor test --full-app --driver-package meteortesting:mocha --port 3100",
+    "test": "TEST_BROWSER_DRIVER=chrome meteor MONGO_URL='mongodb://localhost:3001/meteor' test --once --driver-package meteortesting:mocha --port 3100",
+    "test-app": "TEST_BROWSER_DRIVER=chrome meteor MONGO_URL='mongodb://localhost:3001/meteor' test --full-app --once --driver-package meteortesting:mocha --port 3100",
+    "test-watch": "MONGO_URL='mongodb://localhost:3001/meteor' meteor test --driver-package meteortesting:mocha --port 3100",
+    "test-app-watch": "MONGO_URL='mongodb://localhost:3001/meteor' meteor test --full-app --driver-package meteortesting:mocha --port 3100",
+    "test-watch-terminal": "TEST_WATCH=1 TEST_BROWSER_DRIVER=chrome MONGO_URL='mongodb://localhost:3001/meteor' meteor test --driver-package meteortesting:mocha --port 3100",
+    "test-app-watch-terminal": "TEST_WATCH=1 TEST_BROWSER_DRIVER=chrome MONGO_URL='mongodb://localhost:3001/meteor' meteor test --full-app --driver-package meteortesting:mocha --port 3100",
     "lint": "eslint ."
   },
   "author": "",

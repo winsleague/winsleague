@@ -11,6 +11,7 @@ jobs:
     docker:
       - image: abernix/meteord:node-8.11.2-base
       - image: circleci/mongo:3.4.5
+        command: --port 3001
 
     steps:
       - checkout
