@@ -17,28 +17,25 @@ export default {
       season = SeasonFinder.getLatestByLeague(league);
     }
 
-    const url = 'https://erikberg.com/nba/standings.json';
+    const url = 'http://data.nba.net/prod/v1/current/standings_all.json';
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url, {
       headers: { 'user-agent': 'Meteor/1.4 (https://github.com/winsleague/winsleague)' },
     });
-    // clean the JSON because the keys don't have quotes
-    const cleanJSON = response.content.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?: /g, '"$2": ');
-    log.debug(`cleanJSON: ${cleanJSON}`);
-    const parsedJSON = JSON.parse(cleanJSON);
+    const parsedJSON = JSON.parse(response.content);
 
-    log.debug('parsedJSON.standing: ', parsedJSON.standing);
-    parsedJSON.standing.forEach((teamData) => {
-      log.debug('teamData: ', teamData);
+    log.debug('parsedJSON.league.standard.teams: ', parsedJSON.league.standard.teams);
+    parsedJSON.league.standard.teams.forEach((teamData) => {
+      log.debug('NBA teamData: ', teamData);
       this.saveTeam(league, season, teamData);
     });
   },
 
   saveTeam(league, season, teamData) {
-    const leagueTeam = LeagueTeamFinder.getByName(league, teamData.first_name, teamData.last_name);
+    const leagueTeam = LeagueTeamFinder.getByNbaNetTeamId(league, teamData.teamId);
     if (!leagueTeam) {
-      throw new Error(`Unable to find team! ${teamData.first_name} ${teamData.last_name}`);
+      throw new Error(`Unable to find team! nbaNetTeamId: ${teamData.teamId}`);
     }
 
     SeasonLeagueTeams.upsert(
@@ -50,17 +47,17 @@ export default {
       },
       {
         $set: {
-          wins: teamData.won,
-          losses: teamData.lost,
+          wins: teamData.win,
+          losses: teamData.loss,
           ties: 0,
-          homeWins: teamData.home_won,
-          homeLosses: teamData.home_lost,
+          homeWins: teamData.homeWin,
+          homeLosses: teamData.homeLoss,
           homeTies: 0,
-          awayWins: teamData.away_won,
-          awayLosses: teamData.away_lost,
+          awayWins: teamData.awayWin,
+          awayLosses: teamData.awayLoss,
           awayTies: 0,
-          pointsFor: teamData.points_for,
-          pointsAgainst: teamData.points_against,
+          pointsFor: 0,
+          pointsAgainst: 0,
           closeWins: 0,
           closeLosses: 0,
         },
