@@ -6141,10 +6141,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
-simpl-schema@1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/simpl-schema/-/simpl-schema-1.5.3.tgz#c1d12ebddd7ff6dd32ace5e6364824ae506d4a9a"
-  integrity sha512-J24gSh39gBc3TYRFgaWx81bRf9unNML9u3dTAgxL1KI3F9JOv+Z29yEbosJFqmHfuuZ3K7ET/tTQKX4r4+f8/w==
+simpl-schema@1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/simpl-schema/-/simpl-schema-1.5.5.tgz#0bcba6f2445547e6edb79e066b50c6d83b9b490b"
+  integrity sha512-LEAKeqXS9VDpH7sVXmsIJsED7fdMj/WAP0roZw0u0IzOgQV7n3x7jcf722cl7WM6U5ANwI4wwv0dujLuwv266A==
   dependencies:
     clone "^2.1.1"
     extend "^3.0.1"
