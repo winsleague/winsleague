@@ -11,6 +11,7 @@ jobs:
     docker:
       - image: abernix/meteord:node-8.11.2-base
       - image: circleci/mongo:3.4.5
+        command: --port 3001
 
     steps:
       - checkout
@@ -24,8 +25,6 @@ jobs:
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
             source $BASH_ENV
 
-      - run: yarn global add https://github.com/jasonLaster/greenkeeper-lockfile.git
-
       - run: 
           name: Install Meteor
           command: |
@@ -35,8 +34,8 @@ jobs:
       - run:
           name: Install Selenium dependencies
           command: |
-            echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list
-            apt-get update
+            echo "deb http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+            apt-get -o Acquire::Check-Valid-Until=false update
             apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
             apt-get install openjdk-8-jdk -y
             update-java-alternatives -s java-1.8.0-openjdk-amd64
@@ -67,8 +66,6 @@ jobs:
             echo "$(meteor --version)"
             echo "meteor node $(meteor node -v)"
             echo "yarn $(yarn -v)"
-
-      - run: greenkeeper-lockfile-update
 
       - restore_cache:
           name: Restore Yarn package cache
@@ -112,10 +109,6 @@ jobs:
 
       - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
     
-      - run:
-          name: greenkeeper-lockfile-upload
-          command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
-
       - store_artifacts:
           path: node_cache/_logs
       - store_artifacts:
