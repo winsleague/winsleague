@@ -67,8 +67,6 @@ jobs:
             echo "meteor node $(meteor node -v)"
             echo "yarn $(yarn -v)"
 
-      - run: greenkeeper-lockfile-update
-
       - restore_cache:
           name: Restore Yarn package cache
           key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
@@ -111,10 +109,6 @@ jobs:
 
       - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
     
-      - run:
-          name: greenkeeper-lockfile-upload
-          command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
-
       - store_artifacts:
           path: node_cache/_logs
       - store_artifacts:
