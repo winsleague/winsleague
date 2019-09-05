@@ -4462,10 +4462,10 @@ lodash.without@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.without/-/lodash.without-4.4.0.tgz#3cd4574a00b67bae373a94b748772640507b7aac"
   integrity sha1-PNRXSgC2e643OpS3SHcmQFB7eqw=
 
-lodash@4.17.12:
-  version "4.17.12"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.12.tgz#a712c74fdc31f7ecb20fe44f157d802d208097ef"
-  integrity sha512-+CiwtLnsJhX03p20mwXuvhoebatoh5B3tt+VvYlrPgZC1g36y+RRbkufX95Xa+X4I59aWEacDFYwnJZiyBh9gA==
+lodash@4.17.15, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
 lodash@^2.4.1:
   version "2.4.2"
@@ -4481,11 +4481,6 @@ lodash@^4.14.0, lodash@^4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
   integrity sha1-eCA6TRwyiuHYbcpkYONptX9AVa4=
-
-lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
 lodash@^4.2.0, lodash@^4.3.0:
   version "4.16.4"
@@ -4774,10 +4769,10 @@ mocha@^4.1.0:
     mkdirp "0.5.1"
     supports-color "4.4.0"
 
-moment-timezone@0.5.22:
-  version "0.5.22"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.22.tgz#11923e7ee878e8a2f74fba5859b8604cb9ec9b2d"
-  integrity sha512-yYy26PNi+1mpZ7BvPYW6lPaaJhNGeJ4vKl+ryn8h56mmgauCm1IQ0ySwuZP/kknJdkk+sGaSC2uxK2WdI6B73g==
+moment-timezone@0.5.24:
+  version "0.5.24"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.24.tgz#59e14e210a6f2410ec71e01c01d324c45f7f0a7e"
+  integrity sha512-oxg1YswuqzOBzGWs3i3TnNqbvHMGK7qY7zcg9SJfZ09K+FiNtSPKmFfqGuxN1oMyusGisvYZEc4un//j3wwAKw==
   dependencies:
     moment ">= 2.9.0"
 
