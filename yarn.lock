@@ -4774,10 +4774,10 @@ mocha@^4.1.0:
     mkdirp "0.5.1"
     supports-color "4.4.0"
 
-moment-timezone@0.5.22:
-  version "0.5.22"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.22.tgz#11923e7ee878e8a2f74fba5859b8604cb9ec9b2d"
-  integrity sha512-yYy26PNi+1mpZ7BvPYW6lPaaJhNGeJ4vKl+ryn8h56mmgauCm1IQ0ySwuZP/kknJdkk+sGaSC2uxK2WdI6B73g==
+moment-timezone@0.5.24:
+  version "0.5.24"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.24.tgz#59e14e210a6f2410ec71e01c01d324c45f7f0a7e"
+  integrity sha512-oxg1YswuqzOBzGWs3i3TnNqbvHMGK7qY7zcg9SJfZ09K+FiNtSPKmFfqGuxN1oMyusGisvYZEc4un//j3wwAKw==
   dependencies:
     moment ">= 2.9.0"
 
