@@ -14,6 +14,7 @@
     "@babel/runtime": "7.0.0-beta.55",
     "bcrypt": "3.0.0",
     "faker": "4.1.0",
+    "fibers": "2.0.2",
     "lodash": "4.17.15",
     "loggly": "1.1.1",
     "meteor-node-stubs": "0.4.1",
