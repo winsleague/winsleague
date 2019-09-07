@@ -9,8 +9,8 @@ jobs:
       LC_ALL: C.UTF-8
     
     docker:
-      - image: abernix/meteord:node-8.11.2-base
       - image: circleci/mongo:3.4.5
+      - image: abernix/meteord:node-8.11.4-base
         command: --port 3001
 
     steps:
@@ -79,7 +79,6 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/node_modules
-            - /opt/circleci/nodejs/v8.11.2/lib/node_modules
             - /opt/circleci/nodejs/v8.11.4/lib/node_modules
 
       - restore_cache:
@@ -122,7 +121,7 @@ jobs:
       METEOR_ALLOW_SUPERUSER: 1
 
     docker:
-      - image: abernix/meteord:node-8.11.2-base
+      - image: abernix/meteord:node-8.11.4-base
       
     steps:
       - checkout
