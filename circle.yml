@@ -9,8 +9,8 @@ jobs:
       LC_ALL: C.UTF-8
     
     docker:
-      - image: circleci/mongo:3.4.5
       - image: abernix/meteord:node-8.11.4-base
+      - image: circleci/mongo:3.6.4
         command: --port 3001
 
     steps:
