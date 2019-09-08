@@ -25,6 +25,9 @@ jobs:
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
             source $BASH_ENV
 
+      - restore_cache:
+          key: meteor-release-{{ checksum ".meteor/release" }}-{{ checksum "circle.yml" }}
+
       - run: 
           name: Install Meteor
           command: |
@@ -69,13 +72,15 @@ jobs:
 
       - restore_cache:
           name: Restore Yarn package cache
-          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
+
       - run: 
           name: Install Yarn packages
           command: yarn install --frozen-lockfile
+
       - save_cache:
           name: Save Yarn package cache
-          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
           paths:
             - ~/.cache/yarn
             - ~/node_modules
@@ -83,26 +88,25 @@ jobs:
             - /opt/circleci/nodejs/v8.11.4/lib/node_modules
 
       - restore_cache:
-          name: Restore Meteor plugin cache
-          key: meteor-plugin-v5-{{ checksum ".meteor/release" }}
-      - restore_cache:
-          name: Restore Meteor build cache
-          key: meteor-build-v5-{{ .Branch }}
+          name: Restore Meteor packages cache
+          key: meteor-packages-{{ checksum ".meteor/versions" }}-{{ checksum "circle.yml" }}
+
       - run:
           name: Build Meteor app & dependencies
           command: ./.testing/cache_build_and_dependencies.sh
           no_output_timeout: 1200s
+
       - save_cache:
-          name: Save Meteor build cache
-          key: meteor-build-v5-{{ .Branch }}
+          name: Save Meteor release cache
+          key: meteor-release-{{ checksum ".meteor/release" }}-{{ checksum "circle.yml" }}
+          paths:
+            - ~/.meteor
+
+      - save_cache:
+          name: Save Meteor packages cache
+          key: meteor-packages-{{ checksum ".meteor/versions" }}-{{ checksum "circle.yml" }}
           paths:
             - ~/project/.meteor/local/build
-      - save_cache:
-          name: Save Meteor plugin cache
-          key: meteor-plugin-v5-{{ checksum ".meteor/release" }}
-          paths:
-            - ~/.meteor/packages
-            - ~/.meteor/package-metadata
             - ~/project/.meteor/local/bundler-cache
             - ~/project/.meteor/local/isopacks # need to figure out when this expires
             - ~/project/.meteor/local/plugin-cache
