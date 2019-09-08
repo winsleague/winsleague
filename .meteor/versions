@@ -48,7 +48,7 @@ http@1.4.1
 hwillson:stub-collections@1.0.9
 id-map@1.1.0
 infinitedg:winston@0.7.3
-jcbernack:reactive-aggregate@0.6.0
+jcbernack:reactive-aggregate@1.0.0
 jquery@1.11.10
 kadira:blaze-layout@2.3.0
 launch-screen@1.1.1

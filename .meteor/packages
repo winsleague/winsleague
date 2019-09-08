@@ -33,7 +33,7 @@ brentjanderson:winston-client
 saucecode:rollbar
 mdg:validated-method
 tunifight:loggedin-mixin
-jcbernack:reactive-aggregate
+jcbernack:reactive-aggregate@1.0.0
 percolate:migrations
 lookback:emails
 meteorhacks:aggregate
