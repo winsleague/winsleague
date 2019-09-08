@@ -100,7 +100,8 @@ jobs:
           name: Save Meteor release cache
           key: meteor-release-{{ checksum ".meteor/release" }}-{{ checksum "circle.yml" }}
           paths:
-            - ~/.meteor
+            - ~/.meteor/packages
+            - ~/.meteor/package-metadata
 
       - save_cache:
           name: Save Meteor packages cache
