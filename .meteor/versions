@@ -1,8 +1,8 @@
 accounts-base@1.4.2
 accounts-password@1.5.1
-aldeed:autoform@6.2.0
-aldeed:collection2-core@2.1.0
-aldeed:schema-deny@2.0.1
+aldeed:autoform@6.3.0
+aldeed:collection2@3.0.2
+aldeed:schema-deny@3.0.0
 allow-deny@1.1.0
 amplify@1.0.0
 audit-argument-checks@1.0.7
@@ -24,7 +24,6 @@ chuangbo:cookie@1.1.0
 coffeescript@1.0.17
 dburles:collection-helpers@1.0.4
 dburles:factory@1.1.0
-dburles:mongo-collection-instances@0.3.4
 ddp@1.4.0
 ddp-client@2.3.2
 ddp-common@1.4.0
@@ -52,7 +51,6 @@ infinitedg:winston@0.7.3
 jcbernack:reactive-aggregate@0.6.0
 jquery@1.11.10
 kadira:blaze-layout@2.3.0
-lai:collection-extensions@0.1.4
 launch-screen@1.1.1
 livedata@1.0.18
 lmieulet:meteor-coverage@1.1.4
@@ -73,7 +71,6 @@ meteorhacks:ssr@2.2.0
 meteortesting:browser-tests@1.0.0
 meteortesting:mocha@1.0.1
 meteortesting:mocha-core@1.0.1
-meteortoys:toykit@2.2.1
 minifier-css@1.3.1
 minifier-js@2.3.5
 minimongo@1.4.4
@@ -86,7 +83,6 @@ mongo@1.4.7
 mongo-dev-server@1.1.0
 mongo-id@1.0.7
 mongo-livedata@1.0.12
-msavin:mongol@1.6.2
 npm-bcrypt@0.9.3
 npm-mongo@2.2.34
 observe-sequence@1.0.16
