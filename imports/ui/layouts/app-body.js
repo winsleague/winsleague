@@ -4,6 +4,7 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import log from '../../utils/log';
 import { Template } from 'meteor/templating';
 import { atNavButton } from 'meteor/useraccounts:bootstrap';
+import { $ } from 'jquery';
 
 import '../components/pools-menu';
 
@@ -17,6 +18,6 @@ Template.App_body.onRendered(function () {
 
 Template.App_body.events({
   'click .menuLink'(event) {
-    $('.navbar-toggle').click();
+    $('.navbar-toggler').click();
   },
 });
