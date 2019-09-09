@@ -37,7 +37,6 @@ percolate:migrations@1.0.2
 lookback:emails
 meteorhacks:aggregate
 useraccounts:bootstrap
-u2622:persistent-session
 standard-minifier-css@1.4.1
 standard-minifier-js@2.3.4
 xolvio:cleaner
