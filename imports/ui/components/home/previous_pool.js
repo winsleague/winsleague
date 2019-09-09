@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { _ } from 'lodash';
+import store from 'store';
 
 import { Pools } from '../../../api/pools/pools';
 
@@ -15,7 +16,7 @@ Template.previousPool.helpers({
 });
 
 Template.previousPool.onCreated(function () {
-  this.getPoolId = () => Session.get('previousPoolId');
+  this.getPoolId = () => store.get('previousPoolId');
 
   this.autorun(() => {
     this.subscribe('pools.single', this.getPoolId());

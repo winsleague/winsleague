@@ -46,13 +46,13 @@ export default {
         if (game.homeScore > game.awayScore) {
           wins += 1;
           homeWins += 1;
-          if (pointDifference <= closeScore) {
+          if (pointDifference <= closeScore || game.quarter === 'final overtime') {
             closeWins += 1;
           }
         } else if (game.homeScore < game.awayScore) {
           losses += 1;
           homeLosses += 1;
-          if (pointDifference <= closeScore) {
+          if (pointDifference <= closeScore || game.quarter === 'final overtime') {
             closeLosses += 1;
           }
         } else {
@@ -65,13 +65,13 @@ export default {
         if (game.awayScore > game.homeScore) {
           wins += 1;
           awayWins += 1;
-          if (pointDifference <= closeScore) {
+          if (pointDifference <= closeScore || game.quarter === 'final overtime') {
             closeWins += 1;
           }
         } else if (game.awayScore < game.homeScore) {
           losses += 1;
           awayLosses += 1;
-          if (pointDifference <= closeScore) {
+          if (pointDifference <= closeScore || game.quarter === 'final overtime') {
             closeLosses += 1;
           }
         } else {
