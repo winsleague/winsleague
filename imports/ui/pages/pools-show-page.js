@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { Session } from 'meteor/session';
+import store from 'store';
 import { _ } from 'lodash';
 import log from '../../utils/log';
 
@@ -70,7 +70,7 @@ Template.Pools_show_page.onCreated(function () {
 
       // this is so we can suggest to users on the homepage where to find
       // the pool they were looking at
-      Session.setPersistent('previousPoolId', this.getPoolId());
+      store.set('previousPoolId', this.getPoolId());
     });
 
     this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId());
