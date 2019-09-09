@@ -55,3 +55,4 @@ ostrio:flow-router-extra@3.6.3
 mealsunite:flow-routing-extra@2.0.2
 aldeed:schema-deny@3.0.0
 underscore@1.0.10
+dburles:collection-helpers
