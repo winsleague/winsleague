@@ -41,17 +41,20 @@ jobs:
             update-java-alternatives -s java-1.8.0-openjdk-amd64
 
       - run:
-          name: Install Chrome and Chromedriver
+          name: Install Chrome dependencies
           command: |
             apt-get install lsb-release=4.1+Debian13+nmu1 libappindicator3-1=0.4.92-3.1 fonts-liberation=1.07.4-1 -y
             apt-get install libxss1=1:1.2.2-1 wget xdg-utils unzip -y
 
+      - run:
+          name: Install Chrome and Chromedriver
+          command: |
             curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             dpkg -i google-chrome.deb
             sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome
             rm google-chrome.deb
 
-            wget https://chromedriver.storage.googleapis.com/78.0.3904.11/chromedriver_linux64.zip
+            wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
             unzip chromedriver_linux64.zip
             mv chromedriver /usr/bin/chromedriver
             chown root:root /usr/bin/chromedriver
