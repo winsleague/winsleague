@@ -71,7 +71,14 @@ jobs:
           name: Restore Yarn package cache
           key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
 
-      - run: 
+      - run:
+          name: Install and configure Greenkeeper Lockfile
+          command: |
+            sudo yarn global add greenkeeper-lockfile@1
+            greenkeeper-lockfile-update
+            echo 'Installed greenkeeper-lockfile and ran greenkeeper-lockfile-update'
+
+      - run:
           name: Install Yarn packages
           command: yarn install --frozen-lockfile
 
@@ -115,6 +122,10 @@ jobs:
 
       - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
     
+      - run:
+          name: Greenkeeper Lockfile Upload
+          command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
+
       - store_artifacts:
           path: node_cache/_logs
       - store_artifacts:
