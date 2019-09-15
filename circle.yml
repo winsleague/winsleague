@@ -41,15 +41,17 @@ jobs:
             update-java-alternatives -s java-1.8.0-openjdk-amd64
 
       - run:
-          name: Install Chromedriver latest version
+          name: Install Chrome and Chromedriver
           command: |
             apt-get install lsb-release=4.1+Debian13+nmu1 libappindicator3-1=0.4.92-3.1 fonts-liberation=1.07.4-1 -y
             apt-get install libxss1=1:1.2.2-1 wget xdg-utils -y
-            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            dpkg -i google-chrome.deb
-            sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox --headless|g' /opt/google/chrome/google-chrome
-            rm google-chrome.deb
-            apt-get install chromedriver=57.0.2987.98-1~deb8u1 -y
+            sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+            sudo echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+            sudo apt-get -y update
+            sudo apt-get -y install google-chrome-stable
+
+            apt-get install chromium-chromedriver -y
+            ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
       - run: 
           name: Print Environment
