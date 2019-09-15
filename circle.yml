@@ -32,15 +32,6 @@ jobs:
             if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
       - run:
-          name: Install Selenium dependencies
-          command: |
-            echo "deb http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
-            apt-get -o Acquire::Check-Valid-Until=false update
-            apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
-            apt-get install openjdk-8-jdk -y
-            update-java-alternatives -s java-1.8.0-openjdk-amd64
-
-      - run:
           name: Install Chrome and Chromedriver
           command: |
             apt-get update
@@ -54,6 +45,15 @@ jobs:
 
             apt-get install chromium-chromedriver -y
             ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+
+      - run:
+          name: Install Selenium dependencies
+          command: |
+            echo "deb http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+            apt-get -o Acquire::Check-Valid-Until=false update
+            apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
+            apt-get install openjdk-8-jdk -y
+            update-java-alternatives -s java-1.8.0-openjdk-amd64
 
       - run: 
           name: Print Environment
