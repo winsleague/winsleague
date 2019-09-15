@@ -18,7 +18,7 @@ jobs:
 
       - run: 
           name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.10.1
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
       - run:
           name: Update PATH for Yarn
           command: |
@@ -145,7 +145,7 @@ jobs:
 
       - run: 
           name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.10.1
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
       - run:
           name: Update PATH for Yarn
           command: |
