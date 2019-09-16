@@ -154,7 +154,7 @@ jobs:
 
       - restore_cache:
           name: Restore Yarn package cache
-          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
       - run: 
           name: Install Yarn packages
           command: yarn install --frozen-lockfile
