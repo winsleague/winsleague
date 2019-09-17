@@ -80,14 +80,16 @@ jobs:
 
       - run:
           name: Install Yarn packages
-          command: yarn install --frozen-lockfile
+          command: |
+            yarn install --frozen-lockfile
+            yarn list
 
       - save_cache:
           name: Save Yarn package cache
           key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
           paths:
             - ~/.cache/yarn
-            - ~/node_modules
+            - ~/project/node_modules
             - /opt/circleci/nodejs/v8.15.1/lib/node_modules
 
       - restore_cache:
@@ -154,7 +156,9 @@ jobs:
 
       - run: 
           name: Install Yarn packages
-          command: yarn install --frozen-lockfile --production
+          command: |
+            yarn install --frozen-lockfile --production
+            yarn list
       
       - run: 
           name: Install Meteor
