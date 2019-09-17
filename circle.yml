@@ -89,7 +89,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
           paths:
             - ~/.cache/yarn
-            - ~/node_modules
+            - ~/project/node_modules
             - /opt/circleci/nodejs/v8.15.1/lib/node_modules
 
       - restore_cache:
