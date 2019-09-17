@@ -80,7 +80,9 @@ jobs:
 
       - run:
           name: Install Yarn packages
-          command: yarn install --frozen-lockfile --verbose
+          command: |
+            yarn install --frozen-lockfile
+            yarn list
 
       - save_cache:
           name: Save Yarn package cache
@@ -154,7 +156,9 @@ jobs:
 
       - run: 
           name: Install Yarn packages
-          command: yarn install --frozen-lockfile --production --verbose
+          command: |
+            yarn install --frozen-lockfile --production
+            yarn list
       
       - run: 
           name: Install Meteor
