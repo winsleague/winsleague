@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.6.0",
-    "bcrypt": "3.0.0",
+    "bcrypt": "3.0.6",
     "faker": "4.1.0",
     "fibers": "2.0.2",
     "lodash": "4.17.15",
