@@ -1,6 +1,6 @@
 import log from '../../../utils/log';
 
-import { Games } from '../../games/games';
+import { Games } from '../games';
 import '../../season_league_teams/server/hooks';
 
 export default {
