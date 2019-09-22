@@ -1,0 +1,33 @@
+<template name="Pools_head_to_head_records">
+  {{#if Template.subscriptionsReady}}
+    <h4 class="Pools_head_to_head_records">Best Head to Head Records</h4>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th class="col-xs-3">Player</th>
+          <th class="col-xs-3">Opponent</th>
+          <th class="col-xs-2">Wins</th>
+          <th class="col-xs-2">Losses</th>
+          <th class="col-xs-2">Ties</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each poolTeamRecord in poolTeamRecords}}
+          <tr id="{{poolTeamRecord._id}}">
+            <td>
+              {{poolTeamRecord.poolTeamId}}
+            </td>
+            <td>{{poolTeamRecord.opponentPoolTeamId}}</td>
+            <td>{{poolTeamRecord.wins}}</td>
+            <td>{{poolTeamRecord.losses}}</td>
+            <td>{{poolTeamRecord.ties}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <br/>
+  {{/if}}
+</template>
