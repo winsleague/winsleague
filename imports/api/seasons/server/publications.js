@@ -10,7 +10,7 @@ import SeasonFinder from '../finder';
 
 Meteor.publish('seasons.single', function(_id) {
   check(_id, Match.Maybe(String));
-  if (! _id) return this.ready();
+  if (!_id) return this.ready();
   return Seasons.find(_id);
 });
 
@@ -22,7 +22,7 @@ Meteor.publish('seasons.latest', function() {
 
 Meteor.publish('seasons.latest.ofLeague', function(leagueId) {
   check(leagueId, Match.Maybe(String));
-  if (! leagueId) return this.ready();
+  if (!leagueId) return this.ready();
   return SeasonFinder.getLatestCursorByLeagueId(leagueId);
 });
 
@@ -32,6 +32,8 @@ Meteor.publish('seasons.ofPool', function(poolId) {
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
+        // for some reason I think Mongo has a problem with this query when it's shorthand
+        // eslint-disable-next-line object-shorthand
         poolId: poolId,
       },
     },
@@ -42,10 +44,8 @@ Meteor.publish('seasons.ofPool', function(poolId) {
       },
     },
   ],
-    {
-      observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
-      clientCollection: 'seasons',
-    }
-  );
+  {
+    observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
+    clientCollection: 'seasons',
+  });
 });
-

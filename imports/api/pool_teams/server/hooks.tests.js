@@ -1,6 +1,3 @@
-/* eslint-env mocha */
-/* eslint-disable func-names, prefer-arrow-callback */
-
 import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
 
@@ -13,7 +10,7 @@ describe('Pool Teams Hooks', function () {
 
   it('should remove its PoolTeamPicks when PoolTeam is removed', function () {
     const poolTeamPick = Factory.create('poolTeamPick');
-    const poolTeamId = poolTeamPick.poolTeamId;
+    const { poolTeamId } = poolTeamPick;
 
     let poolTeamPicksCount = PoolTeamPicks.find({ poolTeamId }).count();
     assert.equal(poolTeamPicksCount, 1);

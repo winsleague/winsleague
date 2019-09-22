@@ -14,6 +14,7 @@ PoolTeams.schema = new SimpleSchema({
       if (this.isInsert && !this.isSet) {
         return Pools.findOne(this.field('poolId').value).leagueId;
       }
+      return undefined;
     },
   },
   seasonId: {
@@ -26,6 +27,7 @@ PoolTeams.schema = new SimpleSchema({
         if (latestSeason) return latestSeason._id;
         throw new Error(`No season found for leagueId ${leagueId}`);
       }
+      return undefined;
     },
   },
   seasonYear: {
@@ -37,6 +39,7 @@ PoolTeams.schema = new SimpleSchema({
         if (latestSeason) return latestSeason.year;
         throw new Error(`No season found for leagueId ${leagueId}`);
       }
+      return undefined;
     },
   },
   poolId: {
@@ -104,10 +107,12 @@ PoolTeams.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
       this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
   updatedAt: {
@@ -118,6 +123,7 @@ PoolTeams.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,
@@ -161,16 +167,16 @@ if (Meteor.isServer) {
       // verify userId either owns PoolTeam or is commissioner of pool
       const { poolId } = doc;
       const pool = Pools.findOne(poolId);
-      return (userId === doc.userId ||
-        userId === pool.commissionerUserId);
+      return (userId === doc.userId
+        || userId === pool.commissionerUserId);
     },
 
     remove(userId, doc) {
       // verify userId either owns PoolTeam or is commissioner of pool
       const { poolId } = doc;
       const pool = Pools.findOne(poolId);
-      return (userId === doc.userId ||
-      userId === pool.commissionerUserId);
+      return (userId === doc.userId
+        || userId === pool.commissionerUserId);
     },
   });
 }

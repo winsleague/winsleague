@@ -14,6 +14,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
       if (this.isInsert && !this.isSet) {
         return Pools.findOne(this.field('poolId').value).leagueId;
       }
+      return undefined;
     },
   },
   seasonId: {
@@ -26,6 +27,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
         if (latestSeason) return latestSeason._id;
         throw new Error(`No season found for leagueId ${leagueId}`);
       }
+      return undefined;
     },
   },
   seasonYear: {
@@ -37,6 +39,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
         if (latestSeason) return latestSeason.year;
         throw new Error(`No season found for leagueId ${leagueId}`);
       }
+      return undefined;
     },
   },
   week: {
@@ -80,10 +83,12 @@ PoolTeamWeeks.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
   updatedAt: {
@@ -94,6 +99,7 @@ PoolTeamWeeks.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,

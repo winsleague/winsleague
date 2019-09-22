@@ -15,6 +15,6 @@ Factory.define('user', Meteor.users, {
       verified: false,
     }];
   },
-}).after(factory => {
+}).after((factory) => {
   log.debug('user factory created:', factory);
 });

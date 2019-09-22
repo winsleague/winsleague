@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
-import { check, Match } from 'meteor/check';
+import { check } from 'meteor/check';
 import 'meteor/reywood:publish-composite';
 
 import { PoolGameInterestRatings } from '../pool_game_interest_ratings';
@@ -27,7 +27,8 @@ Meteor.publishComposite('poolGameInterestRatings.ofPool', function poolGameInter
             rating: -1,
           },
           limit: 5,
-        });
+        },
+      );
     },
     children: [{
       find(poolGameInterestRating) {

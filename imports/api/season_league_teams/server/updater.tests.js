@@ -1,15 +1,12 @@
-/* eslint-env mocha */
-/* eslint-disable func-names, prefer-arrow-callback */
-
 import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
 
 import '../../seasons/seasons_factory';
 import '../../league_teams/league_teams_factory';
 
-import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
+import { SeasonLeagueTeams } from '../season_league_teams';
 import { Games } from '../../games/games';
-import SeasonLeagueTeamsUpdater from '../../season_league_teams/server/updater';
+import SeasonLeagueTeamsUpdater from './updater';
 
 describe('Season League Teams Updater', () => {
   describe('Update Team Stats', () => {

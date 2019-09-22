@@ -1,17 +1,14 @@
-/* eslint-env mocha */
-/* eslint-disable func-names, prefer-arrow-callback */
-
 import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
 import log from '../../../utils/log';
 
-import '../../pool_teams/pool_teams_factory';
+import '../pool_teams_factory';
 import '../../league_teams/league_teams_factory';
 import '../../pool_team_picks/pool_team_picks_factory';
 
-import { PoolTeams } from '../../pool_teams/pool_teams';
+import { PoolTeams } from '../pool_teams';
 import { Games } from '../../games/games';
-import PoolTeamsUpdater from '../../pool_teams/server/updater';
+import PoolTeamsUpdater from './updater';
 
 describe('Pool Teams Updater', function () {
   this.timeout(5000);

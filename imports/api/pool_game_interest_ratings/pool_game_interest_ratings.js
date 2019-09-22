@@ -48,10 +48,12 @@ PoolGameInterestRatings.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
 
@@ -63,6 +65,7 @@ PoolGameInterestRatings.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,
