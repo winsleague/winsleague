@@ -6,6 +6,6 @@ import '../leagues/leagues_factory';
 
 Factory.define('leaguePickExpectedWin', LeaguePickExpectedWins, {
   leagueId: Factory.get('league'),
-}).after(factory => {
+}).after((factory) => {
   log.debug('leaguePickExpectedWin factory created:', factory);
 });

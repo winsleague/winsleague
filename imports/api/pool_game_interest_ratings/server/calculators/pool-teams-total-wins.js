@@ -12,14 +12,15 @@ export default {
     const mostWins = this.poolMostWins(pool);
     const leastWins = this.poolLeastWins(pool);
 
-    const result = this._calculate(homePoolTeam.totalWins, awayPoolTeam.totalWins, mostWins, leastWins);
+    const result = this.calculateFromWins(homePoolTeam.totalWins, awayPoolTeam.totalWins, mostWins, leastWins);
 
-    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} (homePoolTeamWins: ${homePoolTeam.totalWins}, awayPoolTeamWins: ${awayPoolTeam.totalWins})`);
+    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} \
+(homePoolTeamWins: ${homePoolTeam.totalWins}, awayPoolTeamWins: ${awayPoolTeam.totalWins})`);
 
     return result;
   },
 
-  _calculate(homeWins, awayWins, mostWins, leastWins) {
+  calculateFromWins(homeWins, awayWins, mostWins, leastWins) {
     if (mostWins === 0) {
       // this calculator doesn't make much sense unless there are some games played
       return {
@@ -105,4 +106,3 @@ export default {
     return team.totalWins;
   },
 };
-

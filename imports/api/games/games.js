@@ -89,10 +89,12 @@ Games.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
   updatedAt: {
@@ -103,6 +105,7 @@ Games.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,
@@ -130,7 +133,9 @@ Games.helpers({
   title(poolId, seasonId) {
     // "Noah's #6 NYG (2-1) at Charlie's #8 GB (1-2)"
 
-    return `${this.awayTeamOwner(poolId, seasonId)} ${this.awayTeamPick(poolId, seasonId)} ${this.awayTeamRecord(seasonId)} at ${this.homeTeamOwner(poolId, seasonId)} ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
+    return `${this.awayTeamOwner(poolId, seasonId)} ${this.awayTeamPick(poolId, seasonId)} \
+${this.awayTeamRecord(seasonId)} at ${this.homeTeamOwner(poolId, seasonId)} \
+${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
   },
 
   homeTeamOwner(poolId, seasonId) {
@@ -228,9 +233,9 @@ Games.helpers({
 
     const gameDate = moment(this.gameDate).tz('US/Pacific');
     const today = moment().tz('US/Pacific');
-    const isGameToday = gameDate.date() === today.date() &&
-      gameDate.month() === today.month() &&
-      gameDate.year() === today.year();
+    const isGameToday = gameDate.date() === today.date()
+      && gameDate.month() === today.month()
+      && gameDate.year() === today.year();
 
     if (!isGameToday) {
       date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D, ');
@@ -251,15 +256,17 @@ Games.helpers({
   timeStatus() {
     if (this.status === 'scheduled') {
       return this.friendlyDate();
-    } else if (this.status === 'in progress') {
+    }
+    if (this.status === 'in progress') {
       if (this.quarter) {
-        const q = (!isNaN(this.quarter) ? 'Q' : '');
+        const q = (!Number.isNaN(this.quarter) ? 'Q' : '');
         const quarter = `${q}${_.capitalize(this.quarter)}`;
         if (this.timeRemaining) {
           return `${quarter} ${this.timeRemaining}`;
         }
         return quarter;
-      } else if (this.inning) {
+      }
+      if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
       }
@@ -298,4 +305,3 @@ Games.deny({
   update() { return true; },
   remove() { return true; },
 });
-

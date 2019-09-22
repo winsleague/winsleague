@@ -1,4 +1,3 @@
-import { _ } from 'lodash';
 import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
@@ -16,7 +15,7 @@ import LeagueTeamsRecentWins from './calculators/league-teams-recent-wins';
 
 export default {
   calculateAllInterestRatings() {
-    this.nflPools().forEach(pool => {
+    this.nflPools().forEach((pool) => {
       this.calculatePoolInterestRatings(pool);
     });
   },
@@ -26,7 +25,7 @@ export default {
       poolId: pool._id,
     });
 
-    this.upcomingGames(pool).forEach(game => {
+    this.upcomingGames(pool).forEach((game) => {
       this.calculatePoolGame(pool, game);
     });
   },
@@ -94,11 +93,12 @@ export default {
 
     log.info(`Calculating interest ratings for ${gameTitle} (game: ${game._id}, pool: ${poolId})`);
 
-    this.calculators().forEach(calculator => {
+    this.calculators().forEach((calculator) => {
       const result = calculator.calculate(pool, game, homePoolTeamPick, awayPoolTeamPick);
       const rating = Math.round(result.rating);
 
-      log.info(`${calculator.name()} rating for ${gameTitle} (${game._id}) is ${rating} because of ${result.justification}`);
+      log.info(`${calculator.name()} rating for ${gameTitle} (${game._id}) is ${rating} \
+because of ${result.justification}`);
 
       PoolGameInterestRatings.insert({
         poolId,

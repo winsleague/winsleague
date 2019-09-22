@@ -7,7 +7,7 @@ export default {
 
   getIdByName(name) {
     const league = Leagues.findOne({ name });
-    if (! league) throw new Error('League not found!', name);
+    if (!league) throw new Error('League not found!', name);
     return league._id;
   },
 };
