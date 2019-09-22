@@ -3,7 +3,7 @@ import log from '../../../utils/log';
 import { Games } from '../../games/games';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { PoolTeams } from '../../pool_teams/pool_teams';
-import { PoolTeamRecords } from '../pool_team_records';
+import { PoolTeamHeadToHeadRecords } from '../pool_team_head_to_head_records';
 
 export default {
   updatePoolTeamByLeagueTeam(leagueId, seasonId, leagueTeamId) {
@@ -29,21 +29,12 @@ export default {
         poolTeamPick.poolTeamId);
     });
 
-    log.debug(`Done updating PoolTeamRecords for seasonId ${seasonId} and leagueTeamId ${leagueTeamId}`);
-
-
-    /* BE CAREFUL THAT THIS MAY HAPPEN ASYNCRONOUSLY. WE MAY NEED TO HOOK OURSELVES IN MORE DOWNSTREAM.
-
-    update PoolTeamRecords
-    find out which PoolTeams have doc.homeTeamId and doc.awayTeamId
-      update head to head record between those pool teams
-        for each pool team, get which teams they picked
-          for each team they picked, get which games they played against the opponent's teams
-            add up wins and losses
-    */
+    log.debug(`Done updating PoolTeamHeadToHeadRecords for seasonId ${seasonId} and leagueTeamId ${leagueTeamId}`);
   },
 
   updatePoolTeamRecord(leagueId, seasonId, poolId, poolTeamId) {
+    log.info(`Updating PoolTeamHeadToHeadRecords for seasonId ${seasonId}, poolTeamId ${poolTeamId}`);
+
     const poolTeamPicks = PoolTeamPicks.find({ leagueId, seasonId, poolId, poolTeamId });
     const myLeagueTeams = poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
 
@@ -106,7 +97,7 @@ export default {
           pointsAgainst += game.homeScore;
         });
 
-        PoolTeamRecords.upsert({
+        PoolTeamHeadToHeadRecords.upsert({
           leagueId,
           seasonId,
           poolId,

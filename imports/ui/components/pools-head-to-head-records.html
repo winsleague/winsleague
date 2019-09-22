@@ -14,15 +14,15 @@
         </tr>
         </thead>
         <tbody>
-        {{#each poolTeamRecord in poolTeamRecords}}
-          <tr id="{{poolTeamRecord._id}}">
+        {{#each poolTeamHeadToHeadRecord in poolTeamHeadToHeadRecords}}
+          <tr id="{{poolTeamHeadToHeadRecord._id}}">
             <td>
-              {{poolTeamRecord.poolTeamId}}
+              {{poolTeamHeadToHeadRecord.poolTeamId}}
             </td>
-            <td>{{poolTeamRecord.opponentPoolTeamId}}</td>
-            <td>{{poolTeamRecord.wins}}</td>
-            <td>{{poolTeamRecord.losses}}</td>
-            <td>{{poolTeamRecord.ties}}</td>
+            <td>{{poolTeamHeadToHeadRecord.opponentPoolTeamId}}</td>
+            <td>{{poolTeamHeadToHeadRecord.wins}}</td>
+            <td>{{poolTeamHeadToHeadRecord.losses}}</td>
+            <td>{{poolTeamHeadToHeadRecord.ties}}</td>
           </tr>
         {{/each}}
         </tbody>

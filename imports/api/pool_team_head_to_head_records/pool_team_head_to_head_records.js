@@ -1,9 +1,9 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
-export const PoolTeamRecords = new Mongo.Collection('pool_team_records');
+export const PoolTeamHeadToHeadRecords = new Mongo.Collection('pool_team_head_to_head_records');
 
-PoolTeamRecords.schema = new SimpleSchema({
+PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
   leagueId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
@@ -71,9 +71,9 @@ PoolTeamRecords.schema = new SimpleSchema({
   },
 });
 
-PoolTeamRecords.attachSchema(PoolTeamRecords.schema);
+PoolTeamHeadToHeadRecords.attachSchema(PoolTeamHeadToHeadRecords.schema);
 
-PoolTeamRecords.helpers({
+PoolTeamHeadToHeadRecords.helpers({
   totalGames() {
     return this.wins + this.losses + this.ties;
   },
@@ -93,7 +93,7 @@ PoolTeamRecords.helpers({
   },
 });
 
-PoolTeamRecords.deny({
+PoolTeamHeadToHeadRecords.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; },
