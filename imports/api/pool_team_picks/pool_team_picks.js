@@ -18,6 +18,7 @@ PoolTeamPicks.schema = new SimpleSchema({
       if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).leagueId;
       }
+      return undefined;
     },
   },
   seasonId: {
@@ -27,6 +28,7 @@ PoolTeamPicks.schema = new SimpleSchema({
       if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).seasonId;
       }
+      return undefined;
     },
   },
   seasonYear: {
@@ -38,6 +40,7 @@ PoolTeamPicks.schema = new SimpleSchema({
         if (season) return season.year;
         throw new Error(`No season found for seasonId ${seasonId}`);
       }
+      return undefined;
     },
   },
   poolId: {
@@ -47,6 +50,7 @@ PoolTeamPicks.schema = new SimpleSchema({
       if (this.isInsert && !this.isSet) {
         return PoolTeams.findOne(this.field('poolTeamId').value).poolId;
       }
+      return undefined;
     },
   },
   poolTeamId: {

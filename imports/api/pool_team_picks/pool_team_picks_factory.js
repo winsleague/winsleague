@@ -10,6 +10,6 @@ Factory.define('poolTeamPick', PoolTeamPicks, {
   poolTeamId: Factory.get('poolTeam'),
   leagueTeamId: Factory.get('leagueTeam'),
   pickNumber() { return _.random(1, 32); },
-}).after(factory => {
+}).after((factory) => {
   log.debug('poolTeamPick factory created:', factory);
 });
