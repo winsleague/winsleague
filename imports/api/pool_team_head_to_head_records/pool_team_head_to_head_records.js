@@ -36,6 +36,10 @@ PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
     type: SimpleSchema.Integer,
     defaultValue: 0,
   },
+  winPercentage: {
+    type: Number,
+    defaultValue: 0,
+  },
   pointsFor: {
     type: SimpleSchema.Integer,
     defaultValue: 0,

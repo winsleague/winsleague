@@ -53,7 +53,6 @@ export default {
         const opponentLeagueTeams = opponentPoolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
 
         log.info(`Looking for Games with homeTeamId in ${myLeagueTeams} and awayTeamId in ${opponentLeagueTeams}`);
-
         const homeGames = Games.find({
           leagueId,
           seasonId,
@@ -76,11 +75,12 @@ export default {
         });
 
 
+        log.info(`Looking for Games with homeTeamId in ${opponentLeagueTeams} and awayTeamId in ${myLeagueTeams}`);
         const awayGames = Games.find({
           leagueId,
           seasonId,
-          homeTeamId: { $in: myLeagueTeams },
-          awayTeamId: { $in: opponentLeagueTeams },
+          homeTeamId: { $in: opponentLeagueTeams },
+          awayTeamId: { $in: myLeagueTeams },
           status: 'completed',
         });
         awayGames.forEach((game) => {
@@ -97,6 +97,11 @@ export default {
           pointsAgainst += game.homeScore;
         });
 
+        let winPercentage = 0;
+        if (wins + losses + ties > 0) {
+          winPercentage = wins / (wins + losses + ties);
+        }
+
         PoolTeamHeadToHeadRecords.upsert({
           leagueId,
           seasonId,
@@ -108,18 +113,12 @@ export default {
             wins,
             losses,
             ties,
+            winPercentage,
             pointsFor,
             pointsAgainst,
           },
         });
       }
     });
-
-    // which teams does this poolTeamId have
-    // for every other poolTeamId in this pool
-      // get picks for that poolTeamId
-      // look for games where the poolTeamIds played each other
-        // add up wins and losses
-        // upsert 
   },
 };

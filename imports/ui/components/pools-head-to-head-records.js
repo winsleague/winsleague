@@ -10,9 +10,9 @@ import './pools-head-to-head-records.html';
 Template.Pools_head_to_head_records.helpers({
   poolTeamHeadToHeadRecords: () => {
     const { poolId, seasonId } = Template.currentData();
-    return PoolTeamHeadToHeadRecords.find({ seasonId, poolId }, {
-      sort: { wins: 1 },
-      limit: 50,
+    return PoolTeamHeadToHeadRecords.find({ seasonId, poolId, winPercentage: { $gt: 0.5 } }, {
+      sort: { winPercentage: -1 },
+      limit: 5,
     });
   },
 });
