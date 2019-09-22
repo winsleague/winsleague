@@ -10,8 +10,8 @@ import '../../league_teams/league_teams_factory';
 import '../../season_league_teams/season_league_teams_factory';
 import '../../league_pick_expected_wins/league_pick_expected_wins_factory';
 
-import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
-import PoolTeamPicksUpdater from '../../pool_team_picks/server/updater';
+import { PoolTeamPicks } from '../pool_team_picks';
+import PoolTeamPicksUpdater from './updater';
 
 describe('Pool Team Picks Updater', function () {
   this.timeout(5000);

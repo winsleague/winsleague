@@ -32,6 +32,13 @@ export default {
     log.debug(`Done updating PoolTeamHeadToHeadRecords for seasonId ${seasonId} and leagueTeamId ${leagueTeamId}`);
   },
 
+  updateAllPoolTeamRecords(leagueId, seasonId, poolId) {
+    const poolTeams = PoolTeams.find({ leagueId, seasonId, poolId });
+    poolTeams.forEach((poolTeam) => {
+      this.updatePoolTeamRecord(poolTeam.leagueId, poolTeam.seasonId, poolTeam.poolId, poolTeam._id);
+    });
+  },
+
   updatePoolTeamRecord(leagueId, seasonId, poolId, poolTeamId) {
     log.info(`Updating PoolTeamHeadToHeadRecords for seasonId ${seasonId}, poolTeamId ${poolTeamId}`);
 
