@@ -3,8 +3,8 @@ import log from '../../../utils/log';
 import { Leagues } from '../../leagues/leagues';
 import { Games } from '../../games/games';
 import { LeagueTeams } from '../../league_teams/league_teams';
-import { SeasonLeagueTeams } from '../../season_league_teams/season_league_teams';
-import '../../season_league_teams/server/hooks';
+import { SeasonLeagueTeams } from '../season_league_teams';
+import './hooks';
 
 export default {
   updateTeamStats(leagueId, seasonId, leagueTeamId) {
@@ -24,7 +24,7 @@ export default {
     if (!league) {
       throw new Error(`League doesn't exist for leagueId ${leagueId}`);
     }
-    const closeScore = league.closeScore;
+    const { closeScore } = league;
 
     const games = Games.find({
       seasonId,
@@ -34,11 +34,12 @@ export default {
         { awayTeamId: leagueTeamId },
       ],
     });
-    let wins = 0, losses = 0, ties = 0,
-      homeWins = 0, homeLosses = 0, homeTies = 0,
-      awayWins = 0, awayLosses = 0, awayTies = 0,
-      pointsFor = 0, pointsAgainst = 0,
-      closeWins = 0, closeLosses = 0;
+
+    let wins = 0; let losses = 0; let ties = 0;
+    let homeWins = 0; let homeLosses = 0; let homeTies = 0;
+    let awayWins = 0; let awayLosses = 0; let awayTies = 0;
+    let pointsFor = 0; let pointsAgainst = 0;
+    let closeWins = 0; let closeLosses = 0;
     games.forEach((game) => {
       const pointDifference = Math.abs(game.homeScore - game.awayScore);
 
@@ -83,19 +84,28 @@ export default {
       }
     });
 
-    const abbreviation = LeagueTeams.findOne(leagueTeamId).abbreviation;
+    const { abbreviation } = LeagueTeams.findOne(leagueTeamId);
 
     const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId }, // leagueId needed because it could be an insert
       {
         $set: {
           abbreviation,
-          wins, losses, ties,
-          homeWins, homeLosses, homeTies,
-          awayWins, awayLosses, awayTies,
-          pointsFor, pointsAgainst,
-          closeWins, closeLosses,
+          wins,
+          losses,
+          ties,
+          homeWins,
+          homeLosses,
+          homeTies,
+          awayWins,
+          awayLosses,
+          awayTies,
+          pointsFor,
+          pointsAgainst,
+          closeWins,
+          closeLosses,
         },
       });
+
     log.debug(`SeasonLeagueTeams.upsert for seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
   },
 };

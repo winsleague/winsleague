@@ -34,7 +34,7 @@ describe('Season League Teams Updater', () => {
       SeasonLeagueTeamsUpdater.updateTeamStats(
         season.leagueId,
         season._id,
-        homeLeagueTeam._id
+        homeLeagueTeam._id,
       );
 
       const homeSeasonLeagueTeam = SeasonLeagueTeams.findOne({
