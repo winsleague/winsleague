@@ -17,9 +17,11 @@
         {{#each poolTeamHeadToHeadRecord in poolTeamHeadToHeadRecords}}
           <tr id="{{poolTeamHeadToHeadRecord._id}}">
             <td>
-              {{poolTeamHeadToHeadRecord.poolTeamId}}
+              <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamHeadToHeadRecord.poolTeamId}}">{{playerName poolTeamHeadToHeadRecord.poolTeamId}}</a>
             </td>
-            <td>{{poolTeamHeadToHeadRecord.opponentPoolTeamId}}</td>
+            <td>
+              <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamHeadToHeadRecord.opponentPoolTeamId}}">{{playerName poolTeamHeadToHeadRecord.opponentPoolTeamId}}</a>
+            </td>
             <td>{{poolTeamHeadToHeadRecord.wins}}</td>
             <td>{{poolTeamHeadToHeadRecord.losses}}</td>
             <td>{{poolTeamHeadToHeadRecord.ties}}</td>

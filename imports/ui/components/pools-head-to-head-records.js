@@ -15,6 +15,11 @@ Template.Pools_head_to_head_records.helpers({
       limit: 5,
     });
   },
+
+  playerName: (poolTeamId) => {
+    const poolTeam = Template.instance().getPoolTeam(poolTeamId);
+    return poolTeam.friendlyTeamName();
+  },
 });
 
 Template.Pools_head_to_head_records.onCreated(function () {
@@ -28,6 +33,8 @@ Template.Pools_head_to_head_records.onCreated(function () {
   this.getPoolTeam = (poolTeamId) => PoolTeams.findOne(poolTeamId);
 
   this.autorun(() => {
+    this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId);
+
     this.subscribe('poolTeamHeadToHeadRecords.ofPool', this.data.poolId, this.data.seasonId);
   });
 });
