@@ -61,6 +61,7 @@ export default {
           closeWins: 0,
           closeLosses: 0,
         },
-      });
+      },
+    );
   },
 };

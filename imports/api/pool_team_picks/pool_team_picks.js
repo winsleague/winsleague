@@ -64,7 +64,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options() {
-          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map(leagueTeam => ({
+          return LeagueTeams.find({}, { sort: ['cityName', 'asc'] }).map((leagueTeam) => ({
             label: leagueTeam.fullName(),
             value: leagueTeam._id,
           }));
@@ -78,7 +78,7 @@ PoolTeamPicks.schema = new SimpleSchema({
     autoform: {
       afFieldInput: {
         options() {
-          return _.range(1, LeagueTeams.find().count() + 1).map(number => ({
+          return _.range(1, LeagueTeams.find().count() + 1).map((number) => ({
             label: number,
             value: number,
           }));
@@ -125,10 +125,12 @@ PoolTeamPicks.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
   updatedAt: {
@@ -139,6 +141,7 @@ PoolTeamPicks.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,
@@ -178,18 +181,18 @@ function isCommissioner(userId, poolId) {
 if (Meteor.isServer) {
   PoolTeamPicks.allow({
     insert(userId, doc) {
-      return isPoolTeamOwner(userId, doc.poolTeamId) ||
-        isCommissioner(userId, doc.poolId);
+      return isPoolTeamOwner(userId, doc.poolTeamId)
+        || isCommissioner(userId, doc.poolId);
     },
 
-    update(userId, doc, fieldNames, modifier) {
-      return isPoolTeamOwner(userId, doc.poolTeamId) ||
-        isCommissioner(userId, doc.poolId);
+    update(userId, doc) {
+      return isPoolTeamOwner(userId, doc.poolTeamId)
+        || isCommissioner(userId, doc.poolId);
     },
 
     remove(userId, doc) {
-      return isPoolTeamOwner(userId, doc.poolTeamId) ||
-        isCommissioner(userId, doc.poolId);
+      return isPoolTeamOwner(userId, doc.poolTeamId)
+       || isCommissioner(userId, doc.poolId);
     },
   });
 }

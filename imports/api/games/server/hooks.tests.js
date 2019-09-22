@@ -1,12 +1,9 @@
-/* eslint-env mocha */
-/* eslint-disable func-names, prefer-arrow-callback */
-
 import { assert } from 'chai';
-import log from '../../../utils/log';
 import { Factory } from 'meteor/dburles:factory';
+import log from '../../../utils/log';
 
 import { PoolTeams } from '../../pool_teams/pool_teams';
-import { Games } from '../../games/games';
+import { Games } from '../games';
 
 import '../../league_teams/league_teams_factory';
 import '../../pool_team_picks/pool_team_picks_factory';
@@ -41,6 +38,5 @@ describe('Game hooks', function() {
       assert.equal(poolTeam.totalGames, 1, 'totalGames');
       assert.equal(poolTeam.totalPlusMinus, 7, 'totalPlusMinus');
     });
-
   });
 });

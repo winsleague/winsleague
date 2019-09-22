@@ -60,7 +60,7 @@ export default {
       return;
     }
 
-    for (const gameData of json.ss) {
+    json.ss.forEach((gameData) => {
       // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
       const gameId = gameData[10];
       const status = cleanStatus(gameData[2]);
@@ -82,11 +82,12 @@ export default {
             homeScore,
             awayScore,
           },
-        }
+        },
       );
 
-      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: (status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
-    }
+      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: \
+(status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
+    });
   },
 
   ingestSeasonData(season) {
@@ -99,7 +100,7 @@ export default {
       throw new Error('League is not found!');
     }
 
-    for (let week = 1; week <= 17; week++) {
+    for (let week = 1; week <= 17; week += 1) {
       this.ingestWeekData(season, week);
     }
   },
@@ -116,9 +117,9 @@ export default {
     log.debug('parsed json:', json);
 
     log.debug('parsed json.ss.gms.g:', json.ss.gms.g);
-    for (const game of json.ss.gms.g) {
+    json.ss.gms.g.forEach((game) => {
       this.saveGame(game, season, week);
-    }
+    });
   },
 
   saveGame(game, season, week) {
@@ -163,8 +164,10 @@ export default {
           quarter: friendlyQuarter(game.q),
           status: cleanStatus(game.q),
         },
-      });
-    log.debug(`Games.upsert for leagueId ${leagueId}, seasonId ${season._id}, gameId: ${game.gsis}: gameDate ${gameDate}, week ${week}, homeTeamId ${homeLeagueTeam._id}, ${result.numberAffected} affected`);
+      },
+    );
+    log.debug(`Games.upsert for leagueId ${leagueId}, seasonId ${season._id}, gameId: ${game.gsis}: \
+gameDate ${gameDate}, week ${week}, homeTeamId ${homeLeagueTeam._id}, ${result.numberAffected} affected`);
   },
 
   parseGameDate(game) {
