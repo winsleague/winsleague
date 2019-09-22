@@ -2,7 +2,6 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
 import { check, Match } from 'meteor/check';
 
@@ -69,6 +68,8 @@ Meteor.methods({
   },
 });
 
+// disabling the eslint rule because this is the recommended approach from Meteor
+// eslint-disable-next-line import/no-mutable-exports
 let generateData;
 if (Meteor.isClient) {
   // Create a second connection to the server to use to call test data methods
