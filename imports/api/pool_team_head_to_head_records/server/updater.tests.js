@@ -22,19 +22,25 @@ describe('Pool Team Head to Head Records Updater', function () {
       const league = Factory.create('league');
       const season = Factory.create('season', { leagueId: league._id });
       const pool = Factory.create('pool', { leagueId: league._id, latestSeasonId: season._id });
-      const poolTeam = Factory.create('poolTeam', { seasonId: season._id, poolId: pool._id });
-      const opponentPoolTeam = Factory.create('poolTeam', { seasonId: season._id, poolId: pool._id });
+      const poolTeam = Factory.create('poolTeam', { leagueId: league._id, seasonId: season._id, poolId: pool._id });
+      const opponentPoolTeam = Factory.create('poolTeam', { leagueId: league._id, seasonId: season._id, poolId: pool._id });
   
       const homeLeagueTeam = Factory.create('leagueTeam', { leagueId: season.leagueId });
       const awayLeagueTeam = Factory.create('awayLeagueTeam', { leagueId: season.leagueId });
 
       Factory.create('poolTeamPick', {
+        leagueId: league._id,
+        seasonId: season._id,
+        poolId: pool._id,
         poolTeamId: poolTeam._id,
         leagueTeamId: homeLeagueTeam._id,
         pickNumber: 1,
       });
 
       Factory.create('poolTeamPick', {
+        leagueId: league._id,
+        seasonId: season._id,
+        poolId: pool._id,
         poolTeamId: opponentPoolTeam._id,
         leagueTeamId: awayLeagueTeam._id,
         pickNumber: 2,
@@ -53,7 +59,7 @@ describe('Pool Team Head to Head Records Updater', function () {
         period: 'final',
       });
 
-      PoolTeamHeadToHeadRecordsUpdater.updateAllPoolTeamRecords(season.leagueId, season._id, poolTeam._id);
+      PoolTeamHeadToHeadRecordsUpdater.updateAllPoolTeamRecords(league._id, season._id, pool._id);
 
       const poolTeamHeadToHeadRecord = PoolTeamHeadToHeadRecords.findOne({
         leagueId: season.leagueId,

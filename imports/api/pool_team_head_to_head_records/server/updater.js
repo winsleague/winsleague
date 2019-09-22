@@ -33,6 +33,7 @@ export default {
   },
 
   updateAllPoolTeamRecords(leagueId, seasonId, poolId) {
+    log.info(`Looking for PoolTeams with leagueId ${leagueId}, seasonId ${seasonId}, poolId ${poolId}`);
     const poolTeams = PoolTeams.find({ leagueId, seasonId, poolId });
     poolTeams.forEach((poolTeam) => {
       this.updatePoolTeamRecord(poolTeam.leagueId, poolTeam.seasonId, poolTeam.poolId, poolTeam._id);
