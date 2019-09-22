@@ -18,7 +18,7 @@ describe('Pool Team Head to Head Records Updater', function () {
   this.timeout(5000);
 
   describe('updatePoolTeamRecord', () => {
-    it('should update the head to head record ', () => {
+    it('should update the head to head record', () => {
       const league = Factory.create('league');
       const season = Factory.create('season', { leagueId: league._id });
       const pool = Factory.create('pool', { leagueId: league._id, latestSeasonId: season._id });

@@ -109,7 +109,7 @@ export default {
           winPercentage = wins / (wins + losses + ties);
         }
 
-        PoolTeamHeadToHeadRecords.upsert({
+        const result = PoolTeamHeadToHeadRecords.upsert({
           leagueId,
           seasonId,
           poolId,
@@ -125,6 +125,8 @@ export default {
             pointsAgainst,
           },
         });
+
+        log.debug(`PoolTeamHeadToHeadRecords.upsert for seasonId ${seasonId}, poolId: ${poolId}, poolTeamId: ${poolTeamId}, opponentPoolTeamId: ${opponentPoolTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
       }
     });
   },
