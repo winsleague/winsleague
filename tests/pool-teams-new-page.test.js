@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 // These are Chimp globals */
-/* globals browser server assert */
+/* globals browser assert */
 
 import { setup, timeout, clickElement } from '../.testing/chimp-shared';
 

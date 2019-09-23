@@ -1,8 +1,9 @@
-/* eslint-env mocha */
 // These are Chimp globals */
-/* globals browser server assert */
+/* globals browser assert */
 
-import { timeout, setup, clickElement, selectElementIndex } from '../.testing/chimp-shared';
+import {
+  timeout, setup, clickElement, selectElementIndex,
+} from '../.testing/chimp-shared';
 
 describe('PoolTeamPicks.new page ui', () => {
   beforeEach(() => {
