@@ -13,12 +13,12 @@ const init = () => {
   }
 
   const options = {
-    'level': 'info',
-    'subdomain': 'winsleague',
-    'inputToken': token(),
-    'json': true,
-    'tags': ['meteor'],
-    'handleExceptions': true,
+    level: 'info',
+    subdomain: 'winsleague',
+    inputToken: token(),
+    json: true,
+    tags: ['meteor'],
+    handleExceptions: true,
   };
 
   log.add(log.transports.Loggly, options);
