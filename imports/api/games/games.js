@@ -6,6 +6,7 @@ import { _ } from 'lodash';
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { SeasonLeagueTeams } from '../season_league_teams/season_league_teams';
 import { PoolTeamPicks } from '../pool_team_picks/pool_team_picks';
+// eslint-disable-next-line import/no-cycle
 import { PoolGameInterestRatings } from '../pool_game_interest_ratings/pool_game_interest_ratings';
 
 export const Games = new Mongo.Collection('games');

@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+// eslint-disable-next-line import/no-cycle
 import Utils from './utils';
 import LeagueFinder from '../../../api/leagues/finder';
 

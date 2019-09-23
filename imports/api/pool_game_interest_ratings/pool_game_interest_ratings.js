@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
+// eslint-disable-next-line import/no-cycle
 import { Games } from '../games/games';
 
 export const PoolGameInterestRatings = new Mongo.Collection('pool_game_interest_ratings');
