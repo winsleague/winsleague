@@ -19,7 +19,7 @@ Template.Pools_records_pool_teams_most_season.helpers({
     );
   },
 
-  getMetric: poolTeam => _.get(poolTeam, Template.currentData().metricField),
+  getMetric: (poolTeam) => _.get(poolTeam, Template.currentData().metricField),
 });
 
 Template.Pools_records_pool_teams_most_season.onCreated(function () {

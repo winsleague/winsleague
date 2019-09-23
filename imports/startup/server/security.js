@@ -43,4 +43,3 @@ if (Meteor.isTest || Meteor.isAppTest) {
     },
   }, 2, 5000);
 }
-

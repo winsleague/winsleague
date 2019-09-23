@@ -31,7 +31,7 @@ Template.Pools_header.onCreated(function () {
   this.getSeasonId = () => this.data.seasonId;
 
   this.seasonYear = () => {
-    if (! this.getSeasonId()) return null;
+    if (!this.getSeasonId()) return null;
 
     return _.get(Seasons.findOne(this.getSeasonId()), 'year');
   };

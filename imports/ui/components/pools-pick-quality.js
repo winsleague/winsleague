@@ -1,7 +1,5 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import SimpleSchema from 'simpl-schema';
-import { _ } from 'lodash';
 
 import { LeagueTeams } from '../../api/league_teams/league_teams';
 import { PoolTeams } from '../../api/pool_teams/pool_teams';
@@ -16,8 +14,7 @@ Template.Pools_pick_quality.helpers({
   },
 
   poolTeamPicks: () => {
-    const poolId = Template.currentData().poolId;
-    const seasonId = Template.currentData().seasonId;
+    const { poolId, seasonId } = Template.currentData();
     return PoolTeamPicks.find({ seasonId, poolId }, {
       sort: { pickQuality: Template.currentData().sort },
       limit: 5,

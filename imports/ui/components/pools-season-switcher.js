@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import SimpleSchema from 'simpl-schema';
 import log from '../../utils/log';
@@ -14,7 +13,7 @@ Template.Pools_season_switcher.helpers({
       sort: {
         year: -1,
       },
-    }
+    },
   ),
 
   isMultipleSeasons: () => Seasons.find().count() > 1,
