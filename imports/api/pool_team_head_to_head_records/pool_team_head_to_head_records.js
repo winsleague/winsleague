@@ -40,6 +40,10 @@ PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  gameCount: {
+    type: SimpleSchema.Integer,
+    defaultValue: 0,
+  },
   wins: {
     type: SimpleSchema.Integer,
     defaultValue: 0,

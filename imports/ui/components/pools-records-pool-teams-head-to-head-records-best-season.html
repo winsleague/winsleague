@@ -6,8 +6,8 @@
         <thead>
         <tr>
           <th class="col-xs-4 player">Player</th>
-          <th class="col-xs-4 player">Opponent</th>
-          <th class="col-xs-2 metricTitle">{{metricTitle}}</th>
+          <th class="col-xs-4 opponent">Opponent</th>
+          <th class="col-xs-2 metricTitle">Record</th>
           <th class="col-xs-2 season">Season</th>
         </tr>
         </thead>
@@ -15,7 +15,7 @@
         {{#each poolTeamHeadToHeadRecord in poolTeamHeadToHeadRecords}}
           <tr>
             <td class="userTeamName">{{poolTeamHeadToHeadRecord.userTeamName}}</td>
-            <td class="userTeamName">{{poolTeamHeadToHeadRecord.opponentTeamName}}</td>
+            <td class="opponentTeamName">{{poolTeamHeadToHeadRecord.opponentTeamName}}</td>
             <td class="metric">{{poolTeamHeadToHeadRecord.record}}</td>
             <td class="season">{{poolTeamHeadToHeadRecord.seasonYear}}</td>
           </tr>
