@@ -10,9 +10,10 @@ Template.Pools_records_pool_teams_head_to_head_records_best_season.helpers({
   poolTeamHeadToHeadRecords: () => PoolTeamHeadToHeadRecords.find(
     {
       poolId: Template.currentData().poolId,
+      gameCount: { $gte: 8 },
     },
     {
-      sort: { gameCount: -1, winPercentage: -1, wins: -1 },
+      sort: { winPercentage: -1, wins: -1 },
       limit: 10,
     },
   ),
