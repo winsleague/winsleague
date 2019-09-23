@@ -1,6 +1,8 @@
 <template name="Pools_head_to_head_records">
   {{#if Template.subscriptionsReady}}
-    <h4 class="Pools_head_to_head_records">Best Head to Head Records</h4>
+    <h4 class="Pools_head_to_head_records">
+      <a href="{{pathFor 'Pools.head-to-head-records.season' seasonId=seasonId poolId=poolId}}">Best Head to Head Records</a>
+    </h4>
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered">

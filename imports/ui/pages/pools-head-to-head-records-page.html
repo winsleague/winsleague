@@ -1,0 +1,23 @@
+<template name="Pools_head_to_head_records_page">
+  {{#if Template.subscriptionsReady}}
+    {{> Pools_header poolId=poolId seasonId=seasonId }}
+
+    {{> Pools_head_to_head_records
+      leagueId=leagueId
+      seasonId=seasonId
+      poolId=poolId
+      poolTeamId=myPoolTeamId
+      limit=100
+    }}
+
+    {{> Pools_season_switcher
+      poolId=poolId
+    }}
+
+    <br/>
+    <a class="btn btn-default" href="{{pathFor 'Pools.show' poolId=poolId}}" id="Pools_show">Back to Pool</a>
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>
+

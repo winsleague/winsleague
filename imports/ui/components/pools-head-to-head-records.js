@@ -8,10 +8,10 @@ import './pools-head-to-head-records.html';
 
 Template.Pools_head_to_head_records.helpers({
   poolTeamHeadToHeadRecords: () => {
-    const { poolId, seasonId } = Template.currentData();
+    const { poolId, seasonId, limit } = Template.currentData();
     return PoolTeamHeadToHeadRecords.find({ seasonId, poolId, winPercentage: { $gte: 0.5 } }, {
-      sort: { winPercentage: -1 },
-      limit: 5,
+      sort: { winPercentage: -1, wins: -1 },
+      limit,
     });
   },
 
@@ -27,6 +27,7 @@ Template.Pools_head_to_head_records.onCreated(function () {
     seasonId: { type: String },
     poolId: { type: String },
     poolTeamId: { type: String, optional: true },
+    limit: { type: Number },
   }).validate(this.data);
 
   this.getPoolTeam = (poolTeamId) => PoolTeams.findOne(poolTeamId);
