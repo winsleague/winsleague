@@ -1,4 +1,3 @@
-import { _ } from 'lodash';
 import { Mailer } from 'meteor/lookback:emails';
 
 import log from '../../../utils/log';
@@ -47,7 +46,8 @@ export default {
         sort: {
           pickQuality: -1,
         },
-      });
+      },
+    );
     if (!bestPick) {
       log.error(`Unable to find best pick for pool ${poolId} and seasonId ${seasonId}`);
       return null;
@@ -64,7 +64,8 @@ export default {
         sort: {
           pickQuality: 1,
         },
-      });
+      },
+    );
     if (!worstPick) {
       log.error(`Unable to find worst pick for pool ${poolId} and seasonId ${seasonId}`);
       return null;

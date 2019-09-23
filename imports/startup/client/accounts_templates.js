@@ -1,5 +1,7 @@
 // https://github.com/meteor-useraccounts/core/blob/master/Guide.md
 
+// useraccounts:core using the older export method so we can't resolve path
+// eslint-disable-next-line import/no-unresolved
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 AccountsTemplates.configure({

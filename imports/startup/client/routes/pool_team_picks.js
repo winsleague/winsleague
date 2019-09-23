@@ -1,5 +1,8 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+
+// useraccounts:core using the older export method so we can't resolve path
+// eslint-disable-next-line import/no-unresolved
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 import log from '../../../utils/log';

@@ -13,7 +13,7 @@ export default {
 
     RatingCalculator.calculateAllInterestRatings();
 
-    RatingCalculator.nflPools().forEach(pool => {
+    RatingCalculator.nflPools().forEach((pool) => {
       this.sendPoolEmail(pool._id, pool.latestSeasonId);
     });
   },
@@ -33,7 +33,8 @@ export default {
           rating: -1,
         },
         limit: 5,
-      });
+      },
+    );
 
     return {
       poolId,
