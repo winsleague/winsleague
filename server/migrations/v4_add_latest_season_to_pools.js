@@ -7,10 +7,10 @@ Migrations.add({
   version: 4,
   name: 'Adds latest season field to Pools',
   up: () => {
-    Pools.find().forEach(pool => {
+    Pools.find().forEach((pool) => {
       if (!pool.latestSeasonId) {
         // select latest season for league
-        const leagueId = pool.leagueId;
+        const { leagueId } = pool;
         const latestSeason = SeasonFinder.getLatestByLeagueId(leagueId);
         if (latestSeason) {
           log.info(`Updating poolId ${pool._id} with latestSeasonId ${latestSeason._id}`);

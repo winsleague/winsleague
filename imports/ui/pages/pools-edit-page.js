@@ -15,14 +15,12 @@ Template.Pools_edit_page.helpers({
 
   poolDoc: () => Template.instance().getPoolDoc(),
 
-  onDelete: () => {
-    return () => {
-      log.debug('onRemoveSuccess called');
+  onDelete: () => () => {
+    log.debug('onRemoveSuccess called');
 
-      Pools.remove(FlowRouter.getParam('poolId'));
+    Pools.remove(FlowRouter.getParam('poolId'));
 
-      FlowRouter.go('/?force=true');
-    };
+    FlowRouter.go('/?force=true');
   },
 });
 
@@ -44,7 +42,7 @@ Template.Pools_edit_page.onCreated(function () {
 
 
 Template.Pools_edit_page.events({
-  'click #delete': function (event) {
+  'click #delete' (event) {
     event.preventDefault();
 
     $('#deleteModal').modal('show');

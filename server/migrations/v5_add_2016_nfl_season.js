@@ -1,7 +1,5 @@
 import { Migrations } from 'meteor/percolate:migrations';
-import log from '../../imports/utils/log';
 import SeasonCreator from '../../imports/api/seasons/server/creator';
-import SeasonFinder from '../../imports/api/seasons/finder';
 
 Migrations.add({
   version: 5,
