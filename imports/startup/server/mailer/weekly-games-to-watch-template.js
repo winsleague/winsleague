@@ -2,7 +2,7 @@ import WeeklyGamesToWatch from '../../../api/emails/server/weekly-games-to-watch
 
 export default {
   name: 'weekly-games-to-watch-email',
-  path: 'weekly-games-to-watch-email/template.html',    // Relative to the 'private' dir.
+  path: 'weekly-games-to-watch-email/template.html', // Relative to the 'private' dir.
 
   helpers: {
     preview() {
@@ -13,7 +13,7 @@ export default {
   route: {
     path: '/weekly-games-to-watch-email/pools/:poolId',
     data(params) {
-      const poolId = params.poolId;
+      const { poolId } = params;
 
       return WeeklyGamesToWatch.getEmailData(poolId);
     },

@@ -7,9 +7,9 @@ import weeklyGamesToWatchTemplate from './mailer/weekly-games-to-watch-template'
 
 Mailer.config({
   from: 'Wins League <no-reply@winsleague.com>',
-  routePrefix: 'emails',              // Route prefix.
-  baseUrl: process.env.ROOT_URL,      // The base domain to build absolute link URLs from in the emails.
-  testEmail: 'team@winsleague.com',  // Default address to send test emails to.
+  routePrefix: 'emails', // Route prefix.
+  baseUrl: process.env.ROOT_URL, // The base domain to build absolute link URLs from in the emails.
+  testEmail: 'team@winsleague.com', // Default address to send test emails to.
   logger: log,
   addRoutes: true,
   plainTextOpts: {
@@ -26,7 +26,7 @@ Meteor.startup(() => {
     helpers: {},
     layout: {
       name: 'emailLayout',
-      path: 'layout.html',   // Relative to 'private' dir.
+      path: 'layout.html', // Relative to 'private' dir.
       css: 'layout.css',
     },
   });
