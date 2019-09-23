@@ -2,7 +2,7 @@ import WeeklyLeaderboardEmail from '../../../api/emails/server/weekly-leaderboar
 
 export default {
   name: 'weekly-leaderboard-email',
-  path: 'weekly-leaderboard-email/template.html',    // Relative to the 'private' dir.
+  path: 'weekly-leaderboard-email/template.html', // Relative to the 'private' dir.
 
   helpers: {
     preview() {
@@ -13,8 +13,8 @@ export default {
   route: {
     path: '/weekly-leaderboard-email/pools/:poolId/seasons/:seasonId',
     data(params) {
-      const poolId = params.poolId;
-      const seasonId = params.seasonId;
+      const { poolId } = params;
+      const { seasonId } = params;
 
       return WeeklyLeaderboardEmail.getEmailData(poolId, seasonId);
     },

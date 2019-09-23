@@ -4,9 +4,7 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 import { $ } from 'meteor/jquery';
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import sinon from 'sinon';
 
 import { withRenderedTemplate } from '../../test-helpers.js';
@@ -14,7 +12,7 @@ import '../home_page.js';
 
 describe('Home_page', function () {
   beforeEach(function () {
-    Template.registerHelper('_', key => key);
+    Template.registerHelper('_', (key) => key);
     sinon.stub(Meteor, 'subscribe').callsFake(() => ({
       subscriptionId: 0,
       ready: () => true,
@@ -27,7 +25,7 @@ describe('Home_page', function () {
   });
 
   it('renders correctly with simple data', function () {
-    withRenderedTemplate('Home_page', {}, el => {
+    withRenderedTemplate('Home_page', {}, (el) => {
       const renderedText = $(el).find('h3.home').text();
       assert.equal(renderedText, 'Simple fantasy sports');
     });

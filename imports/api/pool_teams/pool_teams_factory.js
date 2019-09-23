@@ -13,6 +13,6 @@ Factory.define('poolTeam', PoolTeams, {
   userId: Factory.get('user'),
   userTeamName: () => faker.company.companyName(),
   teamSummary: () => faker.company.companyName(),
-}).after(factory => {
+}).after((factory) => {
   log.debug('poolTeam factory created:', factory);
 });

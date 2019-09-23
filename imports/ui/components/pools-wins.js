@@ -11,13 +11,13 @@ import './pools-wins.html';
 
 Template.Pools_wins.helpers({
   poolTeams: () => {
-    const seasonId = Template.currentData().seasonId;
-    const poolId = Template.currentData().poolId;
+    const { seasonId } = Template.currentData();
+    const { poolId } = Template.currentData();
     return PoolTeams.find({ poolId, seasonId }, {
       sort: {
         totalWins: -1,
-        totalGames: 1,  // if two teams are tied in wins,
-                        // rank the one with fewest games played higher
+        totalGames: 1, // if two teams are tied in wins,
+        // rank the one with fewest games played higher
         totalPlusMinus: -1,
         userTeamName: 1, // just in case everyone is tied, let's sort predictably
       },
@@ -25,7 +25,7 @@ Template.Pools_wins.helpers({
   },
 
   title: () => {
-    const title = Template.currentData().title;
+    const { title } = Template.currentData();
     if (Template.currentData().linkTitle) {
       const path = FlowRouter.path('Pools.show', { poolId: Template.currentData().poolId });
       return `<a href="${path}">${title}</a>`;

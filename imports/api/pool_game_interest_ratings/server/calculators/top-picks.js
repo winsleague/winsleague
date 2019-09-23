@@ -1,7 +1,5 @@
 import log from '../../../../utils/log';
 
-import { PoolTeamPicks } from '../../../pool_team_picks/pool_team_picks';
-
 export default {
   name: () => 'TopPicks',
 
@@ -9,14 +7,15 @@ export default {
     // totalPickNumber = 1+2 = 3 ==> 100
     // totalPickNumber = 31+32 = 63 ==> 0
 
-    const result = this._calculate(homePoolTeamPick.pickNumber, awayPoolTeamPick.pickNumber);
+    const result = this.calculateFromPickNumber(homePoolTeamPick.pickNumber, awayPoolTeamPick.pickNumber);
 
-    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} (homePickNumber: ${homePoolTeamPick.pickNumber}, awayPickNumber: ${awayPoolTeamPick.pickNumber})`);
+    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} \
+(homePickNumber: ${homePoolTeamPick.pickNumber}, awayPickNumber: ${awayPoolTeamPick.pickNumber})`);
 
     return result;
   },
 
-  _calculate(homePickNumber, awayPickNumber) {
+  calculateFromPickNumber(homePickNumber, awayPickNumber) {
     let rating = 0;
     let justification = '';
 
@@ -39,4 +38,3 @@ export default {
     };
   },
 };
-

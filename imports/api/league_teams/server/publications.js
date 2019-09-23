@@ -3,7 +3,7 @@ import { check, Match } from 'meteor/check';
 
 import { LeagueTeams } from '../league_teams';
 
-Meteor.publish('leagueTeams.ofLeague', leagueId => {
+Meteor.publish('leagueTeams.ofLeague', (leagueId) => {
   check(leagueId, Match.Maybe(String));
   return LeagueTeams.find({ leagueId });
 });

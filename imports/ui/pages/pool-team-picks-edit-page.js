@@ -19,15 +19,13 @@ Template.PoolTeamPicks_edit_page.helpers({
 
   poolTeamPickDoc: () => Template.instance().getPoolTeamPickDoc(),
 
-  onDelete: () => {
-    return () => {
-      PoolTeamPicks.remove(FlowRouter.getParam('poolTeamPickId'));
+  onDelete: () => () => {
+    PoolTeamPicks.remove(FlowRouter.getParam('poolTeamPickId'));
 
-      FlowRouter.go('PoolTeams.show', {
-        poolId: FlowRouter.getParam('poolId'),
-        poolTeamId: FlowRouter.getParam('poolTeamId'),
-      });
-    };
+    FlowRouter.go('PoolTeams.show', {
+      poolId: FlowRouter.getParam('poolId'),
+      poolTeamId: FlowRouter.getParam('poolTeamId'),
+    });
   },
 });
 
@@ -63,7 +61,7 @@ Template.PoolTeamPicks_edit_page.onCreated(function () {
 });
 
 Template.PoolTeamPicks_edit_page.events({
-  'click #delete': function (event) {
+  'click #delete' (event) {
     event.preventDefault();
 
     $('#deleteModal').modal('show');

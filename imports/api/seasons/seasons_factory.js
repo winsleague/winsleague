@@ -12,7 +12,6 @@ Factory.define('season', Seasons, {
   startDate: new Date(),
   endDate: new Date(),
   status: 'in progress',
-}).after(factory => {
+}).after((factory) => {
   log.debug('season factory created:', factory);
 });
-

@@ -6,20 +6,20 @@ import { assert } from 'chai';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';
 
-import { waitForSubscriptions, afterFlushPromise, resetRoute, login } from './helpers.app-tests';
-import { generateData } from './../../../api/generate-data.app-tests';
+import {
+  waitForSubscriptions, afterFlushPromise, resetRoute, login,
+} from './helpers.app-tests';
+import { generateData } from '../../../api/generate-data.app-tests';
 
 
 if (Meteor.isClient) {
   describe('Full-app test of Homepage', function () {
     this.timeout(10000);
 
-    beforeEach(() =>
-      resetRoute()
-        .then(() => generateData())
-        .then(login)
-        .then(waitForSubscriptions)
-    );
+    beforeEach(() => resetRoute()
+      .then(() => generateData())
+      .then(login)
+      .then(waitForSubscriptions));
 
     afterEach((done) => {
       Meteor.logout(() => {
@@ -30,11 +30,9 @@ if (Meteor.isClient) {
       });
     });
 
-    it('has title on homepage', () => {
-      return afterFlushPromise()
-        .then(() => {
-          assert.equal($('a.navbar-brand').html(), 'Wins League');
-        });
-    });
+    it('has title on homepage', () => afterFlushPromise()
+      .then(() => {
+        assert.equal($('a.navbar-brand').html(), 'Wins League');
+      }));
   });
 }

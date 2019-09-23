@@ -3,7 +3,6 @@
 
 import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
-import log from '../../../utils/log';
 
 import '../../pool_teams/pool_teams_factory';
 import '../../league_teams/league_teams_factory';
@@ -23,8 +22,10 @@ describe('Pool Team Head to Head Records Updater', function () {
       const season = Factory.create('season', { leagueId: league._id });
       const pool = Factory.create('pool', { leagueId: league._id, latestSeasonId: season._id });
       const poolTeam = Factory.create('poolTeam', { leagueId: league._id, seasonId: season._id, poolId: pool._id });
-      const opponentPoolTeam = Factory.create('poolTeam', { leagueId: league._id, seasonId: season._id, poolId: pool._id });
-  
+      const opponentPoolTeam = Factory.create('poolTeam', {
+        leagueId: league._id, seasonId: season._id, poolId: pool._id,
+      });
+
       const homeLeagueTeam = Factory.create('leagueTeam', { leagueId: season.leagueId });
       const awayLeagueTeam = Factory.create('awayLeagueTeam', { leagueId: season.leagueId });
 

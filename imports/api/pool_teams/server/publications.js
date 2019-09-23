@@ -26,9 +26,7 @@ Meteor.publish('poolTeams.single', function poolTeamsSingle(_id) {
   return PoolTeams.find(_id);
 });
 
-Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPool(
-  poolId, field, collectionName) {
-
+Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPool(poolId, field, collectionName) {
   check(poolId, String);
   check(field, String);
   check(collectionName, String);
@@ -36,6 +34,8 @@ Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPoo
   ReactiveAggregate(this, PoolTeams, [
     {
       $match: {
+        // for some reason I think shorthand breaks this Mongo query
+        // eslint-disable-next-line object-shorthand
         poolId: poolId,
       },
     },
@@ -52,9 +52,8 @@ Meteor.publish('poolUsersMostAllTime.ofPool', function poolUsersMostAllTimeOfPoo
       },
     },
   ],
-    {
-      observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
-      clientCollection: collectionName,
-    }
-  );
+  {
+    observeSelector: { poolId }, // only observe PoolTeams for this pool (perf reasons)
+    clientCollection: collectionName,
+  });
 });

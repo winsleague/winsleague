@@ -1,6 +1,6 @@
-import log from '../../utils/log';
-
 import { Factory } from 'meteor/dburles:factory';
+
+import log from '../../utils/log';
 import { SeasonLeagueTeams } from './season_league_teams';
 import { Seasons } from '../seasons/seasons';
 import { LeagueTeams } from '../league_teams/league_teams';
@@ -14,7 +14,7 @@ Factory.define('seasonLeagueTeam', SeasonLeagueTeams, {
   seasonId: Factory.get('season'),
   leagueTeamId: Factory.get('leagueTeam'),
   abbreviation: 'NYG',
-}).after(factory => {
+}).after((factory) => {
   const season = Seasons.findOne(factory.seasonId);
   season.leagueId = factory.leagueId;
   Seasons.update(season._id,

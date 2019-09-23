@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { AutoForm } from 'meteor/aldeed:autoform';
 import { _ } from 'lodash';
 import log from '../../utils/log';
 
@@ -37,8 +36,8 @@ Template.PoolTeams_show_page.helpers({
   editAllowed: () => {
     const poolTeam = Template.instance().getPoolTeam();
     const pool = Template.instance().getPool();
-    return (Meteor.userId() === _.get(poolTeam, 'userId') ||
-      Meteor.userId() === _.get(pool, 'commissionerUserId'));
+    return (Meteor.userId() === _.get(poolTeam, 'userId')
+      || Meteor.userId() === _.get(pool, 'commissionerUserId'));
   },
 
   isLatestSeason: () => Template.instance().isLatestSeason(),
@@ -63,8 +62,7 @@ Template.PoolTeams_show_page.onCreated(function () {
 
   this.getSeasonId = () => _.get(this.getPoolTeam(), 'seasonId');
 
-  this.isLatestSeason = () =>
-    _.get(this.getPoolTeam(), 'seasonId') === _.get(this.getPool(), 'latestSeasonId');
+  this.isLatestSeason = () => _.get(this.getPoolTeam(), 'seasonId') === _.get(this.getPool(), 'latestSeasonId');
 
   this.autorun(() => {
     this.subscribe('poolTeams.single', this.getPoolTeamId(), () => {

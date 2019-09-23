@@ -23,6 +23,7 @@ Pools.schema = new SimpleSchema({
           return leagueId;
         }
       }
+      return undefined;
     },
   },
   name: {
@@ -36,6 +37,7 @@ Pools.schema = new SimpleSchema({
       if (this.isInsert && this.isSet === false) {
         return Meteor.userId(); // so we can easily stub this in tests
       }
+      return undefined;
     },
   },
   latestSeasonId: {
@@ -53,6 +55,7 @@ Pools.schema = new SimpleSchema({
         }
         this.unset();
       }
+      return undefined;
     },
   },
   createdAt: {
@@ -62,10 +65,12 @@ Pools.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
-      this.unset();  // Prevent user from supplying their own value
+      this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
   updatedAt: {
@@ -76,6 +81,7 @@ Pools.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,

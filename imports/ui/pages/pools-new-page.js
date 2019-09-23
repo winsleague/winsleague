@@ -11,9 +11,7 @@ import { Pools } from '../../api/pools/pools';
 Template.Pools_new_page.helpers({
   pools: () => Pools,
 
-  leagueOptions: () => Leagues.find().map(league => {
-    return { label: league.name, value: league._id };
-  }),
+  leagueOptions: () => Leagues.find().map((league) => ({ label: league.name, value: league._id })),
 
   nflLeagueId: () => Template.instance().getNflLeagueId(),
 });
@@ -27,7 +25,7 @@ Template.Pools_new_page.onCreated(function () {
 
   this.autorun(() => {
     this.subscribe('leagues.list', () => {
-      const leagues = Leagues.find().map(league => league._id);
+      const leagues = Leagues.find().map((league) => league._id);
       log.debug(`leagues.list subscription ready: ${Leagues.find().count()} leagues, %j`, leagues);
 
       this.subscribe('seasons.latest');
@@ -43,4 +41,3 @@ AutoForm.hooks({
     },
   },
 });
-

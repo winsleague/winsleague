@@ -1,4 +1,3 @@
-import { _ } from 'lodash';
 import log from '../../../../utils/log';
 
 import { Games } from '../../../games/games';
@@ -12,14 +11,15 @@ export default {
     const homeWinCount = this.recentWinCount(game.homeTeamId);
     const awayWinCount = this.recentWinCount(game.awayTeamId);
 
-    const result = this._calculate(homeWinCount, awayWinCount);
+    const result = this.calculateFromWins(homeWinCount, awayWinCount);
 
-    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} (homeRecentWinCount: ${homeWinCount}, awayRecentWinCount: ${awayWinCount})`);
+    log.info(`Rating for poolId ${pool._id} and gameId ${game._id} is ${result.rating} \
+(homeRecentWinCount: ${homeWinCount}, awayRecentWinCount: ${awayWinCount})`);
 
     return result;
   },
 
-  _calculate(homeWins, awayWins) {
+  calculateFromWins(homeWins, awayWins) {
     let rating;
     let justification = '';
 
@@ -83,7 +83,7 @@ export default {
     }).fetch();
 
     let wins = 0;
-    games.forEach(game => {
+    games.forEach((game) => {
       if (game.homeTeamId === leagueTeamId && game.homeScore > game.awayScore) {
         wins += 1;
       }
@@ -96,4 +96,3 @@ export default {
     return wins;
   },
 };
-

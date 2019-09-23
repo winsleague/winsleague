@@ -3,10 +3,8 @@ import 'winston-loggly-bulk';
 
 import log from '../../utils/log';
 
-const token = () => {
-  // mup.js sets this
-  return process.env.LOGGLY_TOKEN;
-};
+// mup.js sets this
+const token = () => process.env.LOGGLY_TOKEN;
 
 const init = () => {
   if (!token()) {
@@ -15,12 +13,12 @@ const init = () => {
   }
 
   const options = {
-    'level': 'info',
-    'subdomain': 'winsleague',
-    'inputToken': token(),
-    'json': true,
-    'tags': ['meteor'],
-    'handleExceptions': true,
+    level: 'info',
+    subdomain: 'winsleague',
+    inputToken: token(),
+    json: true,
+    tags: ['meteor'],
+    handleExceptions: true,
   };
 
   log.add(log.transports.Loggly, options);

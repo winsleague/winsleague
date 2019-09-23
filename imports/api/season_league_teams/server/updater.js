@@ -86,7 +86,8 @@ export default {
 
     const { abbreviation } = LeagueTeams.findOne(leagueTeamId);
 
-    const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId }, // leagueId needed because it could be an insert
+    // leagueId needed because it could be an insert
+    const result = SeasonLeagueTeams.upsert({ leagueId, seasonId, leagueTeamId },
       {
         $set: {
           abbreviation,
@@ -106,6 +107,7 @@ export default {
         },
       });
 
-    log.debug(`SeasonLeagueTeams.upsert for seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
+    log.debug(`SeasonLeagueTeams.upsert for seasonId ${seasonId}, leagueTeamId: ${leagueTeamId}: \
+${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
   },
 };

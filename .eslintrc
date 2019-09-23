@@ -1,65 +1,36 @@
 {
   "extends": [
     "airbnb",
-    "plugin:meteor/recommended"
+    "plugin:meteor/recommended",
+    "@meteorjs/eslint-config-meteor"
   ],
   "env": {
     "browser": true,
-    "jasmine": true,
     "meteor": true,
     "mocha": true,
     "node": true
   },
   "plugins": [
-    "meteor"
+    "meteor",
+    "chai-friendly"
   ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
   "globals": {
     "throwError": false,
     "handleError": false
   },
   "rules": {
-    "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
-    "no-underscore-dangle": [
-      "error",
-      {
-        "allow": [
-          "_id",
-          "_ensureIndex"
-        ]
-      }
-    ],
-    "object-shorthand": [
-      "error",
-      "always",
-      {
-        "avoidQuotes": false
-      }
-    ],
-    "space-before-function-paren": 0,
-    "meteor/eventmap-params": [
-      "error",
-      {
-        "eventParamName": "event",
-        "templateInstanceParamName": "instance"
-      }
-    ],
-    "meteor/template-names": [
-      "off"
-    ],
-    "max-len": ["error", 120],
-
-    // for Meteor API's that rely on `this` context, e.g. Template.onCreated and publications
-    "func-names": 0,
-    "prefer-arrow-callback'": 0
+    "no-unused-vars": ["error", { "args": "none" }],
+    "no-unused-expressions": 0, // for chai
+    "chai-friendly/no-unused-expressions": 2,
+    "meteor/template-names": [2, "snake-case"],
+    "max-len": ["error", 130]
   },
   "settings": {
-    "import/resolver": {
-      "meteor": {
-        "moduleDirectory": [
-          "node_modules"
-        ]
-      }
-    }
+    "import/resolver": "meteor"
   }
 }

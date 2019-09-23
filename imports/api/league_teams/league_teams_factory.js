@@ -12,7 +12,7 @@ Factory.define('leagueTeam', LeagueTeams, {
   abbreviation: () => faker.lorem.words(1),
   conference: 'NFC',
   division: 'East',
-}).after(leagueTeam => {
+}).after((leagueTeam) => {
   log.debug('leagueTeam factory created:', leagueTeam);
 });
 
@@ -23,6 +23,6 @@ Factory.define('awayLeagueTeam', LeagueTeams, {
   abbreviation: () => faker.lorem.words(1),
   conference: 'AFC',
   division: 'South',
-}).after(awayLeagueTeam => {
+}).after((awayLeagueTeam) => {
   log.debug('awayLeagueTeam factory created:', awayLeagueTeam);
 });

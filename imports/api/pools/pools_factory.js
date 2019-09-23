@@ -12,6 +12,6 @@ Factory.define('pool', Pools, {
   name: () => faker.lorem.words(),
   commissionerUserId: Factory.get('user'),
   latestSeasonId: Factory.get('season'),
-}).after(factory => {
+}).after((factory) => {
   log.debug('pool factory created:', factory);
 });

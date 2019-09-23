@@ -2,21 +2,21 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Factory } from 'meteor/dburles:factory';
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import log from '../utils/log';
 import { resetDatabase } from 'meteor/xolvio:cleaner';
-import { denodeify } from '../utils/denodeify';
 import { check, Match } from 'meteor/check';
 
-import '../api/leagues/leagues_factory';
-import '../api/pools/pools_factory';
-import '../api/pool_teams/pool_teams_factory';
-import '../api/pool_team_picks/pool_team_picks_factory';
-import '../api/season_league_teams/season_league_teams_factory';
+import { denodeify } from '../utils/denodeify';
+import log from '../utils/log';
 
-import LeagueFinder from '../api/leagues/finder';
-import SeasonFinder from '../api/seasons/finder';
-import { LeagueTeams } from '../api/league_teams/league_teams';
+import './leagues/leagues_factory';
+import './pools/pools_factory';
+import './pool_teams/pool_teams_factory';
+import './pool_team_picks/pool_team_picks_factory';
+import './season_league_teams/season_league_teams_factory';
+
+import LeagueFinder from './leagues/finder';
+import SeasonFinder from './seasons/finder';
+import { LeagueTeams } from './league_teams/league_teams';
 
 Meteor.methods({
   generateFixtures(arg) {
@@ -25,10 +25,12 @@ Meteor.methods({
     // runs on server so it's a lot easier to create fixtures here
 
     log.info('Resetting database');
-    resetDatabase({ excludedCollections: [
-      'leagues', 'seasons', 'league_teams', 'season_league_teams', 'league_pick_expected_wins',
-      '__kdtimeevents', '__kdtraces',
-    ] });
+    resetDatabase({
+      excludedCollections: [
+        'leagues', 'seasons', 'league_teams', 'season_league_teams', 'league_pick_expected_wins',
+        '__kdtimeevents', '__kdtraces',
+      ],
+    });
 
     log.info('Loading default fixtures');
 
@@ -41,7 +43,9 @@ Meteor.methods({
     const userId = Accounts.createUser({ email: 'test@test.com', password: 'test' });
     const poolId = Factory.create('pool', { leagueId, latestSeasonId: seasonId, commissionerUserId: userId })._id;
     const poolTeamId = Factory.create('poolTeam', { seasonId, poolId, userId })._id;
-    Factory.create('poolTeamPick', { poolTeamId, poolId, leagueTeamId, seasonId });
+    Factory.create('poolTeamPick', {
+      poolTeamId, poolId, leagueTeamId, seasonId,
+    });
 
     Factory.create('seasonLeagueTeam', {
       leagueId,
@@ -64,6 +68,8 @@ Meteor.methods({
   },
 });
 
+// disabling the eslint rule because this is the recommended approach from Meteor
+// eslint-disable-next-line import/no-mutable-exports
 let generateData;
 if (Meteor.isClient) {
   // Create a second connection to the server to use to call test data methods

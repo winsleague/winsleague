@@ -4,7 +4,7 @@ import { Seasons } from '../seasons';
 import { Pools } from '../../pools/pools';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import LeagueFinder from '../../leagues/finder';
-import SeasonFinder from '../../seasons/finder';
+import SeasonFinder from '../finder';
 
 export default {
   create(leagueName, year, startDate, endDate) {
@@ -51,7 +51,7 @@ export default {
     const leagueId = LeagueFinder.getIdByName(leagueName);
 
     const newLatestSeason = SeasonFinder.getByYear(leagueName, year);
-    if (! newLatestSeason) {
+    if (!newLatestSeason) {
       log.info(`Season for ${year} doesn't exist!`);
       return;
     }
@@ -61,7 +61,7 @@ export default {
 
     const originalLatestSeason = SeasonFinder.getLatestByLeagueName(leagueName);
 
-    Pools.find({ leagueId }).forEach(pool => {
+    Pools.find({ leagueId }).forEach((pool) => {
       log.info(`Updating poolId ${pool._id} with original seasonId ${originalLatestSeason._id}`);
       Pools.update(pool._id, {
         $set: {

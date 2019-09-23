@@ -19,8 +19,7 @@ Migrations.add({
         $set: {
           closeScore: 3,
         },
-      }
-    );
+      });
 
     const nbaLeague = LeagueFinder.getByName('NBA');
     if (!nbaLeague) {
@@ -31,8 +30,7 @@ Migrations.add({
         $set: {
           closeScore: 3,
         },
-      }
-    );
+      });
 
     const mlbLeague = LeagueFinder.getByName('MLB');
     if (!mlbLeague) {
@@ -43,8 +41,7 @@ Migrations.add({
         $set: {
           closeScore: 1,
         },
-      }
-    );
+      });
 
 
     // Initialize to zero to avoid undefined errors

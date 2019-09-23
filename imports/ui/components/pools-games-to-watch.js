@@ -13,7 +13,8 @@ function myTeamClassHelper(leagueTeamId, myScore, theirScore) {
   if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
     if (myScore > theirScore) {
       return 'success';
-    } else if (myScore < theirScore) {
+    }
+    if (myScore < theirScore) {
       return 'danger';
     }
     return 'info';
@@ -31,7 +32,8 @@ Template.Pools_games_to_watch.helpers({
         gameDate: 1,
         gameId: 1,
       },
-    }),
+    },
+  ),
 
   poolId: () => Template.currentData().poolId,
 
@@ -45,7 +47,7 @@ Template.Pools_games_to_watch.helpers({
   },
 
   poolGameInterestRatings: () => {
-    const poolId = Template.currentData().poolId;
+    const { poolId } = Template.currentData();
     return PoolGameInterestRatings.find({ poolId }, {
       sort: {
         rating: -1,
@@ -69,7 +71,7 @@ Template.Pools_games_to_watch.onCreated(function () {
     const poolTeamPicks = PoolTeamPicks.find({
       poolTeamId: this.data.poolTeamId,
     });
-    return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+    return poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
   };
 
   this.autorun(() => {

@@ -15,7 +15,7 @@ import WeeklyGamesToWatchEmail from '../../api/emails/server/weekly-games-to-wat
 if (!Meteor.isTest && !Meteor.isAppTest) {
   log.info('Initializing SyncedCron');
 
-  const SyncedCronLogger = opts => {
+  const SyncedCronLogger = (opts) => {
     log.log(opts.level, `${opts.tag}: ${opts.message}`);
   };
 

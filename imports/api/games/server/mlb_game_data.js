@@ -1,6 +1,7 @@
-import log from '../../../utils/log';
 import moment from 'moment-timezone';
 import { _ } from 'lodash';
+
+import log from '../../../utils/log';
 
 import LeagueFinder from '../../leagues/finder';
 import SeasonFinder from '../../seasons/finder';
@@ -10,7 +11,7 @@ import { LeagueTeams } from '../../league_teams/league_teams';
 
 function getLeagueTeamIdByAbbreviation(league, abbreviation) {
   const leagueTeam = LeagueTeams.findOne({ leagueId: league._id, abbreviation });
-  if (! leagueTeam) {
+  if (!leagueTeam) {
     log.error('No leagueTeam found for leagueId', league._id, 'and abbreviation', abbreviation);
   }
   return leagueTeam._id;
@@ -57,12 +58,14 @@ function parseGameDate(game) {
     // ampm: PM
     // all times are in EST
     return moment.tz(`${game.time_date} ${game.ampm}`, 'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
-  } else if (game.original_date) {
+  }
+  if (game.original_date) {
     // original_date: 2016/04/03
     // home_time: 1:05
     // ampm: PM
     // all times are in EST
-    return moment.tz(`${game.original_date} ${game.home_time} ${game.ampm}`, 'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
+    return moment.tz(`${game.original_date} ${game.home_time} ${game.ampm}`,
+      'YYYY/MM/DD h:mm A', 'US/Eastern').toDate();
   }
   throw new Error('Error parsing date out of ', game);
 }
@@ -88,19 +91,22 @@ export default {
 
     log.info(`Ingesting MLB data from ${year}-${month}-${day}`);
 
-    const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/day_${padZeros(day, 2)}/miniscoreboard.json`;
+    const url = `http://gd2.mlb.com/components/game/mlb/year_${year}/month_${padZeros(month, 2)}/`
+      + `day_${padZeros(day, 2)}/miniscoreboard.json`;
     log.debug('url: ', url);
     const response = HTTP.get(url);
     const parsedJSON = JSON.parse(response.content);
     // log.debug('json: ', parsedJSON);
 
-    if (! parsedJSON.data.games.game) return; // no games on that day
+    if (!parsedJSON.data.games.game) return; // no games on that day
 
     if (Array.isArray(parsedJSON.data.games.game)) {
-      parsedJSON.data.games.game.forEach(game => {
+      parsedJSON.data.games.game.forEach((game) => {
         this.upsertGame(season, game);
       });
-    } else { // this happens when there's only one game that day (http://gd2.mlb.com/components/game/mlb/year_2016/month_07/day_12/miniscoreboard.json)
+    } else {
+      // this happens when there's only one game that day
+      // (http://gd2.mlb.com/components/game/mlb/year_2016/month_07/day_12/miniscoreboard.json)
       this.upsertGame(season, parsedJSON.data.games.game);
     }
   },
@@ -143,7 +149,7 @@ export default {
       },
       {
         $set: values,
-      }
+      },
     );
   },
 

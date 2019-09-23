@@ -1,5 +1,3 @@
-/* eslint-disable prefer-arrow-callback */
-
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import moment from 'moment-timezone';
@@ -11,13 +9,12 @@ import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { Seasons } from '../../seasons/seasons';
 import LeagueFinder from '../../leagues/finder';
-import SeasonFinder from '../../seasons/finder';
 
 function myLeagueTeams(poolTeamId) {
   const poolTeamPicks = PoolTeamPicks.find({
     poolTeamId,
   });
-  return poolTeamPicks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+  return poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
 }
 
 function relevantNflWeek(seasonId) {
@@ -62,7 +59,8 @@ function todaysGames(seasonId, poolTeamId) {
   const myTeams = myLeagueTeams(poolTeamId);
 
   const today = moment().tz('US/Pacific').startOf('day').toDate();
-  const tomorrow = moment().tz('US/Pacific').startOf('day').add(1, 'days').toDate();
+  const tomorrow = moment().tz('US/Pacific').startOf('day').add(1, 'days')
+    .toDate();
 
   return Games.find({
     seasonId,
@@ -103,8 +101,7 @@ Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeam
     return this.ready();
   }
 
-  const seasonId = poolTeam.seasonId;
-  const poolId = poolTeam.poolId;
+  const { seasonId, poolId } = poolTeam;
 
   const pool = Pools.findOne(poolId);
   if (!pool) {
@@ -114,8 +111,6 @@ Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeam
 
   if (pool.leagueId === nflLeagueId) {
     return relevantNflGames(seasonId, poolTeamId);
-  } else {
-    return todaysGames(seasonId, poolTeamId);
   }
+  return todaysGames(seasonId, poolTeamId);
 });
-

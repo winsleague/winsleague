@@ -10,6 +10,7 @@ import log from '../../../utils/log';
 // Utility -- returns a promise which resolves when all subscriptions are done
 const waitForSubscriptions = () => new Promise((resolve) => {
   const poll = Meteor.setInterval(() => {
+    // eslint-disable-next-line no-underscore-dangle
     if (DDP._allSubscriptionsReady()) {
       Meteor.clearInterval(poll);
       resolve();

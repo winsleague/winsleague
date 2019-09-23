@@ -1,17 +1,14 @@
-/* eslint-env mocha */
-/* eslint-disable func-names, prefer-arrow-callback */
-
 import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
 
 import '../../leagues/leagues_factory';
 import '../../pools/pools_factory';
-import '../../seasons/seasons_factory';
+import '../seasons_factory';
 import '../../pool_teams/pool_teams_factory';
 
 import { PoolTeams } from '../../pool_teams/pool_teams';
-import { Seasons } from '../../seasons/seasons';
-import SeasonCreator from '../../seasons/server/creator';
+import { Seasons } from '../seasons';
+import SeasonCreator from './creator';
 
 describe('Season Creator', () => {
   it('should create season and clean up', () => {

@@ -19,7 +19,7 @@ Template.Pools_records_pool_teams_most_week.helpers({
     );
   },
 
-  getMetric: poolTeamWeek => _.get(poolTeamWeek, Template.currentData().metricField),
+  getMetric: (poolTeamWeek) => _.get(poolTeamWeek, Template.currentData().metricField),
 });
 
 Template.Pools_records_pool_teams_most_week.onCreated(function () {

@@ -6,7 +6,8 @@ export default {
   getCollection(name) {
     let cached = collectionCache[name];
     if (!cached) {
-      cached = collectionCache[name] = new Mongo.Collection(name);
+      collectionCache[name] = new Mongo.Collection(name);
+      cached = collectionCache[name];
     }
     return cached;
   },

@@ -1,13 +1,14 @@
 import log from '../../../utils/log';
 
-import { PoolTeamWeeks } from '../../pool_team_weeks/pool_team_weeks';
+import { PoolTeamWeeks } from '../pool_team_weeks';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { PoolTeams } from '../../pool_teams/pool_teams';
 import { Games } from '../../games/games';
 
 export default {
   updateLeagueTeam(leagueId, seasonId, leagueTeamId, week) {
-    log.info(`PoolTeamWeeksUpdater.updateLeagueTeam(leagueId: ${leagueId}, seasonId: ${seasonId}, leagueTeamId: ${leagueTeamId}, week: ${week})`);
+    log.info(`PoolTeamWeeksUpdater.updateLeagueTeam(leagueId: ${leagueId}, seasonId: ${seasonId}, \
+leagueTeamId: ${leagueTeamId}, week: ${week})`);
 
     const poolTeamPicks = PoolTeamPicks.find({
       leagueId,
@@ -31,14 +32,13 @@ export default {
 
     let pointsFor = 0;
     let pointsAgainst = 0;
-    let gameSummaries = [];
+    const gameSummaries = [];
 
     const poolTeamPicks = PoolTeamPicks.find({ poolTeamId });
     poolTeamPicks.forEach((poolTeamPick) => {
       log.debug(`poolTeamPick: ${JSON.stringify(poolTeamPick)}`);
 
-      const poolId = poolTeamPick.poolId;
-      const seasonId = poolTeamPick.seasonId;
+      const { poolId, seasonId } = poolTeamPick;
 
       const homeGame = Games.findOne({
         seasonId: poolTeam.seasonId,

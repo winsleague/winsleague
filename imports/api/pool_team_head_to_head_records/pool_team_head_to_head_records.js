@@ -55,10 +55,12 @@ PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
     autoValue() {
       if (this.isInsert) {
         return new Date();
-      } else if (this.isUpsert) {
+      }
+      if (this.isUpsert) {
         return { $setOnInsert: new Date() };
       }
       this.unset(); // Prevent user from supplying their own value
+      return undefined;
     },
   },
   updatedAt: {
@@ -69,6 +71,7 @@ PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
       if (this.isUpdate) {
         return new Date();
       }
+      return undefined;
     },
     denyInsert: true,
     optional: true,
@@ -87,13 +90,6 @@ PoolTeamHeadToHeadRecords.helpers({
       return `${this.wins}-${this.losses}-${this.ties}`;
     }
     return `${this.wins}-${this.losses}`;
-  },
-
-  winningPercentage() {
-    if (this.wins + this.losses + this.ties == 0) {
-      return null;
-    }
-    return this.wins / (this.wins + this.losses + this.ties);
   },
 });
 

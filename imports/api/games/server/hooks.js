@@ -1,12 +1,11 @@
-import log from '../../../utils/log';
-
 import { Games } from '../games';
 import GameUpdater from './updater';
 import SeasonLeagueTeamUpdater from '../../season_league_teams/server/updater';
 import PoolTeamWeeksUpdater from '../../pool_team_weeks/server/updater';
 import PoolTeamHeadToHeadRecordsUpdater from '../../pool_team_head_to_head_records/server/updater';
 
-// performance improvement - https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
+// performance improvement
+// https://github.com/matb33/meteor-collection-hooks#afterupdateuserid-doc-fieldnames-modifier-options
 Games.hookOptions.after.update = { fetchPrevious: false };
 
 Games.after.insert((userId, doc) => {

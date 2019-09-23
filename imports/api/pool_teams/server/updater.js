@@ -74,10 +74,10 @@ export default {
         },
       },
     );
-    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, ` +
-      `totalPlusMins: ${totalPlusMinus}, ` +
-      `closeWins: ${closeWins}, closeLosses: ${closeLosses}, ` +
-      `numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, `
+      + `totalPlusMins: ${totalPlusMinus}, `
+      + `closeWins: ${closeWins}, closeLosses: ${closeLosses}, `
+      + `numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamPickQuality(poolTeamId) {
@@ -95,8 +95,8 @@ export default {
         },
       },
     );
-    log.debug(`PoolTeams.update ${poolTeamId} with totalPickQuality: ${totalPickQuality}, ` +
-      `numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with totalPickQuality: ${totalPickQuality}, `
+      + `numberAffected: ${numberAffected}`);
   },
 
   updatePoolTeamUndefeatedWeeks(poolTeamId) {
@@ -111,7 +111,7 @@ export default {
     const picks = PoolTeamPicks.find({ poolTeamId });
     const pickCount = picks.count();
     if (pickCount > 0) {
-      const leagueTeams = picks.map(poolTeamPick => poolTeamPick.leagueTeamId);
+      const leagueTeams = picks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
 
       for (let week = 1; week < 18; week += 1) {
         const gamesWon = Games.find({
@@ -142,11 +142,10 @@ export default {
           undefeatedWeeks,
           defeatedWeeks,
         },
-      },
-    );
+      });
 
-    log.debug(`PoolTeams.update ${poolTeamId} with undefeatedWeeks: ${undefeatedWeeks}, ` +
-      `defeatedWeeks: ${defeatedWeeks}, numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with undefeatedWeeks: ${undefeatedWeeks}, `
+      + `defeatedWeeks: ${defeatedWeeks}, numberAffected: ${numberAffected}`);
   },
 
   updateTeamSummary(poolTeamId) {
@@ -172,7 +171,7 @@ export default {
         },
       },
     );
-    log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, ` +
-      `numberAffected: ${numberAffected}`);
+    log.debug(`PoolTeams.update ${poolTeamId} with teamSummary: ${teamSummary}, `
+      + `numberAffected: ${numberAffected}`);
   },
 };

@@ -36,14 +36,21 @@ export default {
     log.info(`Looking for PoolTeams with leagueId ${leagueId}, seasonId ${seasonId}, poolId ${poolId}`);
     const poolTeams = PoolTeams.find({ leagueId, seasonId, poolId });
     poolTeams.forEach((poolTeam) => {
-      this.updatePoolTeamRecord(poolTeam.leagueId, poolTeam.seasonId, poolTeam.poolId, poolTeam._id);
+      this.updatePoolTeamRecord(
+        poolTeam.leagueId,
+        poolTeam.seasonId,
+        poolTeam.poolId,
+        poolTeam._id,
+      );
     });
   },
 
   updatePoolTeamRecord(leagueId, seasonId, poolId, poolTeamId) {
     log.info(`Updating PoolTeamHeadToHeadRecords for seasonId ${seasonId}, poolTeamId ${poolTeamId}`);
 
-    const poolTeamPicks = PoolTeamPicks.find({ leagueId, seasonId, poolId, poolTeamId });
+    const poolTeamPicks = PoolTeamPicks.find({
+      leagueId, seasonId, poolId, poolTeamId,
+    });
     const myLeagueTeams = poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
 
     const poolTeams = PoolTeams.find({ leagueId, seasonId, poolId });
@@ -57,7 +64,9 @@ export default {
 
         const opponentPoolTeamId = poolTeam._id;
 
-        const opponentPoolTeamPicks = PoolTeamPicks.find({ leagueId, seasonId, poolId, poolTeamId: poolTeam._id });
+        const opponentPoolTeamPicks = PoolTeamPicks.find({
+          leagueId, seasonId, poolId, poolTeamId: poolTeam._id,
+        });
         const opponentLeagueTeams = opponentPoolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
 
         log.info(`Looking for Games with homeTeamId in ${myLeagueTeams} and awayTeamId in ${opponentLeagueTeams}`);
@@ -127,7 +136,9 @@ export default {
           },
         });
 
-        log.debug(`PoolTeamHeadToHeadRecords.upsert for seasonId ${seasonId}, poolId: ${poolId}, poolTeamId: ${poolTeamId}, opponentPoolTeamId: ${opponentPoolTeamId}: ${wins} wins, ${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
+        log.debug(`PoolTeamHeadToHeadRecords.upsert for seasonId ${seasonId}, poolId: ${poolId}, \
+poolTeamId: ${poolTeamId}, opponentPoolTeamId: ${opponentPoolTeamId}: ${wins} wins, \
+${losses} losses, ${ties} ties, ${result.numberAffected} affected`);
       }
     });
   },

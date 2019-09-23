@@ -13,7 +13,7 @@ describe('Pools Hooks', function () {
 
   it('should remove its PoolTeams when Pool is removed', function () {
     const poolTeam = Factory.create('poolTeam');
-    const poolId = poolTeam.poolId;
+    const { poolId } = poolTeam;
 
     let poolTeamsCount = PoolTeams.find({ poolId }).count();
     assert.equal(poolTeamsCount, 1);

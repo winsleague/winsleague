@@ -1,7 +1,7 @@
-import log from '../../../utils/log';
-
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { LoggedInMixin } from 'meteor/tunifight:loggedin-mixin';
+
+import log from '../../../utils/log';
 
 import { PoolTeams } from '../pool_teams';
 

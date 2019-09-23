@@ -13,8 +13,11 @@ export default {
       throw new Error('League is not found!');
     }
 
-    if (!season) {
-      season = SeasonFinder.getLatestByLeague(league);
+    let actualSeason;
+    if (season) {
+      actualSeason = season;
+    } else {
+      actualSeason = SeasonFinder.getLatestByLeague(league);
     }
 
     const url = 'http://data.nba.net/prod/v1/current/standings_all.json';
@@ -28,7 +31,7 @@ export default {
     log.debug('parsedJSON.league.standard.teams: ', parsedJSON.league.standard.teams);
     parsedJSON.league.standard.teams.forEach((teamData) => {
       log.debug('NBA teamData: ', teamData);
-      this.saveTeam(league, season, teamData);
+      this.saveTeam(league, actualSeason, teamData);
     });
   },
 
@@ -61,6 +64,7 @@ export default {
           closeWins: 0,
           closeLosses: 0,
         },
-      });
+      },
+    );
   },
 };

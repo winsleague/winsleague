@@ -1,5 +1,3 @@
-/* eslint-disable prefer-arrow-callback func-names */
-
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import 'meteor/reywood:publish-composite';

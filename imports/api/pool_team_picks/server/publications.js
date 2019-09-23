@@ -31,7 +31,7 @@ Meteor.publish('poolTeamPicks.ofPool', function poolTeamPicksOfPool(poolId, seas
 
   if (seasonId) {
     check(seasonId, String);
-    return PoolTeamPicks.find({poolId, seasonId});
+    return PoolTeamPicks.find({ poolId, seasonId });
   }
 
   return PoolTeamPicks.find({ poolId });

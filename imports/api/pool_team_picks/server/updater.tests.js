@@ -1,6 +1,3 @@
-/* eslint-env mocha */
-/* eslint-disable func-names, prefer-arrow-callback */
-
 import { assert } from 'chai';
 import { Factory } from 'meteor/dburles:factory';
 import log from '../../../utils/log';

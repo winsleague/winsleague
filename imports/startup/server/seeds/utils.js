@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import log from '../../../utils/log';
 
 import LeagueFinder from '../../../api/leagues/finder';
