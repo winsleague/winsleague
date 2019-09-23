@@ -176,6 +176,15 @@
           tableId="pool_teams_worst_plus_minus_season"
         }}
 
+        {{> Pools_records_pool_teams_head_to_head_records_best_season
+          poolId=poolId
+          recordTitle="Best Head to Head Record, Season"
+          metricTitle="Record"
+          metricField="winPercentage"
+          sort=-1
+          tableId="pool_teams_best_head_to_head_record_season"
+        }}
+
         {{> Pools_records_pool_teams_most_season
           poolId=poolId
           recordTitle="Most 4-0 Weeks, Season"

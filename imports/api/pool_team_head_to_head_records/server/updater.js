@@ -127,6 +127,7 @@ export default {
           opponentPoolTeamId,
         }, {
           $set: {
+            seasonYear: poolTeam.seasonYear,
             wins,
             losses,
             ties,
