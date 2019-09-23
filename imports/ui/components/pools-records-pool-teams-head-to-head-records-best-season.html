@@ -1,0 +1,29 @@
+<template name="Pools_records_pool_teams_head_to_head_records_best_season">
+  <h4>{{recordTitle}}</h4>
+  {{#if Template.subscriptionsReady}}
+    <div class="table-responsive">
+      <table id="{{tableId}}" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th class="col-xs-4 player">Player</th>
+          <th class="col-xs-4 opponent">Opponent</th>
+          <th class="col-xs-2 metricTitle">Record</th>
+          <th class="col-xs-2 season">Season</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each poolTeamHeadToHeadRecord in poolTeamHeadToHeadRecords}}
+          <tr>
+            <td class="userTeamName">{{poolTeamHeadToHeadRecord.userTeamName}}</td>
+            <td class="opponentTeamName">{{poolTeamHeadToHeadRecord.opponentTeamName}}</td>
+            <td class="metric">{{poolTeamHeadToHeadRecord.record}}</td>
+            <td class="season">{{poolTeamHeadToHeadRecord.seasonYear}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+  <br/>
+</template>

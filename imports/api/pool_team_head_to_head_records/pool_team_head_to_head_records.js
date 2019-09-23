@@ -1,6 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
+import { Pools } from '../pools/pools';
+import { PoolTeams } from '../pool_teams/pool_teams';
+import SeasonFinder from '../seasons/finder';
+
 export const PoolTeamHeadToHeadRecords = new Mongo.Collection('pool_team_head_to_head_records');
 
 PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
@@ -11,6 +15,18 @@ PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
   seasonId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
+  },
+  seasonYear: {
+    type: SimpleSchema.Integer,
+    autoValue() {
+      if (this.isInsert && !this.isSet) {
+        const { seasonId } = PoolTeams.findOne(this.field('poolTeamId').value);
+        const season = Seasons.findOne(seasonId);
+        if (season) return season.year;
+        throw new Error(`No season found for seasonId ${seasonId}`);
+      }
+      return undefined;
+    },
   },
   poolId: {
     type: String,
@@ -23,6 +39,10 @@ PoolTeamHeadToHeadRecords.schema = new SimpleSchema({
   opponentPoolTeamId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
+  },
+  gameCount: {
+    type: SimpleSchema.Integer,
+    defaultValue: 0,
   },
   wins: {
     type: SimpleSchema.Integer,
@@ -86,10 +106,21 @@ PoolTeamHeadToHeadRecords.helpers({
   },
 
   record() {
+    const perc = (this.winPercentage * 100).toFixed(0);
     if (this.ties > 0) {
-      return `${this.wins}-${this.losses}-${this.ties}`;
+      return `${this.wins}-${this.losses}-${this.ties} (${perc}%)`;
     }
-    return `${this.wins}-${this.losses}`;
+    return `${this.wins}-${this.losses} (${perc}%)`;
+  },
+
+  userTeamName() {
+    const poolTeam = PoolTeams.findOne(this.poolTeamId);
+    return poolTeam.userTeamName;
+  },
+
+  opponentTeamName() {
+    const poolTeam = PoolTeams.findOne(this.opponentPoolTeamId);
+    return poolTeam.userTeamName;
   },
 });
 

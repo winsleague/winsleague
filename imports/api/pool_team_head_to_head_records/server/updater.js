@@ -114,6 +114,8 @@ export default {
           pointsAgainst += game.homeScore;
         });
 
+        const gameCount = wins + losses + ties;
+
         let winPercentage = 0;
         if (wins + losses + ties > 0) {
           winPercentage = wins / (wins + losses + ties);
@@ -127,6 +129,8 @@ export default {
           opponentPoolTeamId,
         }, {
           $set: {
+            seasonYear: poolTeam.seasonYear,
+            gameCount,
             wins,
             losses,
             ties,
