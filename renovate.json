@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "statusCheckVerify": true,
+  "ignoreDeps": [
+    "babel-runtime",
+    "loggly",
+    "winston",
+    "winston-loggly-bulk"
+  ]
+}
