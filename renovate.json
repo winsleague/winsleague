@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:base",
+    ":meteor"
+  ],
+  "statusCheckVerify": true,
+  "ignoreDeps": [
+    "loggly",
+    "winston",
+    "winston-loggly-bulk"
+  ]
+}
