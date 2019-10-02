@@ -1,10 +1,10 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":meteor"
   ],
   "statusCheckVerify": true,
   "ignoreDeps": [
-    "babel-runtime",
     "loggly",
     "winston",
     "winston-loggly-bulk"
