@@ -27,24 +27,22 @@ Template.PoolTeamPicks_show_page.helpers({
     return '';
   },
 
-  games: () => {
-    return Games.find({
-      seasonId: this.getSeasonId(),
-      $or: [
-        {
-          homeTeamId: this.getLeagueTeamId(),
-        },
-        {
-          awayTeamId: this.getLeagueTeamId(),
-        },
-      ],
-    },
-    {
-      sort: {
-        gameDate: 1,
+  games: () => Games.find({
+    seasonId: this.getSeasonId(),
+    $or: [
+      {
+        homeTeamId: this.getLeagueTeamId(),
       },
-    });
+      {
+        awayTeamId: this.getLeagueTeamId(),
+      },
+    ],
   },
+  {
+    sort: {
+      gameDate: 1,
+    },
+  }),
 });
 
 Template.PoolTeamPicks_show_page.onCreated(function () {
