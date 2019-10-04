@@ -28,13 +28,13 @@ Template.PoolTeamPicks_show_page.helpers({
   },
 
   games: () => Games.find({
-    seasonId: this.getSeasonId(),
+    seasonId: Template.instance().getSeasonId(),
     $or: [
       {
-        homeTeamId: this.getLeagueTeamId(),
+        homeTeamId: Template.instance().getLeagueTeamId(),
       },
       {
-        awayTeamId: this.getLeagueTeamId(),
+        awayTeamId: Template.instance().getLeagueTeamId(),
       },
     ],
   },
@@ -52,7 +52,7 @@ Template.PoolTeamPicks_show_page.onCreated(function () {
   this.getLeagueId = () => _.get(this.getPoolTeamPick(), 'leagueId');
   this.getSeasonId = () => _.get(this.getPoolTeamPick(), 'seasonId');
   this.getLeagueTeamId = () => _.get(this.getPoolTeamPick(), 'leagueTeamId');
-  this.getPoolId = () => _.get(this.getPoolTeamPick(), 'poolId');
+  this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getSeasonLeagueTeamId = () => SeasonLeagueTeams.find({
     seasonId: this.getSeasonId(),
@@ -63,11 +63,15 @@ Template.PoolTeamPicks_show_page.onCreated(function () {
     this.subscribe('poolTeamPicks.single', this.getPoolTeamPickId(), () => {
       log.debug('poolTeamPicks.single subscription ready');
 
-      this.subscribe('leagueTeams.ofLeague', this.getLeagueId());
+      this.subscribe('poolTeamPicks.ofPool', this.getPoolId(), this.getSeasonId(), () => {
+        this.subscribe('poolTeams.ofPool', this.getPoolId(), this.getSeasonId(), () => {
+          this.subscribe('games.ofSeasonLeagueTeam', this.getSeasonId(), this.getLeagueTeamId());
+        });
+      });
+
+      this.subscribe('seasonLeagueTeams.ofLeagueSeason', this.getLeagueId(), this.getSeasonId());
 
       this.subscribe('leagueTeam.single', this.getLeagueTeamId());
-
-      this.subscribe('games.ofSeasonLeagueTeam', this.getSeasonId(), this.getLeagueTeamId());
     });
   });
 });

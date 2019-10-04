@@ -10,5 +10,5 @@ Meteor.publish('leagueTeams.ofLeague', (leagueId) => {
 
 Meteor.publish('leagueTeam.single', (leagueTeamId) => {
   check(leagueTeamId, Match.Maybe(String));
-  return LeagueTeams.findOne(leagueTeamId);
+  return LeagueTeams.find(leagueTeamId);
 });

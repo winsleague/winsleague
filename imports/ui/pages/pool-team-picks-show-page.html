@@ -8,13 +8,13 @@
       {{#each game in games}}
         <tr>
           <td>
-            <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
+            <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}} {{game.homeScore}}</span>
           </td>
           <td>
-            <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
+            <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}} {{game.awayScore}}</span>
           </td>
         </tr>
-      {{}}
+      {{/each}}
     </table>
 
     
