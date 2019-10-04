@@ -11,7 +11,7 @@ import { PoolTeamPicks } from '../pool_team_picks';
 import PoolTeamPicksUpdater from './updater';
 
 describe('Pool Team Picks Updater', function () {
-  this.timeout(5000);
+  this.timeout(10000);
 
   describe('updatePickQuality', () => {
     it('should update the pick quality ', () => {

@@ -14,7 +14,7 @@ import { PoolTeamHeadToHeadRecords } from '../pool_team_head_to_head_records';
 import PoolTeamHeadToHeadRecordsUpdater from './updater';
 
 describe('Pool Team Head to Head Records Updater', function () {
-  this.timeout(5000);
+  this.timeout(10000);
 
   describe('updatePoolTeamRecord', () => {
     it('should update the head to head record', () => {
