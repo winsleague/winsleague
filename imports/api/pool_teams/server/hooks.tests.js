@@ -6,7 +6,7 @@ import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import './hooks';
 
 describe('Pool Teams Hooks', function () {
-  this.timeout(5000);
+  this.timeout(10000);
 
   it('should remove its PoolTeamPicks when PoolTeam is removed', function () {
     const poolTeamPick = Factory.create('poolTeamPick');
