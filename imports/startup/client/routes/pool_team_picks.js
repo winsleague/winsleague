@@ -8,6 +8,7 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 import log from '../../../utils/log';
 
 import '../../../ui/pages/pool-team-picks-new-page';
+import '../../../ui/pages/pool-team-picks-show-page';
 import '../../../ui/pages/pool-team-picks-edit-page';
 
 const group = FlowRouter.group({
@@ -21,6 +22,16 @@ group.route('/new', {
   action(params) {
     log.debug(`We're creating picks for a pool team: ${params.poolTeamId}`);
     BlazeLayout.render('App_body', { content: 'PoolTeamPicks_new_page' });
+  },
+});
+
+// http://app.com/pools/:poolId/teams/:poolTeamId/picks/:poolTeamPickId
+group.route('/:poolTeamPickId', {
+  name: 'PoolTeamPicks.show',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
+  action(params) {
+    log.debug(`We're showing a pool team pick: ${params.poolTeamId} and ${params.poolTeamPickId}`);
+    BlazeLayout.render('App_body', { content: 'PoolTeamPicks_show_page' });
   },
 });
 

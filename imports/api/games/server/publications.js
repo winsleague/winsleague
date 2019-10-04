@@ -114,3 +114,23 @@ Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeam
   }
   return todaysGames(seasonId, poolTeamId);
 });
+
+Meteor.publish('games.ofSeasonLeagueTeam', (seasonId, leagueTeamId) => {
+  check(seasonId, Match.Maybe(String));
+  check(leagueTeamId, Match.Maybe(String));
+  if (!seasonId || !leagueTeamId) {
+    return this.ready();
+  }
+
+  return Games.find({
+    seasonId,
+    $or: [
+      {
+        homeTeamId: leagueTeamId,
+      },
+      {
+        awayTeamId: leagueTeamId,
+      },
+    ],
+  });
+});

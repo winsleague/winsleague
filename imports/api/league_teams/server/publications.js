@@ -7,3 +7,8 @@ Meteor.publish('leagueTeams.ofLeague', (leagueId) => {
   check(leagueId, Match.Maybe(String));
   return LeagueTeams.find({ leagueId });
 });
+
+Meteor.publish('leagueTeam.single', (leagueTeamId) => {
+  check(leagueTeamId, Match.Maybe(String));
+  return LeagueTeams.findOne(leagueTeamId);
+});

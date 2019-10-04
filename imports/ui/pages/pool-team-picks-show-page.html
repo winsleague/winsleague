@@ -1,0 +1,24 @@
+<template name="PoolTeamPicks_show_page">
+  {{#if Template.subscriptionsReady}}
+    {{> Pools_header poolId=poolId seasonId=seasonId }}
+
+    Games
+
+    <table class="table" id="game">
+      {{#each game in games}}
+        <tr>
+          <td>
+            <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
+          </td>
+          <td>
+            <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
+          </td>
+        </tr>
+      {{}}
+    </table>
+
+    
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>
