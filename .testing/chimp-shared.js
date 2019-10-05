@@ -1,12 +1,12 @@
-const timeout = 3000;
+const timeout = 10000;
 
 const setup = () => {
   // we must navigate to client first so Meteor methods are available
   browser.url('http://localhost:3100');
 
-  browser.timeouts('script', 5000);
-  browser.timeouts('implicit', 5000);
-  browser.timeouts('page load', 5000);
+  browser.timeouts('script', 10000);
+  browser.timeouts('implicit', 10000);
+  browser.timeouts('page load', 10000);
 
   server.call('logout');
 
