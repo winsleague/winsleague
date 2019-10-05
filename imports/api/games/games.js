@@ -298,6 +298,16 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
   isCompleted() {
     return this.status === 'completed';
   },
+
+  winningTeamId() {
+    if (this.isHomeWinner()) {
+      return this.homeTeamId;
+    }
+    if (this.isAwayWinner()) {
+      return this.awayTeamId;
+    }
+    return undefined;
+  },
 });
 
 // Deny all client-side updates since we will be using methods to manage this collection

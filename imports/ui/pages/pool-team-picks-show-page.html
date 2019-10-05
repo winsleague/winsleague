@@ -2,7 +2,13 @@
   {{#if Template.subscriptionsReady}}
     {{> Pools_header poolId=poolId seasonId=seasonId }}
 
-    Games
+    Games<br/><br/>
+
+    Current record: {{currentRecord}}<br/><br/>
+
+    Opponent record of completed games: {{opponentsRecordOfCompletedGames}}<br/><br/>
+
+    Opponent record of upcoming games: {{opponentsRecordOfUpcomingGames}}<br/><br/>
 
     <table class="table" id="game">
       {{#each game in games}}
