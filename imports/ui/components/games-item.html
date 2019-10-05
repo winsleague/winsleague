@@ -1,0 +1,68 @@
+<template name="strongContent">
+  {{#if isStrong}}
+    <strong>{{> Template.contentBlock}}</strong>
+  {{else}}
+    {{> Template.contentBlock}}
+  {{/if}}
+</template>
+
+<Template name="Games_item">
+  {{#if Template.subscriptionsReady}}
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <table class="table" id="game{{game._id}}">
+        <tbody>
+          <tr>
+            <td class="col-xs-6 {{myTeamClass game false}}">
+              {{#strongContent isStrong=game.isAwayWinner}}
+                <span class="avoidwrap">
+                  {{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}
+                </span>
+              {{/strongContent}}
+            </td>
+            <td class="col-xs-1 {{myTeamClass game false}} text-right">
+              {{#if game.showScore}}
+                {{#strongContent isStrong=game.isAwayWinner}}
+                  {{game.awayScore}}
+                {{/strongContent}}
+              {{/if}}
+            </td>
+            <td class="col-xs-1" rowspan="2">&nbsp;</td>
+            <td class="col-xs-4 " rowspan="2" style="vertical-align: middle !important;">
+              {{#strongContent isStrong=game.isCompleted}}
+                {{game.timeStatus}}
+              {{/strongContent}}
+            </td>
+          </tr>
+          <tr>
+            <td class="{{myTeamClass game true}}">
+              {{#strongContent isStrong=game.isHomeWinner}}
+                <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
+              {{/strongContent}}
+            </td>
+            <td class="{{myTeamClass game true}} text-right">
+              {{#if game.showScore}}
+                {{#strongContent isStrong=game.isHomeWinner}}
+                  {{game.homeScore}}
+                {{/strongContent}}
+              {{/if}}
+            </td>
+          </tr>
+
+        {{#if game.interestRatingJustification}}
+          <tr>
+            <td colspan="4" class="text-muted">
+              {{game.interestRatingJustification}}
+            </td>
+          </tr>
+        {{/if}}
+
+        <!-- stupid hack to make sure we get bottom border on table -->
+        <tr style="line-height: 0px; min-height: 0px; height: 0px; !important">
+          <td colspan="4" style="line-height: 0px; min-height: 0px; height: 0px; !important">&nbsp;</td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+</template>

@@ -87,6 +87,12 @@ function todaysGames(seasonId, poolTeamId) {
   });
 }
 
+Meteor.publish('games.single', (gameId) => {
+  check(gameId, Match.Maybe(String));
+
+  return Games.find({ _id: gameId });
+});
+
 Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeamId) {
   check(poolTeamId, Match.Maybe(String));
   if (!poolTeamId) {

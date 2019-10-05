@@ -7,20 +7,9 @@ import { Games } from '../../api/games/games';
 import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
 import { PoolGameInterestRatings } from '../../api/pool_game_interest_ratings/pool_game_interest_ratings';
 
-import './pools-games-to-watch.html';
+import './games-item';
 
-function myTeamClassHelper(leagueTeamId, myScore, theirScore) {
-  if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
-    if (myScore > theirScore) {
-      return 'success';
-    }
-    if (myScore < theirScore) {
-      return 'danger';
-    }
-    return 'info';
-  }
-  return '';
-}
+import './pools-games-to-watch.html';
 
 Template.Pools_games_to_watch.helpers({
   games: () => Games.find(
@@ -35,16 +24,23 @@ Template.Pools_games_to_watch.helpers({
     },
   ),
 
+  gameArgs: (game) => {
+    const {
+      seasonId, poolId, poolTeamId, includeInterestRatings,
+    } = Template.currentData();
+    return {
+      gameId: game._id,
+      seasonId,
+      poolId,
+      poolTeamId,
+      myLeagueTeamIds: Template.instance().getMyLeagueTeamIds(),
+      includeInterestRatings,
+    };
+  },
+
   poolId: () => Template.currentData().poolId,
 
   seasonId: () => Template.currentData().seasonId,
-
-  myTeamClass: (game, isHomeTeam) => {
-    if (isHomeTeam) {
-      return myTeamClassHelper(game.homeTeamId, game.homeScore, game.awayScore);
-    }
-    return myTeamClassHelper(game.awayTeamId, game.awayScore, game.homeScore);
-  },
 
   poolGameInterestRatings: () => {
     const { poolId } = Template.currentData();
@@ -67,7 +63,7 @@ Template.Pools_games_to_watch.onCreated(function () {
   schema.clean(this.data, { mutate: true });
   schema.validate(this.data);
 
-  this.getMyLeagueTeams = () => {
+  this.getMyLeagueTeamIds = () => {
     const poolTeamPicks = PoolTeamPicks.find({
       poolTeamId: this.data.poolTeamId,
     });
