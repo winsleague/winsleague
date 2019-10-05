@@ -2,13 +2,14 @@
   {{#if Template.subscriptionsReady}}
     {{> Pools_header poolId=poolId seasonId=seasonId }}
 
-    Games<br/><br/>
+    <h3>{{friendlyTitle}}</h3>
 
-    Current record: {{currentRecord}}<br/><br/>
+    <br/>
+    <strong>Current record: {{currentRecord}}</strong><br/><br/>
 
-    Opponent record of completed games: {{opponentsRecordOfCompletedGames}}<br/><br/>
+    <strong>Opponent's record of completed games: {{opponentsRecordOfCompletedGames}}</strong><br/><br/>
 
-    Opponent record of upcoming games: {{opponentsRecordOfUpcomingGames}}<br/><br/>
+    <strong>Opponent's record of upcoming games: {{opponentsRecordOfUpcomingGames}}</strong><br/><br/>
 
     <table class="table" id="game">
       {{#each game in games}}
@@ -23,7 +24,8 @@
       {{/each}}
     </table>
 
-    
+    <br/>
+    <a class="btn btn-default" href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamId}}">Back to Team</a>
   {{else}}
     <div>Loading...</div>
   {{/if}}

@@ -151,6 +151,18 @@ PoolTeamPicks.schema = new SimpleSchema({
 PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
 
 PoolTeamPicks.helpers({
+  friendlyTitle() {
+    const poolTeam = PoolTeams.findOne(this.poolTeamId);
+    let title = poolTeam.friendlyTeamName();
+
+    title = `${title} #${this.pickNumber} `;
+
+    const leagueTeam = LeagueTeams.findOne(this.leagueTeamId);
+    title = `${title}${leagueTeam.abbreviation}`;
+
+    return title;
+  },
+
   record() {
     if (this.actualTies > 0) {
       return `${this.actualWins}-${this.actualLosses}-${this.actualTies}`;

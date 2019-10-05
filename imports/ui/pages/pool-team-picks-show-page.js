@@ -73,11 +73,15 @@ const opponentsRecord = (games) => {
 
 
 Template.PoolTeamPicks_show_page.helpers({
+  friendlyTitle: () => Template.instance().getPoolTeamPick().friendlyTitle(),
+
   leagueId: () => Template.instance().getLeagueId(),
 
   seasonId: () => Template.instance().getSeasonId(),
 
   poolId: () => Template.instance().getPoolId(),
+
+  poolTeamId: () => Template.instance().getPoolTeamId(),
 
   leagueTeamName: (leagueTeamId) => {
     const team = LeagueTeams.findOne(leagueTeamId);
@@ -123,6 +127,7 @@ Template.PoolTeamPicks_show_page.onCreated(function () {
   this.getLeagueId = () => _.get(this.getPoolTeamPick(), 'leagueId');
   this.getSeasonId = () => _.get(this.getPoolTeamPick(), 'seasonId');
   this.getLeagueTeamId = () => _.get(this.getPoolTeamPick(), 'leagueTeamId');
+  this.getPoolTeamId = () => _.get(this.getPoolTeamPick(), 'poolTeamId');
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.autorun(() => {
