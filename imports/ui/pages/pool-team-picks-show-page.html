@@ -11,18 +11,13 @@
 
     <strong>Opponent's record of upcoming games: {{opponentsRecordOfUpcomingGames}}</strong><br/><br/>
 
-    <table class="table" id="game">
-      {{#each game in games}}
-        <tr>
-          <td>
-            <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}} {{game.homeScore}}</span>
-          </td>
-          <td>
-            <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}} {{game.awayScore}}</span>
-          </td>
-        </tr>
-      {{/each}}
-    </table>
+    <div class="container">
+      <div class="row">
+        {{#each game in games}}
+          {{> Games_item (gameArgs game)}}
+        {{/each}}
+      </div>
+    </div>
 
     <br/>
     <a class="btn btn-default" href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamId}}">Back to Team</a>

@@ -6,6 +6,7 @@ import log from '../../utils/log';
 import './pool-team-picks-show-page.html';
 
 import '../components/pools-header';
+import '../components/games-item';
 
 import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
 import { LeagueTeams } from '../../api/league_teams/league_teams';
@@ -118,6 +119,13 @@ Template.PoolTeamPicks_show_page.helpers({
   opponentsRecordOfCompletedGames: () => opponentsRecord(completedGames()),
 
   opponentsRecordOfUpcomingGames: () => opponentsRecord(upcomingGames()),
+
+  gameArgs: (game) => ({
+    gameId: game._id,
+    seasonId: Template.instance().getSeasonId(),
+    poolId: Template.instance().getPoolId(),
+    poolTeamId: Template.instance().getPoolTeamId(),
+  }),
 });
 
 Template.PoolTeamPicks_show_page.onCreated(function () {

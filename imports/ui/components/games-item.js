@@ -42,7 +42,8 @@ Template.Games_item.onCreated(function () {
     seasonId: { type: String },
     poolId: { type: String },
     poolTeamId: { type: String, optional: true },
-    myLeagueTeamIds: [String],
+    myLeagueTeamIds: { type: Array, optional: true, defaultValue: [] },
+    'myLeagueTeamIds.$': { type: String },
     includeInterestRatings: { type: Boolean, optional: true, defaultValue: true },
   }).validate(Template.currentData());
 
