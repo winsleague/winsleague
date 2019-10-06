@@ -6,6 +6,14 @@
   {{/if}}
 </template>
 
+<template name="pickLink">
+  {{#if poolTeamPickId}}
+    <a href="{{pathFor 'PoolTeamPicks.show' poolId=poolId poolTeamId=poolTeamId poolTeamPickId=poolTeamPickId}}">{{> Template.contentBlock}}</a>
+  {{else}}
+    {{> Template.contentBlock}}
+  {{/if}}
+</template>
+
 <Template name="Games_item">
   {{#if Template.subscriptionsReady}}
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -14,9 +22,9 @@
           <tr>
             <td class="col-xs-6 {{myTeamClass game false}}">
               {{#strongContent isStrong=game.isAwayWinner}}
-                <span class="avoidwrap">
-                  {{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}
-                </span>
+                {{#pickLink poolId=poolId poolTeamId=poolTeamId poolTeamPickId=awayTeamPickId}}
+                  <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
+                {{/pickLink}}
               {{/strongContent}}
             </td>
             <td class="col-xs-1 {{myTeamClass game false}} text-right">
@@ -36,7 +44,9 @@
           <tr>
             <td class="{{myTeamClass game true}}">
               {{#strongContent isStrong=game.isHomeWinner}}
-                <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
+                {{#pickLink poolId=poolId poolTeamId=poolTeamId poolTeamPickId=homeTeamPickId}}
+                  <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
+                {{/pickLink}}
               {{/strongContent}}
             </td>
             <td class="{{myTeamClass game true}} text-right">

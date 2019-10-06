@@ -26,7 +26,17 @@ Template.Games_item.helpers({
 
   poolId: () => Template.currentData().poolId,
 
-  awayTeamPickId: () => Template.instance().getGame().awayTeamPickId,
+  homeTeamPickId: () => {
+    const { poolId, seasonId } = Template.currentData();
+    const game = Template.instance().getGame();
+    return game.homeTeamPickId(poolId, seasonId);
+  },
+
+  awayTeamPickId: () => {
+    const { poolId, seasonId } = Template.currentData();
+    const game = Template.instance().getGame();
+    return game.awayTeamPickId(poolId, seasonId);
+  },
 
   myTeamClass: (game, isHomeTeam) => {
     if (isHomeTeam) {

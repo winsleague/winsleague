@@ -153,12 +153,24 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
     return '';
   },
 
-  homeTeamPick(poolId, seasonId) {
-    const homePoolTeamPick = PoolTeamPicks.findOne({
+  homePoolTeamPick(poolId, seasonId) {
+    return PoolTeamPicks.findOne({
       seasonId,
       poolId,
       leagueTeamId: this.homeTeamId,
     });
+  },
+
+  homeTeamPickId(poolId, seasonId) {
+    const pick = this.homePoolTeamPick(poolId, seasonId);
+    if (!pick) {
+      return null;
+    }
+    return pick._id;
+  },
+
+  homeTeamPick(poolId, seasonId) {
+    const homePoolTeamPick = this.homePoolTeamPick(poolId, seasonId);
     let homePick = '';
     if (homePoolTeamPick) {
       homePick = `#${homePoolTeamPick.pickNumber} `;
@@ -198,12 +210,24 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
     return '';
   },
 
-  awayTeamPick(poolId, seasonId) {
-    const awayPoolTeamPick = PoolTeamPicks.findOne({
+  awayPoolTeamPick(poolId, seasonId) {
+    return PoolTeamPicks.findOne({
       seasonId,
       poolId,
       leagueTeamId: this.awayTeamId,
     });
+  },
+
+  awayTeamPickId(poolId, seasonId) {
+    const pick = this.awayPoolTeamPick(poolId, seasonId);
+    if (!pick) {
+      return null;
+    }
+    return pick._id;
+  },
+
+  awayTeamPick(poolId, seasonId) {
+    const awayPoolTeamPick = this.homePoolTeamPick(poolId, seasonId);
     let awayPick = '';
     if (awayPoolTeamPick) {
       awayPick = `#${awayPoolTeamPick.pickNumber} `;
