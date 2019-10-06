@@ -153,11 +153,17 @@ PoolTeamPicks.attachSchema(PoolTeamPicks.schema);
 PoolTeamPicks.helpers({
   friendlyTitle() {
     const poolTeam = PoolTeams.findOne(this.poolTeamId);
+    if (!poolTeam) {
+      return null;
+    }
     let title = poolTeam.friendlyTeamName();
 
     title = `${title} #${this.pickNumber} `;
 
     const leagueTeam = LeagueTeams.findOne(this.leagueTeamId);
+    if (!leagueTeam) {
+      return null;
+    }
     title = `${title}${leagueTeam.abbreviation}`;
 
     return title;
