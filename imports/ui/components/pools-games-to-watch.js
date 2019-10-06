@@ -5,6 +5,7 @@ import log from '../../utils/log';
 
 import { Games } from '../../api/games/games';
 import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
 import { PoolGameInterestRatings } from '../../api/pool_game_interest_ratings/pool_game_interest_ratings';
 
 import './games-item';
@@ -64,8 +65,12 @@ Template.Pools_games_to_watch.onCreated(function () {
   schema.validate(this.data);
 
   this.getMyLeagueTeamIds = () => {
+    const poolTeam = PoolTeams.findOne({
+      seasonId: this.data.seasonId,
+      userId: Meteor.userId(),
+    });
     const poolTeamPicks = PoolTeamPicks.find({
-      poolTeamId: this.data.poolTeamId,
+      poolTeamId: _.get(poolTeam, '_id'),
     });
     return poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
   };

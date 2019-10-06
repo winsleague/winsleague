@@ -9,6 +9,7 @@ import '../components/pools-header';
 import '../components/games-item';
 
 import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
 import { LeagueTeams } from '../../api/league_teams/league_teams';
 import { SeasonLeagueTeams } from '../../api/season_league_teams/season_league_teams';
 import { Games } from '../../api/games/games';
@@ -140,8 +141,12 @@ Template.PoolTeamPicks_show_page.onCreated(function () {
   this.getPoolId = () => FlowRouter.getParam('poolId');
 
   this.getMyLeagueTeamIds = () => {
+    const poolTeam = PoolTeams.findOne({
+      seasonId: this.getSeasonId(),
+      userId: Meteor.userId(),
+    });
     const poolTeamPicks = PoolTeamPicks.find({
-      poolTeamId: this.getPoolTeamId(),
+      poolTeamId: _.get(poolTeam, '_id'),
     });
     return poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
   };
