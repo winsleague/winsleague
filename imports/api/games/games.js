@@ -227,7 +227,7 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
   },
 
   awayTeamPick(poolId, seasonId) {
-    const awayPoolTeamPick = this.homePoolTeamPick(poolId, seasonId);
+    const awayPoolTeamPick = this.awayPoolTeamPick(poolId, seasonId);
     let awayPick = '';
     if (awayPoolTeamPick) {
       awayPick = `#${awayPoolTeamPick.pickNumber} `;
