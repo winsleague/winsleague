@@ -6,8 +6,8 @@ import { Games } from '../../api/games/games';
 
 import './games-item.html';
 
-function myTeamClassHelper(leagueTeamId, myScore, theirScore) {
-  if (_.includes(Template.currentData().myLeagueTeams, leagueTeamId)) {
+function myTeamClassHelper(myLeagueTeamIds, leagueTeamId, myScore, theirScore) {
+  if (_.includes(myLeagueTeamIds, leagueTeamId)) {
     if (myScore > theirScore) {
       return 'success';
     }
@@ -40,9 +40,9 @@ Template.Games_item.helpers({
 
   myTeamClass: (game, isHomeTeam) => {
     if (isHomeTeam) {
-      return myTeamClassHelper(game.homeTeamId, game.homeScore, game.awayScore);
+      return myTeamClassHelper(Template.currentData().myLeagueTeamIds, game.homeTeamId, game.homeScore, game.awayScore);
     }
-    return myTeamClassHelper(game.awayTeamId, game.awayScore, game.homeScore);
+    return myTeamClassHelper(Template.currentData().myLeagueTeamIds, game.awayTeamId, game.awayScore, game.homeScore);
   },
 });
 
