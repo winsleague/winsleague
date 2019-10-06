@@ -293,7 +293,9 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
       && gameDate.month() === today.month()
       && gameDate.year() === today.year();
 
-    if (!isGameToday) {
+    if (isGameToday) {
+      date = 'Today';
+    } else {
       date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D');
     }
     return date;

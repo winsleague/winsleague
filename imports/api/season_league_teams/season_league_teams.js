@@ -114,6 +114,13 @@ SeasonLeagueTeams.helpers({
     }
     return `${this.wins}-${this.losses}`;
   },
+
+  winPercentage() {
+    if (this.wins + this.losses + this.ties === 0) {
+      return 'N/A';
+    }
+    return (this.wins / (this.wins + this.losses + this.ties)).toFixed(3);
+  },
 });
 
 SeasonLeagueTeams.deny({
