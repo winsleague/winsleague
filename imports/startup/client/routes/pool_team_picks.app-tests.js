@@ -35,7 +35,7 @@ if (Meteor.isClient) {
 
     describe('Full-app test of PoolTeamPicks.show', () => {
       const page = {
-        getCurrentRecordSelector: () => 'id=currentRecord',
+        getCurrentRecordSelector: () => 'span[id=currentRecord]',
       };
 
       beforeEach(() => afterFlushPromise()
