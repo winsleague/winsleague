@@ -253,18 +253,8 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
     return '';
   },
 
-  friendlyDate() {
-    let date = '';
-
-    const gameDate = moment(this.gameDate).tz('US/Pacific');
-    const today = moment().tz('US/Pacific');
-    const isGameToday = gameDate.date() === today.date()
-      && gameDate.month() === today.month()
-      && gameDate.year() === today.year();
-
-    if (!isGameToday) {
-      date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D, ');
-    }
+  friendlyDateTime() {
+    const date = this.friendlyDate();
 
     const timezoneGuess = moment.tz.guess();
     let time = '';
@@ -275,12 +265,27 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
       const pst = moment(this.gameDate).tz('US/Pacific').format('ha');
       time = `${est} ET / ${pst} PT`;
     }
-    return `${date}${time}`;
+    return `${date}, ${time}`;
+  },
+
+  friendlyDate() {
+    let date = '';
+
+    const gameDate = moment(this.gameDate).tz('US/Pacific');
+    const today = moment().tz('US/Pacific');
+    const isGameToday = gameDate.date() === today.date()
+      && gameDate.month() === today.month()
+      && gameDate.year() === today.year();
+
+    if (!isGameToday) {
+      date = moment(this.gameDate).tz('US/Eastern').format('ddd M/D');
+    }
+    return date;
   },
 
   timeStatus() {
     if (this.status === 'scheduled') {
-      return this.friendlyDate();
+      return this.friendlyDateTime();
     }
     if (this.status === 'in progress') {
       if (this.quarter) {
@@ -296,7 +301,7 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
         return `${topBottom} ${ordinalSuffixOf(this.inning)}`;
       }
     }
-    return 'Final';
+    return `Final on ${this.friendlyDate()}`;
   },
 
   showScore() {
