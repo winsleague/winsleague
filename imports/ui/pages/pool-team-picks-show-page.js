@@ -67,10 +67,30 @@ const opponentsRecord = (games) => {
     ties += seasonLeagueTeam.ties;
   });
 
+  return {
+    wins,
+    losses,
+    ties,
+  };
+};
+
+const friendlyRecord = (record) => {
+  const { wins, losses, ties } = record;
+
   if (ties === 0) {
     return `${wins}-${losses}`;
   }
   return `${wins}-${losses}-${ties}`;
+};
+
+const friendlyWinPercentage = (record) => {
+  const { wins, losses, ties } = record;
+
+  if (wins + losses + ties === 0) {
+    return 'N/A';
+  }
+
+  return (wins / (wins + losses + ties)).toFixed(3);
 };
 
 
@@ -117,9 +137,22 @@ Template.PoolTeamPicks_show_page.helpers({
     return seasonLeagueTeam.record();
   },
 
-  opponentsRecordOfCompletedGames: () => opponentsRecord(completedGames()),
+  currentWinPercentage: () => {
+    const seasonLeagueTeam = SeasonLeagueTeams.findOne({
+      seasonId: Template.instance().getSeasonId(),
+      leagueTeamId: Template.instance().getLeagueTeamId(),
+    });
 
-  opponentsRecordOfUpcomingGames: () => opponentsRecord(upcomingGames()),
+    return seasonLeagueTeam.winPercentage();
+  },
+
+  opponentsRecordOfCompletedGames: () => friendlyRecord(opponentsRecord(completedGames())),
+
+  opponentsWinPercentageOfCompletedGames: () => friendlyWinPercentage(opponentsRecord(completedGames())),
+
+  opponentsRecordOfUpcomingGames: () => friendlyRecord(opponentsRecord(upcomingGames())),
+
+  opponentsWinPercentageOfUpcomingGames: () => friendlyWinPercentage(opponentsRecord(upcomingGames())),
 
   gameArgs: (game) => ({
     gameId: game._id,
