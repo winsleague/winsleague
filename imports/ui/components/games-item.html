@@ -22,7 +22,7 @@
           <tr>
             <td class="col-xs-6 {{myTeamClass game false}}">
               {{#strongContent isStrong=game.isAwayWinner}}
-                {{#pickLink poolId=poolId poolTeamId=poolTeamId poolTeamPickId=awayTeamPickId}}
+                {{#pickLink poolId=poolId poolTeamId=awayPoolTeamId poolTeamPickId=awayTeamPickId}}
                   <span class="avoidwrap">{{game.awayTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.awayTeamPick poolId seasonId}}</span>
                 {{/pickLink}}
               {{/strongContent}}
@@ -44,7 +44,7 @@
           <tr>
             <td class="{{myTeamClass game true}}">
               {{#strongContent isStrong=game.isHomeWinner}}
-                {{#pickLink poolId=poolId poolTeamId=poolTeamId poolTeamPickId=homeTeamPickId}}
+                {{#pickLink poolId=poolId poolTeamId=homePoolTeamId poolTeamPickId=homeTeamPickId}}
                   <span class="avoidwrap">{{game.homeTeamOwner poolId seasonId}}</span> <span class="avoidwrap">{{game.homeTeamPick poolId seasonId}}</span>
                 {{/pickLink}}
               {{/strongContent}}

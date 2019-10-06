@@ -28,7 +28,6 @@ group.route('/new', {
 // http://app.com/pools/:poolId/teams/:poolTeamId/picks/:poolTeamPickId
 group.route('/:poolTeamPickId', {
   name: 'PoolTeamPicks.show',
-  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params) {
     log.debug(`We're showing a pool team pick: ${params.poolTeamId} and ${params.poolTeamPickId}`);
     BlazeLayout.render('App_body', { content: 'PoolTeamPicks_show_page' });

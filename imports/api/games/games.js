@@ -169,6 +169,14 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
     return pick._id;
   },
 
+  homePoolTeamId(poolId, seasonId) {
+    const pick = this.homePoolTeamPick(poolId, seasonId);
+    if (!pick) {
+      return null;
+    }
+    return pick.poolTeamId;
+  },
+
   homeTeamPick(poolId, seasonId) {
     const homePoolTeamPick = this.homePoolTeamPick(poolId, seasonId);
     let homePick = '';
@@ -224,6 +232,14 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
       return null;
     }
     return pick._id;
+  },
+
+  awayPoolTeamId(poolId, seasonId) {
+    const pick = this.awayPoolTeamPick(poolId, seasonId);
+    if (!pick) {
+      return null;
+    }
+    return pick.poolTeamId;
   },
 
   awayTeamPick(poolId, seasonId) {

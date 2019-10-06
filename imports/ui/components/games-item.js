@@ -26,6 +26,18 @@ Template.Games_item.helpers({
 
   poolId: () => Template.currentData().poolId,
 
+  homePoolTeamId: () => {
+    const { poolId, seasonId } = Template.currentData();
+    const game = Template.instance().getGame();
+    return game.homePoolTeamId(poolId, seasonId);
+  },
+
+  awayPoolTeamId: () => {
+    const { poolId, seasonId } = Template.currentData();
+    const game = Template.instance().getGame();
+    return game.awayPoolTeamId(poolId, seasonId);
+  },
+
   homeTeamPickId: () => {
     const { poolId, seasonId } = Template.currentData();
     const game = Template.instance().getGame();
