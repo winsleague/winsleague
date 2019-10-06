@@ -30,7 +30,7 @@ function relevantNflWeek(seasonId) {
   return Math.round((daysSinceStart - 2) / 7) + 1;
 }
 
-function relevantNflGames(seasonId, poolTeamId) {
+function releventNflGames(seasonId, poolTeamId) {
   const week = relevantNflWeek(seasonId);
 
   if (!week) {
@@ -39,28 +39,58 @@ function relevantNflGames(seasonId, poolTeamId) {
 
   log.info(`Upcoming games are in week ${week} for season ${seasonId}`);
 
-  const myTeams = myLeagueTeams(poolTeamId);
-
+  if (poolTeamId) {
+    const myTeams = myLeagueTeams(poolTeamId);
+    return Games.find({
+      seasonId,
+      week,
+      $or: [
+        {
+          homeTeamId: { $in: myTeams },
+        },
+        {
+          awayTeamId: { $in: myTeams },
+        },
+      ],
+    });
+  }
   return Games.find({
     seasonId,
     week,
-    $or: [
-      {
-        homeTeamId: { $in: myTeams },
-      },
-      {
-        awayTeamId: { $in: myTeams },
-      },
-    ],
   });
 }
 
 function todaysGames(seasonId, poolTeamId) {
-  const myTeams = myLeagueTeams(poolTeamId);
-
   const today = moment().tz('US/Pacific').startOf('day').toDate();
   const tomorrow = moment().tz('US/Pacific').startOf('day').add(1, 'days')
     .toDate();
+
+  if (poolTeamId) {
+    const myTeams = myLeagueTeams(poolTeamId);
+    return Games.find({
+      seasonId,
+      $and: [
+        {
+          gameDate: {
+            $gte: today,
+          },
+        },
+        {
+          gameDate: {
+            $lt: tomorrow,
+          },
+        },
+      ],
+      $or: [
+        {
+          homeTeamId: { $in: myTeams },
+        },
+        {
+          awayTeamId: { $in: myTeams },
+        },
+      ],
+    });
+  }
 
   return Games.find({
     seasonId,
@@ -76,41 +106,52 @@ function todaysGames(seasonId, poolTeamId) {
         },
       },
     ],
-    $or: [
-      {
-        homeTeamId: { $in: myTeams },
-      },
-      {
-        awayTeamId: { $in: myTeams },
-      },
-    ],
   });
 }
 
-Meteor.publish('myGames.ofPoolTeam', function relevantGamesOfPoolTeamId(poolTeamId) {
+Meteor.publish('games.single', (gameId) => {
+  check(gameId, String);
+
+  return Games.find({ _id: gameId });
+});
+
+Meteor.publish('games.ofSeason', (seasonId, poolTeamId) => {
+  check(seasonId, String);
   check(poolTeamId, Match.Maybe(String));
-  if (!poolTeamId) {
+  if (!seasonId) {
     return this.ready();
   }
 
   const nflLeagueId = LeagueFinder.getIdByName('NFL');
 
-  const poolTeam = PoolTeams.findOne(poolTeamId);
-  if (!poolTeam) {
-    log.error('myGames.ofPoolTeam: Cannot find PoolTeam ', poolTeamId);
+  const season = Seasons.findOne(seasonId);
+  if (!season) {
+    log.error('games.ofSeason: Cannot find Pool ', seasonId);
     return this.ready();
   }
 
-  const { seasonId, poolId } = poolTeam;
-
-  const pool = Pools.findOne(poolId);
-  if (!pool) {
-    log.error('myGames.ofPoolTeam: Cannot find Pool ', poolId);
-    return this.ready();
-  }
-
-  if (pool.leagueId === nflLeagueId) {
-    return relevantNflGames(seasonId, poolTeamId);
+  if (season.leagueId === nflLeagueId) {
+    return releventNflGames(seasonId, poolTeamId);
   }
   return todaysGames(seasonId, poolTeamId);
+});
+
+Meteor.publish('games.ofSeasonLeagueTeam', (seasonId, leagueTeamId) => {
+  check(seasonId, String);
+  check(leagueTeamId, String);
+  if (!seasonId || !leagueTeamId) {
+    return this.ready();
+  }
+
+  return Games.find({
+    seasonId,
+    $or: [
+      {
+        homeTeamId: leagueTeamId,
+      },
+      {
+        awayTeamId: leagueTeamId,
+      },
+    ],
+  });
 });

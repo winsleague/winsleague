@@ -1,0 +1,27 @@
+<template name="PoolTeamPicks_show_page">
+  {{#if Template.subscriptionsReady}}
+    {{> Pools_header poolId=poolId seasonId=seasonId }}
+
+    <h3>{{friendlyTitle}}</h3>
+
+    <br/>
+    <strong>Current record: <span id="currentRecord">{{currentRecord}}</span></strong><br/><br/>
+
+    <strong>Opponent's record of completed games: {{opponentsRecordOfCompletedGames}}</strong><br/><br/>
+
+    <strong>Opponent's record of upcoming games: {{opponentsRecordOfUpcomingGames}}</strong><br/><br/>
+
+    <div class="container">
+      <div class="row">
+        {{#each game in games}}
+          {{> Games_item (gameArgs game)}}
+        {{/each}}
+      </div>
+    </div>
+
+    <br/>
+    <a class="btn btn-default" href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeamId}}">Back to Team</a>
+  {{else}}
+    <div>Loading...</div>
+  {{/if}}
+</template>

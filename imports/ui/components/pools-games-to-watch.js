@@ -5,22 +5,12 @@ import log from '../../utils/log';
 
 import { Games } from '../../api/games/games';
 import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
+import { PoolTeams } from '../../api/pool_teams/pool_teams';
 import { PoolGameInterestRatings } from '../../api/pool_game_interest_ratings/pool_game_interest_ratings';
 
-import './pools-games-to-watch.html';
+import './games-item';
 
-function myTeamClassHelper(leagueTeamId, myScore, theirScore) {
-  if (_.includes(Template.instance().getMyLeagueTeams(), leagueTeamId)) {
-    if (myScore > theirScore) {
-      return 'success';
-    }
-    if (myScore < theirScore) {
-      return 'danger';
-    }
-    return 'info';
-  }
-  return '';
-}
+import './pools-games-to-watch.html';
 
 Template.Pools_games_to_watch.helpers({
   games: () => Games.find(
@@ -35,16 +25,23 @@ Template.Pools_games_to_watch.helpers({
     },
   ),
 
+  gameArgs: (game) => {
+    const {
+      seasonId, poolId, poolTeamId, includeInterestRatings,
+    } = Template.currentData();
+    return {
+      gameId: game._id,
+      seasonId,
+      poolId,
+      poolTeamId,
+      myLeagueTeamIds: Template.instance().getMyLeagueTeamIds(),
+      includeInterestRatings,
+    };
+  },
+
   poolId: () => Template.currentData().poolId,
 
   seasonId: () => Template.currentData().seasonId,
-
-  myTeamClass: (game, isHomeTeam) => {
-    if (isHomeTeam) {
-      return myTeamClassHelper(game.homeTeamId, game.homeScore, game.awayScore);
-    }
-    return myTeamClassHelper(game.awayTeamId, game.awayScore, game.homeScore);
-  },
 
   poolGameInterestRatings: () => {
     const { poolId } = Template.currentData();
@@ -67,17 +64,21 @@ Template.Pools_games_to_watch.onCreated(function () {
   schema.clean(this.data, { mutate: true });
   schema.validate(this.data);
 
-  this.getMyLeagueTeams = () => {
+  this.getMyLeagueTeamIds = () => {
+    const poolTeam = PoolTeams.findOne({
+      seasonId: this.data.seasonId,
+      userId: Meteor.userId(),
+    });
     const poolTeamPicks = PoolTeamPicks.find({
-      poolTeamId: this.data.poolTeamId,
+      poolTeamId: _.get(poolTeam, '_id'),
     });
     return poolTeamPicks.map((poolTeamPick) => poolTeamPick.leagueTeamId);
   };
 
   this.autorun(() => {
     this.subscribe('seasonLeagueTeams.ofLeagueSeason', this.data.leagueId, this.data.seasonId, () => {
-      this.subscribe('myGames.ofPoolTeam', this.data.poolTeamId, () => {
-        log.debug(`myGames.ofPoolTeam subscription ready: ${Games.find().count()}`);
+      this.subscribe('games.ofSeason', this.data.seasonId, this.data.poolTeamId, () => {
+        log.debug(`games.ofSeason subscription ready: ${Games.find().count()}`);
       });
 
       this.subscribe('poolTeams.ofPool', this.data.poolId, this.data.seasonId);
