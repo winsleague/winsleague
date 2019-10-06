@@ -35,7 +35,7 @@ if (Meteor.isClient) {
 
     describe('Full-app test of PoolTeamPicks.show', () => {
       const page = {
-        getGameSelector: (gameId) => `table[id="game${gameId}"]`,
+        getCurrentRecordSelector: () => 'id=currentRecord',
       };
 
       beforeEach(() => afterFlushPromise()
@@ -54,10 +54,9 @@ if (Meteor.isClient) {
         .then(() => afterFlushPromise())
         .then(waitForSubscriptions));
 
-      it('has the game row selector', () => afterFlushPromise()
+      it('has the current record', () => afterFlushPromise()
         .then(() => {
-          const game = Games.findOne();
-          expect($(page.getGameSelector(game._id))).to.exist;
+          expect($(page.getCurrentRecordSelector())).to.exist;
         }));
     });
   });
