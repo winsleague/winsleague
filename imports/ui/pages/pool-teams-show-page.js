@@ -48,6 +48,11 @@ Template.PoolTeams_show_page.helpers({
     return '';
   },
 
+  friendlyPointsMetric: (pointsMetric) => {
+    if (pointsMetric === 'losses') return '(L)';
+    return '';
+  },
+
   roundedPickQuality: (pickQuality) => pickQuality.toFixed(1),
 });
 

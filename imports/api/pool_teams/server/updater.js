@@ -163,7 +163,8 @@ export default {
     const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
     picks.forEach((poolTeamPick) => {
       const leagueTeam = LeagueTeams.findOne(poolTeamPick.leagueTeamId);
-      teamSummary += `${leagueTeam.abbreviation}, `;
+      const friendlyPointsMetric = (poolTeamPick.pointsMetric === 'wins' ? '' : ' (L)');
+      teamSummary += `${leagueTeam.abbreviation}${friendlyPointsMetric}, `;
     });
     if (teamSummary.length > 0) {
       teamSummary = teamSummary.substr(0, teamSummary.length - 2);
