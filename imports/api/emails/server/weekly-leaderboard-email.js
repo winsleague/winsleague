@@ -32,7 +32,7 @@ export default {
       seasonId,
     }, {
       sort: {
-        totalWins: -1,
+        totalPoints: -1,
         totalPlusMinus: -1,
       },
     });

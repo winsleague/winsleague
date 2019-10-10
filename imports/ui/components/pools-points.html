@@ -1,13 +1,13 @@
-<template name="Pools_wins">
+<template name="Pools_points">
   <h3 class="Pools_show">{{{title}}}</h3>
 
   <div class="table-responsive">
-    <table class="table table-striped table-bordered" id="Pools_wins">
+    <table class="table table-striped table-bordered" id="Pools_points">
       <thead>
         <tr>
           <th class="col-xs-3">Player</th>
           <th class="col-xs-4">Teams</th>
-          <th class="col-xs-2">W</th>
+          <th class="col-xs-2">Pts</th>
           <th class="col-xs-2">GP</th>
           <th class="col-xs-1">+/-</th>
         </tr>
@@ -19,7 +19,7 @@
               <a href="{{pathFor 'PoolTeams.show' poolId=poolId poolTeamId=poolTeam._id}}" class="PoolTeams_show">{{poolTeam.friendlyTeamName}}</a>
             </td>
             <td>{{poolTeam.teamSummary}}</td>
-            <td>{{poolTeam.totalWins}}</td>
+            <td>{{poolTeam.totalPoints}}</td>
             <td>{{poolTeam.totalGames}}</td>
             <td>{{poolTeam.totalPlusMinus}}</td>
           </tr>

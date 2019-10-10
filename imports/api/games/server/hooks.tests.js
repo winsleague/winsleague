@@ -34,7 +34,7 @@ describe('Game hooks', function() {
       const poolTeam = PoolTeams.findOne(poolTeamPick.poolTeamId);
       log.debug('poolTeam:', poolTeam);
 
-      assert.equal(poolTeam.totalWins, 1, 'totalWins');
+      assert.equal(poolTeam.totalPoints, 1, 'totalPoints');
       assert.equal(poolTeam.totalGames, 1, 'totalGames');
       assert.equal(poolTeam.totalPlusMinus, 7, 'totalPlusMinus');
     });
