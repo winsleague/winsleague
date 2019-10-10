@@ -9,7 +9,6 @@
   ],
   "dependencies": {
     "mute": [
-      "chimp",
       "winston",
       "winston-loggly-bulk"
     ],

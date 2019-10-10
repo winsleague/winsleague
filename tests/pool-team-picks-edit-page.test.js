@@ -1,4 +1,4 @@
-// These are Chimp globals */
+// These are Chimpy globals */
 /* globals browser assert */
 
 import {
