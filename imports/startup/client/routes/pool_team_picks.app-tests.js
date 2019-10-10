@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import 'chai-jquery';
 import { $ } from 'meteor/jquery';
 import log from '../../../utils/log';
@@ -13,7 +13,6 @@ import { generateData } from '../../../api/generate-data.app-tests';
 import { Pools } from '../../../api/pools/pools';
 import { PoolTeams } from '../../../api/pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../../api/pool_team_picks/pool_team_picks';
-import { Games } from '../../../api/games/games';
 
 if (Meteor.isClient) {
   describe('Full-app test of PoolTeamPicks', function () {

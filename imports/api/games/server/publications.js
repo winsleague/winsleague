@@ -4,8 +4,6 @@ import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
 import { Games } from '../games';
-import { Pools } from '../../pools/pools';
-import { PoolTeams } from '../../pool_teams/pool_teams';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 import { Seasons } from '../../seasons/seasons';
 import LeagueFinder from '../../leagues/finder';
