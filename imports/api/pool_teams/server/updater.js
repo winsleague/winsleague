@@ -54,7 +54,7 @@ export default {
         if (poolTeamPick.pointsMetric === 'wins') {
           totalPoints += seasonLeagueTeam.wins;
         } else {
-          totalPoints += SeasonLeagueTeams.losses;
+          totalPoints += seasonLeagueTeam.losses;
         }
         totalWins += seasonLeagueTeam.wins;
         totalLosses += seasonLeagueTeam.losses;
