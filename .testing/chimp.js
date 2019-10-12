@@ -26,16 +26,16 @@ var startTestApp = function(onStarted, options) {
 
 var startChimpWatch = function() {
   processes.start({
-    name: 'Chimp Watch',
-    command: './node_modules/.bin/chimp --ddp=http://localhost:3100 --watch --path=tests --mocha --chai --browser=chrome',
+    name: 'Chimpy Watch',
+    command: './node_modules/.bin/chimpy --ddp=http://localhost:3100 --watch --path=tests --mocha --chai --browser=chrome',
     options: { cwd: baseDir }
   });
 };
 
 var startChimpCi = function() {
-  var command = './node_modules/.bin/chimp --ddp=http://localhost:3100 --path=tests --browser=chrome --mocha --chai';
+  var command = './node_modules/.bin/chimpy --ddp=http://localhost:3100 --path=tests --browser=chrome --mocha --chai';
   processes.start({
-    name: 'Chimp CI',
+    name: 'Chimpy CI',
     command: command,
     options: { cwd: baseDir }
   });
