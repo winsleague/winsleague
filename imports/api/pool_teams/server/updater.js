@@ -28,6 +28,7 @@ export default {
     log.info('Updating PoolTeam record', poolTeamId);
 
     let totalPoints = 0;
+    let totalLostPoints = 0;
     let totalWins = 0;
     let totalLosses = 0;
     let totalGames = 0;
@@ -53,8 +54,10 @@ export default {
 
         if (poolTeamPick.pointsMetric === 'wins') {
           totalPoints += seasonLeagueTeam.wins;
+          totalLostPoints += seasonLeagueTeam.losses;
         } else {
           totalPoints += seasonLeagueTeam.losses;
+          totalLostPoints += seasonLeagueTeam.wins;
         }
         totalWins += seasonLeagueTeam.wins;
         totalLosses += seasonLeagueTeam.losses;
@@ -72,6 +75,7 @@ export default {
       {
         $set: {
           totalPoints,
+          totalLostPoints,
           totalWins,
           totalLosses,
           totalGames,
@@ -81,7 +85,7 @@ export default {
         },
       },
     );
-    log.debug(`PoolTeams.update ${poolTeamId} with totalPoints: ${totalPoints}, `
+    log.debug(`PoolTeams.update ${poolTeamId} with totalPoints: ${totalPoints}, totalLostPoints: ${totalLostPoints}, `
       + `totalWins: ${totalWins}, totalLosses: ${totalLosses}, `
       + `totalPlusMins: ${totalPlusMinus}, `
       + `closeWins: ${closeWins}, closeLosses: ${closeLosses}, `

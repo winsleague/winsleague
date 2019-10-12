@@ -62,6 +62,10 @@ PoolTeams.schema = new SimpleSchema({
     type: SimpleSchema.Integer,
     defaultValue: 0,
   },
+  totalLostPoints: {
+    type: SimpleSchema.Integer,
+    defaultValue: 0,
+  },
   totalWins: {
     type: SimpleSchema.Integer,
     defaultValue: 0,

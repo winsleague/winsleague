@@ -21,12 +21,13 @@ Migrations.add({
         {
           $set: {
             totalPoints: poolTeam.totalWins,
+            totalLostPoints: poolTeam.totalLosses,
           },
         });
     });
   },
   down: () => {
-    PoolTeams.direct.update({}, { $unset: { totalPoints: '' } }, { multi: true });
-    PoolTeamPicks.direct.update({}, { $unset: { totalPoints: '', pointsMetric: '' } }, { multi: true });
+    PoolTeams.direct.update({}, { $unset: { totalPoints: '', totalLostPoints: '' } }, { multi: true });
+    PoolTeamPicks.direct.update({}, { $unset: { totalPoints: '', totalLostPoints: '', pointsMetric: '' } }, { multi: true });
   },
 });

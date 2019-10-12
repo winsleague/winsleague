@@ -9,19 +9,19 @@
 
         {{> Pools_records_pool_users_most_all_time
           poolId=poolId
-          recordTitle="Most Wins, All Time"
-          metricTitle="Wins"
-          metricField="totalWins"
-          collectionName="pool_users_most_wins_all_time"
+          recordTitle="Most Points, All Time"
+          metricTitle="Points"
+          metricField="totalPoints"
+          collectionName="pool_users_most_points_all_time"
           sort=-1
         }}
 
         {{> Pools_records_pool_users_most_all_time
           poolId=poolId
-          recordTitle="Most Losses, All Time"
-          metricTitle="Losses"
-          metricField="totalLosses"
-          collectionName="pool_users_most_losses_all_time"
+          recordTitle="Most Lost Points, All Time"
+          metricTitle="Points"
+          metricField="totalLostPoints"
+          collectionName="pool_users_most_lost_points_all_time"
           sort=-1
         }}
 
@@ -124,20 +124,20 @@
 
         {{> Pools_records_pool_teams_most_season
           poolId=poolId
-          recordTitle="Most Wins, Season"
-          metricTitle="Wins"
-          metricField="totalWins"
+          recordTitle="Most Points, Season"
+          metricTitle="Points"
+          metricField="totalPoints"
           sort=-1
           tableId="pool_teams_most_wins_season"
         }}
 
         {{> Pools_records_pool_teams_most_season
           poolId=poolId
-          recordTitle="Most Losses, Season"
-          metricTitle="Losses"
-          metricField="totalLosses"
-          sort=-1
-          tableId="pool_teams_most_losses_season"
+          recordTitle="Fewest Points, Season"
+          metricTitle="Points"
+          metricField="totalPoints"
+          sort=1
+          tableId="pool_teams_fewest_points_season"
         }}
 
         {{> Pools_records_pool_team_picks_most_season
