@@ -24,7 +24,7 @@ export default {
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url, {
-      headers: { 'user-agent': 'Meteor/1.4 (https://github.com/winsleague/winsleague)' },
+      headers: { 'user-agent': 'Meteor/1.8 (https://github.com/winsleague/winsleague)' },
     });
     const parsedJSON = JSON.parse(response.content);
 
