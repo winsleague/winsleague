@@ -27,6 +27,8 @@ export default {
   updatePoolTeamRecord(poolTeamId) {
     log.info('Updating PoolTeam record', poolTeamId);
 
+    let totalPoints = 0;
+    let totalLostPoints = 0;
     let totalWins = 0;
     let totalLosses = 0;
     let totalGames = 0;
@@ -50,6 +52,13 @@ export default {
           },
         });
 
+        if (poolTeamPick.pointsMetric === 'wins') {
+          totalPoints += seasonLeagueTeam.wins;
+          totalLostPoints += seasonLeagueTeam.losses;
+        } else {
+          totalPoints += seasonLeagueTeam.losses;
+          totalLostPoints += seasonLeagueTeam.wins;
+        }
         totalWins += seasonLeagueTeam.wins;
         totalLosses += seasonLeagueTeam.losses;
         totalGames += seasonLeagueTeam.totalGames();
@@ -65,6 +74,8 @@ export default {
       poolTeamId,
       {
         $set: {
+          totalPoints,
+          totalLostPoints,
           totalWins,
           totalLosses,
           totalGames,
@@ -74,7 +85,8 @@ export default {
         },
       },
     );
-    log.debug(`PoolTeams.update ${poolTeamId} with totalWins: ${totalWins}, totalLosses: ${totalLosses}, `
+    log.debug(`PoolTeams.update ${poolTeamId} with totalPoints: ${totalPoints}, totalLostPoints: ${totalLostPoints}, `
+      + `totalWins: ${totalWins}, totalLosses: ${totalLosses}, `
       + `totalPlusMins: ${totalPlusMinus}, `
       + `closeWins: ${closeWins}, closeLosses: ${closeLosses}, `
       + `numberAffected: ${numberAffected}`);
@@ -155,7 +167,8 @@ export default {
     const picks = PoolTeamPicks.find({ poolTeamId }, { sort: { pickNumber: 1 } });
     picks.forEach((poolTeamPick) => {
       const leagueTeam = LeagueTeams.findOne(poolTeamPick.leagueTeamId);
-      teamSummary += `${leagueTeam.abbreviation}, `;
+      const friendlyPointsMetric = (poolTeamPick.pointsMetric === 'wins' ? '' : ' (L)');
+      teamSummary += `${leagueTeam.abbreviation}${friendlyPointsMetric}, `;
     });
     if (teamSummary.length > 0) {
       teamSummary = teamSummary.substr(0, teamSummary.length - 2);

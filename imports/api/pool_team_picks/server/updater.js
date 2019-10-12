@@ -32,7 +32,8 @@ export default {
 
     const expectedWins = (gamesPlayed / seasonGameCount) * expectedWinsFullSeason;
 
-    const pickQuality = actualWins - expectedWins;
+    let pickQuality = actualWins - expectedWins;
+    if (poolTeamPick.pointsMetric === 'losses') pickQuality *= -1;
 
     const plusMinus = _.get(seasonLeagueTeam, 'pointsFor', 0) - _.get(seasonLeagueTeam, 'pointsAgainst', 0);
 

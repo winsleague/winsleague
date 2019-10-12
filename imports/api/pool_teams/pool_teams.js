@@ -58,6 +58,14 @@ PoolTeams.schema = new SimpleSchema({
     type: String,
     defaultValue: '',
   },
+  totalPoints: {
+    type: SimpleSchema.Integer,
+    defaultValue: 0,
+  },
+  totalLostPoints: {
+    type: SimpleSchema.Integer,
+    defaultValue: 0,
+  },
   totalWins: {
     type: SimpleSchema.Integer,
     defaultValue: 0,

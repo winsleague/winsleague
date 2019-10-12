@@ -10,7 +10,7 @@ import { Pools } from '../../pools/pools';
 import { PoolTeamPicks } from '../../pool_team_picks/pool_team_picks';
 
 import TopPicks from './calculators/top-picks';
-import PoolTeamsTotalWins from './calculators/pool-teams-total-wins';
+import PoolTeamsTotalPoints from './calculators/pool-teams-total-points';
 import LeagueTeamsRecentWins from './calculators/league-teams-recent-wins';
 
 export default {
@@ -113,7 +113,7 @@ because of ${result.justification}`);
   calculators() {
     return [
       TopPicks,
-      PoolTeamsTotalWins,
+      PoolTeamsTotalPoints,
       LeagueTeamsRecentWins,
     ];
   },

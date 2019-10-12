@@ -7,16 +7,16 @@ import log from '../../utils/log';
 import { Pools } from '../../api/pools/pools';
 import { PoolTeams } from '../../api/pool_teams/pool_teams';
 
-import './pools-wins.html';
+import './pools-points.html';
 
-Template.Pools_wins.helpers({
+Template.Pools_points.helpers({
   poolTeams: () => {
     const { seasonId } = Template.currentData();
     const { poolId } = Template.currentData();
     return PoolTeams.find({ poolId, seasonId }, {
       sort: {
-        totalWins: -1,
-        totalGames: 1, // if two teams are tied in wins,
+        totalPoints: -1,
+        totalGames: 1, // if two teams are tied in points,
         // rank the one with fewest games played higher
         totalPlusMinus: -1,
         userTeamName: 1, // just in case everyone is tied, let's sort predictably
@@ -44,9 +44,9 @@ Template.Pools_wins.helpers({
   },
 });
 
-Template.Pools_wins.onCreated(function () {
+Template.Pools_points.onCreated(function () {
   const schema = new SimpleSchema({
-    title: { type: String, optional: true, defaultValue: 'Wins Leaderboard' },
+    title: { type: String, optional: true, defaultValue: 'Leaderboard' },
     linkTitle: { type: Boolean, optional: true, defaultValue: false },
     poolId: { type: String },
     seasonId: { type: String },

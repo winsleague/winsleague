@@ -16,6 +16,7 @@ Template.Pools_pick_quality.helpers({
   poolTeamPicks: () => {
     const { poolId, seasonId } = Template.currentData();
     return PoolTeamPicks.find({ seasonId, poolId }, {
+      pointsMetric: 'wins',
       sort: { pickQuality: Template.currentData().sort },
       limit: 5,
     });

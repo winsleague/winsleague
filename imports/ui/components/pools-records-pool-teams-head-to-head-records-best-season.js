@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
 import SimpleSchema from 'simpl-schema';
-import { _ } from 'lodash';
 
 import { PoolTeamHeadToHeadRecords } from '../../api/pool_team_head_to_head_records/pool_team_head_to_head_records';
 

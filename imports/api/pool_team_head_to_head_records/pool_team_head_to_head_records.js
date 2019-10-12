@@ -1,9 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
-import { Pools } from '../pools/pools';
 import { PoolTeams } from '../pool_teams/pool_teams';
-import SeasonFinder from '../seasons/finder';
+import { Seasons } from '../seasons/seasons';
 
 export const PoolTeamHeadToHeadRecords = new Mongo.Collection('pool_team_head_to_head_records');
 

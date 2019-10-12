@@ -42,6 +42,7 @@ describe('Pool Teams Updater', function () {
       poolTeam = PoolTeams.findOne(poolTeam._id);
       log.debug('poolTeam:', poolTeam);
 
+      assert.equal(poolTeam.totalPoints, 1, 'totalPoints');
       assert.equal(poolTeam.totalWins, 1, 'totalWins');
       assert.equal(poolTeam.totalGames, 1, 'totalGames');
       assert.equal(poolTeam.totalPlusMinus, 7, 'totalPlusMinus');

@@ -86,6 +86,20 @@ PoolTeamPicks.schema = new SimpleSchema({
       },
     },
   },
+  pointsMetric: {
+    type: String,
+    allowedValues: ['wins', 'losses'],
+    defaultValue: 'wins',
+    label: 'Points metric',
+    autoform: {
+      afFieldInput: {
+        options: () => [
+          { label: 'Wins', value: 'wins' },
+          { label: 'Losses', value: 'losses' },
+        ],
+      },
+    },
+  },
   actualWins: {
     type: SimpleSchema.Integer,
     defaultValue: 0,
