@@ -9,8 +9,8 @@ jobs:
       LC_ALL: C.UTF-8
     
     docker:
-      - image: abernix/meteord:node-8.11.2-base
-      - image: circleci/mongo:3.4.5
+      - image: abernix/meteord:node-8.11.3-base
+      - image: circleci/mongo:3.6.4
         command: --port 3001
 
     steps:
@@ -71,7 +71,14 @@ jobs:
           name: Restore Yarn package cache
           key: yarn-packages-{{ checksum "yarn.lock" }}-{{ checksum "circle.yml" }}
 
-      - run: 
+      - run:
+          name: Install and configure Greenkeeper Lockfile
+          command: |
+            yarn global add greenkeeper-lockfile@1
+            greenkeeper-lockfile-update
+            echo 'Installed greenkeeper-lockfile and ran greenkeeper-lockfile-update'
+
+      - run:
           name: Install Yarn packages
           command: yarn install --frozen-lockfile
 
@@ -81,8 +88,8 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ~/node_modules
-            - /opt/circleci/nodejs/v8.11.2/lib/node_modules
             - /opt/circleci/nodejs/v8.11.4/lib/node_modules
+            - /opt/circleci/nodejs/v8.11.3/lib/node_modules
 
       - restore_cache:
           name: Restore Meteor release cache
@@ -115,6 +122,10 @@ jobs:
 
       - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
     
+      - run:
+          name: Greenkeeper Lockfile Upload
+          command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then greenkeeper-lockfile-upload; fi
+
       - store_artifacts:
           path: node_cache/_logs
       - store_artifacts:
@@ -128,7 +139,7 @@ jobs:
       METEOR_ALLOW_SUPERUSER: 1
 
     docker:
-      - image: abernix/meteord:node-8.11.2-base
+      - image: abernix/meteord:node-8.11.3-base
       
     steps:
       - checkout
@@ -157,7 +168,7 @@ jobs:
 
       - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
-      - run: yarn global add mup@1.4.5 # install meteor-up for deployment
+      - run: yarn global add mup@1.4.6
       - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy)
       - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
 
