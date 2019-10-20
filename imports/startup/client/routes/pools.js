@@ -11,6 +11,7 @@ import '../../../ui/pages/pools-new-page';
 import '../../../ui/pages/pools-show-page';
 import '../../../ui/pages/pools-edit-page';
 import '../../../ui/pages/pools-head-to-head-records-page';
+import '../../../ui/pages/pools-pick-quality-page';
 import '../../../ui/pages/pools-records-page';
 
 const group = FlowRouter.group({
@@ -70,12 +71,30 @@ group.route('/:poolId/head-to-head-records', {
   },
 });
 
-// http://app.com/pools/:poolId/head-to-head-records
+// http://app.com/pools/:poolId/seasons/:seasonId/head-to-head-records
 group.route('/:poolId/seasons/:seasonId/head-to-head-records', {
   name: 'Pools.head-to-head-records.season',
   action(params) {
     log.debug(`We're viewing head to head records for a single pool: ${params.poolId} with season ${params.seasonId}`);
     BlazeLayout.render('App_body', { content: 'Pools_head_to_head_records_page' });
+  },
+});
+
+// http://app.com/pools/:poolId/pick-quality
+group.route('/:poolId/pick-quality', {
+  name: 'Pools.pick-quality',
+  action(params) {
+    log.debug(`We're viewing pick qualities for a single pool: ${params.poolId}`);
+    BlazeLayout.render('App_body', { content: 'Pools_pick_quality_page' });
+  },
+});
+
+// http://app.com/pools/:poolId/seasons/:seasonId/pick-quality
+group.route('/:poolId/seasons/:seasonId/pick-quality', {
+  name: 'Pools.pick-quality',
+  action(params) {
+    log.debug(`We're viewing pick qualities for a single pool: ${params.poolId} with season ${params.seasonId}`);
+    BlazeLayout.render('App_body', { content: 'Pools_pick_quality_page' });
   },
 });
 
