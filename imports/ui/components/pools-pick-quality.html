@@ -1,6 +1,8 @@
 <template name="Pools_pick_quality">
   {{#if Template.subscriptionsReady}}
-    <h4 class="Pools_pick_quality">{{tableTitle}}</h4>
+    <h4 class="Pools_pick_quality">
+      <a href="{{pathFor 'Pools.pick-quality' poolId=poolId seasonId=seasonId}}">{{tableTitle}}</a>
+    </h4>
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered">

@@ -8,6 +8,10 @@ import { PoolTeamPicks } from '../../api/pool_team_picks/pool_team_picks';
 import './pools-pick-quality.html';
 
 Template.Pools_pick_quality.helpers({
+  poolId: () => Template.currentData().poolId,
+
+  seasonId: () => Template.currentData().seasonId,
+
   playerName: (poolTeamPick) => {
     const poolTeam = Template.instance().getPoolTeam(poolTeamPick.poolTeamId);
     return poolTeam.friendlyTeamName();
@@ -18,7 +22,7 @@ Template.Pools_pick_quality.helpers({
     return PoolTeamPicks.find({ seasonId, poolId }, {
       pointsMetric: 'wins',
       sort: { pickQuality: Template.currentData().sort },
-      limit: 5,
+      limit: Template.currentData().limit,
     });
   },
 
@@ -42,6 +46,7 @@ Template.Pools_pick_quality.onCreated(function () {
     poolId: { type: String },
     tableTitle: { type: String },
     sort: { type: SimpleSchema.Integer, allowedValues: [1, -1] },
+    limit: { type: SimpleSchema.Integer, optional: true, defaultValue: 32 },
     poolTeamId: { type: String, optional: true },
   }).validate(this.data);
 
