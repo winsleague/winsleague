@@ -38,7 +38,7 @@ export default {
   saveTeam(league, season, teamData) {
     const leagueTeam = LeagueTeamFinder.getByNbaNetTeamId(league, teamData.teamId);
     if (!leagueTeam) {
-      throw new Error(`Unable to find team! nbaNetTeamId: ${teamData.teamId}`);
+      log.warn(`Unable to find team! nbaNetTeamId: ${teamData.teamId}`);
     }
 
     SeasonLeagueTeams.upsert(
