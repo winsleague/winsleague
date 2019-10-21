@@ -39,6 +39,7 @@ export default {
     const leagueTeam = LeagueTeamFinder.getByNbaNetTeamId(league, teamData.teamId);
     if (!leagueTeam) {
       log.warn(`Unable to find team! nbaNetTeamId: ${teamData.teamId}`);
+      return;
     }
 
     SeasonLeagueTeams.upsert(
