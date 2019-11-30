@@ -11,7 +11,7 @@
     "test": "tests"
   },
   "dependencies": {
-    "@babel/runtime": "7.6.3",
+    "@babel/runtime": "7.7.4",
     "bcrypt": "3.0.6",
     "faker": "4.1.0",
     "fibers": "3.1.1",
