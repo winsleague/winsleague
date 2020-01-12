@@ -43,7 +43,7 @@
     "eslint-plugin-react-hooks": "2.3.0",
     "selenium-webdriver": "3.6.0",
     "shell-source": "1.1.0",
-    "sinon": "7.5.0",
+    "sinon": "8.0.4",
     "sinon-chai": "3.3.0",
     "xmlbuilder": "13.0.2"
   },
