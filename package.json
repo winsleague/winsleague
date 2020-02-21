@@ -45,7 +45,7 @@
     "shell-source": "1.1.0",
     "sinon": "9.0.0",
     "sinon-chai": "3.5.0",
-    "xmlbuilder": "13.0.2"
+    "xmlbuilder": "14.0.0"
   },
   "greenkeeper": {
     "ignore": [
