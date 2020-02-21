@@ -8,5 +8,11 @@
     "loggly",
     "winston",
     "winston-loggly-bulk"
+  ],
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    }
   ]
 }
