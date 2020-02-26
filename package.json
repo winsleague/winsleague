@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "1.0.5",
-    "babel-eslint": "10.0.3",
+    "babel-eslint": "10.1.0",
     "chai": "4.2.0",
     "chai-jquery": "2.1.0",
     "chimpy": "3.0.1",
