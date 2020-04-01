@@ -1685,10 +1685,10 @@ child-process-debug@0.0.7:
   resolved "https://registry.yarnpkg.com/child-process-debug/-/child-process-debug-0.0.7.tgz#54e11fb81c3b6f94a96b631faca93ed1af7f8ad0"
   integrity sha1-VOEfuBw7b5Spa2MfrKk+0a9/itA=
 
-chimpy@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/chimpy/-/chimpy-3.0.3.tgz#425c120cf58992a0f38c1169624f4aab06e4788c"
-  integrity sha512-bp+ZHMN6aJ4k1Uz7gqdMdsNxAEvcmkv5BQx/C3tWELn58J6kQrFB/DjJkhLCOAlVCBv3pPEKGXte2mENxw5mtQ==
+chimpy@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/chimpy/-/chimpy-3.0.4.tgz#c92315884c8b44fde4bad6a0e41a34b096a9fc67"
+  integrity sha512-QaPyuVy3VFpE0W6aB2n4+Un3ip3bZNKMFrdTYQxyAkK7dFhZ+IJv1JggHHccMR6ldOk0XoRObv6YaakZEov+bw==
   dependencies:
     "@babel/cli" "^7.8.4"
     "@babel/core" "^7.8.4"
