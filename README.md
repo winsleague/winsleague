@@ -5,7 +5,10 @@
 ## Getting Started
 
 1. [Install Meteor](https://www.meteor.com/install)
-2. (optional) [Install ESLint packages](https://www.npmjs.com/package/eslint-config-airbnb)
+2. [Install NVM](https://github.com/nvm-sh/nvm)
+3. `nvm install 8.15.1`
+4. [Install Yarn](https://classic.yarnpkg.com/en/docs/install)
+5. `yarn`
 
 
 ## Developing Locally
