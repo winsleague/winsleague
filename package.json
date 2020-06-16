@@ -47,14 +47,6 @@
     "sinon-chai": "3.5.0",
     "xmlbuilder": "15.1.0"
   },
-  "greenkeeper": {
-    "ignore": [
-      "babel-runtime",
-      "loggly",
-      "winston",
-      "winston-loggly-bulk"
-    ]
-  },
   "scripts": {
     "start": "meteor",
     "pretest": "echo 'npm run lint --silent'",
