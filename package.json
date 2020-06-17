@@ -20,7 +20,7 @@
     "meteor-node-stubs": "1.0.0",
     "moment": "2.26.0",
     "moment-timezone": "0.5.31",
-    "simpl-schema": "1.5.7",
+    "simpl-schema": "1.7.3",
     "store": "2.0.12",
     "winston": "2.3.0",
     "winston-loggly-bulk": "1.3.4"
