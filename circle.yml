@@ -36,7 +36,7 @@ jobs:
           command: |
             echo "deb http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
             apt-get -o Acquire::Check-Valid-Until=false update
-            apt-get install -t jessie-backports ca-certificates-java=20161107~bpo8+1 -y
+            apt-get install -t jessie-backports ca-certificates-java -y
             apt-get install openjdk-8-jdk -y
             update-java-alternatives -s java-1.8.0-openjdk-amd64
 
