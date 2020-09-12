@@ -44,7 +44,7 @@ export default {
       return;
     }
 
-    const url = 'http://www.nfl.com/liveupdate/scorestrip/scorestrip.json';
+    const url = 'http://static.nfl.com/liveupdate/scorestrip/scorestrip.json';
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
     let content = response.content.replace(/,,/g, ',"",');
@@ -106,7 +106,7 @@ export default {
   },
 
   ingestWeekData(season, week) {
-    const url = `http://www.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
+    const url = `http://static.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url);
