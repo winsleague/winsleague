@@ -41,7 +41,7 @@ jobs:
           name: Install Chrome
           command: |
             apt-get install lsb-release libappindicator3-1 fonts-liberation -y
-            apt-get install libxss1 wget xdg-utils libgbm1 -y
+            apt-get install libxss1 wget xdg-utils libgbm1 libasound2 -y
             CHROME_VERSION=79.0.3945.130-1
             curl -L -o google-chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
             dpkg -i google-chrome.deb
