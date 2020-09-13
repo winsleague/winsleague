@@ -17,7 +17,7 @@
     "fibers": "3.1.1",
     "lodash": "4.17.19",
     "loggly": "1.1.1",
-    "meteor-node-stubs": "1.0.0",
+    "meteor-node-stubs": "1.0.1",
     "moment": "2.28.0",
     "moment-timezone": "0.5.31",
     "simpl-schema": "1.10.1",
