@@ -4403,10 +4403,10 @@ message-box@^0.2.7:
   dependencies:
     lodash.template "^4.5.0"
 
-meteor-node-stubs@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-1.0.0.tgz#b72cfcdba9ab4402de3ca905da65a99049cf3544"
-  integrity sha512-QJwyv23wyXD3uEMzk5Xr/y5ezoVlCbHvBbrgdkVadn84dmifLRbs0PtD6EeNw5NLIk+SQSfxld7IMdEsneGz5w==
+meteor-node-stubs@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-1.0.1.tgz#09f38010d708ce9928c7aa6d3d1260c1e336aa94"
+  integrity sha512-I4PE/z7eAl45XEsebHA4pcQbgjqEdK3EBGgiUoIZBi3bMQcMq6blLWZo+WdtK4Or9X4NJOiYWw4GmHiubr3egA==
   dependencies:
     assert "^1.4.1"
     browserify-zlib "^0.2.0"
