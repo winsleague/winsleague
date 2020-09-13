@@ -2667,10 +2667,10 @@ eslint-plugin-jsx-a11y@6.3.1:
     jsx-ast-utils "^2.4.1"
     language-tags "^1.0.5"
 
-eslint-plugin-meteor@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-meteor/-/eslint-plugin-meteor-6.0.0.tgz#0bbb72224a54fedf10750650ead811f3c061cfed"
-  integrity sha512-2sEW3Ow1QJMLeJPHnTJbqD3ASAyRUzgU24SKTaj2NyYC4CWYl7WmEMUl99HVlDS3qigrSnSUNMix9+3vn9TmkQ==
+eslint-plugin-meteor@7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-meteor/-/eslint-plugin-meteor-7.2.0.tgz#cc44f3e1da0401de4875ba94f984f2e424660b44"
+  integrity sha512-ZThLcyCfkbrERix467/BZbsaoRWVKH0kSL3lFuFh86fMsRB9FX9N5P+TFw/wRYul75oKbgsw+sApsLYC7gC0HQ==
   dependencies:
     invariant "2.2.4"
 
