@@ -19,7 +19,7 @@
     "loggly": "1.1.1",
     "meteor-node-stubs": "1.0.1",
     "moment": "2.29.1",
-    "moment-timezone": "0.5.31",
+    "moment-timezone": "0.5.32",
     "simpl-schema": "1.10.2",
     "store": "2.0.12",
     "winston": "2.3.0",
