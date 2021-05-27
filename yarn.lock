@@ -1380,6 +1380,11 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
   integrity sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==
 
+bn.js@^4.11.9:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
+  integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
+
 boom@2.x.x, boom@^2.5.x:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
@@ -1411,7 +1416,7 @@ braces@^2.3.1, braces@^2.3.2:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-brorand@^1.0.1:
+brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
@@ -2448,6 +2453,19 @@ elliptic@^6.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
+
+elliptic@^6.5.4:
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
+  integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    hash.js "^1.0.0"
+    hmac-drbg "^1.0.1"
+    inherits "^2.0.4"
+    minimalistic-assert "^1.0.1"
+    minimalistic-crypto-utils "^1.0.1"
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -3604,7 +3622,7 @@ heavy@3.x.x:
     hoek "2.x.x"
     joi "6.x.x"
 
-hmac-drbg@^1.0.0:
+hmac-drbg@^1.0.0, hmac-drbg@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
   integrity sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
@@ -3730,7 +3748,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
+inherits@2, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -4572,10 +4590,10 @@ message-box@^0.2.7:
   dependencies:
     lodash.template "^4.5.0"
 
-meteor-node-stubs@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-1.0.1.tgz#09f38010d708ce9928c7aa6d3d1260c1e336aa94"
-  integrity sha512-I4PE/z7eAl45XEsebHA4pcQbgjqEdK3EBGgiUoIZBi3bMQcMq6blLWZo+WdtK4Or9X4NJOiYWw4GmHiubr3egA==
+meteor-node-stubs@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-1.0.3.tgz#f22f02149cc51371940b06c205fdff92628ecf0f"
+  integrity sha512-JQwIWPfM/Oa2x1Ycwn1Q0wVVQ8b0bOLv+qs4RR/D12b5dPktLlPCRhMzWzRPncZVJtfsnKKBgPLdFmJYUqAwHg==
   dependencies:
     assert "^1.4.1"
     browserify-zlib "^0.2.0"
@@ -4584,6 +4602,7 @@ meteor-node-stubs@1.0.1:
     constants-browserify "^1.0.0"
     crypto-browserify "^3.12.0"
     domain-browser "^1.2.0"
+    elliptic "^6.5.4"
     events "^3.0.0"
     https-browserify "^1.0.0"
     os-browserify "^0.3.0"
