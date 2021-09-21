@@ -1,4 +1,3 @@
-import { xml2js } from 'meteor/peerlibrary:xml2js';
 import moment from 'moment-timezone';
 import log from '../../../utils/log';
 
@@ -8,17 +7,9 @@ import SeasonFinder from '../../seasons/finder';
 import { LeagueTeams } from '../../league_teams/league_teams';
 import { Games } from '../games';
 
-function friendlyQuarter(old) {
-  if (old === 'P') { return 'pregame'; }
-  if (old === 'O') { return 'overtime'; }
-  if (old === 'F') { return 'final'; }
-  if (old === 'FO') { return 'final overtime'; }
-  return old;
-}
-
 function cleanStatus(old) {
-  if (old === 'P' || old === 'Pregame') { return 'scheduled'; }
-  if (old === 'F' || old === 'Final' || old === 'FO' || old === 'final overtime') { return 'completed'; }
+  if (old === 'STATUS_SCHEDULED') { return 'scheduled'; }
+  if (old === 'STATUS_FINAL') { return 'completed'; }
   return 'in progress';
 }
 
@@ -33,7 +24,6 @@ export default {
     if (!season) {
       throw new Error(`Season is not found for league ${league._id}!`);
     }
-    const seasonId = season._id;
 
     if (today.isBefore(season.startDate) && !force) {
       log.info(`Not refreshing NFL standings because ${today.toDate()} is before ${season.startDate}`);
@@ -44,49 +34,24 @@ export default {
       return;
     }
 
-    const url = 'http://static.nfl.com/liveupdate/scorestrip/scorestrip.json';
+    const url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
-    let content = response.content.replace(/,,/g, ',"",');
-    content = content.replace(/,,/g, ',"",'); // do it again to address multiple commas in a row
-    log.debug(`fixed content: ${content}`);
-
     let json;
     try {
-      json = JSON.parse(content);
+      json = JSON.parse(response.content);
       log.debug('parsed json:', json);
     } catch (e) {
-      log.error(content, e);
+      log.error(response.content, e);
       return;
     }
+    log.debug('parsed json:', json);
 
-    json.ss.forEach((gameData) => {
-      // ["Sun","13:00:00","Final",,"NYJ","17","BUF","22",,,"56744",,"REG17","2015"]
-      const gameId = gameData[10];
-      const status = cleanStatus(gameData[2]);
-      const quarter = gameData[2].toLowerCase();
-      const timeRemaining = gameData[3].length ? moment(gameData[3], 'mm:ss').format('m:ss') : ''; // '09:32'
-      const homeScore = gameData[7];
-      const awayScore = gameData[5];
+    const week = json.week.number;
 
-      const affected = Games.update(
-        {
-          leagueId: league._id,
-          seasonId,
-          gameId,
-        }, {
-          $set: {
-            quarter,
-            status,
-            timeRemaining,
-            homeScore,
-            awayScore,
-          },
-        },
-      );
-
-      log.info(`Updated game with leagueId ${league._id} and gameId ${gameId}: \
-(status: ${status}, quarter: ${quarter}, homeScore: ${homeScore}, awayScore: ${awayScore}, affected: ${affected})`);
+    log.debug('parsed json.events:', json.events);
+    json.events.forEach((game) => {
+      this.saveGame(game, season, week);
     });
   },
 
@@ -100,69 +65,76 @@ export default {
       throw new Error('League is not found!');
     }
 
-    for (let week = 1; week <= 17; week += 1) {
+    for (let week = 1; week <= 18; week += 1) {
       this.ingestWeekData(season, week);
     }
   },
 
   ingestWeekData(season, week) {
-    const url = `http://static.nfl.com/ajax/scorestrip?season=${season.year}&seasonType=REG&week=${week}`;
+    const url = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week=${week}`;
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url);
-    const xmlString = response.content;
-    log.debug(`xml: ${xmlString}`);
 
-    const json = xml2js.parseStringSync(xmlString, { mergeAttrs: true, explicitArray: false });
+    let json;
+    try {
+      json = JSON.parse(response.content);
+      log.debug('parsed json:', json);
+    } catch (e) {
+      log.error(response.content, e);
+      return;
+    }
     log.debug('parsed json:', json);
 
-    log.debug('parsed json.ss.gms.g:', json.ss.gms.g);
-    json.ss.gms.g.forEach((game) => {
+    log.debug('parsed json.events:', json.events);
+    json.events.forEach((game) => {
       this.saveGame(game, season, week);
     });
   },
 
   saveGame(game, season, week) {
-    log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
+    log.info(`season: ${season.year}, week: ${week}, game: ${game.id}`);
     const leagueId = LeagueFinder.getIdByName('NFL');
     const gameDate = this.parseGameDate(game);
 
+    if (!game.id) {
+      throw new Error(`Invalid game data ${game}`);
+    }
+    
+
+    const homeAbbreviation = game.competitions[0].competitors[0].team.abbreviation;
     const homeLeagueTeam = LeagueTeams.findOne({
       leagueId,
-      mascotName: {
-        $regex: new RegExp(game.hnn, 'i'),
-      },
+      abbreviation: homeAbbreviation,
     });
     if (!homeLeagueTeam) {
-      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.hnn}`);
+      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and abbrevation ${homeAbbreviation}`);
     }
 
+    const awayAbbreviation = game.competitions[0].competitors[1].team.abbreviation;
     const awayLeagueTeam = LeagueTeams.findOne({
       leagueId,
-      mascotName: {
-        $regex: `^${game.vnn}$`,
-        $options: 'i',
-      },
+      abbreviation: awayAbbreviation,
     });
     if (!awayLeagueTeam) {
-      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.vnn}`);
+      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and abbreviation ${awayAbbreviation}`);
     }
 
     const result = Games.upsert(
       {
         leagueId,
         seasonId: season._id,
-        gameId: game.gsis,
+        gameId: game.id,
       }, {
         $set: {
           gameDate,
           week,
           homeTeamId: homeLeagueTeam._id,
-          homeScore: game.hs,
+          homeScore: game.competitions[0].competitors[0].score,
           awayTeamId: awayLeagueTeam._id,
-          awayScore: game.vs,
-          quarter: friendlyQuarter(game.q),
-          status: cleanStatus(game.q),
+          awayScore: game.competitions[0].competitors[1].score,
+          status: cleanStatus(game.status.type.name),
+          timeRemaining: game.status.type.shortDetail,
         },
       },
     );
@@ -171,9 +143,7 @@ gameDate ${gameDate}, week ${week}, homeTeamId ${homeLeagueTeam._id}, ${result.n
   },
 
   parseGameDate(game) {
-    // eid: 2016091101
-    // t: 1:00
-    const ymd = `${game.eid.substr(0, 4)}-${game.eid.substr(4, 2)}-${game.eid.substr(6, 2)}`;
-    return moment.tz(`${ymd} ${game.t} PM`, 'YYYY-MM-DD h:mm A', 'US/Eastern').toDate();
+    // date: 2021-09-21T00:15Z
+    return moment.parseZone(game.date).toDate();
   },
 };

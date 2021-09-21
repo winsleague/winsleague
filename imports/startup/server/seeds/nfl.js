@@ -75,7 +75,7 @@ export default {
       {
         cityName: 'Jacksonville',
         mascotName: 'Jaguars',
-        abbreviation: 'JAC',
+        abbreviation: 'JAX',
         conference: 'AFC',
         division: 'South',
       },
@@ -222,7 +222,7 @@ export default {
       {
         cityName: 'Washington',
         mascotName: 'Football Team',
-        abbreviation: 'WAS',
+        abbreviation: 'WSH',
         conference: 'NFC',
         division: 'East',
       },
@@ -250,7 +250,7 @@ export default {
       {
         cityName: 'Los Angeles',
         mascotName: 'Rams',
-        abbreviation: 'LA',
+        abbreviation: 'LAR',
         conference: 'NFC',
         division: 'West',
       },
@@ -272,9 +272,9 @@ export default {
     });
     Seasons.insert({
       leagueId,
-      year: 2015,
-      startDate: moment('2015-09-10').toDate(),
-      endDate: moment('2016-01-03').toDate(),
+      year: 2021,
+      startDate: moment('2021-09-10').toDate(),
+      endDate: moment('2022-01-03').toDate(),
     });
   },
 

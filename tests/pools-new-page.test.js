@@ -20,6 +20,6 @@ describe('Pools.new page ui', () => {
 
     browser.waitForExist('h3.Pools_show', timeout);
 
-    assert.equal(browser.getText('#Pools_title'), `2015 ${newTitle}`);
+    assert.equal(browser.getText('#Pools_title'), `2021 ${newTitle}`);
   });
 });
