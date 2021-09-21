@@ -1,7 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import moment from 'moment-timezone';
-import { _ } from 'lodash';
 
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { SeasonLeagueTeams } from '../season_league_teams/season_league_teams';
