@@ -93,24 +93,31 @@ export default {
   },
 
   saveGame(game, season, week) {
-    log.info(`season: ${season.year}, week: ${week}, game: ${game.eid}`);
+    log.info(`season: ${season.year}, week: ${week}, game: ${game.id}`);
     const leagueId = LeagueFinder.getIdByName('NFL');
     const gameDate = this.parseGameDate(game);
 
+    if (!game.id) {
+      throw new Error(`Invalid game data ${game}`);
+    }
+    
+
+    const homeAbbreviation = game.competitions[0].competitors[0].team.abbreviation;
     const homeLeagueTeam = LeagueTeams.findOne({
       leagueId,
-      mascotName: game.competitions[0].competitors[0].team.name,
+      abbreviation: homeAbbreviation,
     });
     if (!homeLeagueTeam) {
-      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.hnn}`);
+      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and abbrevation ${homeAbbreviation}`);
     }
 
+    const awayAbbreviation = game.competitions[0].competitors[1].team.abbreviation;
     const awayLeagueTeam = LeagueTeams.findOne({
       leagueId,
-      mascotName: game.competitions[0].competitors[1].team.name,
+      abbreviation: awayAbbreviation,
     });
     if (!awayLeagueTeam) {
-      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and mascot ${game.vnn}`);
+      throw new Error(`Cannot find LeagueTeam in leagueId ${leagueId} and abbreviation ${awayAbbreviation}`);
     }
 
     const result = Games.upsert(
