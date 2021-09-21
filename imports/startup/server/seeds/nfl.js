@@ -75,7 +75,7 @@ export default {
       {
         cityName: 'Jacksonville',
         mascotName: 'Jaguars',
-        abbreviation: 'JAC',
+        abbreviation: 'JAX',
         conference: 'AFC',
         division: 'South',
       },
@@ -222,7 +222,7 @@ export default {
       {
         cityName: 'Washington',
         mascotName: 'Football Team',
-        abbreviation: 'WAS',
+        abbreviation: 'WSH',
         conference: 'NFC',
         division: 'East',
       },
@@ -250,7 +250,7 @@ export default {
       {
         cityName: 'Los Angeles',
         mascotName: 'Rams',
-        abbreviation: 'LA',
+        abbreviation: 'LAR',
         conference: 'NFC',
         division: 'West',
       },
