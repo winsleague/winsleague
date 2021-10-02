@@ -1,7 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import moment from 'moment-timezone';
-import { _ } from 'lodash';
 
 import { PoolTeams } from '../pool_teams/pool_teams';
 import { SeasonLeagueTeams } from '../season_league_teams/season_league_teams';
@@ -306,13 +305,8 @@ ${this.homeTeamPick(poolId, seasonId)} ${this.homeTeamRecord(seasonId)}`;
       return this.friendlyDateTime();
     }
     if (this.status === 'in progress') {
-      if (this.quarter) {
-        const q = (!Number.isNaN(this.quarter) ? 'Q' : '');
-        const quarter = `${q}${_.capitalize(this.quarter)}`;
-        if (this.timeRemaining) {
-          return `${quarter} ${this.timeRemaining}`;
-        }
-        return quarter;
+      if (this.timeRemaining) {
+        return `${this.timeRemaining}`;
       }
       if (this.inning) {
         const topBottom = (this.topInning === 'Y' ? 'Top' : 'Bottom');
