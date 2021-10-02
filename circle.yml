@@ -111,7 +111,8 @@ jobs:
             - ~/project/.meteor/local/isopacks # need to figure out when this expires
             - ~/project/.meteor/local/plugin-cache
 
-      - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; 2) (./tests/acceptance_run) ;; esac
+      - run: case $CIRCLE_NODE_INDEX in 0) (meteor npm run test) ;; 1) (meteor npm run test-app) ;; esac
+      # TODO - renable acceptance tests:  2) (./tests/acceptance_run) ;;
     
       - store_artifacts:
           path: node_cache/_logs
