@@ -34,7 +34,7 @@ export default {
       return;
     }
 
-    const url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
+    const url = 'http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
     const response = HTTP.get(url);
     log.debug(`raw content: ${response.content}`);
     let json;
@@ -71,7 +71,7 @@ export default {
   },
 
   ingestWeekData(season, week) {
-    const url = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week=${week}`;
+    const url = `http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week=${week}`;
 
     log.debug(`fetching ${url}`);
     const response = HTTP.get(url);
