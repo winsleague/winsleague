@@ -18,7 +18,7 @@ jobs:
 
       - run: 
           name: Install Yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
+          command: curl -o- -L --insecure https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
       - run:
           name: Update PATH for Yarn
           command: |
@@ -29,7 +29,7 @@ jobs:
           name: Install Meteor
           command: |
             if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
-            if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+            if [ ! -e $HOME/.meteor/meteor ]; then curl --insecure https://install.meteor.com | sh; fi
 
       - run:
           name: Install Selenium dependencies
@@ -153,13 +153,13 @@ jobs:
           name: Install Meteor
           command: |
             if [ -d ~/.meteor ]; then sudo ln -s ~/.meteor/meteor /usr/local/bin/meteor; fi
-            if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
+            if [ ! -e $HOME/.meteor/meteor ]; then curl --insecure https://install.meteor.com | sh; fi
 
       - run: (cd ~/project/.deploy/production; gpg --no-use-agent --quiet --passphrase $MUP_PASSPHRASE -o mup.js -d mup.js.gpg)
       - run: yarn global add ssh2@0.4.15 # needed for meteor-up
       - run: yarn global add mup@1.4.6
       - run: (cd ~/project/.deploy/production; DEBUG=mup* mup deploy --verbose)
-      - run: curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
+      - run: curl --insecure https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_SERVER_ACCESS_TOKEN -F environment=production -F revision=$CIRCLE_SHA1 -F local_username=$CIRCLE_USERNAME
 
 workflows:
   version: 2
